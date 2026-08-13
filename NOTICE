@@ -1,0 +1,11 @@
+Mudra Interact Core
+Copyright 2026 MAYAYAI
+
+This distribution contains original Mudra Interact Core source code licensed
+under Apache License 2.0.
+
+No third-party runtime library, model weight, dataset, Sanskrit source text,
+mantra, or benefit claim is bundled in version 0.1.0.
+
+Potential optional adapters must retain their own required notices. See
+licenses/approved_components.json and README.md before packaging an adapter.

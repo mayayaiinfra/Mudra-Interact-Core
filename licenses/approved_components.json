@@ -1,0 +1,45 @@
+{
+  "policy_version": "1.0.0",
+  "approved_spdx_licenses": ["Apache-2.0", "MIT"],
+  "release_rule": "Code, model weights, datasets, catalogs, and documentation each need a known approved licence and a notice record before distribution.",
+  "components": [
+    {
+      "name": "Mudra Interact Core",
+      "kind": "source",
+      "license": "Apache-2.0",
+      "status": "included",
+      "notice_required": true
+    },
+    {
+      "name": "MediaPipe Hand Landmarker adapter",
+      "kind": "optional_adapter",
+      "license": "Apache-2.0",
+      "status": "approved_in_principle_pending_model_asset_review",
+      "notice_required": true
+    },
+    {
+      "name": "ONNX Runtime",
+      "kind": "optional_inference_runtime",
+      "license": "MIT",
+      "status": "approved_in_principle_pending_distribution_review",
+      "notice_required": true
+    },
+    {
+      "name": "OpenCV",
+      "kind": "optional_capture_utility",
+      "license": "Apache-2.0",
+      "status": "approved_in_principle_pending_distribution_review",
+      "notice_required": true
+    }
+  ],
+  "blocked_examples": [
+    {
+      "name": "MANO assets",
+      "reason": "Published licence is limited to non-commercial research, education, and artistic use."
+    },
+    {
+      "name": "Unreviewed VLM/mesh model weights or datasets",
+      "reason": "Repository code licences do not automatically licence weights or training data."
+    }
+  ]
+}

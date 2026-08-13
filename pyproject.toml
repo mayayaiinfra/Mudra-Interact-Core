@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mudra-interact-core"
+version = "0.1.0"
+description = "Apache-2.0 landmark protocol and conservative Mudra interaction recognizer"
+requires-python = ">=3.11"
+license = {text = "Apache-2.0"}
+authors = [{name = "MAYAYAI"}]
+keywords = ["gesture", "mudra", "landmarks", "human-agent-interaction", "privacy"]
+
+[project.scripts]
+mudra-interact = "mudra_interact_core.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mudra_interact_core = ["catalog/*.json"]

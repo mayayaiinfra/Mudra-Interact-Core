@@ -1,0 +1,34 @@
+{
+  "catalog_version": "1.0.0",
+  "scope": "Learning labels only. This catalog does not provide health, therapeutic, diagnostic, or religious authority claims.",
+  "entries": [
+    {
+      "gesture_id": "gyan_or_chin_mudra",
+      "display_name": "Gyan or Chin Mudra",
+      "transliteration": "jnana/chin mudra",
+      "learning_note": "This contact pattern needs palm orientation and participant confirmation before it is labeled more specifically.",
+      "content_status": "reviewed_learning_label"
+    },
+    {
+      "gesture_id": "shunya_mudra",
+      "display_name": "Shunya Mudra",
+      "transliteration": "shunya mudra",
+      "learning_note": "The local recognizer uses a thumb-to-middle-finger contact pattern as a tentative learning cue.",
+      "content_status": "reviewed_learning_label"
+    },
+    {
+      "gesture_id": "prithvi_mudra",
+      "display_name": "Prithvi Mudra",
+      "transliteration": "prithvi mudra",
+      "learning_note": "The local recognizer uses a thumb-to-ring-finger contact pattern as a tentative learning cue.",
+      "content_status": "reviewed_learning_label"
+    },
+    {
+      "gesture_id": "apana_mudra",
+      "display_name": "Apana Mudra",
+      "transliteration": "apana mudra",
+      "learning_note": "The local recognizer uses simultaneous thumb-to-middle and thumb-to-ring contact as a tentative learning cue.",
+      "content_status": "reviewed_learning_label"
+    }
+  ]
+}
