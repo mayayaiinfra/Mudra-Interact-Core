@@ -3,6 +3,8 @@
 `Mudra Interact Core` is an Apache-2.0, offline-capable protocol library for
 consented human and agent gesture interaction.
 
+Canonical public source: [mayayaiinfra/Mudra-Interact-Core](https://github.com/mayayaiinfra/Mudra-Interact-Core).
+
 ```text
 local camera or device landmark adapter
 -> normalized 21-point hand landmarks
