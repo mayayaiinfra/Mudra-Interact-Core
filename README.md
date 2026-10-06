@@ -5,6 +5,9 @@ consented human and agent gesture interaction.
 
 Canonical public source: [mayayaiinfra/Mudra-Interact-Core](https://github.com/mayayaiinfra/Mudra-Interact-Core).
 
+Implementation and release work is tracked in the
+[Mudra Interact Core specification](MUDRA_INTERACT_CORE_SPEC.md).
+
 ```text
 local camera or device landmark adapter
 -> normalized 21-point hand landmarks
