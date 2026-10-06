@@ -8,6 +8,14 @@ Canonical public source: [mayayaiinfra/Mudra-Interact-Core](https://github.com/m
 Implementation and release work is tracked in the
 [Mudra Interact Core specification](MUDRA_INTERACT_CORE_SPEC.md).
 
+Current source is the `0.1.0` reference baseline. The Astra-reviewed `0.2`
+specification targets package `0.2.0` and event schema `2.0.0`; that target is
+not yet implemented. Start with the [Luna handoff](docs/LUNA_HANDOFF.md),
+[acceptance cases](docs/ACCEPTANCE.md), and
+[implementation ledger](IMPLEMENTATION_BACKLOG.json).
+The baseline has reproduced consent, validation and stability defects described
+in the spec; five passing legacy tests do not establish release readiness.
+
 ```text
 local camera or device landmark adapter
 -> normalized 21-point hand landmarks
@@ -21,10 +29,11 @@ local camera or device landmark adapter
 
 - Accepts 21 hand landmarks in MediaPipe order.
 - Detects a deliberately small set of contact-pattern learning labels.
-- Emits `candidate`, `stable`, `uncertain`, or `rejected` state rather than
-  pretending every frame is certain.
+- Defines `candidate`, `stable`, `uncertain`, and `rejected` states; the revised
+  specification requires stricter transitions and distinct-frame checks.
 - Produces a portable `MudraEvent` for H-to-H, H-to-A, A-to-H, or A-to-A use.
-- Keeps raw images and landmark arrays outside the shareable event contract.
+- Defines an image-free event shape. The revision closes the current arbitrary
+  metadata path and removes unsupported claims about host data retention.
 
 ## What It Does Not Do
 
@@ -34,19 +43,21 @@ local camera or device landmark adapter
 - distinguish Gyan from Chin from contact points alone;
 - auto-execute an action in ALLYK or any other system.
 
-## Quick Start
+## Baseline Development Check
 
 ```powershell
-cd plugins\mudra_interact\core
-python -m pip install -e .
-mudra-interact --input sample_landmarks.json
+git clone https://github.com/mayayaiinfra/Mudra-Interact-Core.git
+cd Mudra-Interact-Core
+python -m venv .venv
+.venv\Scripts\python -m pip install -e . pytest
+.venv\Scripts\python -m pytest -q
 ```
 
-`sample_landmarks.json` must contain a `landmarks` array of exactly 21 objects:
-
-```json
-{"landmarks": [{"x": 0.0, "y": 0.0, "z": 0.0}]}
-```
+On Linux/macOS use `.venv/bin/python`. These are legacy development tests;
+they do not implement or verify the revised release. The spec defines the v2
+API/CLI and its installed-package examples as required implementation outputs.
+Do not treat default consent or a stable result from the baseline as authority
+to share participant data or execute actions.
 
 An adapter, not the core, is responsible for converting camera/video input into
 these landmarks. The intended browser/mobile adapter uses MediaPipe Hand

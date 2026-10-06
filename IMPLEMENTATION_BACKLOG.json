@@ -1,0 +1,470 @@
+{
+  "ledger_version": "1.0.0",
+  "specification_version": "0.2",
+  "reviewed_on": "2026-10-06",
+  "baseline_commit": "eae92b7",
+  "implementation_started": false,
+  "target": {
+    "package": "mudra-interact-core",
+    "package_version": "0.2.0",
+    "schema_version": "2.0.0",
+    "catalog_version": "2.0.0"
+  },
+  "authority": {
+    "behaviour": "MUDRA_INTERACT_CORE_SPEC.md",
+    "acceptance": "docs/ACCEPTANCE.md",
+    "execution": "docs/LUNA_HANDOFF.md"
+  },
+  "review": {
+    "scope": "Specification and current-source defect review only; no runtime acceptance",
+    "baseline_tests": "5 legacy tests and licence checker passed; reproduced defects remain",
+    "verification_claim": "No implementation gate verified"
+  },
+  "active_item": null,
+  "states": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "IMPLEMENTED",
+    "VERIFIED",
+    "FAILED",
+    "BLOCKED"
+  ],
+  "rules": {
+    "required_prerequisite_state": "VERIFIED",
+    "gate_dependencies_required": true,
+    "max_active_items": 1,
+    "required_skips_allowed": false,
+    "required_xfail_allowed": false,
+    "zero_test_pass_allowed": false,
+    "mutable_evidence_is_not_source_identity": true,
+    "self_verification_label": "luna_self_verified",
+    "scope_reduction_requires_approval": true
+  },
+  "platform_matrix": {
+    "python": [
+      "3.11",
+      "3.12",
+      "3.13",
+      "3.14"
+    ],
+    "platforms": [
+      {
+        "os": "linux",
+        "architecture": "x86_64"
+      },
+      {
+        "os": "windows",
+        "architecture": "x86_64"
+      },
+      {
+        "os": "macos",
+        "architecture": "arm64"
+      }
+    ],
+    "required_cells": 12
+  },
+  "gates": [
+    {
+      "id": "M0",
+      "requires": [],
+      "items": [
+        "MI-01"
+      ],
+      "state": "NOT_STARTED",
+      "evidence": []
+    },
+    {
+      "id": "M1",
+      "requires": [
+        "M0"
+      ],
+      "items": [
+        "MI-02",
+        "MI-03",
+        "MI-04"
+      ],
+      "state": "NOT_STARTED",
+      "evidence": []
+    },
+    {
+      "id": "M2",
+      "requires": [
+        "M1"
+      ],
+      "items": [
+        "MI-05",
+        "MI-06",
+        "MI-07"
+      ],
+      "state": "NOT_STARTED",
+      "evidence": []
+    },
+    {
+      "id": "M3",
+      "requires": [
+        "M2"
+      ],
+      "items": [
+        "MI-08",
+        "MI-09"
+      ],
+      "state": "NOT_STARTED",
+      "evidence": []
+    },
+    {
+      "id": "M4",
+      "requires": [
+        "M3"
+      ],
+      "items": [
+        "MI-10"
+      ],
+      "state": "NOT_STARTED",
+      "evidence": []
+    }
+  ],
+  "recommended_order": [
+    "MI-01",
+    "MI-02",
+    "MI-03",
+    "MI-04",
+    "MI-06",
+    "MI-05",
+    "MI-07",
+    "MI-08",
+    "MI-09",
+    "MI-10"
+  ],
+  "items": [
+    {
+      "id": "MI-01",
+      "gate": "M0",
+      "title": "Freeze v2 contracts, fixtures and fail-closed verification harness",
+      "requires": [],
+      "outputs": [
+        "schemas/v2",
+        "tests/fixtures/v2/manifest.json",
+        "docs/API.md",
+        "docs/MIGRATION.md",
+        "requirements-dev.lock",
+        ".gitignore",
+        "tools/verify_gate.py",
+        "tools/verification_report.py",
+        "tests/test_contract_spec.py",
+        "tests/test_verification_tools.py"
+      ],
+      "acceptance_ids": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-02",
+      "gate": "M1",
+      "title": "Strict bounded inputs, values and errors",
+      "requires": [
+        "MI-01"
+      ],
+      "outputs": [
+        "src/mudra_interact_core/validation.py",
+        "src/mudra_interact_core/errors.py",
+        "src/mudra_interact_core/frame.py",
+        "src/mudra_interact_core/protocol.py",
+        "tests/test_validation.py",
+        "tests/test_json_boundary.py"
+      ],
+      "acceptance_ids": [
+        "E10",
+        "E11",
+        "E12",
+        "E13",
+        "E14",
+        "E15",
+        "E16",
+        "E17",
+        "E18",
+        "E19"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-03",
+      "gate": "M1",
+      "title": "Coordinate conversion and complete geometric rule oracle",
+      "requires": [
+        "MI-02"
+      ],
+      "outputs": [
+        "src/mudra_interact_core/coordinates.py",
+        "src/mudra_interact_core/recognition.py",
+        "tests/test_recognition.py",
+        "tests/test_coordinates.py"
+      ],
+      "acceptance_ids": [
+        "E20",
+        "E21",
+        "E22",
+        "E23",
+        "E24",
+        "E25",
+        "E26"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-04",
+      "gate": "M1",
+      "title": "Temporal sessions, explicit consent and immutable event lifecycle",
+      "requires": [
+        "MI-03"
+      ],
+      "outputs": [
+        "src/mudra_interact_core/session.py",
+        "src/mudra_interact_core/protocol.py",
+        "src/mudra_interact_core/__init__.py",
+        "tests/test_session.py",
+        "tests/test_consent.py",
+        "tests/test_event.py"
+      ],
+      "acceptance_ids": [
+        "E30",
+        "E31",
+        "E32",
+        "E33",
+        "E34",
+        "E35",
+        "E36",
+        "E37",
+        "E38",
+        "E39",
+        "E40",
+        "E41",
+        "E42",
+        "E43",
+        "E44"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-05",
+      "gate": "M2",
+      "title": "Safe installed CLI and real batch-to-event workflow",
+      "requires": [
+        "MI-04",
+        "MI-06"
+      ],
+      "outputs": [
+        "src/mudra_interact_core/cli.py",
+        "examples/v2",
+        "README.md",
+        "docs/API.md",
+        "tests/test_cli.py"
+      ],
+      "acceptance_ids": [
+        "E45",
+        "E46",
+        "E47",
+        "E48",
+        "E49",
+        "E50",
+        "E51",
+        "E52",
+        "E53",
+        "E54",
+        "E55"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-06",
+      "gate": "M2",
+      "title": "Neutral catalogue, provenance and explicit cultural review boundary",
+      "requires": [
+        "MI-03"
+      ],
+      "outputs": [
+        "src/mudra_interact_core/catalog.py",
+        "src/mudra_interact_core/catalog/mudra_catalog.json",
+        "docs/CATALOG_REVIEW.md",
+        "docs/MIGRATION.md",
+        "tests/test_catalog.py"
+      ],
+      "acceptance_ids": [
+        "E56",
+        "E57",
+        "E58",
+        "E59",
+        "E60",
+        "E61"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-07",
+      "gate": "M2",
+      "title": "Privacy, licensing, fuzzing and semantic mutation proof",
+      "requires": [
+        "MI-05",
+        "MI-06"
+      ],
+      "outputs": [
+        "docs/PRIVACY.md",
+        "docs/THREAT_MODEL.md",
+        "tools_check_license_allowlist.py",
+        "licenses/approved_components.json",
+        "tools/run_mutations.py",
+        "tests/test_privacy.py",
+        "tests/test_fuzz.py",
+        "tests/test_licensing.py",
+        "tests/test_mutations.py"
+      ],
+      "acceptance_ids": [
+        "E62",
+        "E63",
+        "E64",
+        "E65",
+        "E66",
+        "E67",
+        "E68",
+        "E69",
+        "E70",
+        "E71",
+        "E72"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-08",
+      "gate": "M3",
+      "title": "Reproducible offline distributions and complete platform matrix",
+      "requires": [
+        "MI-07"
+      ],
+      "outputs": [
+        "pyproject.toml",
+        ".gitignore",
+        "requirements-dev.lock",
+        "tools/verify_release.py",
+        "docs/COMPATIBILITY.md",
+        ".github/workflows/verify.yml",
+        "tests/test_distribution.py"
+      ],
+      "acceptance_ids": [
+        "E73",
+        "E74",
+        "E75",
+        "E76",
+        "E77",
+        "E78",
+        "E79",
+        "E80",
+        "E81",
+        "E82",
+        "E83",
+        "E84"
+      ],
+      "completion_kind": "engineering",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-09",
+      "gate": "M3",
+      "title": "Separately gated local camera adapter design",
+      "requires": [
+        "MI-06",
+        "MI-07"
+      ],
+      "outputs": [
+        "docs/ADAPTER_SPEC.md",
+        "tests/test_adapter_contract.py"
+      ],
+      "acceptance_ids": [
+        "E85",
+        "E86",
+        "E87",
+        "E88",
+        "E89"
+      ],
+      "completion_kind": "design_only",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    },
+    {
+      "id": "MI-10",
+      "gate": "M4",
+      "title": "Authorized exact-artifact publication and downloaded-install verification",
+      "requires": [
+        "MI-08",
+        "MI-09"
+      ],
+      "outputs": [
+        "CHANGELOG.md",
+        "SECURITY.md",
+        "docs/RELEASE_RUNBOOK.md",
+        ".github/workflows/publish.yml",
+        "tests/test_release_recovery.py",
+        "evidence/releases"
+      ],
+      "acceptance_ids": [
+        "E90",
+        "E91",
+        "E92",
+        "E93",
+        "E94",
+        "E95",
+        "E96",
+        "E97",
+        "E98",
+        "E99"
+      ],
+      "external_requirements": [
+        "Package-name and publishing identity access on TestPyPI/PyPI",
+        "Release authorization tied to candidate/version",
+        "Live upload/download/hash/installed verification"
+      ],
+      "completion_kind": "published_artifact",
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
+      "blocker": null
+    }
+  ]
+}
