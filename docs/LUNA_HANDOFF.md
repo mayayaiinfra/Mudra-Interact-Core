@@ -7,6 +7,27 @@ at this handoff. The earlier five-test baseline is insufficient.
 
 ## 1. Working protocol
 
+Use the existing primary checkout as the single development worktree for this
+repository. Do not create linked Git worktrees or additional development clones.
+Public Mudra Core and private ALLYK remain separate repositories, each with its
+own existing checkout; this rule does not authorize merging their contents.
+
+Only one task may edit a given checkout at a time. Before editing, establish
+which task owns the active item; a clean Git status alone does not prove another
+task is idle. If another task is writing, wait for its handoff. Preserve its
+changes and never automatically stash, reset, clean, switch branches or stage
+unrelated files to make room. Inspect the diff and stage explicit owned paths.
+Finish the current checks/commit before handing the checkout to another task.
+Freeze source edits during verification; any observed source change invalidates
+the affected evidence and requires a rerun.
+
+Disposable build/mutation copies without Git metadata, isolated virtual
+environments and CI verification checkouts are permitted test infrastructure,
+not additional development worktrees. Keep them bounded and owned as described
+in section 5. Run them against a fixed candidate and never promote their edited
+files into the development checkout. The single-worktree rule does not waive
+independent installed-package checks or the required OS/Python matrix.
+
 1. Inspect repository status, instructions and current ledger. Preserve unrelated
    edits. Do not copy private ALLYK code into this public repository.
 2. Select the first NOT_STARTED item whose dependencies are VERIFIED; mark it

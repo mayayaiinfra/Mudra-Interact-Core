@@ -432,6 +432,14 @@ return through verification. Prerequisites must be VERIFIED; one active item.
 Code presence/test counts/model confidence never substitute for required proof.
 CLI may use a preliminary wheel in M2; only M3 proves full packaging/matrix.
 
+Use one existing development checkout per repository with one writing task at a
+time; do not create linked Git worktrees or additional development clones. Keep
+the public core and private ALLYK repositories separate. Coordinate checkout
+ownership before editing, preserve unrelated changes and freeze source edits
+during verification. Disposable owned test copies/virtual environments and CI
+verification checkouts remain required where applicable; they are not alternate
+development locations. Follow the single-worktree protocol in LUNA_HANDOFF.md.
+
 Luna must run separate adversarial self-review against the fixed acceptance
 oracle. Required skip/xfail/xpass, zero collection, missing IDs/tools/platforms,
 nonzero exit, timeout, stale results or absent artifacts prevent verification.
