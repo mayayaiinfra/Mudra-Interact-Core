@@ -18,9 +18,9 @@
   "review": {
     "scope": "MI-01 through MI-07 and M2 are verified; MI-08 distribution qualification is implemented with local E73-E84 proof, while the required cross-platform matrix remains open",
     "baseline_tests": "182 local tests passed on Windows CPython 3.14.2; no required skips or xfails",
-    "verification_claim": "M0, M1 and M2, plus MI-01 through MI-07, verified by fresh luna_self_verified receipts; MI-08 local qualification is pending its source-qualified receipt"
+    "verification_claim": "M0, M1 and M2, plus MI-01 through MI-08, verified by fresh luna_self_verified receipts; M3 remains open for the required runner matrix"
   },
-  "active_item": "MI-08",
+  "active_item": "MI-09",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -78,8 +78,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-mi07.json",
-          "sha256": "c516f7c384eae6879516ae857b1695397785d5e15892fbf736456aeab27e7fa8"
+          "path": "evidence/local/M0-mi08.json",
+          "sha256": "d1b9555ebea50730f4f3e20310f762bed3654e1c00fb615de7593ff141441530"
         }
       ]
     },
@@ -96,8 +96,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-mi07.json",
-          "sha256": "bd4dc287575bf053cc087135c30cca902b5f04f460fc58e71751b845a7f1cbb9"
+          "path": "evidence/local/M1-mi08.json",
+          "sha256": "803e4bf6aa95df14a9701fa3452e5e6a764586c3dbd84a1677673e3d2cc05ceb"
         }
       ]
     },
@@ -114,8 +114,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2.json",
-          "sha256": "ed25d9b28c82cd5a82cbdf0a7bad4e60f6c50e0a9095e1f021e2d6be65d90c28"
+          "path": "evidence/local/M2-mi08.json",
+          "sha256": "9983e8e585bd4958146f64883eead1b99c09235d93d77b57ae28dce42b75da00"
         }
       ]
     },
@@ -186,8 +186,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-01-mi07.json",
-          "sha256": "360b6635e5d103419b4bea0116ec57f75c7fe150bccf1706dedc5dd3266ee350"
+          "path": "evidence/local/MI-01-mi08.json",
+          "sha256": "6e76e04b3d763bcfe36c57211a11195e5a2fa4154145cf84abfab90d328b2375"
         }
       ],
       "blocker": null
@@ -224,8 +224,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-02-mi07.json",
-          "sha256": "282aa7c8e069f1abf8dd41deffb1d10e573eee1f1922a3bc3935d82f761177a6"
+          "path": "evidence/local/MI-02-mi08.json",
+          "sha256": "38395ddc4c32c8e55e22c976e57b11e6cab22f29174298e76a38b79b82395b94"
         }
       ],
       "blocker": null
@@ -257,8 +257,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-03-mi07.json",
-          "sha256": "d3ee2628811e22ef4650c547b5ece8b917eb9d959810cd6866b67ea4f15c81de"
+          "path": "evidence/local/MI-03-mi08.json",
+          "sha256": "f7fea5bbb25421ec560aef11bcc463dc02a5770685ad7af16dda2cfac937cc66"
         }
       ],
       "blocker": null
@@ -300,8 +300,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-04-mi07.json",
-          "sha256": "ec5dbe4e899f7dfa5aa1b22d5d95a85836b09d65d3d7353fbcf75b4b15bdece0"
+          "path": "evidence/local/MI-04-mi08.json",
+          "sha256": "89f1a319bfc2b5cc95262274ec5919de34d09f340fce2c0c5ff983224cc7753d"
         }
       ],
       "blocker": null
@@ -339,8 +339,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-05-mi07.json",
-          "sha256": "a5e62a93dd6b7e13e1ddaf96ae99a5f47478de0f0707efde55644c124dafffa3"
+          "path": "evidence/local/MI-05-mi08.json",
+          "sha256": "6c485e17a414ce4c73c00c1d056e734abab787dc373ad72365b765901dd03b3e"
         }
       ],
       "blocker": null
@@ -372,8 +372,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-06-mi07.json",
-          "sha256": "9d80c21db1e5fc6947c4f66b435f09adf84078d95d362acbcf2ac5e03b65f5bb"
+          "path": "evidence/local/MI-06-mi08.json",
+          "sha256": "142c8cc6c84e0c3ea4348ffb2e015c1175f9a80f85f337129fa226d09d95d3c2"
         }
       ],
       "blocker": null
@@ -415,8 +415,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-07.json",
-          "sha256": "f88b4fab829a7984729b259ebd1192e7128a782738c4a9dc1376cea0f76927d8"
+          "path": "evidence/local/MI-07-mi08.json",
+          "sha256": "c7baa600ae2e29bf41c49b891c9de4131526c47d5f53d429ccf09d0ef060b875"
         }
       ],
       "blocker": null
@@ -452,9 +452,14 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-08-mi08.json",
+          "sha256": "ab282674aa441ebae7a63a333d2947a37308b210b240bd7388143a4a12c0dfee"
+        }
+      ],
       "blocker": null
     },
     {
@@ -477,7 +482,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "blocker": null
