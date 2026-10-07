@@ -233,6 +233,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
         1,
     )[1].split("\n      - name:", 1)[0]
     assert "permissions:\n  contents: read" in workflow
+    assert "workflow_dispatch:" in workflow
+    assert "if: github.event_name != 'workflow_dispatch'" in workflow
+    assert "if: github.event_name == 'workflow_dispatch'" in workflow
     assert "timeout-minutes: 20" in workflow
     assert 'python -m venv "$RUNNER_TEMP/mudra-verifier"' in workflow
     assert "Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'" in workflow
@@ -246,7 +249,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert re.search(r"actions/checkout@[0-9a-f]{40}", workflow)
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow
-    assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 8
+    matrix_block = workflow.split("      matrix:\n", 1)[1].split("    steps:\n", 1)[0]
+    assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", matrix_block)) == 8
+    assert "python-version: '3.14'" in workflow.split("  m3-gate:\n", 1)[1]
     assert "macos-" not in workflow
     assert "sudo unshare --net" in workflow
     assert 'runuser_path="$(command -v runuser)"' in workflow
@@ -261,6 +266,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "MUDRA_CI_RECEIPT_JSON" in workflow
     assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow
     assert "--acceptance-report=" in workflow
+    assert "tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json" in workflow
+    assert "MUDRA_M3_CI_REPORT_JSON" in workflow
+    assert "MUDRA_M3_CI_ARTIFACT_BASE64_JSON" in workflow
 
 
 @pytest.mark.acceptance("E84")

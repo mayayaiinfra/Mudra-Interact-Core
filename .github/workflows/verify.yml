@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -14,6 +15,7 @@ concurrency:
 
 jobs:
   acceptance:
+    if: github.event_name != 'workflow_dispatch'
     name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
@@ -170,3 +172,76 @@ jobs:
           if ($env:MUDRA_FIREWALL_RULE_NAME) {
             Remove-NetFirewallRule -PolicyStore PersistentStore -Name $env:MUDRA_FIREWALL_RULE_NAME -ErrorAction SilentlyContinue
           }
+
+  m3-gate:
+    if: github.event_name == 'workflow_dispatch'
+    name: M3 full acceptance gate / Ubuntu 24.04
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out source and committed prerequisite evidence
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: '3.14'
+      - name: Create isolated verifier environment
+        shell: bash
+        run: python -m venv "$RUNNER_TEMP/mudra-verifier"
+      - name: Install and validate locked verification tools
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --require-hashes --no-deps -r requirements-dev.lock
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --no-deps --no-build-isolation .
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check
+      - name: Run the complete M3 gate in an isolated network namespace
+        shell: bash
+        env:
+          PIP_NO_INDEX: '1'
+          PYTHONNOUSERSITE: '1'
+        run: |
+          runner_user="$USER"
+          python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
+          runuser_path="$(command -v runuser)"
+          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json
+      - name: Record sanitized M3 gate report and acceptance artifacts
+        if: always()
+        shell: bash
+        run: |
+          if [ ! -f evidence/local/M3-ci.json ]; then
+            echo 'MUDRA_M3_CI_REPORT_JSON=missing'
+            exit 0
+          fi
+          python - <<'PY'
+          import base64
+          import hashlib
+          import json
+          from pathlib import Path
+
+          report_path = Path('evidence/local/M3-ci.json')
+          report = json.loads(report_path.read_text(encoding='utf-8'))
+          print('MUDRA_M3_CI_REPORT_JSON=' + json.dumps(report, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+          recorded_paths = set()
+          for artifact in report.get('artifacts', []):
+              relative = Path(artifact['path'])
+              data = relative.read_bytes()
+              if hashlib.sha256(data).hexdigest() != artifact['sha256'] or len(data) != artifact['size_bytes']:
+                  raise SystemExit('M3 acceptance artifact digest mismatch')
+              payload = {'path': relative.as_posix(), 'sha256': artifact['sha256'], 'data_base64': base64.b64encode(data).decode('ascii')}
+              print('MUDRA_M3_CI_ARTIFACT_BASE64_JSON=' + json.dumps(payload, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+              recorded_paths.add(relative.as_posix())
+          for command in report.get('commands', []):
+              for argument in command.get('argv', []):
+                  prefix = '--acceptance-report='
+                  if not isinstance(argument, str) or not argument.startswith(prefix):
+                      continue
+                  relative = Path(argument[len(prefix):])
+                  if relative.is_absolute() or '..' in relative.parts:
+                      raise SystemExit('unsafe M3 pytest report path')
+                  if relative.as_posix() in recorded_paths or not relative.is_file():
+                      continue
+                  data = relative.read_bytes()
+                  payload = {'path': relative.as_posix(), 'sha256': hashlib.sha256(data).hexdigest(), 'data_base64': base64.b64encode(data).decode('ascii')}
+                  print('MUDRA_M3_CI_ARTIFACT_BASE64_JSON=' + json.dumps(payload, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+                  recorded_paths.add(relative.as_posix())
+          PY

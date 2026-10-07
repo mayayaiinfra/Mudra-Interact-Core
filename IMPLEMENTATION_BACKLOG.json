@@ -18,7 +18,7 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
-    "verification_claim": "MI-08 is IN_PROGRESS. A local Windows probe across CPython 3.11-3.14 showed the venv Scripts\\python.exe launcher differs from the base python.exe image reported by GetModuleFileNameW; the workflow and verifier target the native image while confirming acceptance still runs inside the isolated venv. The d3cd606 hosted run exposed two setup defects, both fixed: Windows had enabled PIP_NO_INDEX before hash-locked tools were installed, and prerequisite evidence was absent from clean checkouts. The d380150 run confirmed Windows tool installation and firewall setup, then found missing pytest artifacts referenced by fresh gate receipts. M0/M1/M2/MI-09 reports and their pytest artifacts are now committed. Local preflight validates all evidence bundles and MI-08 dependencies. Fresh current-tree receipts for M0 (23/23), M1 (120/120), M2 (165/165 including mutation checks), and MI-09 (5/5) are present. No MI-08 platform receipt is complete yet; the eight-cell matrix is next. M4 remains NOT_STARTED."
+    "verification_claim": "The Windows verifier originally reported the venv launcher from sys.executable while the OS process image was the base python.exe. MI-08 now scopes its firewall proof to the native GetModuleFileNameW image and separately proves pytest remains in the isolated venv. A full M3 workflow_dispatch job was added so the aggregate gate can run under a hosted Linux network namespace without local elevation. M0, M1 and M2 were freshly reverified on the updated source tree (M2 includes its semantic mutation checks). Fresh eight-cell MI-08 receipts and the complete M3 gate remain to be regenerated on this source tree; M4 remains NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-windows-3.14-b20b817.json",
-          "sha256": "e18b7d064c31038963cac62abd8c75856a473af984984acb6136dd2e05f3ec26"
+          "path": "evidence/local/M0-current-m3ci.json",
+          "sha256": "b541fa3248dc46dfe368a98efd2068ce731a819f269b2e01bd8cf76b1ddb9ba9"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -93,8 +93,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-windows-3.14-46392cb.json",
-          "sha256": "e49c9384e5dbffad2f47df2bc48db140251bb44126ef35a5df44929b80c3ba6e"
+          "path": "evidence/local/M1-current-m3ci.json",
+          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
-          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
+          "path": "evidence/local/M2-current-m3ci-check.json",
+          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -187,8 +187,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-windows-3.14-b20b817.json",
-          "sha256": "e18b7d064c31038963cac62abd8c75856a473af984984acb6136dd2e05f3ec26"
+          "path": "evidence/local/M0-current-m3ci.json",
+          "sha256": "b541fa3248dc46dfe368a98efd2068ce731a819f269b2e01bd8cf76b1ddb9ba9"
         }
       ],
       "blocker": null
@@ -225,8 +225,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-windows-3.14-46392cb.json",
-          "sha256": "e49c9384e5dbffad2f47df2bc48db140251bb44126ef35a5df44929b80c3ba6e"
+          "path": "evidence/local/M1-current-m3ci.json",
+          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
         }
       ],
       "blocker": null
@@ -258,8 +258,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-windows-3.14-46392cb.json",
-          "sha256": "e49c9384e5dbffad2f47df2bc48db140251bb44126ef35a5df44929b80c3ba6e"
+          "path": "evidence/local/M1-current-m3ci.json",
+          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
         }
       ],
       "blocker": null
@@ -301,8 +301,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-windows-3.14-46392cb.json",
-          "sha256": "e49c9384e5dbffad2f47df2bc48db140251bb44126ef35a5df44929b80c3ba6e"
+          "path": "evidence/local/M1-current-m3ci.json",
+          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
         }
       ],
       "blocker": null
@@ -340,8 +340,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
-          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
+          "path": "evidence/local/M2-current-m3ci-check.json",
+          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
         }
       ],
       "blocker": null
@@ -373,8 +373,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
-          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
+          "path": "evidence/local/M2-current-m3ci-check.json",
+          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
         }
       ],
       "blocker": null
@@ -416,8 +416,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
-          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
+          "path": "evidence/local/M2-current-m3ci-check.json",
+          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
         }
       ],
       "blocker": null
