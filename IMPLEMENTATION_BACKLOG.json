@@ -3,7 +3,7 @@
   "specification_version": "0.2",
   "reviewed_on": "2026-10-06",
   "baseline_commit": "eae92b7",
-  "implementation_started": false,
+  "implementation_started": true,
   "target": {
     "package": "mudra-interact-core",
     "package_version": "0.2.0",
@@ -20,7 +20,7 @@
     "baseline_tests": "5 legacy tests and licence checker passed; reproduced defects remain",
     "verification_claim": "No implementation gate verified"
   },
-  "active_item": null,
+  "active_item": "MI-01",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -167,7 +167,7 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "blocker": null

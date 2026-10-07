@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0.0",
+  "event_id": "123e4567-e89b-42d3-a456-426614174001",
+  "occurred_at": "2026-10-06T12:30:45.123456Z",
+  "sender": "human",
+  "recipient": "agent",
+  "direction": "human_to_agent",
+  "privacy_mode": "event_only",
+  "consent_confirmed": true,
+  "participant_confirmed": true,
+  "conversation_id": null,
+  "project_id": null,
+  "recognition": {
+    "gesture_id": "contact_thumb_index",
+    "confidence": 0.72,
+    "state": "stable",
+    "method": "contact_rules_v2",
+    "catalog_version": "2.0.0",
+    "observation_codes": ["thumb_index_contact"],
+    "uncertainty_codes": ["posture_unverified"]
+  },
+  "raw_media_included": false,
+  "raw_landmarks_included": false
+}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mudra-interact-core"
-version = "0.1.0"
+version = "0.2.0"
 description = "Apache-2.0 landmark protocol and conservative Mudra interaction recognizer"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
@@ -21,4 +21,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-mudra_interact_core = ["catalog/*.json"]
+mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json"]
+
+[tool.pytest.ini_options]
+markers = ["acceptance(case_id): required Mudra contract or verification case"]

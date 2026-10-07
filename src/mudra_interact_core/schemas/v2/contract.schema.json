@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:allyk:mudra-interact-core:contract:2.0.0",
+  "$comment": "The single normative schema source. Consumers select a local fragment such as #/$defs/Frame. Runtime contract checks add semantic invariants beyond JSON Schema.",
+  "$defs": {
+    "Landmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": {"type": "number", "minimum": -16, "maximum": 16},
+        "y": {"type": "number", "minimum": -16, "maximum": 16},
+        "z": {"type": "number", "minimum": -16, "maximum": 16}
+      }
+    },
+    "Frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "stream_id", "frame_id", "monotonic_ms", "coordinate_space", "landmarks"],
+      "properties": {
+        "schema_version": {"const": "2.0.0"},
+        "stream_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "frame_id": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+        "monotonic_ms": {"type": "integer", "minimum": 0, "maximum": 9007199254740991},
+        "coordinate_space": {"enum": ["cartesian_relative_v1", "mediapipe_image_v1"]},
+        "image_width": {"type": "integer", "minimum": 1, "maximum": 16384},
+        "image_height": {"type": "integer", "minimum": 1, "maximum": 16384},
+        "landmarks": {"type": "array", "minItems": 21, "maxItems": 21, "items": {"$ref": "#/$defs/Landmark"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"coordinate_space": {"const": "cartesian_relative_v1"}}, "required": ["coordinate_space"]},
+          "then": {"not": {"anyOf": [{"required": ["image_width"]}, {"required": ["image_height"]}]}}
+        },
+        {
+          "if": {"properties": {"coordinate_space": {"const": "mediapipe_image_v1"}}, "required": ["coordinate_space"]},
+          "then": {"required": ["image_width", "image_height"]}
+        }
+      ]
+    },
+    "Recognition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gesture_id", "confidence", "state", "method", "catalog_version", "observation_codes", "uncertainty_codes"],
+      "properties": {
+        "gesture_id": {"enum": ["unknown", "contact_thumb_index", "contact_thumb_middle", "contact_thumb_ring", "contact_thumb_middle_ring"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "state": {"enum": ["candidate", "stable", "uncertain"]},
+        "method": {"const": "contact_rules_v2"},
+        "catalog_version": {"const": "2.0.0"},
+        "observation_codes": {
+          "type": "array", "maxItems": 8, "uniqueItems": true,
+          "items": {"enum": ["thumb_index_contact", "thumb_middle_contact", "thumb_ring_contact"]}
+        },
+        "uncertainty_codes": {
+          "type": "array", "maxItems": 8, "uniqueItems": true,
+          "items": {"enum": ["unsupported_pattern", "ambiguous_contacts", "posture_unverified", "low_confidence", "insufficient_frames", "hold_incomplete", "frame_gap", "gesture_changed"]}
+        }
+      }
+    },
+    "Event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "event_id", "occurred_at", "sender", "recipient", "direction", "privacy_mode", "consent_confirmed", "participant_confirmed", "conversation_id", "project_id", "recognition", "raw_media_included", "raw_landmarks_included"],
+      "properties": {
+        "schema_version": {"const": "2.0.0"},
+        "event_id": {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+        "occurred_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$"},
+        "sender": {"enum": ["human", "agent"]},
+        "recipient": {"enum": ["human", "agent"]},
+        "direction": {"enum": ["human_to_human", "human_to_agent", "agent_to_human", "agent_to_agent"]},
+        "privacy_mode": {"const": "event_only"},
+        "consent_confirmed": {"const": true},
+        "participant_confirmed": {"const": true},
+        "conversation_id": {"anyOf": [{"type": "null"}, {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}]},
+        "project_id": {"anyOf": [{"type": "null"}, {"type": "string", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}]},
+        "recognition": {"$ref": "#/$defs/Recognition"},
+        "raw_media_included": {"const": false},
+        "raw_landmarks_included": {"const": false}
+      }
+    },
+    "CatalogueEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gesture_id", "display_name", "contact_pattern", "confidence", "limitations", "provenance"],
+      "properties": {
+        "gesture_id": {"enum": ["contact_thumb_index", "contact_thumb_middle", "contact_thumb_ring", "contact_thumb_middle_ring"]},
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 80},
+        "contact_pattern": {"enum": ["I", "M", "R", "M+R"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "limitations": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"type": "string", "minLength": 1, "maxLength": 240}},
+        "provenance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "reference", "content_license"],
+          "properties": {
+            "status": {"enum": ["specification_source", "unverified_historical_alias"]},
+            "reference": {"type": "string", "minLength": 1, "maxLength": 240},
+            "content_license": {"type": "string", "minLength": 1, "maxLength": 80}
+          }
+        }
+      }
+    },
+    "Catalogue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["catalog_version", "entries"],
+      "properties": {
+        "catalog_version": {"const": "2.0.0"},
+        "entries": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/CatalogueEntry"}}
+      }
+    },
+    "Batch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "frames"],
+      "properties": {
+        "schema_version": {"const": "2.0.0"},
+        "frames": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/Frame"}}
+      }
+    },
+    "LocalReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "recognition", "reason_code"],
+      "properties": {
+        "schema_version": {"const": "2.0.0"},
+        "recognition": {"$ref": "#/$defs/Recognition"},
+        "reason_code": {"anyOf": [{"type": "null"}, {"enum": ["unsupported_pattern", "ambiguous_contacts", "insufficient_frames", "hold_incomplete", "low_confidence", "frame_gap", "gesture_changed"]}]}
+      }
+    }
+  }
+}

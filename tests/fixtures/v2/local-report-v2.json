@@ -1,0 +1,13 @@
+{
+  "schema_version": "2.0.0",
+  "recognition": {
+    "gesture_id": "contact_thumb_index",
+    "confidence": 0.72,
+    "state": "candidate",
+    "method": "contact_rules_v2",
+    "catalog_version": "2.0.0",
+    "observation_codes": ["thumb_index_contact"],
+    "uncertainty_codes": ["posture_unverified"]
+  },
+  "reason_code": "insufficient_frames"
+}

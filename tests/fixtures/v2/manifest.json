@@ -1,0 +1,144 @@
+{
+  "manifest_version": 1,
+  "origin": "synthetic",
+  "fixtures": [
+    {
+      "fixture_id": "v2-frame-cartesian-one-hand",
+      "path": "frame-v2.json",
+      "sha256": "ff9ef7bc0f0a0e16ee42a203a9247779674b5232443e49a9bccfdb0575117bf4",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "Frame",
+        "expected_fields": [
+          "schema_version",
+          "stream_id",
+          "frame_id",
+          "monotonic_ms",
+          "coordinate_space",
+          "landmarks"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v2-recognition-supported-stable",
+      "path": "recognition-v2.json",
+      "sha256": "36da41a35f9a59bdab7812c84c170985ee38048d3e06ed00a4bc00af0d90c92b",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "Recognition",
+        "expected_fields": [
+          "gesture_id",
+          "confidence",
+          "state",
+          "method",
+          "catalog_version",
+          "observation_codes",
+          "uncertainty_codes"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v2-event-confirmed-human-to-agent",
+      "path": "event-v2.json",
+      "sha256": "4f9153128eb5c1bcc1dd657aadd3a818a0869eed50d6a7832214e42366f771fd",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "Event",
+        "expected_fields": [
+          "schema_version",
+          "event_id",
+          "occurred_at",
+          "sender",
+          "recipient",
+          "direction",
+          "privacy_mode",
+          "consent_confirmed",
+          "participant_confirmed",
+          "conversation_id",
+          "project_id",
+          "recognition",
+          "raw_media_included",
+          "raw_landmarks_included"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v2-neutral-catalogue-four-rules",
+      "path": "catalogue-v2.json",
+      "sha256": "b67113d7c4ade5f6060e34313c1b61d178a0bc03423631963baa011dfe17da36",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "Catalogue",
+        "expected_fields": [
+          "catalog_version",
+          "entries"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v2-single-stream-frame-batch",
+      "path": "batch-v2.json",
+      "sha256": "804a37ac7756e21f2837ee4c62985956200141e36f0be3c21cef1e30f2f280fe",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "Batch",
+        "expected_fields": [
+          "schema_version",
+          "frames"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v2-local-candidate-report",
+      "path": "local-report-v2.json",
+      "sha256": "21dddd76c491d0823c62992298b4e1d53b0d3fac3eac2acf96d87e8f44d91136",
+      "case_id": "E01",
+      "expected": {
+        "outcome": "valid",
+        "schema": "LocalReport",
+        "expected_fields": [
+          "schema_version",
+          "recognition",
+          "reason_code"
+        ]
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "v1-event-inspection-only",
+      "path": "event-v1-inspection.json",
+      "sha256": "09ec033953bb4b1962ccd4fb07e3852a65e8f38b79fc05c6ca415af27e7fca6f",
+      "case_id": "E03",
+      "expected": {
+        "outcome": "invalid",
+        "schema": "Event",
+        "expected_fields": [],
+        "expected_error": "unsupported_version"
+      },
+      "origin": "synthetic"
+    },
+    {
+      "fixture_id": "future-event-version-2-1",
+      "path": "event-unknown-version.json",
+      "sha256": "b51d22c8c5cd634000eb24d9f21c6cb2fcb3d3173171b202441f2180649fc587",
+      "case_id": "E03",
+      "expected": {
+        "outcome": "invalid",
+        "schema": "Event",
+        "expected_fields": [],
+        "expected_error": "unsupported_version"
+      },
+      "origin": "synthetic"
+    }
+  ]
+}

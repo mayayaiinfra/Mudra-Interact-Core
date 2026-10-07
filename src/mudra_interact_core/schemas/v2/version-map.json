@@ -1,0 +1,10 @@
+{
+  "package_version": "0.2.0",
+  "protocol_version": "2.0.0",
+  "catalog_version": "2.0.0",
+  "event_schema_versions": {
+    "1.0": {"v2_import": false, "handling": "inspection_and_manual_migration_only"},
+    "2.0.0": {"v2_import": true, "handling": "supported"}
+  },
+  "unsupported_version_policy": "reject_without_coercion_or_authority_migration"
+}

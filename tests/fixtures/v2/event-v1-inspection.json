@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "event_id": "synthetic-v1-event",
+  "consent_confirmed": true,
+  "migration_fixture_only": true
+}
