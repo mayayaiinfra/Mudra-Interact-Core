@@ -433,7 +433,10 @@ exit 3
             stderr=subprocess.DEVNULL,
             env=env,
             check=False,
-            timeout=8,
+            # Windows PowerShell startup is several seconds under concurrent
+            # matrix load; keep the lookup below the job timeout without
+            # treating a slow shell launch as missing firewall isolation.
+            timeout=30,
         )
     except (OSError, subprocess.TimeoutExpired):
         return False
