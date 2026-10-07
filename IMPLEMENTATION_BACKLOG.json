@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; the current-source MI-08 platform matrix is being regenerated after the M3 workflow history-validation correction.",
-    "verification_claim": "The full M3 hosted gate correctly rejected its first dispatch because the shallow checkout could not establish ancestry for the committed matrix. The workflow now fetches full history for this check. M0, M1 and M2 have been freshly reverified on the corrected source tree; the eight-cell MI-08 matrix and full M3 gate must be regenerated on this tree. M4 remains NOT_STARTED."
+    "baseline_tests": "Corrected current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; hosted MI-08 matrix 8/8 on Linux/Windows x86_64 × CPython 3.11-3.14.",
+    "verification_claim": "The first M3 workflow_dispatch preflight failed closed because actions/checkout fetch-depth 1 did not provide the prior candidate commit needed to prove receipt ancestry. The M3 job now fetches full Git history. The corrected source-tree hosted matrix run 37641574629 passed all eight cells; receipts and linked pytest reports are hash-validated, and the strict aggregator reports 8/8 VERIFIED. The full M3 gate via workflow_dispatch is next; M4 remains NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
