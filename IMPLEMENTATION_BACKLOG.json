@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M1 now have current-source receipts after the offline package-install fix: 23/23 M0 executions and 120/120 M1 dependency-closure executions passed. M2 is next; MI-08 remains active for the hosted matrix.",
-    "baseline_tests": "Current-source M0: 23/23; M1 dependency closure: 120/120. Focused Windows E52/E79/E84: 3/3; focused Linux E52/E79/E84: 3/3; clean verifier pip check and actionlint passed.",
-    "verification_claim": "M0-M1 and MI-01-04 have current luna_self_verified receipts. M2 and MI-05-07/MI-09 are being refreshed next; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M2 requalification now passes the console-entrypoint case but exposed E53 pip build isolation attempting an index download for setuptools. E53 now builds with the already locked verifier toolchain and disables package-index access. Requalify M0-M2 before the hosted matrix.",
+    "baseline_tests": "Current-source E53 offline wheel build passed on Windows (1/1) and Linux CPython 3.11 (1/1); focused E52/E79/E84 passed on both platforms; clean verifier pip check and actionlint passed. Full M0-M2 gates are being rerun after these test changes.",
+    "verification_claim": "M0-M2 receipts must be refreshed for the latest source identity. MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [

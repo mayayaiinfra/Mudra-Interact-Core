@@ -240,14 +240,16 @@ def test_module_entrypoint_shorthand_help_and_version_parity(tmp_path: Path) -> 
 def test_preliminary_wheel_owns_imports_outside_checkout(tmp_path: Path) -> None:
     wheel_dir = tmp_path / "wheel"
     wheel_dir.mkdir()
-    built = subprocess.run([sys.executable, "-m", "pip", "wheel", "--no-deps", str(ROOT), "--wheel-dir", str(wheel_dir)], cwd=ROOT, capture_output=True, text=True, check=False)
+    environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
+    environment["PIP_NO_INDEX"] = "1"
+    environment["PYTHONNOUSERSITE"] = "1"
+    built = subprocess.run([sys.executable, "-m", "pip", "wheel", "--no-deps", "--no-build-isolation", str(ROOT), "--wheel-dir", str(wheel_dir)], cwd=ROOT, env=environment, capture_output=True, text=True, check=False)
     assert built.returncode == 0, built.stderr[-500:]
     wheels = sorted(wheel_dir.glob("*.whl"))
     assert len(wheels) == 1
     target = tmp_path / "installed"
     venv.EnvBuilder(with_pip=True, clear=True).create(target)
     python = target / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
-    environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
     installed = subprocess.run([str(python), "-m", "pip", "install", "--no-index", "--no-deps", str(wheels[0])], cwd=tmp_path, env=environment, capture_output=True, text=True, check=False)
     assert installed.returncode == 0, installed.stderr[-500:]
     probe = subprocess.run([str(python), "-c", "import mudra_interact_core; print(mudra_interact_core.__file__)"], cwd=tmp_path, env=environment, capture_output=True, text=True, check=False)
