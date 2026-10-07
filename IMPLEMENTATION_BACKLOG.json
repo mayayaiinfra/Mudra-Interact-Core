@@ -456,9 +456,42 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/linux-x86_64-py3.11.json",
+          "sha256": "8fe5ad1ae26e4a728d4c75380a902fd9272a81f57f51f80be069aac48fd8cf43"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/linux-x86_64-py3.12.json",
+          "sha256": "b88222d207e2f2fcbb43146ffc408a3c922f9ca2d65b8b9b0cb81d0d09256925"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/linux-x86_64-py3.13.json",
+          "sha256": "d3f1a64da34c0dd6556a2d637e442406c594e47ebddd6073f19caae983e1ee96"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/linux-x86_64-py3.14.json",
+          "sha256": "4bbec952d9e61104f482096520732da02695921b4508c595d6648fcd5c8bc3bd"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/windows-x86_64-py3.11.json",
+          "sha256": "f1f225bf152c2fcdefe3604ba3c671f6bd96e8164c49f8748de14207eb67dfed"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/windows-x86_64-py3.12.json",
+          "sha256": "ea7507168631047c2db28f1df04d26b6eff276dd860d7b95d0da1d92a096249e"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/windows-x86_64-py3.13.json",
+          "sha256": "52745e10e9372d4d8e2c893e157beb4b95afcacbad32da9b59197910ebf031a0"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/m4-58d1b2e/windows-x86_64-py3.14.json",
+          "sha256": "3e22ace2c7ff3d7eb9443e742c7aaa5e1ea0509cec56032ae4e0ed6a5e517526"
+        }
+      ],
       "blocker": null
     },
     {
@@ -481,9 +514,14 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "IMPLEMENTED",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-09-m4.json",
+          "sha256": "672dc6b5dc2fdb80706ad7117123567e90f62a1a80eda2d4a419953d29fad405"
+        }
+      ],
       "blocker": null
     },
     {
