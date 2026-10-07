@@ -41,14 +41,29 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-      - name: Install locked verification tools
-        run: python -m pip install --require-hashes --no-deps -r requirements-dev.lock
+      - name: Create isolated verifier environment
+        run: python -m venv .mudra-verifier
+      - name: Install and validate locked verification tools
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          .mudra-verifier/bin/python -m pip install --require-hashes --no-deps -r requirements-dev.lock
+          .mudra-verifier/bin/python -m pip check
+      - name: Install and validate locked verification tools
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $python = Join-Path $PWD '.mudra-verifier/Scripts/python.exe'
+          & $python -m pip install --require-hashes --no-deps -r requirements-dev.lock
+          if ($LASTEXITCODE -ne 0) { throw 'locked verifier install failed' }
+          & $python -m pip check
+          if ($LASTEXITCODE -ne 0) { throw 'locked verifier dependency check failed' }
       - name: Block outbound networking for the Python process
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $python = (Get-Command python).Source
+          $python = Join-Path $PWD '.mudra-verifier/Scripts/python.exe'
           $name = "Mudra-MI08-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           "MUDRA_FIREWALL_RULE_NAME=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           New-NetFirewallRule -Name $name -DisplayName $name -Direction Outbound -Action Block -Program $python -RemoteAddress Any -Profile Any -Enabled True | Out-Null
@@ -64,15 +79,15 @@ jobs:
           case "$RUNNER_OS" in
             Linux)
               runner_user="$USER"
-              python_path="$(command -v python)"
+              python_path="$GITHUB_WORKSPACE/.mudra-verifier/bin/python"
               runuser_path="$(command -v runuser)"
               sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             Windows)
-              python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+              .mudra-verifier/Scripts/python.exe tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             macOS)
-              sandbox-exec -p '(version 1)(allow default)(deny network*)' python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+              sandbox-exec -p '(version 1)(allow default)(deny network*)' .mudra-verifier/bin/python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             *)
               echo "Unsupported runner OS: $RUNNER_OS" >&2

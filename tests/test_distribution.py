@@ -166,6 +166,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     workflow = (ROOT / ".github" / "workflows" / "verify.yml").read_text(encoding="utf-8")
     assert "permissions:\n  contents: read" in workflow
     assert "timeout-minutes: 20" in workflow
+    assert "python -m venv .mudra-verifier" in workflow
+    assert "python -m pip check" in workflow
+    assert "--require-hashes --no-deps -r requirements-dev.lock" in workflow
     assert re.search(r"actions/checkout@[0-9a-f]{40}", workflow)
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow
@@ -176,6 +179,20 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "sandbox-exec" in workflow
     assert "MUDRA_CI_RECEIPT_JSON" in workflow
     assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow
+
+
+@pytest.mark.acceptance("E84")
+def test_locked_verifier_environment_has_complete_dependencies() -> None:
+    completed = subprocess.run(
+        [sys.executable, "-m", "pip", "check"],
+        cwd=ROOT,
+        env={**os.environ, "PYTHONNOUSERSITE": "1"},
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        timeout=60,
+    )
+    assert completed.returncode == 0, completed.stdout
 
 
 @pytest.mark.acceptance("E80")

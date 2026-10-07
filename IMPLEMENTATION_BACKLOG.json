@@ -16,11 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "MI-01 through MI-09 and M2 are locally self-verified; M3 aggregate acceptance is complete but blocked by the required cross-platform release qualification",
-    "baseline_tests": "187 local tests passed on Windows CPython 3.14.2; no required skips or xfails",
-    "verification_claim": "M0, M1 and M2, plus MI-01 through MI-09, verified by fresh luna_self_verified receipts; M3 is BLOCKED by 11 missing cells and runner network isolation"
+    "scope": "M0-M2 and MI-01 through MI-09 passed on the previous source identity. MI-08/M3 are IN_PROGRESS after fixing the omitted locked Python 3.11 verifier dependency; current-source receipts and the 12-cell matrix are being regenerated.",
+    "baseline_tests": "Current clean Linux CPython 3.11 distribution suite: 14 passed; focused Windows checks: 3 passed; combined M3 gate and fresh cross-platform matrix pending.",
+    "verification_claim": "Prior M0-M2 and MI-01 through MI-09 receipts are historical until refreshed against the current source identity. MI-08/M3 are not yet VERIFIED; a previous 12/12 matrix is stale after the lock/workflow correction."
   },
-  "active_item": null,
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -131,18 +131,8 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "BLOCKED",
-      "evidence": [],
-      "blocker": {
-        "code": "required_platform_matrix_unavailable",
-        "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
-        "qualification_report_sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e",
-        "verified_cells": 1,
-        "required_cells": 12,
-        "missing_cells": 11,
-        "network_isolation": "linux_network_namespace_verified; hosted_cells_pending",
-        "unblock": "Collect current-source isolated receipts for Linux x86_64 Python 3.12-3.14, Windows x86_64 Python 3.11-3.14, and macOS arm64 Python 3.11-3.14."
-      }
+      "state": "IN_PROGRESS",
+      "evidence": []
     },
     {
       "id": "M4",
@@ -466,24 +456,10 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "BLOCKED",
+      "state": "IN_PROGRESS",
       "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/MI-08-linux-local-smoke.json",
-          "sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e"
-        }
-      ],
-      "blocker": {
-        "code": "required_platform_matrix_unavailable",
-        "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
-        "qualification_report_sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e",
-        "verified_cells": 1,
-        "required_cells": 12,
-        "missing_cells": 11,
-        "network_isolation": "linux_network_namespace_verified; hosted_cells_pending",
-        "unblock": "Collect current-source isolated receipts for Linux x86_64 Python 3.12-3.14, Windows x86_64 Python 3.11-3.14, and macOS arm64 Python 3.11-3.14."
-      }
+      "evidence": [],
+      "blocker": null
     },
     {
       "id": "MI-09",

@@ -3,7 +3,12 @@
 Read in order: [specification](../MUDRA_INTERACT_CORE_SPEC.md),
 [acceptance matrix](ACCEPTANCE.md), [ledger](../IMPLEMENTATION_BACKLOG.json).
 This is the end-to-end public core delivery contract. No runtime gate is verified
-at this handoff. The earlier five-test baseline is insufficient.
+at the original five-test baseline. As of 2026-10-07, MI-01 through MI-09 and
+M0-M2 had passed their recorded checks on an earlier source identity. The
+previous hosted matrix reached 12/12, but M3 had not closed because a clean
+Python 3.11 gate run exposed an omitted locked verifier dependency. MI-08/M3
+are being requalified after correcting the lock and isolating CI; the old matrix
+receipts do not prove the updated source. M4 remains pending.
 
 ## 1. Working protocol
 

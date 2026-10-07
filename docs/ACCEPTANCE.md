@@ -118,12 +118,12 @@ targets; files not present at baseline must be implemented before verification.
 | E76 | MI-08 / test_distribution.py | OS/runner isolation is observed (Linux: no default route plus denied connect; Windows: active interpreter-scoped outbound block plus denied connect; macOS: sandbox network denial), alongside the synthetic negative-egress probe; cold missing build dependency causes explicit setup failure. Missing isolation is not a pass. |
 | E77 | MI-08 / test_distribution.py | Two clean builds same environment produce same wheel/sdist hashes; any mismatch blocks, not normalize away unexplained content. |
 | E78 | MI-08 / test_distribution.py | Actual artifact SBOM/inventory/notices and independent hashes agree; no unexpected bundled model/key/cache/raw corpus. |
-| E79 | MI-08 / test_distribution.py | CI ignores no required failures, has pinned actions/timeouts/permissions and no secrets for untrusted PR execution. |
+| E79 | MI-08 / test_distribution.py | CI ignores no required failures, installs hash-pinned tools into an isolated environment with a clean dependency check, has pinned actions/timeouts/permissions and no secrets for untrusted PR execution. |
 | E80 | MI-08 / test_distribution.py | Stale source/tag/version/hash/evidence mismatch rejects release packet. |
 | E81 | MI-08 / test_distribution.py | Windows path/encoding and POSIX regular-file checks tested on actual respective OS; simulated platform strings don't qualify. |
 | E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue and module ownership stay consistent. |
 | E83 | MI-08 / test_distribution.py | Dependent ALLYK consumer compatibility inventory records upgrade risk without exporting private sources or assuming automatic upgrade. |
-| E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; text identity is stable across LF/CRLF checkouts while binary identity remains byte-exact; absent required artifact/tool/platform blocks aggregation. |
+| E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; the isolated verifier has a complete dependency closure; text identity is stable across LF/CRLF checkouts while binary identity remains byte-exact; absent required artifact/tool/platform blocks aggregation. |
 | E85 | MI-09 / test_adapter_contract.py | DESIGN specifies asset pin/hash/licence and absence of core camera dependency; no implementation status fabricated. |
 | E86 | MI-09 / test_adapter_contract.py | DESIGN state table covers start/deny/stop/revoke/late callback/device switch/hand loss/tab hide; queued result never silently accepted. |
 | E87 | MI-09 / test_adapter_contract.py | DESIGN defines track identity/aspect/mirror/clock and no duplicate-frame hold bypass. |
