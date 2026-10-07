@@ -17,10 +17,10 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current renamed-distribution source cda3e5c: M0 23/23, M1 120/120, M2 165/165 (including semantic mutations), and MI-09 5/5. MI-08 Windows firewall isolation rules are now unique per Python matrix cell; current-source platform matrix is being rerun.",
-    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M2 and MI-09 have fresh current-source receipts; the previous MI-08 matrix exposed a shared Windows firewall rule race, now fixed. The current-source MI-08 matrix and hosted M3 full gate remain in progress. M4 remains blocked until package ownership, Trusted Publishers, protected GitHub environments, and exact candidate/version authorization are established."
+    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 (including semantic mutations), MI-09 5/5, and the current-source MI-08 Linux/Windows × CPython 3.11-3.14 matrix 8/8 (17 accepted test nodes per cell). The hosted M3 full gate is next.",
+    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M2, MI-09 and all eight MI-08 platform cells now have current-source receipts. The M3 full hosted acceptance gate remains in progress. M4 remains blocked until package ownership, Trusted Publishers, protected GitHub environments, and exact candidate/version authorization are established."
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -455,9 +455,42 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.11.json",
+          "sha256": "78ec7b7222c20df24542133ee9f57de1d4132a828a0244e0c54ee6641ac2d2d0"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.12.json",
+          "sha256": "dbc1c3ccfb3316c17a31082f1d86f41911fcfe456d3bf18d298c68b00bf3da5e"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.13.json",
+          "sha256": "3a83929fa42eebfd2a9b8df2337adb6a4df0e19958b23e71d68b9ed8fb65e9a5"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.14.json",
+          "sha256": "195e96971c87e7a4412e11b49c0d9dfda0a442c30fe5745b9c792fd409f13f88"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.11.json",
+          "sha256": "4c9d688de768a745cfd71e3dcb0c33e81b18405cbdc08de74e4c2d1d9a68dd4f"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.12.json",
+          "sha256": "053af8ea92bd3b2375d629218dc9dec8776fc1bed9972a441efa135ce792fff4"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.13.json",
+          "sha256": "58eb2ef3ac952ed13543af2e4e48588f5b6465548fc9e09e247d8086fe2ffed2"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.14.json",
+          "sha256": "6bf00e4841eb003bb38970c80f6279925cc405fdcba1274b8fbdbbba0f1efd72"
+        }
+      ],
       "blocker": null
     },
     {
