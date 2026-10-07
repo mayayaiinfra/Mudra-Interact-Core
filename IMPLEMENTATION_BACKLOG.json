@@ -16,11 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The last hosted MI-08 matrix on 127ff06 passed 8/12 cells; all four Windows cells failed E76. The current Windows probe now requires a successful pre-rule connection control and an active canonical-interpreter firewall rule before treating a timeout as denied. M0 refresh also found that pytest did not expose src/ in its isolated environment; pyproject now sets the source path explicitly. Fresh dependent receipts and hosted matrix remain pending.",
-    "baseline_tests": "Before the M0 correction, current-source clean Linux CPython 3.11 distribution suite: 15 passed; focused Windows workflow/helper tests: 2 passed; actionlint passed. The refreshed M0 gate failed on a missing src/ import path, now fixed and being rerun.",
-    "verification_claim": "M0 and MI-01 are IN_PROGRESS while the clean pytest import fix is verified. M3 and MI-08 remain IN_PROGRESS. M1-M2 and MI-02-09 retain earlier receipts and require refreshed source-identity evidence. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M0 was refreshed on source commit 6b9ba3b with 23 required acceptance executions passing, including the clean src/ package import. M1 and M2 receipts are being refreshed next; MI-08 remains active for the hosted matrix.",
+    "baseline_tests": "Current-source M0 gate: 23 acceptance executions passed, 0 failed/skipped; direct M0 modules: 24 passed. Current-source Linux CPython 3.11 distribution suite: 15 passed; focused Windows workflow/helper tests: 2 passed; actionlint passed.",
+    "verification_claim": "M0/MI-01 are current-source luna_self_verified. M1-M2 and MI-02-09 receipts are being refreshed in dependency order; MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
-  "active_item": "MI-01",
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -75,11 +75,11 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-mi09.json",
-          "sha256": "16716c6b84dafd90185fd7dd3f216edabaf9441a9f659036f1fe5b8e98825759"
+          "path": "evidence/local/M0-current-6b9ba3b.json",
+          "sha256": "707c90c3b2c7a7bd8f0b24c619e8eb9b2c0a3446b2022edd268fc1327a2422c8"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -185,12 +185,12 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-01-mi09.json",
-          "sha256": "9c238c882fb3a6a169ab1205d2361f0c2bfff98dd76b7e6f7200ee366785e812"
+          "path": "evidence/local/M0-current-6b9ba3b.json",
+          "sha256": "707c90c3b2c7a7bd8f0b24c619e8eb9b2c0a3446b2022edd268fc1327a2422c8"
         }
       ],
       "blocker": null
