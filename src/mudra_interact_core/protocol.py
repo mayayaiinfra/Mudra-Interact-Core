@@ -106,10 +106,19 @@ class Recognition:
         object.__setattr__(self, "confidence", require_finite_float(self.confidence, code="invalid_number"))
         if type(self.method) is not str or not self.method or len(self.method) > 80:
             fail("invalid_shape")
-        object.__setattr__(self, "observations", _codes(self.observations))
-        object.__setattr__(self, "uncertainties", _codes(self.uncertainties))
+        allowed_observations = V2_OBSERVATION_CODES if self.method == "contact_rules_v2" else None
+        allowed_uncertainties = V2_UNCERTAINTY_CODES if self.method == "contact_rules_v2" else None
+        object.__setattr__(self, "observations", _codes(self.observations, allowed_observations))
+        object.__setattr__(self, "uncertainties", _codes(self.uncertainties, allowed_uncertainties))
         if type(self.catalog_version) is not str or not self.catalog_version:
             fail("invalid_shape")
+        if self.method == "contact_rules_v2":
+            if self.gesture_id not in V2_GESTURE_IDS or self.catalog_version != CATALOG_VERSION:
+                fail("unsupported_version")
+            if self.state is RecognitionState.UNCERTAIN and (self.gesture_id != "unknown" or self.confidence != 0.0):
+                fail("invalid_state")
+            if self.state in {RecognitionState.CANDIDATE, RecognitionState.STABLE} and self.confidence <= 0.0:
+                fail("invalid_state")
 
     @property
     def observation_codes(self) -> tuple[str, ...]:
