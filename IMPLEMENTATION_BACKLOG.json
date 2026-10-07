@@ -18,9 +18,9 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
-    "verification_claim": "Specification 0.3 platform-scope change invalidates prior gate receipts. M0-M3 evidence refresh is in progress; MI-08 requires all 8 Linux/Windows cells and a fresh aggregate. macOS is outside the supported matrix. M4 remains NOT_STARTED."
+    "verification_claim": "Specification 0.3 platform-scope change invalidated prior receipts. M0-M2 and MI-09 have fresh evidence; MI-08 has four verified Linux cells. M3 is BLOCKED: the archived local Windows 3.11 MI-08 run on source d4b3c5a failed E76 with egress connected despite an apparently matching rule. A focused elevated Windows 11 diagnostic now passes the pre-rule control and confirms the canonical-interpreter-scoped block returns WSAEACCES (10013). The full four-cell local rerun was canceled at the Windows elevation boundary before it started. The latest public windows-2025 CI matrix on pre-contract commit 127ff064 also failed E76 on all four Windows cells; those results cannot qualify current source. Windows cells and the eight-cell aggregate remain incomplete; M4 remains NOT_STARTED."
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-8fc3af0.json",
-          "sha256": "125c3888998fcb05e63880fb011d3ed7a964f64b72f55ca4d70feb747a2603a8"
+          "path": "evidence/local/M0-linux-3.11-d4b3c5a.json",
+          "sha256": "9aef04056e78ee57fb2d00dae0d4a23aa39843e121559c47716fb9a767ce5c6f"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -93,8 +93,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-8fc3af0.json",
-          "sha256": "f681b6ba7990c23605cb1172c7a4bcda7028c211ff6f20b673e94524ec246a5f"
+          "path": "evidence/local/M1-linux-3.11-d4b3c5a.json",
+          "sha256": "cdc568df61de4ce30384542530f7d104977eff51e4413903587697ac0d3494d6"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-8fc3af0.json",
-          "sha256": "9d2921f6288ef056f249feaf100b7e9b924e0f8e8d13ceaefc4bbf21646dad32"
+          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
+          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -127,8 +127,10 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": []
+      "state": "BLOCKED",
+      "evidence": [],
+      "blocker": "missing condition: fresh Windows x86_64 CPython 3.11-3.14 MI-08 receipts on current source. The archived local Windows 3.11 run (evidence/local/mi08-platform-receipts-failed-d4b3c5a/MI-08-windows-x86_64-py3.11.json) failed E76 with egress_connected despite an apparently matching rule. A focused elevated local probe then passed (pre-rule connect=0; active exact interpreter-scoped outbound Block post-rule connect=10013). The full four-cell elevation rerun was canceled before launch. Public windows-2025 CI run 37583534656 on pre-contract commit 127ff064 also failed E76 for all four cells and cannot be reused. Unblock: run all four cells from an elevated PowerShell session after accepting UAC, or use another Windows runner where the required scoped block is enforced. Do not change the default outbound policy.",
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -185,8 +187,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-8fc3af0.json",
-          "sha256": "125c3888998fcb05e63880fb011d3ed7a964f64b72f55ca4d70feb747a2603a8"
+          "path": "evidence/local/M0-linux-3.11-d4b3c5a.json",
+          "sha256": "9aef04056e78ee57fb2d00dae0d4a23aa39843e121559c47716fb9a767ce5c6f"
         }
       ],
       "blocker": null
@@ -223,8 +225,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-8fc3af0.json",
-          "sha256": "f681b6ba7990c23605cb1172c7a4bcda7028c211ff6f20b673e94524ec246a5f"
+          "path": "evidence/local/M1-linux-3.11-d4b3c5a.json",
+          "sha256": "cdc568df61de4ce30384542530f7d104977eff51e4413903587697ac0d3494d6"
         }
       ],
       "blocker": null
@@ -256,8 +258,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-8fc3af0.json",
-          "sha256": "f681b6ba7990c23605cb1172c7a4bcda7028c211ff6f20b673e94524ec246a5f"
+          "path": "evidence/local/M1-linux-3.11-d4b3c5a.json",
+          "sha256": "cdc568df61de4ce30384542530f7d104977eff51e4413903587697ac0d3494d6"
         }
       ],
       "blocker": null
@@ -299,8 +301,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-8fc3af0.json",
-          "sha256": "f681b6ba7990c23605cb1172c7a4bcda7028c211ff6f20b673e94524ec246a5f"
+          "path": "evidence/local/M1-linux-3.11-d4b3c5a.json",
+          "sha256": "cdc568df61de4ce30384542530f7d104977eff51e4413903587697ac0d3494d6"
         }
       ],
       "blocker": null
@@ -338,8 +340,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-8fc3af0.json",
-          "sha256": "9d2921f6288ef056f249feaf100b7e9b924e0f8e8d13ceaefc4bbf21646dad32"
+          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
+          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
         }
       ],
       "blocker": null
@@ -371,8 +373,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-8fc3af0.json",
-          "sha256": "9d2921f6288ef056f249feaf100b7e9b924e0f8e8d13ceaefc4bbf21646dad32"
+          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
+          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
         }
       ],
       "blocker": null
@@ -414,8 +416,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-8fc3af0.json",
-          "sha256": "9d2921f6288ef056f249feaf100b7e9b924e0f8e8d13ceaefc4bbf21646dad32"
+          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
+          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
         }
       ],
       "blocker": null
@@ -452,15 +454,27 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "BLOCKED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-08-linux-current-8fc3af0.json",
-          "sha256": "31f09c8d3953b8fbe3973a593e12448c57b928be7a97799281409fafeac428b6"
+          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.11.json",
+          "sha256": "56fce228a18f9c90f4edea86346616c1a9c7c4003049a226d01fd646b0147b4d"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.12.json",
+          "sha256": "eee2acafe34ce6f29a0837624a8f5c510474bacb7bfd071b7c9c904afc92b35c"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.13.json",
+          "sha256": "4bc6d9de33c3da9d829a8728afe9c6999fbd3e2849b2fc62b21f14534a3f9014"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.14.json",
+          "sha256": "5cbea5c565a9561c8704908bc4f24e25ebbc7d7c70e98bd5f868279b3b60650d"
         }
       ],
-      "blocker": null
+      "blocker": "missing condition: fresh Windows x86_64 CPython 3.11-3.14 MI-08 receipts on current source. The archived local Windows 3.11 run (evidence/local/mi08-platform-receipts-failed-d4b3c5a/MI-08-windows-x86_64-py3.11.json) failed E76 with egress_connected despite an apparently matching rule. A focused elevated local probe then passed (pre-rule connect=0; active exact interpreter-scoped outbound Block post-rule connect=10013). The full four-cell elevation rerun was canceled before launch. Public windows-2025 CI run 37583534656 on pre-contract commit 127ff064 also failed E76 for all four cells and cannot be reused. Unblock: run all four cells from an elevated PowerShell session after accepting UAC, or use another Windows runner where the required scoped block is enforced. Do not change the default outbound policy."
     },
     {
       "id": "MI-09",
@@ -486,8 +500,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-09-current-8fc3af0.json",
-          "sha256": "25ce731cd27829107a88a863c303d7c13142fc92a52491c416e6116b98cc7757"
+          "path": "evidence/local/MI-09-current-d4b3c5a.json",
+          "sha256": "00303254902967d388a7fb3a859548d623f1b4e231ba71a2a899f7125977d468"
         }
       ],
       "blocker": null
