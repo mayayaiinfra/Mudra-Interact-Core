@@ -29,7 +29,8 @@ under `evidence/local/mi08-platform-receipts/` and their declared artifact paths
 then run `python tools/aggregate_platform_matrix.py --receipt-dir
 evidence/local/mi08-platform-receipts --report
 evidence/local/M3-platform-matrix.json`.  The aggregator checks the receipt
-hashes, all E73-E84 outcomes, shared source/tool identities, exact cell set,
+hashes, all E73-E84 outcomes, shared source/tool identities (with text
+checkout line endings normalized and binary bytes preserved), exact cell set,
 unique cells and candidate commit ancestry.  `python tools/verify_gate.py
 --gate M3 --report evidence/local/M3.json` refuses to verify M3 unless that
 aggregate is fresh and complete.  M3 cannot close until all twelve actual

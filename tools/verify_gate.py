@@ -33,6 +33,7 @@ from tools.verification_report import (
     seal_report,
     sha256_bytes,
     sha256_file,
+    sha256_text_file,
     source_commit,
     source_tree_sha256,
     validate_fixture_manifest,
@@ -631,7 +632,7 @@ def _current_identity(root: Path) -> dict[str, str]:
             files[key] = source_tree_sha256(root)
         else:
             try:
-                files[key] = sha256_file(path)
+                files[key] = sha256_text_file(path)
             except OSError:
                 code = {
                     "spec_sha256": "specification_unavailable",

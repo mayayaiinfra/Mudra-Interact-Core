@@ -29,6 +29,12 @@ from typing import Any, Iterable
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.verification_report import canonical_text_bytes, sha256_text_file  # noqa: E402
+
+
 PACKAGE_NAME = "mudra-interact-core"
 PACKAGE_VERSION = "0.2.0"
 SOURCE_DATE_EPOCH = "1760054400"
@@ -107,7 +113,7 @@ def source_tree_sha256(root: Path) -> str:
     digest = hashlib.sha256()
     for path in source_files(root):
         rel = path.relative_to(root).as_posix().encode("utf-8")
-        data = path.read_bytes()
+        data = canonical_text_bytes(path.read_bytes())
         digest.update(len(rel).to_bytes(4, "big"))
         digest.update(rel)
         digest.update(len(data).to_bytes(8, "big"))
@@ -544,9 +550,9 @@ def qualify(mode: str) -> dict[str, Any]:
     started = now()
     source_digest = source_tree_sha256(ROOT)
     commit = git_value("rev-parse", "HEAD")
-    lock_digest = sha256_file(ROOT / "requirements-dev.lock")
-    spec_digest = sha256_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md")
-    acceptance_digest = sha256_file(ROOT / "docs" / "ACCEPTANCE.md")
+    lock_digest = sha256_text_file(ROOT / "requirements-dev.lock")
+    spec_digest = sha256_text_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md")
+    acceptance_digest = sha256_text_file(ROOT / "docs" / "ACCEPTANCE.md")
     current = current_platform()
     commands: list[dict[str, Any]] = []
     artifacts: list[dict[str, Any]] = []
@@ -707,9 +713,9 @@ def main(argv: list[str] | None = None) -> int:
             "verification_kind": "luna_self_verified",
             "source_commit": git_value("rev-parse", "HEAD"),
             "source_tree_sha256": source_tree_sha256(ROOT),
-            "spec_sha256": sha256_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md"),
-            "acceptance_sha256": sha256_file(ROOT / "docs" / "ACCEPTANCE.md"),
-            "tool_lock_sha256": sha256_file(ROOT / "requirements-dev.lock"),
+            "spec_sha256": sha256_text_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md"),
+            "acceptance_sha256": sha256_text_file(ROOT / "docs" / "ACCEPTANCE.md"),
+            "tool_lock_sha256": sha256_text_file(ROOT / "requirements-dev.lock"),
             "platform": current_platform(),
             "started_at": now(),
             "finished_at": now(),

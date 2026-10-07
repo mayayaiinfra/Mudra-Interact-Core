@@ -24,6 +24,7 @@ from tools.verification_report import (  # noqa: E402
     seal_report,
     sha256_bytes,
     sha256_file,
+    sha256_text_file,
     source_commit,
     source_tree_sha256,
     validate_receipt_file,
@@ -80,9 +81,9 @@ def _python_minor(value: Any) -> str | None:
 def _current_identity(root: Path) -> dict[str, str]:
     return {
         "source_tree_sha256": source_tree_sha256(root),
-        "spec_sha256": sha256_file(root / "MUDRA_INTERACT_CORE_SPEC.md"),
-        "acceptance_sha256": sha256_file(root / "docs" / "ACCEPTANCE.md"),
-        "tool_lock_sha256": sha256_file(root / "requirements-dev.lock"),
+        "spec_sha256": sha256_text_file(root / "MUDRA_INTERACT_CORE_SPEC.md"),
+        "acceptance_sha256": sha256_text_file(root / "docs" / "ACCEPTANCE.md"),
+        "tool_lock_sha256": sha256_text_file(root / "requirements-dev.lock"),
     }
 
 

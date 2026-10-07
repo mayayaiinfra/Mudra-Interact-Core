@@ -24,18 +24,40 @@ from tools.verify_release import (
     REQUIRED_PYTHONS,
     REQUIRED_PLATFORMS,
     current_platform,
+    source_tree_sha256 as release_source_tree_sha256,
     validate_release_identity,
 )
 from tools.verification_report import (
+    canonical_text_bytes,
     canonical_json_bytes,
     seal_report,
     sha256_bytes,
+    sha256_text_file,
     source_tree_sha256 as independent_source_tree_sha256,
     VerificationError,
 )
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.acceptance("E84")
+def test_source_identity_is_stable_across_windows_checkout_newlines(tmp_path: Path) -> None:
+    text_hashes = []
+    tree_hashes = []
+    for name, contents in (("lf", b"Mudra source\nsecond line\n"), ("crlf", b"Mudra source\r\nsecond line\r\n")):
+        tree = tmp_path / name
+        tree.mkdir()
+        (tree / "README.md").write_bytes(contents)
+        subprocess.run(["git", "init", "--quiet"], cwd=tree, check=True)
+        subprocess.run(["git", "add", "--", "README.md"], cwd=tree, check=True)
+        expected = independent_source_tree_sha256(tree)
+        assert release_source_tree_sha256(tree) == expected
+        text_hashes.append(sha256_text_file(tree / "README.md"))
+        tree_hashes.append(expected)
+    assert text_hashes[0] == text_hashes[1]
+    assert tree_hashes[0] == tree_hashes[1]
+    assert canonical_text_bytes(b"binary\x00\r\n") == b"binary\x00\r\n"
 
 
 @pytest.fixture(scope="module")

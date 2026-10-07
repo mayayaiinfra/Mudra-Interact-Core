@@ -68,6 +68,21 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def canonical_text_bytes(contents: bytes) -> bytes:
+    """Normalize Git's CRLF checkout conversion without altering binary data."""
+    if b"\0" in contents:
+        return contents
+    try:
+        contents.decode("utf-8", errors="strict")
+    except UnicodeDecodeError:
+        return contents
+    return contents.replace(b"\r\n", b"\n")
+
+
+def sha256_text_file(path: Path) -> str:
+    return sha256_bytes(canonical_text_bytes(path.read_bytes()))
+
+
 def strict_json_bytes(data: bytes) -> Any:
     if data.startswith(b"\xef\xbb\xbf"):
         raise VerificationError("invalid_json")
@@ -372,7 +387,7 @@ def source_tree_sha256(root: Path) -> str:
     digest = hashlib.sha256()
     for path in tracked_source_files(root):
         rel = path.relative_to(root).as_posix().encode("utf-8")
-        contents = path.read_bytes()
+        contents = canonical_text_bytes(path.read_bytes())
         digest.update(len(rel).to_bytes(4, "big"))
         digest.update(rel)
         digest.update(len(contents).to_bytes(8, "big"))

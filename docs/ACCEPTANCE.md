@@ -123,7 +123,7 @@ targets; files not present at baseline must be implemented before verification.
 | E81 | MI-08 / test_distribution.py | Windows path/encoding and POSIX regular-file checks tested on actual respective OS; simulated platform strings don't qualify. |
 | E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue and module ownership stay consistent. |
 | E83 | MI-08 / test_distribution.py | Dependent ALLYK consumer compatibility inventory records upgrade risk without exporting private sources or assuming automatic upgrade. |
-| E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; absent required artifact/tool/platform blocks aggregation. |
+| E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; text identity is stable across LF/CRLF checkouts while binary identity remains byte-exact; absent required artifact/tool/platform blocks aggregation. |
 | E85 | MI-09 / test_adapter_contract.py | DESIGN specifies asset pin/hash/licence and absence of core camera dependency; no implementation status fabricated. |
 | E86 | MI-09 / test_adapter_contract.py | DESIGN state table covers start/deny/stop/revoke/late callback/device switch/hand loss/tab hide; queued result never silently accepted. |
 | E87 | MI-09 / test_adapter_contract.py | DESIGN defines track identity/aspect/mirror/clock and no duplicate-frame hold bypass. |
