@@ -130,16 +130,16 @@ targets; files not present at baseline must be implemented before verification.
 | E87 | MI-09 / test_adapter_contract.py | DESIGN defines track identity/aspect/mirror/clock and no duplicate-frame hold bypass. |
 | E88 | MI-09 / test_adapter_contract.py | DESIGN defines bounded latest-frame queue, model failure/offline/cold-cache handling, local-only telemetry and no BYOK probe. |
 | E89 | MI-09 / test_adapter_contract.py | DESIGN lists real browser/quality/accessibility/cultural/asset proof still needed and alternative input path; never claims live evaluation. |
-| E90 | MI-10 / release proof | Actual repository/package/publisher ownership and release authorization recorded; no inferred permission or secret in evidence. |
-| E91 | MI-10 / release proof | Exact frozen candidate passes gates and clean-source/artifact/provenance identity before upload. |
-| E92 | MI-10 / release proof | TestPyPI upload, exact version download, hash match and installed smoke; test receipt cannot stand in for production. |
-| E93 | MI-10 / release proof | Production download matches tested artifact hashes; no rebuild/index fallback; fresh installed smoke passes. |
-| E94 | MI-10 / release proof | Immutable tag/release links, changelog, SECURITY/support and migration documents point to exact candidate. |
+| E90 | MI-10 / test_release_recovery.py | Actual repository/package/publisher ownership and protected, version-specific release authorization are required; missing/ambiguous ownership or authorization blocks and no secret is stored in evidence. |
+| E91 | MI-10 / test_release_recovery.py | Exact frozen candidate matches current source/spec/acceptance/tool-lock identity, all verified gates, offline qualification and exact artifact hashes before upload. |
+| E92 | MI-10 / test_release_recovery.py | TestPyPI exact-version metadata and downloaded bytes match the frozen candidate; a fresh isolated install smoke passes; TestPyPI cannot stand in for production. |
+| E93 | MI-10 / test_release_recovery.py | Production download and signed publisher provenance match the tested artifact hashes; no rebuild/index fallback; fresh isolated install smoke passes. |
+| E94 | MI-10 / test_release_recovery.py | Protected workflow uses pinned actions and separate environments; immutable tag/release assets, changelog, SECURITY/support and migration links point to the exact candidate. |
 | E95 | MI-10 / test_release_recovery.py | Synthetic ambiguous upload resumes only when existing hashes match; mismatch/version collision denies retry or overwrite. |
 | E96 | MI-10 / test_release_recovery.py | Synthetic rollback/yank plan preserves published history and requires applicable authorization; never deletes user data. |
-| E97 | MI-10 / release proof | Public quickstart/download links usable; observed release/package state recorded, no mock release acceptance. |
+| E97 | MI-10 / test_release_recovery.py | Public quickstart/download links resolve to exact-version sources; observed live release/package state is recorded, no mock release acceptance. |
 | E98 | MI-10 / test_release_recovery.py | Wrong publisher/repo/artifact/expired authorization or missing signing identity blocks; no long-lived secret fallback. |
-| E99 | MI-10 / release proof | Gate aggregator rejects missing external proof; final report separates published core, unimplemented adapter, unverified accuracy/cultural claims. |
+| E99 | MI-10 / test_release_recovery.py | Gate aggregator rejects missing or stale external proof; final report separates published core, unimplemented adapter, and unverified accuracy/cultural claims. |
 
 ## 3. Required semantic mutations
 

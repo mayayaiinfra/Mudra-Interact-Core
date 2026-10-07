@@ -1,0 +1,305 @@
+name: Publish Mudra Core
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact package version approved for publication
+        required: true
+        type: string
+      candidate_commit:
+        description: Full source commit SHA approved for publication
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mudra-publish-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  validate-inputs:
+    name: Validate version and source authorization
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out approved candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          fetch-depth: 0
+      - name: Reject an unbound or unsupported candidate
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
+          REQUESTED_COMMIT: ${{ inputs.candidate_commit }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          import subprocess
+          import sys
+
+          version = os.environ.get("REQUESTED_VERSION", "")
+          requested = os.environ.get("REQUESTED_COMMIT", "")
+          head = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          if version != "0.2.0" or not re.fullmatch(r"[0-9a-f]{40}", requested):
+              raise SystemExit("unsupported or malformed release candidate")
+          if requested != head or requested != os.environ.get("GITHUB_SHA"):
+              raise SystemExit("candidate commit is not the checked out workflow commit")
+          if os.environ.get("GITHUB_REF") != "refs/heads/main":
+              raise SystemExit("publication must be dispatched from main")
+          PY
+
+  qualify-candidate:
+    name: Qualify frozen candidate
+    needs: validate-inputs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      candidate_fingerprint: ${{ steps.manifest.outputs.fingerprint }}
+    steps:
+      - name: Check out candidate with history and prerequisite evidence
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.14'
+          cache: pip
+      - name: Create isolated qualification environment
+        shell: bash
+        run: python -m venv "$RUNNER_TEMP/mudra-verifier"
+      - name: Install locked verification tools and runtime package
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --require-hashes --no-deps -r requirements-dev.lock
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --no-deps --no-build-isolation .
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check
+      - name: Re-run M3 acceptance gate in an isolated network namespace
+        shell: bash
+        env:
+          PIP_NO_INDEX: '1'
+          PYTHONNOUSERSITE: '1'
+        run: |
+          runner_user="$USER"
+          python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
+          runuser_path="$(command -v runuser)"
+          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-publish.json
+      - name: Rebuild twice and freeze one qualified artifact pair
+        shell: bash
+        env:
+          PIP_NO_INDEX: '1'
+          PYTHONNOUSERSITE: '1'
+        run: |
+          runner_user="$USER"
+          python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
+          runuser_path="$(command -v runuser)"
+          set +e
+          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_release.py --offline --artifact-dir release-artifacts/0.2.0 --report evidence/releases/offline-qualification.json
+          status=$?
+          set -e
+          if [ "$status" -ne 0 ] && [ "$status" -ne 2 ]; then exit "$status"; fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("evidence/releases/offline-qualification.json").read_text(encoding="utf-8"))
+          checks = report.get("checks", {})
+          if report.get("errors"):
+              raise SystemExit("offline candidate checks reported errors")
+          if checks.get("repeat_build", {}).get("wheel_identical") is not True:
+              raise SystemExit("repeat wheel bytes differ")
+          if checks.get("repeat_build", {}).get("sdist_identical") is not True:
+              raise SystemExit("repeat sdist bytes differ")
+          if checks.get("fresh_install", {}).get("install_exit") != 0 or checks.get("fresh_install", {}).get("smoke_exit") != 0:
+              raise SystemExit("isolated candidate install did not pass")
+          if checks.get("offline", {}).get("negative_egress", {}).get("runner_network_isolation") != "VERIFIED":
+              raise SystemExit("candidate qualification lacked runner network isolation")
+          if len(report.get("frozen_candidate_artifacts", [])) != 2:
+              raise SystemExit("frozen wheel and sdist are incomplete")
+          PY
+      - name: Create candidate fingerprint bound to source and artifacts
+        id: manifest
+        shell: bash
+        env:
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+        run: |
+          fingerprint="$(python tools/create_release_manifest.py --candidate --workflow-run-id "$WORKFLOW_RUN_ID")"
+          echo "fingerprint=$fingerprint" >> "$GITHUB_OUTPUT"
+      - name: Save the frozen candidate and qualification report
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: |
+            release-artifacts/0.2.0/
+            evidence/releases/candidate.json
+            evidence/releases/offline-qualification.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+  publish-testpypi:
+    name: TestPyPI publish ${{ needs.qualify-candidate.outputs.candidate_fingerprint }}
+    needs: qualify-candidate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: pypi-test
+      url: https://test.pypi.org/project/mudra-interact-core/0.2.0/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download frozen candidate
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: candidate
+      - name: Publish frozen artifacts to TestPyPI
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          packages-dir: candidate/release-artifacts/0.2.0/
+          repository-url: https://test.pypi.org/legacy/
+
+  verify-testpypi:
+    name: Download and install exact TestPyPI files
+    needs: [publish-testpypi, qualify-candidate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out frozen source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.14'
+      - name: Download the exact frozen candidate
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: .
+      - name: Verify TestPyPI metadata, bytes and fresh installation
+        shell: bash
+        run: python tools/verify_release.py --verify-index testpypi --artifact-dir release-artifacts/0.2.0 --candidate-report evidence/releases/offline-qualification.json --report evidence/releases/testpypi-verification.json
+      - name: Save TestPyPI verification receipt
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: mudra-testpypi-proof
+          path: evidence/releases/testpypi-verification.json
+          if-no-files-found: error
+          retention-days: 30
+
+  publish-pypi:
+    name: Production publish ${{ needs.qualify-candidate.outputs.candidate_fingerprint }}
+    needs: [verify-testpypi, qualify-candidate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: pypi-production
+      url: https://pypi.org/project/mudra-interact-core/0.2.0/
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download the same frozen candidate
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: candidate
+      - name: Publish the same files to PyPI
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          packages-dir: candidate/release-artifacts/0.2.0/
+
+  verify-pypi:
+    name: Verify production bytes, attestations and fresh installation
+    needs: [publish-pypi, qualify-candidate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out frozen source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+      - name: Install the hash-locked PyPI attestation verifier
+        run: python -m pip install --require-hashes -r requirements-release.lock
+      - name: Download the exact frozen candidate
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: .
+      - name: Verify PyPI metadata, bytes, attestations and fresh installation
+        shell: bash
+        run: python tools/verify_release.py --verify-index pypi --artifact-dir release-artifacts/0.2.0 --candidate-report evidence/releases/offline-qualification.json --report evidence/releases/pypi-verification.json
+      - name: Save production verification receipt
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: mudra-pypi-proof
+          path: evidence/releases/pypi-verification.json
+          if-no-files-found: error
+          retention-days: 30
+
+  create-github-release:
+    name: Tag and record verified release
+    needs: [verify-pypi, qualify-candidate]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the exact candidate commit
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+          fetch-depth: 0
+      - name: Download the exact released files
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-candidate-${{ inputs.version }}
+          path: .
+      - name: Download TestPyPI verification
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-testpypi-proof
+          path: evidence/releases
+      - name: Download production verification
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: mudra-pypi-proof
+          path: evidence/releases
+      - name: Create an immutable tag and release with the same artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_COMMIT: ${{ inputs.candidate_commit }}
+        shell: bash
+        run: |
+          gh release create v0.2.0 \
+            release-artifacts/0.2.0/mudra_interact_core-0.2.0-py3-none-any.whl \
+            release-artifacts/0.2.0/mudra_interact_core-0.2.0.tar.gz \
+            --target "$CANDIDATE_COMMIT" \
+            --title "Mudra Interact Core 0.2.0" \
+            --notes-file CHANGELOG.md
+      - name: Create the sanitized publication manifest
+        env:
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+        run: python tools/create_release_manifest.py --published --workflow-run-id "$WORKFLOW_RUN_ID"
+      - name: Save release receipts and manifest for final verification
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: mudra-published-evidence
+          path: evidence/releases/
+          if-no-files-found: error
+          retention-days: 90

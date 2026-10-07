@@ -18,9 +18,9 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "M0-M2: 23/23, 120/120, and 165/165 including semantic mutations; MI-08 platform matrix 8/8; full M3 gate 187/187 on hosted Ubuntu 24.04 with network isolation.",
-    "verification_claim": "M3 completed VERIFIED on source commit 2856ca29d1ae6471c933f4488c14e6d2f353b829. Hosted workflow_dispatch run 37642137665 passed 187/187 cases across MI-01..MI-09; the report hash is recorded in evidence/local/M3-hosted-gate.json. MI-10 is now active. Its local release workflow, recovery tests and docs must be implemented and tested; no package was published. Before relying on M3 as an M4 prerequisite, rerun all dependent gates after MI-10 source changes. External publication still requires proven package/publisher access and candidate-specific release authorization."
+    "verification_claim": "M0, M1 and M2 have fresh current-source receipts (23/23, 120/120 and 165/165); MI-01 through MI-07 item receipts are also refreshed. MI-10 release workflow, read-only publisher verifier, Linux/Python 3.12 hash lock, release runbook and E90-E99 recovery tests are implemented. The focused release tests pass 10/10; the applicable local suite passes 201 tests with only the Windows firewall-isolation case reserved for hosted Windows CI. M3 current-source matrix and full-gate proof are in progress. M4 publication remains blocked until the owner confirms package-name control, configures trusted publishers/protected environments, and authorizes this exact candidate/version."
   },
-  "active_item": "MI-10",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-m3ci-depth0.json",
-          "sha256": "b2df9d73932aad210a1c02d017d195cf4f60541eeb44e246024b648c0a25abb9"
+          "path": "evidence/local/M0-m4.json",
+          "sha256": "28b630176703a0314a0648aabc1c13cede829a86039c51dbb785d484929bc1c3"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -93,8 +93,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci-depth0.json",
-          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
+          "path": "evidence/local/M1-m4.json",
+          "sha256": "779a62ba0a6c2ee9580f72756eb071228642394ea4958f92d628b13f1636b35f"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-depth0.json",
-          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
+          "path": "evidence/local/M2-m4.json",
+          "sha256": "83a90ed043c7b46e8b6090fbfb251999403466f34b9752635a9b7f7071b97986"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -127,15 +127,10 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "VERIFIED",
-      "evidence": [
-        {
-          "path": "evidence/local/M3-hosted-gate.json",
-          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
-        }
-      ],
-      "blocker": null,
-      "verification_kind": "luna_self_verified"
+      "state": "IN_PROGRESS",
+      "evidence": [],
+      "blocker": "Current-source MI-08 platform matrix and full M3 gate evidence are being refreshed.",
+      "verification_kind": null
     },
     {
       "id": "M4",
@@ -145,10 +140,10 @@
       "items": [
         "MI-10"
       ],
-      "state": "IN_PROGRESS",
+      "state": "BLOCKED",
       "evidence": [],
-      "verification_kind": "luna_self_verified",
-      "blocker": null
+      "verification_kind": null,
+      "blocker": "Publication requires owner-confirmed package ownership, TestPyPI/PyPI Trusted Publisher configuration, protected GitHub environments and approval for this exact candidate/version."
     }
   ],
   "recommended_order": [
@@ -194,8 +189,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-m3ci-depth0.json",
-          "sha256": "b2df9d73932aad210a1c02d017d195cf4f60541eeb44e246024b648c0a25abb9"
+          "path": "evidence/local/MI-01-m4.json",
+          "sha256": "3752cd5c99962cdc299f0515b4a2689c7426fdde0ae7e51242eabcc144c8a540"
         }
       ],
       "blocker": null
@@ -232,8 +227,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci-depth0.json",
-          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
+          "path": "evidence/local/MI-02-m4.json",
+          "sha256": "499fd0982b676ebc8b8b6e8877d88287cd4b419509d2f86a67cd0bb58e2c593c"
         }
       ],
       "blocker": null
@@ -265,8 +260,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci-depth0.json",
-          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
+          "path": "evidence/local/MI-03-m4.json",
+          "sha256": "e07c860f1d9385a594b63d90abeb5c3eb9eb7554ff94698bd3fc975273149568"
         }
       ],
       "blocker": null
@@ -308,8 +303,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci-depth0.json",
-          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
+          "path": "evidence/local/MI-04-m4.json",
+          "sha256": "bdd617b4be965e4f1fc4318bb4acd03148feac3352c646d2a5297a29bb5d1dfe"
         }
       ],
       "blocker": null
@@ -347,8 +342,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-depth0.json",
-          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
+          "path": "evidence/local/MI-05-m4.json",
+          "sha256": "0bb8009a51a809c52bac4dc96d1badf774a3a1c97773cb7a4a9ed90c11f2148f"
         }
       ],
       "blocker": null
@@ -380,8 +375,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-depth0.json",
-          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
+          "path": "evidence/local/MI-06-m4.json",
+          "sha256": "e5ec54216d38bbf8e9b670b9942ae2288c2d274c9cc41e393c5842ad4efae7a7"
         }
       ],
       "blocker": null
@@ -423,8 +418,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-depth0.json",
-          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
+          "path": "evidence/local/MI-07-m4.json",
+          "sha256": "b672297b38706e946a5fcc70480795e8a182e8f40a370c496c6befd842ab4079"
         }
       ],
       "blocker": null
@@ -461,14 +456,9 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M3-hosted-gate.json",
-          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
-        }
-      ],
+      "state": "IMPLEMENTED",
+      "verification_kind": null,
+      "evidence": [],
       "blocker": null
     },
     {
@@ -491,14 +481,9 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M3-hosted-gate.json",
-          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
-        }
-      ],
+      "state": "IMPLEMENTED",
+      "verification_kind": null,
+      "evidence": [],
       "blocker": null
     },
     {
@@ -535,10 +520,10 @@
         "Live upload/download/hash/installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IN_PROGRESS",
+      "state": "IMPLEMENTED",
       "verification_kind": null,
       "evidence": [],
-      "blocker": "Live publication awaits verified package-name/publisher access and version-specific authorization; release controls, documentation and recovery tests continue."
+      "blocker": "Owner must confirm package-name ownership, configure TestPyPI/PyPI Trusted Publishers and protected environments, and authorize this exact candidate/version before external publication."
     }
   ]
 }

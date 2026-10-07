@@ -1,0 +1,130 @@
+# Release runbook
+
+This runbook publishes only the declared package `mudra-interact-core==0.2.0`
+from one frozen commit. The public core is a Python library, so its production
+release is a package distribution, not a server deployment. The workflow never
+stores a PyPI API token and does not rebuild after candidate qualification.
+
+## Owner setup required once
+
+Before starting a release, an owner with repository and index administration
+access must complete and verify all of the following:
+
+1. Confirm that `mayayaiinfra/Mudra-Interact-Core` is the intended public
+   repository and that the package name `mudra-interact-core` is controlled by
+   the project owner on both PyPI and TestPyPI. An index `404` is not proof that
+   a name is available or owned.
+2. Configure PyPI Trusted Publishers for this repository and
+   `.github/workflows/publish.yml`, with the `pypi-production` environment.
+   Configure the corresponding TestPyPI publisher with the `pypi-test`
+   environment. Use each service's separate account and trusted-publisher
+   configuration. Do not add a long-lived upload token.
+3. Create the GitHub environments `pypi-test` and `pypi-production`. Configure
+   `pypi-production` with at least one required reviewer and prevent
+   self-review. Restrict deployment branches to `main`. Keep test and
+   production approvals separate.
+4. Confirm that the production publisher is scoped to the exact workflow and
+   environment; the published PyPI attestations must verify against this
+   repository. The exact workflow and source commit are recorded in the
+   release candidate and checked after publication.
+5. Enable GitHub private vulnerability reporting or provide a private
+   reporting channel.
+
+Missing access, package-name collision, absent trusted publishers, or missing
+environment protection blocks the release. Do not guess ownership from an
+unavailable index page.
+
+If the package page or exact version is missing, stop; a `404` is not evidence
+that the project name is available or permission to claim it.
+
+## Candidate qualification
+
+1. Require a clean `main` checkout at the candidate commit. Keep the source
+   frozen through publication. The version, commit, source-tree hash, spec,
+   acceptance table, tool lock and all M0–M3 receipts must match the ledger.
+2. Run the full M3 gate and require the eight-cell Linux/Windows × CPython
+   3.11–3.14 aggregate. Do not substitute a local-only report.
+3. Dispatch **Publish Mudra Core** with version `0.2.0` and the exact candidate
+   commit. The workflow builds twice, compares wheel and sdist bytes, validates
+   the source-built wheel, installs it in a clean isolated environment, and
+   freezes one wheel plus one source distribution. The output is kept as a
+   workflow artifact; do not rebuild it later.
+4. The local offline receipt can say `BLOCKED` only because it ran on one
+   platform cell. The publish job separately requires the complete M3 matrix,
+   zero local verifier errors, a clean repeat build, successful isolated
+   installation and verified runner network isolation.
+
+## Promotion sequence
+
+1. The `pypi-test` publisher receives only the frozen workflow artifact and
+   uploads to TestPyPI. The workflow then queries the exact version, downloads
+   every file from that one index, checks the filename/size/SHA-256 against the
+   frozen candidate, and performs a fresh isolated install smoke from the
+   downloaded wheel. It does not use an extra index or rebuild.
+   The smoke installs only the downloaded wheel with `--no-index --no-deps
+   --no-cache-dir` in a fresh environment; the package has no runtime
+   dependencies.
+2. Only after that check passes does the production job wait at the
+   `pypi-production` protected environment. Approval is specific to this run,
+   version, commit and candidate artifact fingerprint. Once approved, the
+   production publisher uploads the *same frozen files* using the configured
+   Trusted Publisher. Long-lived tokens are not a fallback.
+3. The workflow queries PyPI for the exact version, downloads and hashes each
+   production file, verifies the PyPI Trusted Publisher attestations and runs a
+   second fresh isolated install smoke. TestPyPI evidence cannot stand in for
+   this production proof.
+4. After production verification, create the immutable `v0.2.0` tag/release
+   against the candidate commit and attach the same wheel and sdist. Existing
+   tags/releases are never overwritten. The workflow exports a sanitized
+   publication manifest as an Actions artifact.
+5. Download that manifest into `evidence/releases/published.json` and run:
+
+   ```bash
+   # Ubuntu 24.04, CPython 3.12; this is the hash-locked verifier platform.
+   python3.12 -m venv .release-verifier
+   .release-verifier/bin/python -m pip install --require-hashes -r requirements-release.lock
+   .release-verifier/bin/python tools/verify_release.py --published --report evidence/releases/published-verification.json
+   ```
+
+   The read-only verifier checks live index metadata and artifact bytes on both
+   indexes, exact GitHub run/tag/release identity, environment protection,
+   signed publisher attestations and fresh downloaded installs. It does not
+   upload, rebuild, overwrite or yank. Missing, stale, partial or mismatched
+   proof returns `BLOCKED`.
+
+No rebuild is allowed between qualification, TestPyPI, PyPI and GitHub release.
+
+6. Commit the sanitized publication manifest and verification report, update
+   the implementation ledger to M4 only when this verifier and every E90–E99
+   acceptance case pass, then push the evidence commit. The source-tree digest
+   deliberately excludes `evidence/` and the status ledger; any source,
+   contract or tool-lock edit requires the relevant gates to be rerun.
+
+## Ambiguous uploads and recovery
+
+If an upload times out or its response is lost, do not blindly repeat it.
+Query the exact package version on that same index. Retry with the same frozen
+files only after the index confirms the version is absent. Resume only if the
+complete filename set, sizes and SHA-256 values exactly match. A partial set,
+different digest, different publisher or inconclusive response stops promotion
+for investigation; never rebuild or overwrite a published version.
+
+Rollback is a controlled consumer recovery. Halt promotion, identify the
+affected version, restore a verified version in consumers, then use an
+authorized package yank or a separately reviewed patch release. Preserve
+public history; never delete or rewrite released artifacts. The decision helper
+is tested but cannot perform a yank or publish a patch.
+
+## Post-release and limits
+
+Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact-core/0.2.0/)
+and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)
+open, and that both expose the exact version and artifact hashes. Run the
+documented consumer smoke from the downloaded wheel. Report the source commit,
+candidate fingerprint, artifact digests, workflow run, protected environment,
+index verification and tested platforms.
+
+The public core does not implement a camera adapter and synthetic acceptance
+tests do not establish field accuracy, cultural review, accessibility or
+independent security assessment. Keep each claim separate in release notes and
+the final report.

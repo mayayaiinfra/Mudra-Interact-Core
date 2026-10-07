@@ -1,4 +1,4 @@
-"""Fail-closed, offline release qualification for Mudra Interact Core.
+"""Fail-closed offline qualification and read-only publication verification.
 
 The release verifier deliberately uses only the Python standard library.  It
 does not upload anything, infer a platform result, or turn a missing runner
@@ -23,6 +23,7 @@ import tempfile
 import time
 import venv
 import zipfile
+from shutil import copy2
 from datetime import UTC, datetime
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
@@ -586,7 +587,89 @@ def write_report(path: Path, report: dict[str, Any]) -> None:
     path.write_bytes(json.dumps(report, ensure_ascii=False, allow_nan=False, sort_keys=True, indent=2).encode("utf-8"))
 
 
-def qualify(mode: str) -> dict[str, Any]:
+def frozen_candidate_inventory(artifact_dir: str, candidate_report: str) -> list[dict[str, Any]]:
+    from tools.release_proof import ReleaseProofError, _validate_artifact_inventory
+
+    artifact_relative = Path(artifact_dir)
+    report_relative = Path(candidate_report)
+    if (
+        artifact_relative.is_absolute() or ".." in artifact_relative.parts or "\\" in artifact_dir
+        or report_relative.is_absolute() or ".." in report_relative.parts or "\\" in candidate_report
+    ):
+        raise ReleaseProofError("artifact_path_invalid")
+    artifact_root = (ROOT / artifact_relative).resolve()
+    report_path = (ROOT / report_relative).resolve()
+    try:
+        artifact_root.relative_to(ROOT.resolve())
+        report_path.relative_to(ROOT.resolve())
+    except ValueError:
+        raise ReleaseProofError("artifact_path_invalid") from None
+    if report_path.is_symlink() or not report_path.is_file():
+        raise ReleaseProofError("offline_report_invalid")
+    try:
+        report_bytes = report_path.read_bytes()
+        if len(report_bytes) > 4 * 1024 * 1024:
+            raise ReleaseProofError("offline_report_invalid")
+        offline = json.loads(report_bytes.decode("utf-8", errors="strict"))
+    except (OSError, UnicodeError, json.JSONDecodeError):
+        raise ReleaseProofError("offline_report_invalid") from None
+    if not isinstance(offline, dict) or not isinstance(offline.get("report_sha256"), str):
+        raise ReleaseProofError("offline_report_invalid")
+    offline_body = dict(offline)
+    recorded_offline_hash = offline_body.pop("report_sha256")
+    canonical_offline = json.dumps(
+        offline_body, ensure_ascii=False, allow_nan=False,
+        sort_keys=True, separators=(",", ":"),
+    ).encode("utf-8")
+    if hashlib.sha256(canonical_offline).hexdigest() != recorded_offline_hash:
+        raise ReleaseProofError("offline_report_invalid")
+    if (
+        not isinstance(offline, dict) or offline.get("mode") != "offline"
+        or offline.get("source_commit") != git_value("rev-parse", "HEAD")
+        or offline.get("source_tree_sha256") != source_tree_sha256(ROOT)
+        or offline.get("checks", {}).get("repeat_build", {}).get("wheel_identical") is not True
+        or offline.get("checks", {}).get("repeat_build", {}).get("sdist_identical") is not True
+        or offline.get("checks", {}).get("offline", {}).get("negative_egress", {}).get("runner_network_isolation") != "VERIFIED"
+    ):
+        raise ReleaseProofError("offline_report_invalid")
+    frozen = offline.get("frozen_candidate_artifacts")
+    if not isinstance(frozen, list) or len(frozen) != 2:
+        raise ReleaseProofError("artifact_inventory_invalid")
+    rows: list[dict[str, Any]] = []
+    for item in frozen:
+        if not isinstance(item, dict) or set(item) != {"kind", "filename", "path", "sha256", "size_bytes"}:
+            raise ReleaseProofError("artifact_inventory_invalid")
+        if (
+            item["kind"] not in {"wheel", "sdist"}
+            or not isinstance(item["path"], str)
+            or not isinstance(item["filename"], str)
+            or Path(item["path"]).name != item["filename"]
+            or not isinstance(item["sha256"], str)
+            or not re.fullmatch(r"[0-9a-f]{64}", item["sha256"])
+            or type(item["size_bytes"]) is not int
+            or item["size_bytes"] < 1
+        ):
+            raise ReleaseProofError("artifact_inventory_invalid")
+        source_path = (ROOT / Path(item["path"])).resolve()
+        try:
+            source_path.relative_to(artifact_root)
+        except ValueError:
+            raise ReleaseProofError("artifact_path_invalid") from None
+        if (
+            source_path.is_symlink() or not source_path.is_file()
+            or source_path.parent != artifact_root
+            or source_path.stat().st_size != item["size_bytes"]
+            or sha256_file(source_path) != item["sha256"]
+        ):
+            raise ReleaseProofError("artifact_hash_mismatch")
+        rows.append({"filename": item["filename"], "sha256": item["sha256"], "size_bytes": item["size_bytes"]})
+    try:
+        return _validate_artifact_inventory(rows)
+    except ReleaseProofError:
+        raise
+
+
+def qualify(mode: str, *, artifact_dir: str | None = None) -> dict[str, Any]:
     started = now()
     source_digest = source_tree_sha256(ROOT)
     commit = git_value("rev-parse", "HEAD")
@@ -597,6 +680,7 @@ def qualify(mode: str) -> dict[str, Any]:
     commands: list[dict[str, Any]] = []
     artifacts: list[dict[str, Any]] = []
     checks: dict[str, Any] = {}
+    frozen_candidate: list[dict[str, Any]] = []
     limitations: list[str] = []
     errors: list[str] = []
     with tempfile.TemporaryDirectory(prefix="mudra-release-") as scratch_name:
@@ -674,6 +758,37 @@ def qualify(mode: str) -> dict[str, Any]:
         }
         if install_code != 0 or uninstall_code != 0 or reinstall_code != 0 or smoke_code != 0 or not ownership_ok:
             raise ReleaseError("fresh_install_failed")
+        if artifact_dir is not None:
+            relative = Path(artifact_dir)
+            if relative.is_absolute() or ".." in relative.parts or "\\" in artifact_dir:
+                raise ReleaseError("artifact_path_invalid")
+            destination = (ROOT / relative).resolve()
+            try:
+                destination.relative_to(ROOT.resolve())
+            except ValueError:
+                raise ReleaseError("artifact_path_invalid") from None
+            cursor = ROOT.resolve()
+            for part in relative.parts:
+                cursor = cursor / part
+                if cursor.exists() and cursor.is_symlink():
+                    raise ReleaseError("artifact_path_invalid")
+            destination.mkdir(parents=True, exist_ok=True)
+            frozen = [
+                (wheel_from_sdist, "wheel"),
+                (sdist_a, "sdist"),
+            ]
+            for source, kind in frozen:
+                output = destination / source.name
+                if output.exists() and sha256_file(output) != sha256_file(source):
+                    raise ReleaseError("artifact_output_collision")
+                copy2(source, output)
+                frozen_candidate.append({
+                    "kind": kind,
+                    "filename": output.name,
+                    "path": safe_relative(ROOT, output),
+                    "sha256": sha256_file(output),
+                    "size_bytes": output.stat().st_size,
+                })
         commands.append({"argv": ["python", "-m", "pip", "wheel", "--no-deps", "--no-build-isolation", "--no-index"], "exit": 0})
     checks["offline"] = {
         "negative_egress": offline_negative_probe(),
@@ -728,6 +843,7 @@ def qualify(mode: str) -> dict[str, Any]:
         "mode": mode,
         "candidate_status": "candidate_verified" if state == "VERIFIED" else "blocked",
         "checks": checks,
+        "frozen_candidate_artifacts": frozen_candidate,
         "platform_matrix": matrix,
         "report_sha256": "",
     }
@@ -739,13 +855,104 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--offline", action="store_true")
     mode.add_argument("--published", action="store_true")
+    mode.add_argument("--verify-index", choices=("testpypi", "pypi"))
+    parser.add_argument("--artifact-dir", help="Repository-relative destination for the frozen wheel and sdist (offline mode only).")
+    parser.add_argument("--candidate-report", default="evidence/releases/offline-qualification.json")
+    parser.add_argument("--published-manifest", default="evidence/releases/published.json")
     parser.add_argument("--report", required=True)
     args = parser.parse_args(argv)
     try:
         report_path = Path(args.report)
         if report_path.is_absolute():
             raise ReleaseError("report_path_invalid")
-        report = qualify("offline" if args.offline else "published")
+        if args.published:
+            if args.artifact_dir is not None:
+                raise ReleaseError("artifact_path_invalid")
+            from tools.release_proof import ReleaseProofError, verify_published
+
+            started = now()
+            try:
+                published = verify_published(
+                    ROOT,
+                    args.published_manifest,
+                    current_commit=git_value("rev-parse", "HEAD"),
+                    current_tree=source_tree_sha256(ROOT),
+                    spec_sha256=sha256_text_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md"),
+                    acceptance_sha256=sha256_text_file(ROOT / "docs" / "ACCEPTANCE.md"),
+                    tool_lock_sha256=sha256_text_file(ROOT / "requirements-dev.lock"),
+                )
+                errors: list[str] = []
+                state = "VERIFIED"
+            except ReleaseProofError as exc:
+                published = {}
+                errors = [exc.code]
+                state = "BLOCKED"
+            report = safe_report({
+                "report_schema_version": REPORT_VERSION,
+                "scope": {"kind": "release", "id": "published"},
+                "state": state,
+                "verification_kind": "luna_self_verified",
+                "source_commit": git_value("rev-parse", "HEAD"),
+                "source_tree_sha256": source_tree_sha256(ROOT),
+                "spec_sha256": sha256_text_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md"),
+                "acceptance_sha256": sha256_text_file(ROOT / "docs" / "ACCEPTANCE.md"),
+                "tool_lock_sha256": sha256_text_file(ROOT / "requirements-dev.lock"),
+                "platform": current_platform(),
+                "started_at": started,
+                "finished_at": now(),
+                "commands": [], "test_counts": {"required_platform_cells": 8, "verified_platform_cells": 8 if state == "VERIFIED" else 0},
+                "acceptance_cases": [], "mutation_results": [], "artifacts": [],
+                "prerequisites": ["M0", "M1", "M2", "M3", "protected_release_authorization"],
+                "limitations": [] if state == "VERIFIED" else ["External publication proof is unavailable or invalid"],
+                "errors": errors, "items": ["MI-10"], "mode": "published",
+                "candidate_status": "published_verified" if state == "VERIFIED" else "blocked",
+                "checks": {
+                    **published,
+                    "adapter_status": "not_implemented_in_public_core",
+                    "recognition_quality": "not_established_by_synthetic_tests",
+                    "cultural_review": "not_established_by_public_core",
+                    "publication_state": "verified" if state == "VERIFIED" else "blocked",
+                },
+                "platform_matrix": [], "report_sha256": "",
+            })
+        elif args.verify_index:
+            from tools.release_proof import ReleaseProofError, verify_index
+
+            started = now()
+            try:
+                if args.artifact_dir is None:
+                    raise ReleaseProofError("artifact_path_invalid")
+                inventory = frozen_candidate_inventory(args.artifact_dir, args.candidate_report)
+                check = verify_index(args.verify_index, inventory)
+                state = "VERIFIED"
+                errors = []
+            except ReleaseProofError as exc:
+                check = {"index": args.verify_index, "state": "BLOCKED"}
+                state = "BLOCKED"
+                errors = [exc.code]
+            report = safe_report({
+                "report_schema_version": REPORT_VERSION,
+                "scope": {"kind": "release", "id": f"{args.verify_index}_download"},
+                "state": state,
+                "verification_kind": "luna_self_verified",
+                "source_commit": git_value("rev-parse", "HEAD"),
+                "source_tree_sha256": source_tree_sha256(ROOT),
+                "spec_sha256": sha256_text_file(ROOT / "MUDRA_INTERACT_CORE_SPEC.md"),
+                "acceptance_sha256": sha256_text_file(ROOT / "docs" / "ACCEPTANCE.md"),
+                "tool_lock_sha256": sha256_text_file(ROOT / "requirements-dev.lock"),
+                "platform": current_platform(), "started_at": started, "finished_at": now(),
+                "commands": [], "test_counts": {"collected": 1 if state == "VERIFIED" else 0},
+                "acceptance_cases": [], "mutation_results": [], "artifacts": inventory if not errors else [],
+                "prerequisites": ["frozen_candidate", "single_index_download"],
+                "limitations": [] if not errors else ["Live index or downloaded-install verification did not pass"],
+                "errors": errors, "items": ["MI-10"], "mode": f"verify_{args.verify_index}",
+                "candidate_status": "verified" if state == "VERIFIED" else "blocked",
+                "checks": check, "platform_matrix": [], "report_sha256": "",
+            })
+        else:
+            if args.candidate_report != "evidence/releases/offline-qualification.json":
+                raise ReleaseError("artifact_path_invalid")
+            report = qualify("offline", artifact_dir=args.artifact_dir)
         write_report(ROOT / report_path, report)
         return 0 if report["state"] == "VERIFIED" else 2
     except ReleaseError as exc:

@@ -80,6 +80,7 @@ SAFE_REPORT_ERROR_CODES = {
     "fixture_case_not_executed", "verification_error",
     "platform_matrix_unavailable", "platform_matrix_report_invalid", "platform_matrix_report_stale",
     "platform_matrix_incomplete",
+    "published_artifact_unavailable",
 }
 
 
@@ -167,6 +168,37 @@ def _evidence_for_status(
         raise VerificationError("ledger_evidence_invalid")
 
 
+def _published_release_proof_in_receipt(
+    root: Path,
+    evidence: Any,
+    *,
+    required_case_ids: Iterable[str],
+) -> None:
+    if not isinstance(evidence, list):
+        raise VerificationError("ledger_verified_without_evidence")
+    for item in evidence:
+        if not isinstance(item, dict) or set(item) != {"path", "sha256"}:
+            continue
+        try:
+            receipt = validate_receipt_file(
+                root, item["path"], item["sha256"], required_case_ids=required_case_ids,
+            )
+        except VerificationError:
+            continue
+        proof = receipt.get("published_release")
+        indexes = proof.get("indexes") if isinstance(proof, dict) else None
+        if (
+            isinstance(proof, dict) and proof.get("state") == "VERIFIED"
+            and isinstance(proof.get("source_commit"), str)
+            and isinstance(proof.get("source_tree_sha256"), str)
+            and isinstance(indexes, dict)
+            and set(indexes) == {"testpypi", "pypi"}
+            and all(isinstance(indexes[name], dict) and indexes[name].get("state") == "VERIFIED" for name in indexes)
+        ):
+            return
+    raise VerificationError("ledger_verified_without_evidence")
+
+
 def validate_ledger(root: Path, ledger: Any, owners: dict[str, tuple[str, str]]) -> tuple[dict[str, dict[str, Any]], dict[str, dict[str, Any]]]:
     if not isinstance(ledger, dict) or not isinstance(ledger.get("items"), list) or not isinstance(ledger.get("gates"), list):
         raise VerificationError("ledger_shape_invalid")
@@ -206,6 +238,10 @@ def validate_ledger(root: Path, ledger: Any, owners: dict[str, tuple[str, str]])
                 root, item.get("evidence"), accepted_cases=case_ids,
                 expected_kind="item", expected_id=item_id,
             )
+            if item_id == "MI-10":
+                _published_release_proof_in_receipt(
+                    root, item.get("evidence"), required_case_ids=case_ids,
+                )
     for gate_id, gate in gates.items():
         if gate.get("state") not in STATES:
             raise VerificationError("ledger_state_invalid")
@@ -229,6 +265,11 @@ def validate_ledger(root: Path, ledger: Any, owners: dict[str, tuple[str, str]])
                 root, gate.get("evidence"), accepted_cases=required_cases,
                 expected_kind="gate", expected_id=gate_id, require_gate_scope=True,
             )
+            if gate_id == "M4":
+                required_case_ids = [case for item_id in member_ids for case in items[item_id]["acceptance_ids"]]
+                _published_release_proof_in_receipt(
+                    root, gate.get("evidence"), required_case_ids=required_case_ids,
+                )
     expected_cases = {case for item in items.values() for case in item.get("acceptance_ids", [])}
     if seen_cases != expected_cases or expected_cases != set(owners):
         raise VerificationError("ledger_acceptance_mapping_invalid")
@@ -859,6 +900,35 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
                     "size_bytes": matrix_file.stat().st_size,
                     "kind": "platform_matrix_report",
                 })
+        published_result: dict[str, Any] | None = None
+        if "MI-10" in selected_item_ids:
+            from tools.release_proof import ReleaseProofError, verify_published
+
+            try:
+                published_result = verify_published(
+                    root,
+                    "evidence/releases/published.json",
+                    current_commit=source_commit(root),
+                    current_tree=current_after["source_tree_sha256"],
+                    spec_sha256=current_after["spec_sha256"],
+                    acceptance_sha256=current_after["acceptance_sha256"],
+                    tool_lock_sha256=current_after["tool_lock_sha256"],
+                )
+            except ReleaseProofError as error:
+                code = error.code
+                errors.append({"code": "published_artifact_unavailable"})
+                published_result = {
+                    "state": "BLOCKED",
+                    "reason": code if code in {"published_manifest_unavailable", "manifest_file_missing", "candidate_identity_mismatch", "release_authorization_missing", "index_version_missing", "protected_environment_unavailable", "publisher_attestation_invalid"} else "external_publication_proof_invalid_or_unavailable",
+                }
+            except Exception:
+                errors.append({"code": "published_artifact_unavailable"})
+                published_result = {
+                    "state": "BLOCKED",
+                    "reason": "external_publication_proof_invalid_or_unavailable",
+                }
+        if published_result is not None:
+            report["published_release"] = published_result
         report.update(current_after)
         report["source_commit"] = source_commit(root)
         report["finished_at"] = utc_now()
@@ -873,6 +943,10 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
             report["limitations"] = [
                 "This receipt covers only the declared local acceptance scope and actual current platform.",
                 "It does not establish cross-platform, release, camera-adapter, cultural-review or production-integration readiness.",
+            ]
+        if "MI-10" in selected_item_ids:
+            report["limitations"] = [] if published_result and published_result.get("state") == "VERIFIED" else [
+                "Local E90-E99 acceptance tests passed; authorized external package publication and exact downloaded-install proof are still required.",
             ]
         report["errors"] = errors
         if not errors and report["test_counts"]["collected"] > 0:
