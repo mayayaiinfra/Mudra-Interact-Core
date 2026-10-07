@@ -17,10 +17,10 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Corrected current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; hosted MI-08 matrix 8/8 on Linux/Windows x86_64 × CPython 3.11-3.14.",
-    "verification_claim": "The first M3 workflow_dispatch preflight failed closed because actions/checkout fetch-depth 1 did not provide the prior candidate commit needed to prove receipt ancestry. The M3 job now fetches full Git history. The corrected source-tree hosted matrix run 37641574629 passed all eight cells; receipts and linked pytest reports are hash-validated, and the strict aggregator reports 8/8 VERIFIED. The full M3 gate via workflow_dispatch is next; M4 remains NOT_STARTED."
+    "baseline_tests": "M0-M2: 23/23, 120/120, and 165/165 including semantic mutations; MI-08 platform matrix 8/8; full M3 gate 187/187 on hosted Ubuntu 24.04 with network isolation.",
+    "verification_claim": "M3 completed VERIFIED on source commit 2856ca29d1ae6471c933f4488c14e6d2f353b829. Hosted workflow_dispatch run 37642137665 passed 187/187 cases across MI-01..MI-09; the report hash is recorded in evidence/local/M3-hosted-gate.json. MI-10 is now active. Its local release workflow, recovery tests and docs must be implemented and tested; no package was published. Before relying on M3 as an M4 prerequisite, rerun all dependent gates after MI-10 source changes. External publication still requires proven package/publisher access and candidate-specific release authorization."
   },
-  "active_item": "MI-08",
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -127,8 +127,13 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-hosted-gate.json",
+          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
+        }
+      ],
       "blocker": null,
       "verification_kind": "luna_self_verified"
     },
@@ -140,8 +145,10 @@
       "items": [
         "MI-10"
       ],
-      "state": "NOT_STARTED",
-      "evidence": []
+      "state": "IN_PROGRESS",
+      "evidence": [],
+      "verification_kind": "luna_self_verified",
+      "blocker": null
     }
   ],
   "recommended_order": [
@@ -454,9 +461,14 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "evidence/local/M3-hosted-gate.json",
+          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
+        }
+      ],
       "blocker": null
     },
     {
@@ -483,8 +495,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-09-windows-3.14-fbbc917.json",
-          "sha256": "6670f0456dfc7a0ad52154f4f65590ff690648cb431621b1939492e8f9446710"
+          "path": "evidence/local/M3-hosted-gate.json",
+          "sha256": "f4e38497e1a5370d04e2adb345c5e844b6098ead6a22152115287b77fe8af268"
         }
       ],
       "blocker": null
@@ -523,10 +535,10 @@
         "Live upload/download/hash/installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
-      "blocker": null
+      "blocker": "Live publication awaits verified package-name/publisher access and version-specific authorization; release controls, documentation and recovery tests continue."
     }
   ]
 }
