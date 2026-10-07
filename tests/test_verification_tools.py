@@ -155,6 +155,17 @@ def test_tampered_receipts_and_invalid_ledger_graphs_are_rejected(failure: str) 
         return
 
     ledger = read_json(ROOT / "IMPLEMENTATION_BACKLOG.json")
+    # Make the mutation oracle independent of the live progress ledger.  The
+    # committed ledger advances as gates complete; these cases need a neutral
+    # baseline before applying each invalid edit.
+    ledger["active_item"] = "MI-01"
+    for gate in ledger["gates"]:
+        gate["state"] = "NOT_STARTED"
+        gate["evidence"] = []
+    for item in ledger["items"]:
+        item["state"] = "NOT_STARTED"
+        item["verification_kind"] = None
+        item["evidence"] = []
     if failure == "dependency_cycle":
         ledger["items"][0]["requires"] = ["MI-01"]
         expected = "ledger_dependency_cycle"
