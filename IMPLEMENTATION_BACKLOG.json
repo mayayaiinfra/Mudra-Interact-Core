@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M2 requalification now passes the console-entrypoint case but exposed E53 pip build isolation attempting an index download for setuptools. E53 now builds with the already locked verifier toolchain and disables package-index access. Requalify M0-M2 before the hosted matrix.",
-    "baseline_tests": "Current-source E53 offline wheel build passed on Windows (1/1) and Linux CPython 3.11 (1/1); focused E52/E79/E84 passed on both platforms; clean verifier pip check and actionlint passed. Full M0-M2 gates are being rerun after these test changes.",
-    "verification_claim": "M0-M2 receipts must be refreshed for the latest source identity. MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M0 is refreshed for source commit 7ab8edf with 23/23 required acceptance executions passing after the offline E53 fix. M1 and M2 requalification are next; MI-08 remains active for the hosted matrix.",
+    "baseline_tests": "Current-source M0: 23/23; E53 offline wheel build passed on Windows and Linux; focused E52/E79/E84 passed on both; clean verifier pip check and actionlint passed.",
+    "verification_claim": "M0/MI-01 have current luna_self_verified receipts. M1-M2 and MI-02-09 are being refreshed; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [
@@ -78,8 +78,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-ec3a85c.json",
-          "sha256": "dd2d50b9c2c3d6546c2851fba8552391277f46f41bd7c8368abcc75194fc1663"
+          "path": "evidence/local/M0-current-7ab8edf.json",
+          "sha256": "25eaa81b6b923e40e607ff843cc96016f61e164ed3b758fa0ec14b3ea1220aed"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -189,8 +189,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-ec3a85c.json",
-          "sha256": "dd2d50b9c2c3d6546c2851fba8552391277f46f41bd7c8368abcc75194fc1663"
+          "path": "evidence/local/M0-current-7ab8edf.json",
+          "sha256": "25eaa81b6b923e40e607ff843cc96016f61e164ed3b758fa0ec14b3ea1220aed"
         }
       ],
       "blocker": null
