@@ -18,9 +18,9 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
-    "verification_claim": "MI-08 is IN_PROGRESS. The local elevated Windows matrix on source 8e84e8a completed setup for CPython 3.11-3.14 but each E76 probe remained connected because the rule targeted the venv Scripts\\python.exe launcher. A native Windows image probe on all four versions showed GetModuleFileNameW reports the base python.exe while sys.executable remains inside the venv. The workflow and verifier now target and validate the OS-reported process image while checking that acceptance still runs from the isolated venv. The local Windows distribution suite passed 16/16 applicable checks with only the admin-only E76 case excluded. No fresh current-source Windows receipt exists yet. Historical Linux receipts must be refreshed on the same candidate commit as the Windows receipts before aggregation. M4 remains NOT_STARTED."
+    "verification_claim": "MI-08 remains IN_PROGRESS. A local Windows probe across CPython 3.11-3.14 showed the venv Scripts\\python.exe launcher differs from the base python.exe process image reported by GetModuleFileNameW; the verifier and workflow now target the reported image while confirming sys.executable remains inside the isolated venv. Local MI-08 distribution checks passed 16/16 with only the administrator-only E76 integration case excluded. The first hosted run on d3cd606 failed before E76: Linux could not validate prerequisite receipts because referenced M0-M2/MI-09 evidence was not tracked, and cold Windows runners could not install locked tools because PIP_NO_INDEX was enabled too early. The Windows offline switch is now ordered after the hashed tool install. Refresh and commit M0-M2 and MI-09 receipts against the current source tree before rerunning the eight-cell matrix. M4 remains NOT_STARTED."
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -454,7 +454,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "verification_kind": "luna_self_verified",
       "evidence": [],
       "blocker": null

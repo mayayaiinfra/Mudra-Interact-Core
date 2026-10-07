@@ -228,6 +228,10 @@ def test_artifact_inventory_contains_hashes_not_unexpected_payload(release_repor
 @pytest.mark.acceptance("E79")
 def test_ci_is_pinned_read_only_and_bounded() -> None:
     workflow = (ROOT / ".github" / "workflows" / "verify.yml").read_text(encoding="utf-8")
+    windows_tools_step = workflow.split(
+        "- name: Install and validate locked verification tools\n        if: runner.os == 'Windows'\n        shell: pwsh\n        run: |",
+        1,
+    )[1].split("\n      - name:", 1)[0]
     assert "permissions:\n  contents: read" in workflow
     assert "timeout-minutes: 20" in workflow
     assert 'python -m venv "$RUNNER_TEMP/mudra-verifier"' in workflow
@@ -235,6 +239,7 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert '"$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check' in workflow
     assert '.mudra-verifier' not in workflow
     assert "--require-hashes --no-deps -r requirements-dev.lock" in workflow
+    assert windows_tools_step.index("pip install --require-hashes") < windows_tools_step.index("$env:PIP_NO_INDEX = '1'")
     assert "pip install --no-deps --no-build-isolation ." in workflow
     assert "pip check" in workflow
     assert workflow.index("pip install --no-deps --no-build-isolation .") < workflow.index("Block outbound networking")
