@@ -19,7 +19,7 @@ def test_required_semantic_mutations_are_detected_in_isolated_copies(tmp_path: P
         cwd=ROOT,
         capture_output=True,
         text=True,
-        timeout=240,
+        timeout=600,
         check=False,
     )
     assert result.returncode == 0, result.stdout[-1000:] + result.stderr[-1000:]

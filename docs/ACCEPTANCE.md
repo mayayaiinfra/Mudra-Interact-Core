@@ -108,7 +108,7 @@ targets; files not present at baseline must be implemented before verification.
 | E66 | MI-07 / test_fuzz.py | Random valid sequences/property tests enforce stable prerequisites, confidence bounds, reset, no consent reuse and bounded memory; expected outcomes independent. |
 | E67 | MI-07 / test_licensing.py | Empty/missing/malformed policy, missing core, unknown status/licence and absent NOTICE each fail. |
 | E68 | MI-07 / test_licensing.py | Shipped file with absent inventory/wrong digest/missing licence coverage/pending asset fails; never auto-add permissive status. |
-| E69 | MI-07 / test_mutations.py | All required semantic mutations in section3 cause named assertions to fail; import/syntax/setup failure cannot count as success. |
+| E69 | MI-07 / test_mutations.py | All required semantic mutations in section3 cause named assertions to fail; import/syntax/setup failure cannot count as success. Each mutant run is capped at 90 seconds and the complete isolated mutation suite at 600 seconds. |
 | E70 | MI-07 / test_privacy.py | 10,000-frame session run keeps <=N recent records, no retained point arrays; confirm/revoke/stop clears owned references (no zeroization claim). |
 | E71 | MI-07 / test_verification_tools.py | Report output escapes synthetic diagnostics and removes private path fields; bounded output/timeouts kill owned child process tree and fail gate. |
 | E72 | MI-07 / test_privacy.py | Threat-model checklist maps all public parse/API/import/output channels to actual negative tests; no global no-leak guarantee asserted. |

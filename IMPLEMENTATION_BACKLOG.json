@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M1 now have current-source receipts after the offline E53 fix: 23/23 M0 required executions and 120/120 M1 dependency-closure executions passed. M2 is next; MI-08 remains active for the hosted matrix.",
-    "baseline_tests": "Current-source M0: 23/23; M1 dependency closure: 120/120. E53 offline wheel build passed on Windows and Linux; focused E52/E79/E84 passed on both; clean verifier pip check and actionlint passed.",
-    "verification_claim": "M0-M1 and MI-01-04 have current luna_self_verified receipts. M2 and MI-05-07/MI-09 are being refreshed next; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M2 requalification passes E53 on both Windows and Linux. Its first completed run then found that the E69 mutation proof exceeds the 240-second outer timeout despite the other 164 tests passing. E69 now has a 600-second total bound while each mutant remains capped at 90 seconds; requalify M0-M2 before the hosted matrix.",
+    "baseline_tests": "Current-source E53 offline wheel build passed on Windows and Linux; focused E52/E79/E84 passed on both; clean verifier pip check and actionlint passed. The latest full M2 run reached 164 passing tests and failed only on E69's outer timeout; M0-M1 receipts are stale after the acceptance-timeout update.",
+    "verification_claim": "M0-M2 receipts must be refreshed for the latest source identity. MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [
