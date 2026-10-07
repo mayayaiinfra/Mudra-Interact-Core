@@ -265,8 +265,8 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
             "finished_at": "2026-01-01T00:00:01Z",
             "commands": [],
             "test_counts": {
-                "collected": len(REQUIRED_CASES),
-                "passed": len(REQUIRED_CASES),
+                "collected": len(REQUIRED_CASES) + 1,
+                "passed": len(REQUIRED_CASES) + 1,
                 "failed": 0,
                 "skipped": 0,
                 "xfailed": 0,
@@ -275,7 +275,7 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
             "acceptance_cases": [
                 {"acceptance_id": case_id, "outcome": "passed"}
                 for case_id in REQUIRED_CASES
-            ],
+            ] + [{"acceptance_id": "E84", "outcome": "passed"}],
             "mutation_results": [],
             "artifacts": [],
             "prerequisites": [{"id": "MI-07", "state": "VERIFIED"}],

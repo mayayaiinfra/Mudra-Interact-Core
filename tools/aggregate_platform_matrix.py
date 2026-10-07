@@ -159,15 +159,30 @@ def aggregate_receipt_documents(
             continue
         counts = report.get("test_counts")
         cases = report.get("acceptance_cases")
-        actual_cases = {
-            item.get("acceptance_id")
-            for item in cases
-            if isinstance(item, dict) and item.get("outcome") == "passed"
-        } if isinstance(cases, list) else set()
+        valid_case_entries = (
+            isinstance(cases, list)
+            and all(
+                isinstance(item, dict)
+                and item.get("acceptance_id") in REQUIRED_CASES
+                and item.get("outcome") == "passed"
+                for item in cases
+            )
+        )
+        actual_cases = (
+            {item["acceptance_id"] for item in cases}
+            if valid_case_entries
+            else set()
+        )
+        valid_counts = isinstance(counts, dict) and all(
+            type(counts.get(name)) is int
+            for name in ("collected", "passed", "failed", "skipped", "xfailed", "xpassed")
+        )
         if (
-            not isinstance(counts, dict)
-            or counts.get("collected") != len(REQUIRED_CASES)
-            or counts.get("passed") != len(REQUIRED_CASES)
+            not valid_counts
+            or not valid_case_entries
+            or counts["collected"] != len(cases)
+            or counts["collected"] < len(REQUIRED_CASES)
+            or counts["passed"] != counts["collected"]
             or counts.get("failed") != 0
             or counts.get("skipped") != 0
             or counts.get("xfailed") != 0
