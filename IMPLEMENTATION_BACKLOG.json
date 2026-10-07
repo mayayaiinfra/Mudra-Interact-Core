@@ -79,9 +79,10 @@
       "evidence": [
         {
           "path": "evidence/local/M0-mi09.json",
-          "sha256": "6404b2ae935fdcfa5086091366054311a77a33c1e6bffeb55f5292e7a1e5c57f"
+          "sha256": "353dd3e588aa91c0b7fdbe11997dcb9791dedc4b0d04c2a02690478e77c907a0"
         }
-      ]
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M1",
@@ -97,9 +98,10 @@
       "evidence": [
         {
           "path": "evidence/local/M1-mi09.json",
-          "sha256": "246a2e41a76f2a1e40d957eede36193522675d679c16036ccd4aa01e62c9c3e3"
+          "sha256": "fd53a82b2425ea7958077ae43797b5635aa1efed39a1e4b94d739f5ecfac83bf"
         }
-      ]
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M2",
@@ -115,9 +117,10 @@
       "evidence": [
         {
           "path": "evidence/local/M2-mi09.json",
-          "sha256": "d5c01f1913583cb225284dada3d49b4f3dfb7e1e0d4e2dd04c16ed14076eeb61"
+          "sha256": "63e4e15744dc06f921ee001503aa11f39d34f2da8c3b93d5321ca24aa4540f14"
         }
-      ]
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M3",
@@ -129,21 +132,16 @@
         "MI-09"
       ],
       "state": "BLOCKED",
-      "evidence": [
-        {
-          "path": "evidence/local/M3-mi09.json",
-          "sha256": "c3802b94a359fd061cfdb945ada8f6e87758497e933c2f0deab87fe4a09272ae"
-        }
-      ],
+      "evidence": [],
       "blocker": {
         "code": "required_platform_matrix_unavailable",
-        "qualification_report": "evidence/local/release-mi09.json",
-        "qualification_report_sha256": "2aecdeca2f6e2f356b4a472a1f632464afbf43bc18e4c4a7effd60bc8650a8aa",
+        "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
+        "qualification_report_sha256": "b180a5fdba9a9941e93a2ae7f4c9d7e680c438faaaf5e8dd26f82dd7b04384a7",
         "verified_cells": 1,
         "required_cells": 12,
         "missing_cells": 11,
-        "network_isolation": "runner_level_proof_unavailable",
-        "unblock": "Run the exact locked MI-08 qualification on Linux x86_64, Windows x86_64 Python 3.11-3.13, and macOS arm64 Python 3.11-3.14 with OS-level network denial, then attach fresh receipts."
+        "network_isolation": "linux_network_namespace_verified; hosted_cells_pending",
+        "unblock": "Collect current-source isolated receipts for Linux x86_64 Python 3.12-3.14, Windows x86_64 Python 3.11-3.14, and macOS arm64 Python 3.11-3.14."
       }
     },
     {
@@ -202,7 +200,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-01-mi09.json",
-          "sha256": "65c083fd4e4462b85cff6bbbf5c7b2e26cc7574743206a50dd719e6a725c0056"
+          "sha256": "a44a0f823f882742a3222dac7ed23dd65e9a22ccf4c0caebe55d6dd17a64dc36"
         }
       ],
       "blocker": null
@@ -240,7 +238,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-02-mi09.json",
-          "sha256": "3ea6f94ef68c5eab762285880156488532ce12ba1aaf668774666e284a119c31"
+          "sha256": "889e0940adafdca25670523df2d02ef9bacce40a774baa7dd012a5490ac608df"
         }
       ],
       "blocker": null
@@ -273,7 +271,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-03-mi09.json",
-          "sha256": "1d7b34fd952dd9177f736fccfd7b8986536fd8a2d3ecd0fea223e9cfdc4d3134"
+          "sha256": "34b80b54237facd27c12d4f83d075e993d6bfbe29c8b4ca281941540b975f8b2"
         }
       ],
       "blocker": null
@@ -316,7 +314,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-04-mi09.json",
-          "sha256": "140744b425139c24eedea7d566ad16381dc7268b0395265ad6d44e69910c5f67"
+          "sha256": "d328c3a37ec3380e1a236be2d3853abec6e24ed0bdc24e8b2365fae7c19d6a2a"
         }
       ],
       "blocker": null
@@ -355,7 +353,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-05-mi09.json",
-          "sha256": "52e8c8b63d163fa46a4c862ab55a3b30f57397d1397c4143770f5c687b431f9b"
+          "sha256": "07019b187492fe5cc433219594c65e2e5f6f823d8bd33e893aad6e05e019055a"
         }
       ],
       "blocker": null
@@ -388,7 +386,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-06-mi09.json",
-          "sha256": "7c10eddab036a34c63e48763c08a16ae57ccf1777bb3f445f18c0c255c1d1f80"
+          "sha256": "7f2dd248ccfd62f6f81b3c677a2862359f17bd7e6e6dabe1302b42e4e772f568"
         }
       ],
       "blocker": null
@@ -431,7 +429,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-07-mi09.json",
-          "sha256": "50558d7ecc40138b55376149c194a61f1663f1f08016efb25cd1fc298d45b007"
+          "sha256": "65ccdbf25207219130e48aa12a6bd6ba4576785d52ed4cd4aff5b7e516a98926"
         }
       ],
       "blocker": null
@@ -468,15 +466,24 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "BLOCKED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-08-mi09.json",
-          "sha256": "3b766c451b12be34838e15c663d604186e84e148910a53051b93bfab433e4c07"
+          "path": "evidence/local/MI-08-linux-local-smoke.json",
+          "sha256": "b180a5fdba9a9941e93a2ae7f4c9d7e680c438faaaf5e8dd26f82dd7b04384a7"
         }
       ],
-      "blocker": null
+      "blocker": {
+        "code": "required_platform_matrix_unavailable",
+        "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
+        "qualification_report_sha256": "b180a5fdba9a9941e93a2ae7f4c9d7e680c438faaaf5e8dd26f82dd7b04384a7",
+        "verified_cells": 1,
+        "required_cells": 12,
+        "missing_cells": 11,
+        "network_isolation": "linux_network_namespace_verified; hosted_cells_pending",
+        "unblock": "Collect current-source isolated receipts for Linux x86_64 Python 3.12-3.14, Windows x86_64 Python 3.11-3.14, and macOS arm64 Python 3.11-3.14."
+      }
     },
     {
       "id": "MI-09",
@@ -503,7 +510,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-09-mi09.json",
-          "sha256": "4762e49ad45221c80be92a0a0e6784ffb79f6ae0fac323ea285f41851c0dc141"
+          "sha256": "0455ef13f8100dad06b92a0769b0084e4917a0b8f2a248f5212e4e86d7d6cf9e"
         }
       ],
       "blocker": null
