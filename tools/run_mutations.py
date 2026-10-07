@@ -128,6 +128,30 @@ MUTATIONS = (
         ("E80",),
         custom_assertion="stale_receipt",
     ),
+    Mutation(
+        "solo_release_admin_bypass_allowed",
+        "tools/release_proof.py",
+        'or body.get("can_admins_bypass") is not False',
+        "or False",
+        ("E94",),
+        ("tests/test_release_recovery.py::test_production_environment_requires_solo_owner_manual_approval_main_only_and_no_bypass",),
+    ),
+    Mutation(
+        "solo_release_branch_scope_ignored",
+        "tools/release_proof.py",
+        'and branch_policies[0].get("name") == "main"',
+        "and True",
+        ("E94",),
+        ("tests/test_release_recovery.py::test_production_environment_requires_solo_owner_manual_approval_main_only_and_no_bypass",),
+    ),
+    Mutation(
+        "solo_release_self_approval_policy_reversed",
+        "tools/release_proof.py",
+        "or prevent_self_review is not False",
+        "or prevent_self_review is not True",
+        ("E94",),
+        ("tests/test_release_recovery.py::test_production_environment_requires_solo_owner_manual_approval_main_only_and_no_bypass",),
+    ),
 )
 
 

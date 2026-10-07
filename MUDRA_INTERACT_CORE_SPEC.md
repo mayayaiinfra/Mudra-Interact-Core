@@ -405,10 +405,24 @@ bounded artifact retention and no credentials on untrusted PRs. Publishing is
 a separate protected least-privilege job with configured publishing identity,
 verified source/artifact provenance and no checked-in long-lived token.
 
+The current repository has a single maintainer. `pypi-production` must still
+require a reviewer and a deliberate manual approval, with the repository owner
+as the configured reviewer. The owner may approve their own release run. This
+is single-operator authorization, not independent human review or separation
+of duties; do not describe it as dual control. Disable administrator bypass
+and restrict deployment to `main`. The approval must be made only after
+checking the exact version, full source commit and candidate artifact
+fingerprint shown for that workflow run. Test and production stages remain
+separate, and passing TestPyPI never authorizes production by itself. If a
+second maintainer is added later, prefer enabling self-review prevention and
+requiring that maintainer for production approval.
+
 M4 sequence: verify candidate -> freeze source/artifact/evidence hashes ->
 record release authorization (reuse valid existing authorization) -> TestPyPI
-upload/download/exact-version install -> production upload of SAME artifacts
--> download/hash/installed verification -> GitHub release/tag/artifact links.
+upload/download/exact-version install -> manual owner approval in the protected
+production environment for this exact run/version/commit/fingerprint ->
+production upload of SAME artifacts -> download/hash/installed verification
+-> GitHub release/tag/artifact links.
 Verify repository/package-name/publisher ownership first. Separate indexes and
 accounts; single-index downloads with --no-deps, no extra-index fallback.
 No rebuild after acceptance, overwritten tag or reused published version.

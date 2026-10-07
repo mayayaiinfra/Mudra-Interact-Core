@@ -647,9 +647,39 @@ def _verify_environment_configuration(repo: str, fetch: Callable[..., tuple[int,
     matching = [rule for rule in rules if isinstance(rule, dict) and rule.get("type") == "required_reviewers"] if isinstance(rules, list) else []
     reviewers = matching[0].get("reviewers") if matching else None
     prevent_self_review = matching[0].get("prevent_self_review") if matching else None
-    if not isinstance(reviewers, list) or not reviewers or prevent_self_review is not True:
+    branch_status, _branch_url, branch_body = _json_get(
+        f"https://api.github.com/repos/{repo}/environments/{PRODUCTION_ENVIRONMENT}/deployment-branch-policies?per_page=100",
+        fetch,
+    )
+    branch_policies = branch_body.get("branch_policies") if isinstance(branch_body, dict) else None
+    main_only = (
+        isinstance(branch_policies, list)
+        and len(branch_policies) == 1
+        and isinstance(branch_policies[0], dict)
+        and branch_policies[0].get("name") == "main"
+        and branch_policies[0].get("type") == "branch"
+    )
+    if (
+        not isinstance(reviewers, list) or not reviewers
+        or prevent_self_review is not False
+        or body.get("can_admins_bypass") is not False
+        or branch_status != 200 or not isinstance(branch_body, dict)
+        or type(branch_body.get("total_count")) is not int or branch_body.get("total_count") != 1
+        or not main_only
+        or body.get("deployment_branch_policy") != {
+            "protected_branches": False,
+            "custom_branch_policies": True,
+        }
+    ):
         raise ReleaseProofError("protected_environment_unconfigured")
-    return {"environment": PRODUCTION_ENVIRONMENT, "required_reviewers": len(reviewers), "prevent_self_review": True}
+    return {
+        "environment": PRODUCTION_ENVIRONMENT,
+        "required_reviewers": len(reviewers),
+        "self_approval_allowed": True,
+        "independent_review": False,
+        "administrator_bypass": False,
+        "deployment_branches": ["main"],
+    }
 
 
 def verify_published(

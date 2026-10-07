@@ -19,10 +19,17 @@ access must complete and verify all of the following:
    Configure the corresponding TestPyPI publisher with the `pypi-test`
    environment. Use each service's separate account and trusted-publisher
    configuration. Do not add a long-lived upload token.
-3. Create the GitHub environments `pypi-test` and `pypi-production`. Configure
-   `pypi-production` with at least one required reviewer and prevent
-   self-review. Restrict deployment branches to `main`. Keep test and
-   production approvals separate.
+3. Create the GitHub environments `pypi-test` and `pypi-production`, and
+   restrict both to `main`. `pypi-production` must have a required reviewer,
+   administrator bypass disabled, and a deliberate manual approval for each
+   release run. This repository currently has one maintainer, so the owner is
+   the configured reviewer and may approve their own run. This is single-owner
+   authorization, not an independent review; never claim separation of duties.
+   The owner must check the exact version, full source commit, and candidate
+   artifact fingerprint for that run before approving. Keep the TestPyPI and
+   production stages and their environment identities separate. If another
+   maintainer is added later, enable self-review prevention and require their
+   production approval where practical.
 4. Confirm that the production publisher is scoped to the exact workflow and
    environment; the published PyPI attestations must verify against this
    repository. The exact workflow and source commit are recorded in the
@@ -32,7 +39,10 @@ access must complete and verify all of the following:
 
 Missing access, package-name collision, absent trusted publishers, or missing
 environment protection blocks the release. Do not guess ownership from an
-unavailable index page.
+unavailable index page. The solo-owner exception removes independent reviewer
+separation only; it does not waive manual approval, branch restrictions,
+candidate identity, TestPyPI qualification, provenance, or downloaded-install
+proof.
 
 If the package page or exact version is missing, stop; a `404` is not evidence
 that the project name is available or permission to claim it.
@@ -65,10 +75,13 @@ that the project name is available or permission to claim it.
    --no-cache-dir` in a fresh environment; the package has no runtime
    dependencies.
 2. Only after that check passes does the production job wait at the
-   `pypi-production` protected environment. Approval is specific to this run,
-   version, commit and candidate artifact fingerprint. Once approved, the
-   production publisher uploads the *same frozen files* using the configured
-   Trusted Publisher. Long-lived tokens are not a fallback.
+   `pypi-production` protected environment. The owner must manually approve
+   this run after checking its version, commit and candidate artifact
+   fingerprint. The current solo-owner policy permits the owner to approve
+   their own run; it is not an independent review. Administrator bypass is
+   disabled. Once approved, the production publisher uploads the *same frozen
+   files* using the configured Trusted Publisher. Long-lived tokens are not a
+   fallback.
 3. The workflow queries PyPI for the exact version, downloads and hashes each
    production file, verifies the PyPI Trusted Publisher attestations and runs a
    second fresh isolated install smoke. TestPyPI evidence cannot stand in for

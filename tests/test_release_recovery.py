@@ -277,9 +277,13 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "path: evidence/releases/testpypi-verification.json" in workflow
     assert "path: evidence/releases/pypi-verification.json" in workflow
     assert "python-version: '3.12'" in workflow
-    assert "same frozen files" in runbook.lower() and "no rebuild" in runbook.lower()
+    normalized_runbook = " ".join(runbook.lower().split())
+    assert "same frozen files" in normalized_runbook and "no rebuild" in normalized_runbook
     assert "https://pypi.org/project/mudra-interact/0.2.0/" in readme
     assert "--no-deps" in runbook and "TestPyPI" in runbook
+    assert "may approve their own run" in normalized_runbook
+    assert "administrator bypass is disabled" in normalized_runbook
+    assert "not an independent review" in normalized_runbook
     lock = (ROOT / "requirements-release.lock").read_text(encoding="utf-8")
     requirements = {
         line.split("==", 1)[0].casefold().replace("_", "-")
@@ -292,6 +296,69 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     hashes = re.findall(r"--hash=sha256:([0-9a-f]+)", lock)
     assert len(hashes) == len(entries)
     assert all(len(digest) == 64 for digest in hashes)
+
+
+@pytest.mark.acceptance("E94")
+def test_production_environment_requires_solo_owner_manual_approval_main_only_and_no_bypass() -> None:
+    environment_url = (
+        f"https://api.github.com/repos/{release_proof.REPOSITORY}"
+        f"/environments/{release_proof.PRODUCTION_ENVIRONMENT}"
+    )
+    environment = {
+        "name": release_proof.PRODUCTION_ENVIRONMENT,
+        "can_admins_bypass": False,
+        "protection_rules": [{
+            "type": "required_reviewers",
+            "reviewers": [{"type": "User", "id": 123}],
+            "prevent_self_review": False,
+        }],
+        "deployment_branch_policy": {"protected_branches": False, "custom_branch_policies": True},
+    }
+    branch_policies = {"total_count": 1, "branch_policies": [{"name": "main", "type": "branch"}]}
+
+    def check(
+        candidate_environment: dict[str, Any],
+        candidate_policies: dict[str, Any] = branch_policies,
+    ) -> dict[str, Any]:
+        def fetch(url: str, *, max_bytes: int) -> tuple[int, str, bytes]:
+            del max_bytes
+            body = candidate_environment if url == environment_url else candidate_policies
+            return 200, url, json.dumps(body).encode("utf-8")
+
+        return release_proof._verify_environment_configuration(release_proof.REPOSITORY, fetch)
+
+    assert check(environment) == {
+        "environment": "pypi-production",
+        "required_reviewers": 1,
+        "self_approval_allowed": True,
+        "independent_review": False,
+        "administrator_bypass": False,
+        "deployment_branches": ["main"],
+    }
+
+    invalid_environments: list[dict[str, Any]] = []
+    no_reviewers = json.loads(json.dumps(environment))
+    no_reviewers["protection_rules"][0]["reviewers"] = []
+    invalid_environments.append(no_reviewers)
+    self_review_prevented = json.loads(json.dumps(environment))
+    self_review_prevented["protection_rules"][0]["prevent_self_review"] = True
+    invalid_environments.append(self_review_prevented)
+    bypass_allowed = json.loads(json.dumps(environment))
+    bypass_allowed["can_admins_bypass"] = True
+    invalid_environments.append(bypass_allowed)
+    no_branch_scope = json.loads(json.dumps(environment))
+    no_branch_scope["deployment_branch_policy"] = {"protected_branches": True, "custom_branch_policies": False}
+    invalid_environments.append(no_branch_scope)
+
+    for invalid in invalid_environments:
+        with pytest.raises(release_proof.ReleaseProofError) as error:
+            check(invalid)
+        assert error.value.code == "protected_environment_unconfigured"
+
+    wrong_branch = {"total_count": 1, "branch_policies": [{"name": "release/*", "type": "branch"}]}
+    with pytest.raises(release_proof.ReleaseProofError) as error:
+        check(environment, wrong_branch)
+    assert error.value.code == "protected_environment_unconfigured"
 
 
 @pytest.mark.acceptance("E95")

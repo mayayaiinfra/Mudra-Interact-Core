@@ -26,5 +26,5 @@ def test_required_semantic_mutations_are_detected_in_isolated_copies(tmp_path: P
     document = json.loads(report.read_text(encoding="utf-8"))
     assert document["state"] == "VERIFIED"
     assert document["source_tree_sha256_before"] == document["source_tree_sha256_after"]
-    assert len(document["mutation_results"]) == 12
+    assert len(document["mutation_results"]) == 15
     assert all(item["applied"] and item["detected"] for item in document["mutation_results"])
