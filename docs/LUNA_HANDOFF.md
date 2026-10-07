@@ -2,15 +2,10 @@
 
 Read in order: [specification](../MUDRA_INTERACT_CORE_SPEC.md),
 [acceptance matrix](ACCEPTANCE.md), [ledger](../IMPLEMENTATION_BACKLOG.json).
-This is the end-to-end public core delivery contract. No runtime gate is verified
-at the original five-test baseline. As of 2026-10-07, MI-01 through MI-09 and
-M0-M2 had passed their recorded checks on an earlier source identity. The
-previous hosted matrix reached 12/12, but M3 had not closed because a clean
-Python 3.11 gate run exposed an omitted locked verifier dependency. After fixing
-the lock, a new run exposed that an in-checkout virtual environment changes
-source identity; CI now places it in runner temp and retains sanitized pytest
-reports for failed cells. MI-08/M3 require a fresh matrix and combined gate.
-M4 remains pending.
+This is the end-to-end public core delivery contract. The authoritative current
+implementation state, active gate/item and verification evidence live in
+`IMPLEMENTATION_BACKLOG.json`. Update that ledger at each gate completion; do
+not duplicate volatile status here, where edits would change source identity.
 
 ## 1. Working protocol
 
@@ -73,7 +68,7 @@ contract requires Astra review; ordinary fixes within it do not.
 | MI-05 | cli.py command/error/batch/event flow; valid examples/v2; README/API usage; preliminary wheel smoke helper | E45-E55 on actually installed package; no reliance on PYTHONPATH/source imports. |
 | MI-06 | catalogue2.0 neutral records; robust catalogue loader; historical-alias migration; docs/CATALOG_REVIEW.md with explicit unverified named labels | E56-E61; do not invent provenance or human review. |
 | MI-07 | privacy/threat docs; licensing inventory validator; fuzz/resource/mutation tests; tools/run_mutations.py; safe evidence sanitization | E62-E72 and all selected semantic mutations. |
-| MI-08 | locked/hash-pinned dev tools; pyproject/package data; .gitignore; build/install/reproducibility tools; CI matrix; SBOM/provenance; tools/verify_release.py; tools/aggregate_platform_matrix.py; docs/COMPATIBILITY.md | E73-E84 and all 12 required OS/Python cells, offline/install/source identity proved. E76 must observe Linux network-namespace isolation, an active Windows interpreter-scoped firewall block, or macOS sandbox denial; each runner logs its sanitized item receipt and acceptance artifact, and the matrix aggregator rejects missing, stale, duplicate or failed cells. |
+| MI-08 | locked/hash-pinned dev tools; pyproject/package data; .gitignore; build/install/reproducibility tools; CI matrix; SBOM/provenance; tools/verify_release.py; tools/aggregate_platform_matrix.py; docs/COMPATIBILITY.md | E73-E84 and all 12 required OS/Python cells, offline/install/source identity proved. E76 must observe Linux network-namespace isolation, a successful Windows pre-rule control plus active canonical-interpreter-scoped firewall block and denied/timed-out connect, or macOS sandbox denial; a timeout qualifies only after both Windows controls pass. Each runner logs its sanitized item receipt and acceptance artifact, and the matrix aggregator rejects missing, stale, duplicate or failed cells. |
 | MI-09 | docs/ADAPTER_SPEC.md with state table, interfaces, resource limits and future live-proof requirements; tests/test_adapter_contract.py | E85-E89 verify DESIGN only; camera runtime remains separately unimplemented. |
 | MI-10 | CHANGELOG.md, SECURITY.md, release/recovery runbook; protected publish workflow; authorized TestPyPI/PyPI/GitHub release and downloaded install receipts | E90-E99, actual external publication proof plus synthetic failure-recovery tests. |
 

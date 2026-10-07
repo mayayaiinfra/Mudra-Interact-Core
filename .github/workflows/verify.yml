@@ -70,11 +70,22 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
+          $target = & $python -c "from pathlib import Path; import sys; print(Path(sys.executable).resolve())"
+          if ($LASTEXITCODE -ne 0 -or -not $target) { throw 'Unable to resolve verifier interpreter path' }
+          $probe = "import socket,sys; s=socket.socket(socket.AF_INET,socket.SOCK_STREAM); s.settimeout(3); code=s.connect_ex(('1.1.1.1',443)); s.close(); sys.exit(code)"
+          & $python -c $probe
+          if ($LASTEXITCODE -ne 0) { throw 'Pre-block outbound connectivity control failed' }
+          "MUDRA_WINDOWS_EGRESS_CONTROL=VERIFIED" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           $name = "Mudra-MI08-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           "MUDRA_FIREWALL_RULE_NAME=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          New-NetFirewallRule -Name $name -DisplayName $name -Direction Outbound -Action Block -Program $python -RemoteAddress Any -Profile Any -Enabled True | Out-Null
+          New-NetFirewallRule -Name $name -DisplayName $name -Direction Outbound -Action Block -Program $target -RemoteAddress Any -Profile Any -Enabled True | Out-Null
           $rule = Get-NetFirewallRule -PolicyStore ActiveStore -Name $name -ErrorAction Stop
-          if ($rule.Enabled -ne 'True' -or $rule.Action -ne 'Block' -or $rule.Direction -ne 'Outbound') { throw 'Outbound block rule was not activated' }
+          $application = Get-NetFirewallApplicationFilter -AssociatedNetFirewallRule $rule
+          $address = Get-NetFirewallAddressFilter -AssociatedNetFirewallRule $rule
+          $remote = @($address.RemoteAddress)
+          $expectedTarget = [IO.Path]::GetFullPath($target)
+          $actualTarget = [IO.Path]::GetFullPath($application.Program)
+          if ($rule.Enabled -ne 'True' -or $rule.Action -ne 'Block' -or $rule.Direction -ne 'Outbound' -or $rule.Profile -ne 'Any' -or $actualTarget -ine $expectedTarget -or $remote.Count -ne 1 -or $remote[0] -ne 'Any') { throw 'Interpreter-scoped outbound block rule did not match its required configuration' }
       - name: Run acceptance suite in an isolated network context
         if: runner.os != 'Windows'
         shell: bash

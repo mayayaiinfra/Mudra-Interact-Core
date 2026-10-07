@@ -417,6 +417,28 @@ exit 3
     return completed.returncode == 0
 
 
+def _windows_network_isolation_result(
+    *,
+    control_connection_verified: bool,
+    rule_matches: bool,
+    connect_code: int,
+) -> tuple[str, str, str]:
+    """Require a reachable pre-rule control before interpreting a blocked connect."""
+    method = "windows_firewall_program_rule"
+    if not control_connection_verified:
+        return "UNAVAILABLE", method, "control_connection_unavailable"
+    if not rule_matches:
+        return "UNAVAILABLE", method, "matching_rule_unavailable"
+    if connect_code in {10013, 10060}:
+        # WSAEACCES is an immediate denial; WSAETIMEDOUT is a dropped connection.
+        # The latter counts only after the same endpoint was reachable before the
+        # matching interpreter-scoped block rule was installed.
+        return "VERIFIED", method, "egress_denied"
+    if connect_code == 0:
+        return "FAILED", method, "egress_connected"
+    return "UNAVAILABLE", method, "unexpected_egress_result"
+
+
 def runner_network_isolation_probe() -> tuple[str, str, str]:
     """Verify a runner-level network boundary from the process being tested."""
     if sys.platform.startswith("linux"):
@@ -433,14 +455,12 @@ def runner_network_isolation_probe() -> tuple[str, str, str]:
         return "UNAVAILABLE", "linux_network_namespace", "unexpected_egress_result"
 
     if os.name == "nt":
-        if not _windows_firewall_rule_matches():
-            return "UNAVAILABLE", "windows_firewall_program_rule", "matching_rule_unavailable"
-        code = _egress_connect_code()
-        if code == 10013:
-            return "VERIFIED", "windows_firewall_program_rule", "egress_denied"
-        if code == 0:
-            return "FAILED", "windows_firewall_program_rule", "egress_connected"
-        return "UNAVAILABLE", "windows_firewall_program_rule", "unexpected_egress_result"
+        control_verified = os.environ.get("MUDRA_WINDOWS_EGRESS_CONTROL") == "VERIFIED"
+        return _windows_network_isolation_result(
+            control_connection_verified=control_verified,
+            rule_matches=_windows_firewall_rule_matches(),
+            connect_code=_egress_connect_code(),
+        )
 
     if platform.system().lower() == "darwin":
         if os.environ.get("MUDRA_MACOS_NETWORK_ISOLATION") != "sandbox-exec":
@@ -473,8 +493,16 @@ def offline_negative_probe() -> dict[str, str]:
     finally:
         socket.socket.connect = original  # type: ignore[assignment]
     isolation_state, isolation_method, isolation_result = runner_network_isolation_probe()
+    control_connection = (
+        "VERIFIED"
+        if os.name == "nt" and os.environ.get("MUDRA_WINDOWS_EGRESS_CONTROL") == "VERIFIED"
+        else "UNAVAILABLE"
+        if os.name == "nt"
+        else "NOT_REQUIRED"
+    )
     return {
         "attempted_egress": "VERIFIED" if attempted["value"] else "FAILED",
+        "control_connection_before_block": control_connection,
         "runner_network_isolation": isolation_state,
         "method": isolation_method,
         "isolation_result": isolation_result,

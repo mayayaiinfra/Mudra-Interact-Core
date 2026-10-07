@@ -26,6 +26,7 @@ from tools.verify_release import (
     current_platform,
     source_tree_sha256 as release_source_tree_sha256,
     validate_release_identity,
+    _windows_network_isolation_result,
 )
 from tools.verification_report import (
     canonical_text_bytes,
@@ -134,6 +135,8 @@ def test_offline_negative_egress_and_cold_setup_failure_are_explicit(release_rep
     assert offline["negative_egress"]["synthetic_probe"] == "VERIFIED"
     assert offline["cold_dependency"]["explicit_setup_failure"] == "VERIFIED"
     assert offline["negative_egress"]["runner_network_isolation"] == "VERIFIED"
+    expected_control = "VERIFIED" if current_platform()["os"] == "windows" else "NOT_REQUIRED"
+    assert offline["negative_egress"]["control_connection_before_block"] == expected_control
     expected_methods = {
         "linux": "linux_network_namespace",
         "windows": "windows_firewall_program_rule",
@@ -141,6 +144,30 @@ def test_offline_negative_egress_and_cold_setup_failure_are_explicit(release_rep
     }
     assert offline["negative_egress"]["method"] == expected_methods[current_platform()["os"]]
     assert offline["negative_egress"]["isolation_result"] == "egress_denied"
+
+
+@pytest.mark.acceptance("E84")
+def test_windows_firewall_timeout_needs_control_and_matching_rule() -> None:
+    assert _windows_network_isolation_result(
+        control_connection_verified=True,
+        rule_matches=True,
+        connect_code=10060,
+    ) == ("VERIFIED", "windows_firewall_program_rule", "egress_denied")
+    assert _windows_network_isolation_result(
+        control_connection_verified=False,
+        rule_matches=True,
+        connect_code=10060,
+    ) == ("UNAVAILABLE", "windows_firewall_program_rule", "control_connection_unavailable")
+    assert _windows_network_isolation_result(
+        control_connection_verified=True,
+        rule_matches=False,
+        connect_code=10060,
+    ) == ("UNAVAILABLE", "windows_firewall_program_rule", "matching_rule_unavailable")
+    assert _windows_network_isolation_result(
+        control_connection_verified=True,
+        rule_matches=True,
+        connect_code=0,
+    ) == ("FAILED", "windows_firewall_program_rule", "egress_connected")
 
 
 @pytest.mark.acceptance("E77")
@@ -178,6 +205,10 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "sudo unshare --net" in workflow
     assert 'runuser_path="$(command -v runuser)"' in workflow
     assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
+    assert "Path(sys.executable).resolve()" in workflow
+    assert "MUDRA_WINDOWS_EGRESS_CONTROL=VERIFIED" in workflow
+    assert "connect_ex(('1.1.1.1',443))" in workflow
+    assert workflow.index("connect_ex(('1.1.1.1',443))") < workflow.index("New-NetFirewallRule")
     assert "sandbox-exec" in workflow
     assert "MUDRA_CI_RECEIPT_JSON" in workflow
     assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow

@@ -16,11 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M2 and MI-01 through MI-09 have fresh receipts for the current source identity. MI-08 passed its clean isolated Linux Python 3.11 qualification; the 12-cell hosted matrix and combined M3 gate are pending.",
-    "baseline_tests": "Current clean Linux CPython 3.11 distribution suite: 14 passed; focused Windows workflow and lock checks: 2 passed; current-source MI-08 Linux gate: VERIFIED; actionlint passed.",
-    "verification_claim": "M0-M2 and MI-01 through MI-09 are freshly luna_self_verified for the current source. MI-08 has one current isolated Linux receipt; M3 remains IN_PROGRESS until all 12 hosted cells aggregate and the combined gate passes."
+    "scope": "The last hosted MI-08 matrix on 127ff06 passed 8/12 cells; all four Windows cells failed E76. The current Windows probe now requires a successful pre-rule connection control and an active canonical-interpreter firewall rule before treating a timeout as denied. Fresh hosted matrix and combined M3 gate remain pending. Earlier M0-M2 and MI-01-07/09 receipts belong to the prior source identity.",
+    "baseline_tests": "Current-source clean Linux CPython 3.11 distribution suite: 15 passed; focused Windows workflow/helper tests: 2 passed; actionlint passed. No current hosted qualification receipt yet.",
+    "verification_claim": "MI-08 and M3 are IN_PROGRESS. M0-M2 and MI-01-07/09 retain their earlier recorded verification but require refreshed source-identity evidence before final completion. No current-source 12-cell matrix or combined M3 receipt exists."
   },
-  "active_item": null,
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -456,7 +456,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IN_PROGRESS",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
