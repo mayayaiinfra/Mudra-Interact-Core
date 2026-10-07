@@ -1,7 +1,7 @@
 {
   "ledger_version": "1.0.0",
   "specification_version": "0.2",
-  "reviewed_on": "2026-10-06",
+  "reviewed_on": "2026-10-07",
   "baseline_commit": "eae92b7",
   "implementation_started": true,
   "target": {
@@ -16,11 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "Specification and current-source defect review only; no runtime acceptance",
-    "baseline_tests": "5 legacy tests and licence checker passed; reproduced defects remain",
-    "verification_claim": "No implementation gate verified"
+    "scope": "MI-01 contract and verification harness implemented and self-verified; runtime items remain",
+    "baseline_tests": "27 local tests passed on Windows CPython 3.14.2; no required skips or xfails",
+    "verification_claim": "M0 verified by fresh luna_self_verified item and aggregate receipts"
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -75,8 +75,13 @@
       "items": [
         "MI-01"
       ],
-      "state": "NOT_STARTED",
-      "evidence": []
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M0.json",
+          "sha256": "f411c3956b8c6cf54a30f887d77a332e7b0e1787d765412102ba785acea10a4a"
+        }
+      ]
     },
     {
       "id": "M1",
@@ -167,9 +172,14 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-01.json",
+          "sha256": "fd378b8a9aa4d583bc7c5b03e2c30619d019cf1a48334c1748b95d707d7ea8b2"
+        }
+      ],
       "blocker": null
     },
     {
@@ -200,7 +210,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "blocker": null
