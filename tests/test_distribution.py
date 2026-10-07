@@ -26,7 +26,9 @@ from tools.verify_release import (
     current_platform,
     source_tree_sha256 as release_source_tree_sha256,
     validate_release_identity,
+    _windows_firewall_rule_matches,
     _windows_network_isolation_result,
+    _windows_process_image_path,
 )
 from tools.verification_report import (
     canonical_text_bytes,
@@ -170,6 +172,41 @@ def test_windows_firewall_timeout_needs_control_and_matching_rule() -> None:
     ) == ("FAILED", "windows_firewall_program_rule", "egress_connected")
 
 
+@pytest.mark.acceptance("E84")
+def test_windows_process_image_path_matches_native_image() -> None:
+    image = _windows_process_image_path()
+    if os.name != "nt":
+        assert image is None
+        return
+
+    import ctypes
+
+    native_buffer = ctypes.create_unicode_buffer(32768)
+    native_length = ctypes.windll.kernel32.GetModuleFileNameW(None, native_buffer, len(native_buffer))
+    assert 0 < native_length < len(native_buffer)
+    assert image == Path(native_buffer.value)
+    assert image is not None and image.is_file()
+
+
+@pytest.mark.acceptance("E84")
+def test_windows_firewall_rule_rejects_a_different_process_image(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    image = tmp_path / "base-python.exe"
+    configured_image = tmp_path / "venv" / "Scripts" / "python.exe"
+    monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "synthetic-rule")
+    monkeypatch.setenv("MUDRA_PYTHON_EXE", str(configured_image))
+    monkeypatch.setattr("tools.verify_release.shutil.which", lambda _name: "powershell.exe")
+    monkeypatch.setattr("tools.verify_release._windows_process_image_path", lambda: image)
+    monkeypatch.setattr(
+        "tools.verify_release.subprocess.run",
+        lambda *_args, **_kwargs: pytest.fail("a mismatched process image must not inspect a rule"),
+    )
+
+    assert _windows_firewall_rule_matches() is False
+
+
 @pytest.mark.acceptance("E77")
 def test_repeat_build_hashes_are_identical(release_report: dict) -> None:
     repeat = release_report["checks"]["repeat_build"]
@@ -209,7 +246,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "sudo unshare --net" in workflow
     assert 'runuser_path="$(command -v runuser)"' in workflow
     assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
-    assert "Path(sys.executable).resolve()" in workflow
+    assert "GetModuleFileNameW" in workflow
+    assert "MUDRA_PYTHON_EXE=$target" in workflow
+    assert "Path(sys.executable).resolve()" not in workflow
     assert "MUDRA_WINDOWS_EGRESS_CONTROL=VERIFIED" in workflow
     assert "connect_ex(('1.1.1.1',443))" in workflow
     assert workflow.index("connect_ex(('1.1.1.1',443))") < workflow.index("New-NetFirewallRule")

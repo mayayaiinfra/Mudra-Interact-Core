@@ -18,9 +18,9 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
-    "verification_claim": "Specification 0.3 platform-scope change invalidated prior receipts. M0-M2 and MI-09 have fresh evidence; MI-08 has four verified Linux cells. M3 is BLOCKED: the archived local Windows 3.11 MI-08 run on source d4b3c5a failed E76 with egress connected despite an apparently matching rule. A focused elevated Windows 11 diagnostic now passes the pre-rule control and confirms the canonical-interpreter-scoped block returns WSAEACCES (10013). The full four-cell local rerun was canceled at the Windows elevation boundary before it started. The latest public windows-2025 CI matrix on pre-contract commit 127ff064 also failed E76 on all four Windows cells; those results cannot qualify current source. Windows cells and the eight-cell aggregate remain incomplete; M4 remains NOT_STARTED."
+    "verification_claim": "MI-08 is IN_PROGRESS. The local elevated Windows matrix on source 8e84e8a completed setup for CPython 3.11-3.14 but each E76 probe remained connected because the rule targeted the venv Scripts\\python.exe launcher. A native Windows image probe on all four versions showed GetModuleFileNameW reports the base python.exe while sys.executable remains inside the venv. The workflow and verifier now target and validate the OS-reported process image while checking that acceptance still runs from the isolated venv. The local Windows distribution suite passed 16/16 applicable checks with only the admin-only E76 case excluded. No fresh current-source Windows receipt exists yet. Historical Linux receipts must be refreshed on the same candidate commit as the Windows receipts before aggregation. M4 remains NOT_STARTED."
   },
-  "active_item": null,
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -127,9 +127,9 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "BLOCKED",
+      "state": "IN_PROGRESS",
       "evidence": [],
-      "blocker": "missing condition: fresh Windows x86_64 CPython 3.11-3.14 MI-08 receipts on current source. The archived local Windows 3.11 run (evidence/local/mi08-platform-receipts-failed-d4b3c5a/MI-08-windows-x86_64-py3.11.json) failed E76 with egress_connected despite an apparently matching rule. A focused elevated local probe then passed (pre-rule connect=0; active exact interpreter-scoped outbound Block post-rule connect=10013). The full four-cell elevation rerun was canceled before launch. Public windows-2025 CI run 37583534656 on pre-contract commit 127ff064 also failed E76 for all four cells and cannot be reused. Unblock: run all four cells from an elevated PowerShell session after accepting UAC, or use another Windows runner where the required scoped block is enforced. Do not change the default outbound policy.",
+      "blocker": null,
       "verification_kind": "luna_self_verified"
     },
     {
@@ -454,27 +454,10 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "BLOCKED",
+      "state": "IN_PROGRESS",
       "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.11.json",
-          "sha256": "56fce228a18f9c90f4edea86346616c1a9c7c4003049a226d01fd646b0147b4d"
-        },
-        {
-          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.12.json",
-          "sha256": "eee2acafe34ce6f29a0837624a8f5c510474bacb7bfd071b7c9c904afc92b35c"
-        },
-        {
-          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.13.json",
-          "sha256": "4bc6d9de33c3da9d829a8728afe9c6999fbd3e2849b2fc62b21f14534a3f9014"
-        },
-        {
-          "path": "evidence/local/mi08-platform-receipts/MI-08-linux-x86_64-py3.14.json",
-          "sha256": "5cbea5c565a9561c8704908bc4f24e25ebbc7d7c70e98bd5f868279b3b60650d"
-        }
-      ],
-      "blocker": "missing condition: fresh Windows x86_64 CPython 3.11-3.14 MI-08 receipts on current source. The archived local Windows 3.11 run (evidence/local/mi08-platform-receipts-failed-d4b3c5a/MI-08-windows-x86_64-py3.11.json) failed E76 with egress_connected despite an apparently matching rule. A focused elevated local probe then passed (pre-rule connect=0; active exact interpreter-scoped outbound Block post-rule connect=10013). The full four-cell elevation rerun was canceled before launch. Public windows-2025 CI run 37583534656 on pre-contract commit 127ff064 also failed E76 for all four cells and cannot be reused. Unblock: run all four cells from an elevated PowerShell session after accepting UAC, or use another Windows runner where the required scoped block is enforced. Do not change the default outbound policy."
+      "evidence": [],
+      "blocker": null
     },
     {
       "id": "MI-09",

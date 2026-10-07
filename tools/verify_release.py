@@ -381,10 +381,33 @@ def _linux_default_route_present() -> bool | None:
     return False
 
 
+def _windows_process_image_path() -> Path | None:
+    """Return the executable image path Windows uses for this process."""
+    if os.name != "nt":
+        return None
+    try:
+        import ctypes
+
+        buffer = ctypes.create_unicode_buffer(32768)
+        length = ctypes.windll.kernel32.GetModuleFileNameW(None, buffer, len(buffer))
+    except (AttributeError, OSError, TypeError, ValueError):
+        return None
+    if length <= 0 or length >= len(buffer):
+        return None
+    image = Path(buffer.value)
+    if not image.is_absolute() or not image.is_file():
+        return None
+    return image
+
+
 def _windows_firewall_rule_matches() -> bool:
     rule_name = os.environ.get("MUDRA_FIREWALL_RULE_NAME", "").strip()
+    configured_image = os.environ.get("MUDRA_PYTHON_EXE", "").strip()
     powershell = shutil.which("powershell.exe") or shutil.which("powershell")
-    if not rule_name or not powershell:
+    image = _windows_process_image_path()
+    if not rule_name or not configured_image or not powershell or image is None:
+        return False
+    if os.path.normcase(os.path.abspath(configured_image)) != os.path.normcase(os.path.abspath(image)):
         return False
     script = r"""
 $ErrorActionPreference = 'Stop'
@@ -400,7 +423,7 @@ if ($valid) { exit 0 }
 exit 3
 """
     env = os.environ.copy()
-    env["MUDRA_PYTHON_EXE"] = str(Path(sys.executable).resolve())
+    env["MUDRA_PYTHON_EXE"] = str(image)
     try:
         completed = subprocess.run(
             [powershell, "-NoProfile", "-NonInteractive", "-Command", script],
