@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current renamed-distribution source a6d4e90: M0 23/23, M1 120/120, M2 165/165 (including semantic mutations), and MI-09 5/5. Current-source MI-08 platform matrix and hosted M3 gate are being rerun.",
-    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M2 and MI-09 have fresh current-source receipts; MI-08 platform matrix and hosted M3 full gate remain in progress. M4 remains blocked until ownership of mudra-interact on TestPyPI/PyPI, Trusted Publisher setup, protected GitHub environments, and exact candidate/version authorization are established."
+    "baseline_tests": "Current renamed-distribution source cda3e5c: M0 23/23, M1 120/120, M2 165/165 (including semantic mutations), and MI-09 5/5. MI-08 Windows firewall isolation rules are now unique per Python matrix cell; current-source platform matrix is being rerun.",
+    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M2 and MI-09 have fresh current-source receipts; the previous MI-08 matrix exposed a shared Windows firewall rule race, now fixed. The current-source MI-08 matrix and hosted M3 full gate remain in progress. M4 remains blocked until package ownership, Trusted Publishers, protected GitHub environments, and exact candidate/version authorization are established."
   },
   "active_item": "MI-08",
   "states": [
@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-name-rename-a6d4.json",
-          "sha256": "fac7671c2a4d012b4fe3d19681833bd05811cc71a6dc04e1ecf57f0281688e53"
+          "path": "evidence/local/M0-firewallfix-cda3.json",
+          "sha256": "1be990e39301bd4cf4ee3c96ad17ac834641d5e9938c410673c52428a8fb35fc"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -93,8 +93,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-name-rename-a6d4.json",
-          "sha256": "c965897ac4d03619125d79c63917b9c8a541ba74a7b1c3c65120262c2367abbf"
+          "path": "evidence/local/M1-firewallfix-cda3.json",
+          "sha256": "983201e3c1e7250e84be4fbbd7723617ac6fea400f7d982300f8c940e3183739"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-name-rename-a6d4.json",
-          "sha256": "a834fa42c03d69a9edef29f1d23433b134db06d99eabac8568e5ca462542a608"
+          "path": "evidence/local/M2-firewallfix-cda3.json",
+          "sha256": "7eeb55ba48be6d7a35d9597fe6d2b9c34fb1d8cb4a1767d60a1dce8ad0431dbf"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -188,8 +188,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-name-rename-a6d4.json",
-          "sha256": "fac7671c2a4d012b4fe3d19681833bd05811cc71a6dc04e1ecf57f0281688e53"
+          "path": "evidence/local/M0-firewallfix-cda3.json",
+          "sha256": "1be990e39301bd4cf4ee3c96ad17ac834641d5e9938c410673c52428a8fb35fc"
         }
       ],
       "blocker": null
@@ -226,8 +226,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-name-rename-a6d4.json",
-          "sha256": "c965897ac4d03619125d79c63917b9c8a541ba74a7b1c3c65120262c2367abbf"
+          "path": "evidence/local/M1-firewallfix-cda3.json",
+          "sha256": "983201e3c1e7250e84be4fbbd7723617ac6fea400f7d982300f8c940e3183739"
         }
       ],
       "blocker": null
@@ -259,8 +259,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-name-rename-a6d4.json",
-          "sha256": "c965897ac4d03619125d79c63917b9c8a541ba74a7b1c3c65120262c2367abbf"
+          "path": "evidence/local/M1-firewallfix-cda3.json",
+          "sha256": "983201e3c1e7250e84be4fbbd7723617ac6fea400f7d982300f8c940e3183739"
         }
       ],
       "blocker": null
@@ -302,8 +302,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-name-rename-a6d4.json",
-          "sha256": "c965897ac4d03619125d79c63917b9c8a541ba74a7b1c3c65120262c2367abbf"
+          "path": "evidence/local/M1-firewallfix-cda3.json",
+          "sha256": "983201e3c1e7250e84be4fbbd7723617ac6fea400f7d982300f8c940e3183739"
         }
       ],
       "blocker": null
@@ -341,8 +341,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-name-rename-a6d4.json",
-          "sha256": "a834fa42c03d69a9edef29f1d23433b134db06d99eabac8568e5ca462542a608"
+          "path": "evidence/local/M2-firewallfix-cda3.json",
+          "sha256": "7eeb55ba48be6d7a35d9597fe6d2b9c34fb1d8cb4a1767d60a1dce8ad0431dbf"
         }
       ],
       "blocker": null
@@ -374,8 +374,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-name-rename-a6d4.json",
-          "sha256": "a834fa42c03d69a9edef29f1d23433b134db06d99eabac8568e5ca462542a608"
+          "path": "evidence/local/M2-firewallfix-cda3.json",
+          "sha256": "7eeb55ba48be6d7a35d9597fe6d2b9c34fb1d8cb4a1767d60a1dce8ad0431dbf"
         }
       ],
       "blocker": null
@@ -417,8 +417,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-name-rename-a6d4.json",
-          "sha256": "a834fa42c03d69a9edef29f1d23433b134db06d99eabac8568e5ca462542a608"
+          "path": "evidence/local/M2-firewallfix-cda3.json",
+          "sha256": "7eeb55ba48be6d7a35d9597fe6d2b9c34fb1d8cb4a1767d60a1dce8ad0431dbf"
         }
       ],
       "blocker": null
@@ -484,8 +484,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-09-name-rename-a6d4.json",
-          "sha256": "8251d951e4355f79e1894b87fb52f50b01a9be6f2331f7b1183b56b5873150d3"
+          "path": "evidence/local/MI-09-firewallfix-cda3.json",
+          "sha256": "c0b680849b29c8a3f9730830b74d1056d04eb5237c78944a3629e0d57691e77a"
         }
       ],
       "blocker": null
