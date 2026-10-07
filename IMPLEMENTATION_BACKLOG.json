@@ -79,7 +79,7 @@
       "evidence": [
         {
           "path": "evidence/local/M0-mi09.json",
-          "sha256": "e2cba3e85f30e842005aff941287a643a9c3bb6ca46e876c7bcf53cbbc7e6a06"
+          "sha256": "a3c003ad8da70230b7e93dd3ebf431c1f1b4df953ec9ca5b8f9f333c9fa2f980"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -98,7 +98,7 @@
       "evidence": [
         {
           "path": "evidence/local/M1-mi09.json",
-          "sha256": "80f79c15d57ba85bbf86434ec2acd57f52fc0bfd49342c54bddd478e557f1b2b"
+          "sha256": "cedc70fe7f189e19e63df49e436f262f36883dbfe62fda0d7ced804bb68ac3ca"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -117,7 +117,7 @@
       "evidence": [
         {
           "path": "evidence/local/M2-mi09.json",
-          "sha256": "e53f890015ec6bcbf726168e16aea97484eaccb4e6b5ce9cb64c96d7523631bb"
+          "sha256": "655bfd7c974bd792ee6a3974f3c4a9c1f5dadaf7457a243bc24bc94f887087a6"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -136,7 +136,7 @@
       "blocker": {
         "code": "required_platform_matrix_unavailable",
         "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
-        "qualification_report_sha256": "92864609be2b88ead86e2fbdbfc1495a71b1160a1e1ade63ee6037cbd8d9c804",
+        "qualification_report_sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e",
         "verified_cells": 1,
         "required_cells": 12,
         "missing_cells": 11,
@@ -200,7 +200,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-01-mi09.json",
-          "sha256": "2ce88b4a6d3bf2b0b01332a6e89fa0e984fb6cdb17160c2275f8d1c6d15b568b"
+          "sha256": "164e058d248c0e21c02e6078a5f2f65b56bd7ca7e072ac101376b080c20a0445"
         }
       ],
       "blocker": null
@@ -238,7 +238,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-02-mi09.json",
-          "sha256": "60c28f25a5f7e6f05bcf6d485e6c52e80ed89678e75bf66744a4c37e445e05a8"
+          "sha256": "65236558bd62c7b22c0411fd7f9a7c1b28c9f8e27a206a635237533c4d014cf4"
         }
       ],
       "blocker": null
@@ -271,7 +271,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-03-mi09.json",
-          "sha256": "d2c6a6121aac40895a8e99f679a1f4bf14605206ced4457759305b1d59a07922"
+          "sha256": "d12ddf781a139f9545acedca95ab972b28452c0d21e97dda2afaf1df594224ce"
         }
       ],
       "blocker": null
@@ -314,7 +314,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-04-mi09.json",
-          "sha256": "54e059ee1d3169823445dc1eb04c64d3f4b61ec6e8f8ac6081b9b9771d49a069"
+          "sha256": "7ef5975237759652843d6cae7b5c81cd791edfbab9ceba4ce8b9200a62d1d13a"
         }
       ],
       "blocker": null
@@ -353,7 +353,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-05-mi09.json",
-          "sha256": "90087dc3bff5eaac3487779820d880061cdece631bba6fdd72fa695de36eca82"
+          "sha256": "0c660addf14fcd2d31d8eec7c1d19fe6f0296db5b21510d6d4ad5521a7b873d3"
         }
       ],
       "blocker": null
@@ -386,7 +386,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-06-mi09.json",
-          "sha256": "6be77f7edc49257f3f523c4d6dd7e2a6d6a5aa04cf1a0bf01254c95c79768a0a"
+          "sha256": "0b55d86f803c77bbfe78994f5b37bf938d8dc97cb52e7e5c9f1cdcbff85081e9"
         }
       ],
       "blocker": null
@@ -429,7 +429,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-07-mi09.json",
-          "sha256": "0f356600b26e3b18278fcb3269bc8b9a0cfe3aab64475fa7e8933c4156443d55"
+          "sha256": "4a62b99291950bc849a31ada841358fec43f456dc791f06e1646c6648b0bd37b"
         }
       ],
       "blocker": null
@@ -471,13 +471,13 @@
       "evidence": [
         {
           "path": "evidence/local/MI-08-linux-local-smoke.json",
-          "sha256": "92864609be2b88ead86e2fbdbfc1495a71b1160a1e1ade63ee6037cbd8d9c804"
+          "sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e"
         }
       ],
       "blocker": {
         "code": "required_platform_matrix_unavailable",
         "qualification_report": "evidence/local/MI-08-linux-local-smoke.json",
-        "qualification_report_sha256": "92864609be2b88ead86e2fbdbfc1495a71b1160a1e1ade63ee6037cbd8d9c804",
+        "qualification_report_sha256": "e1c16c345c4e0159fd228719653e559eaea1e8de293af66df4581628a03d7d6e",
         "verified_cells": 1,
         "required_cells": 12,
         "missing_cells": 11,
@@ -510,7 +510,7 @@
       "evidence": [
         {
           "path": "evidence/local/MI-09-mi09.json",
-          "sha256": "7393d43e8d1e8fcaf77caf47dc10ca4af67cc0672e7994a220601c52cac84be1"
+          "sha256": "15a150fba711f0a22c2316a04959723a8ab1df8552f39a87be4aca7e4a4ce833"
         }
       ],
       "blocker": null
