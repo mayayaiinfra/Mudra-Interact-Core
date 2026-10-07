@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M2 are current and verified. MI-08 has a fresh isolated Linux CPython 3.11 receipt with 15/15 required executions; cross-platform cells and combined M3 remain pending. MI-09 is next for current-source refresh.",
-    "baseline_tests": "Current-source M0: 23/23; M1 closure: 120/120; M2 closure: 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11: 15/15; Windows/Linux focused offline packaging checks passed; actionlint passed.",
-    "verification_claim": "M0-M2 and MI-01-08 have current local evidence, but MI-08 remains IN_PROGRESS until all 12 hosted platform cells aggregate. MI-09 needs a current-source receipt. M3 and M4 remain open."
+    "scope": "M0-M2 and MI-01-07 are current and verified. MI-08 has a current Linux CPython 3.11 qualification (15/15); MI-09 design verification passed 5/5. M3 remains open only for all 12 current-source hosted platform cells and the combined gate.",
+    "baseline_tests": "Current-source M0: 23/23; M1 closure: 120/120; M2 closure: 165/165 including 12 semantic mutations; MI-08 Linux: 15/15; MI-09: 5/5; Windows/Linux focused packaging tests passed; actionlint passed.",
+    "verification_claim": "M0-M2 and MI-01-07/MI-09 have current luna_self_verified receipts. MI-08 remains IN_PROGRESS pending the 12-cell hosted matrix; M3 remains IN_PROGRESS. M4 is NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
@@ -456,7 +456,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -490,8 +490,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-09-mi09.json",
-          "sha256": "63adde85e06975ed89d66f43111f83cd127f0569c81b284215e9767861812d61"
+          "path": "evidence/local/MI-09-current-8fc3af0.json",
+          "sha256": "25ce731cd27829107a88a863c303d7c13142fc92a52491c416e6116b98cc7757"
         }
       ],
       "blocker": null
