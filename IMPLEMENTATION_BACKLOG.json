@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
-          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
+          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
+          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -340,8 +340,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
-          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
+          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
+          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
         }
       ],
       "blocker": null
@@ -373,8 +373,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
-          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
+          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
+          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
         }
       ],
       "blocker": null
@@ -416,8 +416,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-linux-3.11-d4b3c5a.json",
-          "sha256": "f1d1ed74f7d63a82401e9780721561539ed0dc839ea63f89bdd4bb50f50b345e"
+          "path": "evidence/local/M2-windows-3.14-05e8d77.json",
+          "sha256": "19fa804404cb5c6d8d52be8106e419740c0830862dc5e10da2aff72b05bdb8d1"
         }
       ],
       "blocker": null
