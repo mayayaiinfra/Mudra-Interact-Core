@@ -4,7 +4,7 @@
 
 Security fixes are developed against the newest published stable version. The
 exact package version and available distribution files are shown on the
-[PyPI project page](https://pypi.org/project/mudra-interact-core/). The public
+[PyPI project page](https://pypi.org/project/mudra-interact/). The public
 core does not receive camera media, make network requests at runtime, or ship
 model weights.
 

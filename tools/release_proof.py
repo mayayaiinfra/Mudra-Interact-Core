@@ -30,7 +30,7 @@ from tools.verification_report import (
 )
 
 
-PACKAGE = "mudra-interact-core"
+PACKAGE = "mudra-interact"
 VERSION = "0.2.0"
 REPOSITORY = "mayayaiinfra/Mudra-Interact-Core"
 WORKFLOW = ".github/workflows/publish.yml"
@@ -126,8 +126,8 @@ def _validate_artifact_inventory(value: Any) -> list[dict[str, Any]]:
     if not isinstance(value, list) or len(value) != 2:
         raise ReleaseProofError("artifact_inventory_invalid")
     expected_names = {
-        f"mudra_interact_core-{VERSION}-py3-none-any.whl",
-        f"mudra_interact_core-{VERSION}.tar.gz",
+        f"mudra_interact-{VERSION}-py3-none-any.whl",
+        f"mudra_interact-{VERSION}.tar.gz",
     }
     rows: list[dict[str, Any]] = []
     seen: set[str] = set()

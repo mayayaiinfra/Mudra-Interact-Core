@@ -42,7 +42,7 @@ def test_license_policy_and_notice_fail_closed(tmp_path: Path, mutation: str) ->
         policy_path.write_text("{not-json", encoding="utf-8")
     elif mutation == "missing_core":
         payload = _policy(root)
-        payload["components"] = [component for component in payload["components"] if component["name"] != "Mudra Interact Core"]  # type: ignore[index]
+        payload["components"] = [component for component in payload["components"] if component["name"] != "Mudra Interact"]  # type: ignore[index]
         _write_policy(root, payload)
     elif mutation == "unknown_status":
         payload = _policy(root)

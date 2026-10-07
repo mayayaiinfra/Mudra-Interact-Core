@@ -22,8 +22,8 @@ from tools.verification_report import seal_report, sha256_text_file, source_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-WHEEL_NAME = "mudra_interact_core-0.2.0-py3-none-any.whl"
-SDIST_NAME = "mudra_interact_core-0.2.0.tar.gz"
+WHEEL_NAME = "mudra_interact-0.2.0-py3-none-any.whl"
+SDIST_NAME = "mudra_interact-0.2.0.tar.gz"
 
 
 def artifact_bytes() -> dict[str, bytes]:
@@ -193,8 +193,8 @@ def fake_index_fetch(index: str, contents: dict[str, bytes], download_contents: 
         }
         for name, body in sorted(contents.items())
     ]
-    response = {"info": {"name": "mudra-interact-core", "version": "0.2.0"}, "urls": urls}
-    responses = {f"{base}/pypi/mudra-interact-core/0.2.0/json": json.dumps(response).encode()}
+    response = {"info": {"name": "mudra-interact", "version": "0.2.0"}, "urls": urls}
+    responses = {f"{base}/pypi/mudra-interact/0.2.0/json": json.dumps(response).encode()}
     downloaded = download_contents or contents
     responses.update({item["url"]: downloaded[item["filename"]] for item in urls})
 
@@ -278,7 +278,7 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "path: evidence/releases/pypi-verification.json" in workflow
     assert "python-version: '3.12'" in workflow
     assert "same frozen files" in runbook.lower() and "no rebuild" in runbook.lower()
-    assert "https://pypi.org/project/mudra-interact-core/0.2.0/" in readme
+    assert "https://pypi.org/project/mudra-interact/0.2.0/" in readme
     assert "--no-deps" in runbook and "TestPyPI" in runbook
     lock = (ROOT / "requirements-release.lock").read_text(encoding="utf-8")
     requirements = {
@@ -319,7 +319,7 @@ def test_rollback_requires_authorization_and_never_deletes_public_history() -> N
 def test_public_download_and_release_links_are_exact_version_links() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     runbook = (ROOT / "docs/RELEASE_RUNBOOK.md").read_text(encoding="utf-8")
-    assert "https://pypi.org/project/mudra-interact-core/0.2.0/" in readme
+    assert "https://pypi.org/project/mudra-interact/0.2.0/" in readme
     assert "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0" in readme
     assert "index_version_missing" in runbook or "package page" in runbook.lower()
     assert "--index-url https://test.pypi.org/simple" in readme

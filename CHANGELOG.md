@@ -3,7 +3,7 @@
 Changes are recorded by release candidate. The links point to immutable tags
 and exact-version package pages after the publication workflow completes.
 
-## 0.2.0
+## Mudra Interact 0.2.0
 
 Prepared release contents:
 

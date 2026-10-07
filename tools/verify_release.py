@@ -36,7 +36,7 @@ if str(ROOT) not in sys.path:
 from tools.verification_report import canonical_text_bytes, sha256_text_file  # noqa: E402
 
 
-PACKAGE_NAME = "mudra-interact-core"
+PACKAGE_NAME = "mudra-interact"
 PACKAGE_VERSION = "0.2.0"
 SOURCE_DATE_EPOCH = "1760054400"
 REPORT_VERSION = 1

@@ -125,9 +125,9 @@ def _policy_errors(payload: Any) -> tuple[list[str], dict[str, dict[str, Any]], 
         if type(component["notice_required"]) is not bool:
             errors.append("component_notice_flag_invalid")
         by_name[name] = component
-    if "Mudra Interact Core" not in by_name:
+    if "Mudra Interact" not in by_name:
         errors.append("core_component_missing")
-    elif by_name["Mudra Interact Core"].get("status") != "included":
+    elif by_name["Mudra Interact"].get("status") != "included":
         errors.append("core_component_not_included")
     inventory_path = _safe_relative(payload.get("inventory_path"))
     if inventory_path is None:
@@ -222,7 +222,7 @@ def write_inventory(root: Path | None = None, *, output: Path | None = None) -> 
         records.append({
             "path": relative,
             "sha256": _sha256(path),
-            "component": "Mudra Interact Core",
+            "component": "Mudra Interact",
             "license": "Apache-2.0",
             "status": "included",
         })

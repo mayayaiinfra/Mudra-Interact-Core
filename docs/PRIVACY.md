@@ -1,6 +1,6 @@
 # Privacy boundary
 
-Mudra Interact Core is a local, image-free protocol library. Its runtime has
+Mudra Interact is a local, image-free protocol library. Its runtime has
 no network client, telemetry, subprocess, persistence, model download or
 camera access. A caller supplies already-normalized landmarks and receives a
 detached recognition value. The core does not identify a person, infer a

@@ -1,9 +1,12 @@
 # Mudra Interact Core: Implementation and Release Specification
 
-Specification **0.3**, owner-approved platform scope update **2026-10-07**;
+Specification **0.3**, owner-approved platform scope and public distribution-name update **2026-10-07**;
 core contract review: Astra **2026-10-06**. Owner: MAYAYAI.
 Implementation baseline: `eae92b7`, package `0.1.0`.
-Target: package `0.2.0`, protocol/schema `2.0.0`, catalogue `2.0.0`.
+Target distribution `mudra-interact` (`Mudra Interact`) version `0.2.0`;
+protocol/schema `2.0.0`, catalogue `2.0.0`. The Python import namespace
+remains `mudra_interact_core`; the v2 schema ID remains
+`urn:allyk:mudra-interact-core:contract:2.0.0`.
 Status: normative implementation contract; progress is tracked in the JSON ledger.
 
 Read [acceptance cases](docs/ACCEPTANCE.md), [Luna handoff](docs/LUNA_HANDOFF.md)

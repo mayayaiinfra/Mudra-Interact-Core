@@ -1,7 +1,7 @@
 # Distribution and compatibility
 
-Mudra Interact Core is a standard-library runtime package.  The supported
-public package is `mudra-interact-core` version `0.2.0`, with the v2 contract,
+Mudra Interact is a standard-library runtime package.  The supported
+public package is `mudra-interact` version `0.2.0`, with the v2 contract,
 catalogue and schema versions set to `2.0.0`.  The wheel carries its schemas,
 neutral catalogue, `py.typed`, `LICENSE`, and `NOTICE`; it has no
 `Requires-Dist` runtime dependencies.
@@ -69,7 +69,7 @@ only after its private compatibility inventory confirms the following:
 
 | Contract surface | Current public value | Consumer check | Upgrade risk |
 | --- | --- | --- | --- |
-| Package | `mudra-interact-core==0.2.0` | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
+| Package | `mudra-interact==0.2.0` (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
 | Schemas | v2 / `2.0.0` | Validate representative synthetic frame, report, batch and event fixtures | A schema change can reject or reinterpret stored work |
 | Catalogue | Neutral catalogue `2.0.0` | Check IDs, version and rule mappings before activation | Label packs and cultural claims are not supplied by core |
 | CLI | `mudra-interact` with explicit consent/confirmation | Run the private integration smoke against the installed wheel | Flags and error codes are a compatibility surface |

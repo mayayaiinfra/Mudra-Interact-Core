@@ -1,6 +1,6 @@
 # Release runbook
 
-This runbook publishes only the declared package `mudra-interact-core==0.2.0`
+This runbook publishes only the declared package `mudra-interact==0.2.0`
 from one frozen commit. The public core is a Python library, so its production
 release is a package distribution, not a server deployment. The workflow never
 stores a PyPI API token and does not rebuild after candidate qualification.
@@ -11,7 +11,7 @@ Before starting a release, an owner with repository and index administration
 access must complete and verify all of the following:
 
 1. Confirm that `mayayaiinfra/Mudra-Interact-Core` is the intended public
-   repository and that the package name `mudra-interact-core` is controlled by
+   repository and that the package name `mudra-interact` is controlled by
    the project owner on both PyPI and TestPyPI. An index `404` is not proof that
    a name is available or owned.
 2. Configure PyPI Trusted Publishers for this repository and
@@ -44,7 +44,7 @@ that the project name is available or permission to claim it.
    acceptance table, tool lock and all M0–M3 receipts must match the ledger.
 2. Run the full M3 gate and require the eight-cell Linux/Windows × CPython
    3.11–3.14 aggregate. Do not substitute a local-only report.
-3. Dispatch **Publish Mudra Core** with version `0.2.0` and the exact candidate
+3. Dispatch **Publish Mudra Interact** with version `0.2.0` and the exact candidate
    commit. The workflow builds twice, compares wheel and sdist bytes, validates
    the source-built wheel, installs it in a clean isolated environment, and
    freezes one wheel plus one source distribution. The output is kept as a
@@ -117,7 +117,7 @@ is tested but cannot perform a yank or publish a patch.
 
 ## Post-release and limits
 
-Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact-core/0.2.0/)
+Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact/0.2.0/)
 and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)
 open, and that both expose the exact version and artifact hashes. Run the
 documented consumer smoke from the downloaded wheel. Report the source commit,

@@ -86,11 +86,11 @@ def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
 
 @pytest.mark.acceptance("E73")
 def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
-    assert release_report["checks"]["wheel"]["metadata_name"] == "mudra-interact-core"
+    assert release_report["checks"]["wheel"]["metadata_name"] == "mudra-interact"
     assert release_report["checks"]["wheel"]["metadata_version"] == PACKAGE_VERSION
     assert release_report["checks"]["wheel"]["requires_dist"] is None
     assert release_report["checks"]["wheel"]["metadata_validator"] == "stdlib_pep427_pep566_equivalent"
-    assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {"mudra_interact_core-0.2.0.data/data/LICENSE", "mudra_interact_core-0.2.0.data/data/NOTICE"}
+    assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {"mudra_interact-0.2.0.data/data/LICENSE", "mudra_interact-0.2.0.data/data/NOTICE"}
     assert set(release_report["checks"]["wheel"]["package_data"]) == {
         "mudra_interact_core/catalog/mudra_catalog.json",
         "mudra_interact_core/schemas/v2/contract.schema.json",
@@ -324,7 +324,7 @@ def test_exact_wheel_install_smoke_and_version_consistency(release_report: dict)
     assert install["install_exit"] == 0 and install["smoke_exit"] == 0
     assert install["uninstall_exit"] == 0 and install["reinstall_exit"] == 0
     assert metadata["metadata_version"] == PACKAGE_VERSION
-    assert metadata["metadata_name"] == "mudra-interact-core"
+    assert metadata["metadata_name"] == "mudra-interact"
 
 
 @pytest.mark.acceptance("E83")

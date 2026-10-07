@@ -1,18 +1,18 @@
-# Mudra Interact Core
+# Mudra Interact
 
-Mudra Interact Core is an Apache-2.0, offline-capable Python library for a
+Mudra Interact is an Apache-2.0, offline-capable Python library for a
 conservative, image-free gesture interaction protocol. It accepts normalized
 21-point hand landmarks, reports bounded recognition states, and emits a
 `MudraEvent` only after distinct-frame stability plus explicit consent and
 confirmation.
 
-The target package version is `mudra-interact-core==0.2.0`. It has **not yet
-been published**: project-owner confirmation, trusted-publisher setup and
+The target package version is `mudra-interact==0.2.0`. It has **not yet
+been published**: package-ownership verification, Trusted Publisher setup and
 candidate-specific release approval are still required. A missing package or
 release page does not prove the name is available or authorize claiming it.
 Once published, these exact-version pages are the distribution sources:
 
-- [PyPI project, version 0.2.0](https://pypi.org/project/mudra-interact-core/0.2.0/)
+- [PyPI project, version 0.2.0](https://pypi.org/project/mudra-interact/0.2.0/)
 - [GitHub release, tag v0.2.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)
 - [Source repository](https://github.com/mayayaiinfra/Mudra-Interact-Core)
 
@@ -20,7 +20,7 @@ After publication is verified, install the exact release and run the synthetic
 example from a source checkout (the examples are repository fixtures):
 
 ```powershell
-python -m pip install --no-deps mudra-interact-core==0.2.0
+python -m pip install --no-deps mudra-interact==0.2.0
 git clone --branch v0.2.0 --depth 1 https://github.com/mayayaiinfra/Mudra-Interact-Core.git
 Set-Location Mudra-Interact-Core
 mudra-interact --input examples/v2/frame.json
@@ -34,7 +34,7 @@ For an owner-authorized TestPyPI candidate, select that index explicitly. Do
 not add PyPI as an extra index fallback:
 
 ```powershell
-python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact-core==0.2.0
+python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.2.0
 ```
 
 TestPyPI may not host runtime dependencies required by another package; this

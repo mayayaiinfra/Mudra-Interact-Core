@@ -5,7 +5,7 @@
   "inventory_path": "licenses/shipped_inventory.json",
   "components": [
     {
-      "name": "Mudra Interact Core",
+      "name": "Mudra Interact",
       "kind": "source",
       "license": "Apache-2.0",
       "status": "included",

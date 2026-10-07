@@ -1,4 +1,4 @@
-name: Publish Mudra Core
+name: Publish Mudra Interact
 
 on:
   workflow_dispatch:
@@ -150,7 +150,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: pypi-test
-      url: https://test.pypi.org/project/mudra-interact-core/0.2.0/
+      url: https://test.pypi.org/project/mudra-interact/0.2.0/
     permissions:
       contents: read
       id-token: write
@@ -204,7 +204,7 @@ jobs:
     timeout-minutes: 10
     environment:
       name: pypi-production
-      url: https://pypi.org/project/mudra-interact-core/0.2.0/
+      url: https://pypi.org/project/mudra-interact/0.2.0/
     permissions:
       contents: read
       id-token: write
@@ -287,10 +287,10 @@ jobs:
         shell: bash
         run: |
           gh release create v0.2.0 \
-            release-artifacts/0.2.0/mudra_interact_core-0.2.0-py3-none-any.whl \
-            release-artifacts/0.2.0/mudra_interact_core-0.2.0.tar.gz \
+            release-artifacts/0.2.0/mudra_interact-0.2.0-py3-none-any.whl \
+            release-artifacts/0.2.0/mudra_interact-0.2.0.tar.gz \
             --target "$CANDIDATE_COMMIT" \
-            --title "Mudra Interact Core 0.2.0" \
+            --title "Mudra Interact 0.2.0" \
             --notes-file CHANGELOG.md
       - name: Create the sanitized publication manifest
         env:

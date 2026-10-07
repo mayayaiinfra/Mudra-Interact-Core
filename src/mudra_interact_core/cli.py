@@ -66,7 +66,7 @@ class _ArgumentParser(argparse.ArgumentParser):
 
 def _package_version() -> str:
     try:
-        return version("mudra-interact-core")
+        return version("mudra-interact")
     except PackageNotFoundError:
         return _VERSION_FALLBACK
 

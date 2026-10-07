@@ -5,7 +5,7 @@
   "baseline_commit": "eae92b7",
   "implementation_started": true,
   "target": {
-    "package": "mudra-interact-core",
+    "package": "mudra-interact",
     "package_version": "0.2.0",
     "schema_version": "2.0.0",
     "catalog_version": "2.0.0"
@@ -18,7 +18,7 @@
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
     "baseline_tests": "M0-M2: 23/23, 120/120, and 165/165 including semantic mutations; current-source MI-08 platform matrix 8/8; hosted M3 full gate 187/187 on Ubuntu 24.04 with network isolation (run 37654020643, source c46dac8).",
-    "verification_claim": "M0-M3 are verified. Hosted M3 run 37654020643 on source c46dac8 passed all 187/187 required cases with zero failures or skips; the supported Linux/Windows CPython 3.11-3.14 matrix is 8/8. MI-10 engineering is complete and its E90-E99 acceptance passed 10/10. The single remaining gate, M4, is blocked because owner-controlled package identity and publisher setup are not established, the GitHub repository has no configured environments, and the exact candidate/version has not been authorized. No public package was released."
+    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M3 are verified on the preceding distribution-name candidate; the rename invalidates source-linked receipts and those gates are being refreshed before release. M4 remains blocked until ownership of mudra-interact on TestPyPI/PyPI, Trusted Publisher setup, protected GitHub environments, and exact candidate/version authorization are established."
   },
   "active_item": null,
   "states": [
@@ -147,7 +147,7 @@
       "state": "BLOCKED",
       "evidence": [],
       "verification_kind": null,
-      "blocker": "External release proof is unavailable: MI-10 acceptance passed 10/10, but evidence/releases/published.json is absent (manifest_file_missing). The repository currently has no configured GitHub environments. The owner must confirm control of the intended package name, configure TestPyPI/PyPI Trusted Publishers and protected GitHub environments, and authorize this exact candidate/version before release."
+      "blocker": "Owner approved the public name Mudra Interact / mudra-interact, but package ownership on TestPyPI/PyPI is not established. Configure Trusted Publishers and protected GitHub environments; authorize the exact candidate/version. Prior release evidence targets the old distribution name and must be regenerated for this candidate."
     }
   ],
   "recommended_order": [
@@ -570,7 +570,7 @@
           "sha256": "b85d9bc7e6c060fa9fa0b930c6726509aaeee3e8254771b19a12ac83cf67ae62"
         }
       ],
-      "blocker": "External release proof is unavailable: MI-10 acceptance passed 10/10, but evidence/releases/published.json is absent (manifest_file_missing). The repository currently has no configured GitHub environments. The owner must confirm control of the intended package name, configure TestPyPI/PyPI Trusted Publishers and protected GitHub environments, and authorize this exact candidate/version before release."
+      "blocker": "Owner approved the public name Mudra Interact / mudra-interact, but package ownership on TestPyPI/PyPI is not established. Configure Trusted Publishers and protected GitHub environments; authorize the exact candidate/version. Prior release evidence targets the old distribution name and must be regenerated for this candidate."
     }
   ]
 }
