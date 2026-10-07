@@ -54,7 +54,8 @@ python -m venv .venv
 .venv\Scripts\mudra-interact.exe --input examples/v2/frame.json
 ```
 
-On Linux/macOS use `.venv/bin/python` and `.venv/bin/mudra-interact`. The
+On Linux use `.venv/bin/python` and `.venv/bin/mudra-interact`. On Windows use
+`.venv\Scripts\python.exe` and `.venv\Scripts\mudra-interact.exe`. The
 acceptance tests exercise the v2 API/CLI and installed-package examples. A
 candidate or stable local recognition is not authority to share participant
 data or execute an action; event output requires both explicit CLI attestations.

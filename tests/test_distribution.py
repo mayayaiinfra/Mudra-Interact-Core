@@ -112,9 +112,10 @@ def test_wheel_from_sdist_is_offline_and_owned_by_fresh_environment(release_repo
 
 
 @pytest.mark.acceptance("E75")
-def test_all_twelve_cells_are_enumerated_without_fake_success(release_report: dict) -> None:
+def test_all_eight_supported_cells_are_enumerated_without_fake_success(release_report: dict) -> None:
     matrix = release_report["platform_matrix"]
-    assert len(matrix) == 12
+    assert len(matrix) == 8
+    assert set(REQUIRED_PLATFORMS) == {("linux", "x86_64"), ("windows", "x86_64")}
     assert {(row["os"], row["architecture"]) for row in matrix} == set(REQUIRED_PLATFORMS)
     assert {row["python"] for row in matrix} == set(REQUIRED_PYTHONS)
     actual = current_platform()
@@ -140,7 +141,6 @@ def test_offline_negative_egress_and_cold_setup_failure_are_explicit(release_rep
     expected_methods = {
         "linux": "linux_network_namespace",
         "windows": "windows_firewall_program_rule",
-        "macos": "macos_sandbox_exec",
     }
     assert offline["negative_egress"]["method"] == expected_methods[current_platform()["os"]]
     assert offline["negative_egress"]["isolation_result"] == "egress_denied"
@@ -204,7 +204,8 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert re.search(r"actions/checkout@[0-9a-f]{40}", workflow)
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow
-    assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 12
+    assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 8
+    assert "macos-" not in workflow
     assert "sudo unshare --net" in workflow
     assert 'runuser_path="$(command -v runuser)"' in workflow
     assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
@@ -212,7 +213,7 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "MUDRA_WINDOWS_EGRESS_CONTROL=VERIFIED" in workflow
     assert "connect_ex(('1.1.1.1',443))" in workflow
     assert workflow.index("connect_ex(('1.1.1.1',443))") < workflow.index("New-NetFirewallRule")
-    assert "sandbox-exec" in workflow
+    assert "sandbox-exec" not in workflow
     assert "MUDRA_CI_RECEIPT_JSON" in workflow
     assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow
     assert "--acceptance-report=" in workflow
@@ -290,7 +291,8 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
     assert release_report["report_sha256"]
     assert release_report["source_tree_sha256"] == independent_source_tree_sha256(ROOT)
     assert release_report["state"] in {"VERIFIED", "BLOCKED"}
-    if len([row for row in release_report["platform_matrix"] if row["state"] == "VERIFIED"]) < 12:
+    required_cell_count = len(REQUIRED_PLATFORMS) * len(REQUIRED_PYTHONS)
+    if len([row for row in release_report["platform_matrix"] if row["state"] == "VERIFIED"]) < required_cell_count:
         assert release_report["state"] == "BLOCKED"
         assert any("cells" in item for item in release_report["limitations"])
 
@@ -347,13 +349,14 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
         "collector_platform": current_platform(),
         "collector_commit": candidate_commit,
     }
+    required_cell_count = len(EXPECTED_CELLS)
     partial = aggregate_receipt_documents(synthetic_receipts[:-1], **aggregate_args)
     assert partial["state"] == "BLOCKED"
-    assert partial["matrix"]["verified_cells"] == 11
+    assert partial["matrix"]["verified_cells"] == required_cell_count - 1
     assert partial["matrix"]["missing_cells"] == 1
     complete = aggregate_receipt_documents(synthetic_receipts, **aggregate_args)
     assert complete["state"] == "VERIFIED"
-    assert complete["matrix"]["verified_cells"] == 12
+    assert complete["matrix"]["verified_cells"] == required_cell_count
     aggregate_path = Path("evidence/local") / f"matrix-fixture-{os.getpid()}.json"
     try:
         write_matrix_report(ROOT, aggregate_path.as_posix(), complete)
@@ -363,7 +366,7 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
             current_identity=identity,
             current_commit=candidate_commit,
         )
-        assert validated["matrix"]["verified_cells"] == 12
+        assert validated["matrix"]["verified_cells"] == required_cell_count
         incomplete = dict(complete)
         incomplete["matrix"] = {**complete["matrix"], "cells": complete["matrix"]["cells"][:-1], "verified_cells": 11, "missing_cells": 1}
         write_matrix_report(ROOT, aggregate_path.as_posix(), seal_report(incomplete))

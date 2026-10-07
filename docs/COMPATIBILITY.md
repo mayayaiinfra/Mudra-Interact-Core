@@ -15,11 +15,13 @@ be copied to another row.
 
 | Operating system | Architecture | Python | Required evidence |
 | --- | --- | --- | --- |
-| Linux | x86_64 | 3.11, 3.12, 3.13, 3.14 | CI runner result |
-| Windows | x86_64 | 3.11, 3.12, 3.13, 3.14 | CI runner result |
-| macOS | arm64 | 3.11, 3.12, 3.13, 3.14 | CI runner result |
+| Linux | x86_64 | 3.11, 3.12, 3.13, 3.14 | Required qualification |
+| Windows | x86_64 | 3.11, 3.12, 3.13, 3.14 | Required qualification |
 
-The checked-in workflow enumerates these twelve cells.  The local release
+macOS is not currently supported or qualified. Its Darwin-based runtime and
+platform sandbox behavior are not represented by Linux results.
+
+The checked-in workflow enumerates these eight cells. The local release
 verifier records the current cell from `platform.system()`,
 `platform.machine()` and the running interpreter.  It reports every absent
 cell as `BLOCKED`; it does not emulate a platform with a string or an
@@ -33,7 +35,7 @@ hashes, all E73-E84 outcomes, shared source/tool identities (with text
 checkout line endings normalized and binary bytes preserved), exact cell set,
 unique cells and candidate commit ancestry.  `python tools/verify_gate.py
 --gate M3 --report evidence/local/M3.json` refuses to verify M3 unless that
-aggregate is fresh and complete.  M3 cannot close until all twelve actual
+aggregate is fresh and complete. M3 cannot close until all eight supported
 cells have fresh receipts.
 
 ## Offline and reproducibility contract
@@ -47,15 +49,14 @@ It installs only that wheel into a fresh virtual environment outside the
 checkout, with `--no-index --no-deps`, and confirms that the imported module is
 owned by the environment.  A synthetic socket-denial probe and a separate real
 egress probe run under OS-level network isolation.  Linux uses a network
-namespace with no default route, Windows uses an active outbound firewall block
-scoped to the test interpreter, and macOS runs under a sandbox profile that
-denies network operations.  The verifier records isolation as `VERIFIED` only
+namespace with no default route, and Windows uses an active outbound firewall
+block scoped to the test interpreter. The verifier records isolation as `VERIFIED` only
 when the platform boundary is present and a real egress attempt is denied;
 missing isolation blocks E76.
 
 The release report records the source commit, source-tree digest, specification
 and acceptance digests, lock digest, exact artifact hashes, metadata/data
-inventory and all twelve cell states.  Reports contain synthetic-safe labels
+inventory and all eight supported cell states. Reports contain synthetic-safe labels
 and never contain host paths, credentials, customer data or raw command
 diagnostics.
 

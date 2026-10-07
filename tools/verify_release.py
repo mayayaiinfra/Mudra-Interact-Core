@@ -43,7 +43,6 @@ REQUIRED_PYTHONS = ("3.11", "3.12", "3.13", "3.14")
 REQUIRED_PLATFORMS = (
     ("linux", "x86_64"),
     ("windows", "x86_64"),
-    ("macos", "arm64"),
 )
 EXCLUDED_PARTS = {
     ".git", ".venv", "__pycache__", ".pytest_cache", "build", "dist",
@@ -462,16 +461,6 @@ def runner_network_isolation_probe() -> tuple[str, str, str]:
             connect_code=_egress_connect_code(),
         )
 
-    if platform.system().lower() == "darwin":
-        if os.environ.get("MUDRA_MACOS_NETWORK_ISOLATION") != "sandbox-exec":
-            return "UNAVAILABLE", "macos_sandbox_exec", "sandbox_marker_unavailable"
-        code = _egress_connect_code()
-        if code in {errno.EPERM, errno.EACCES}:
-            return "VERIFIED", "macos_sandbox_exec", "egress_denied"
-        if code == 0:
-            return "FAILED", "macos_sandbox_exec", "egress_connected"
-        return "UNAVAILABLE", "macos_sandbox_exec", "unexpected_egress_result"
-
     return "UNAVAILABLE", "unsupported_runner", "unsupported_platform"
 
 
@@ -702,7 +691,10 @@ def qualify(mode: str) -> dict[str, Any]:
         "started_at": started,
         "finished_at": now(),
         "commands": commands,
-        "test_counts": {"required_platform_cells": 12, "verified_platform_cells": 12 - missing_cells},
+        "test_counts": {
+            "required_platform_cells": len(REQUIRED_PLATFORMS) * len(REQUIRED_PYTHONS),
+            "verified_platform_cells": len(REQUIRED_PLATFORMS) * len(REQUIRED_PYTHONS) - missing_cells,
+        },
         "acceptance_cases": [],
         "mutation_results": [],
         "artifacts": artifacts,

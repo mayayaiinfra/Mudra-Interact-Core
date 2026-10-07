@@ -408,7 +408,7 @@ def write_report(root: Path, relative_path: str, report: dict[str, Any]) -> None
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--receipt-dir", required=True, help="Directory with the twelve MI-08 runner receipts")
+    parser.add_argument("--receipt-dir", required=True, help="Directory with the eight MI-08 runner receipts")
     parser.add_argument("--report", required=True, help="Aggregate report path under evidence/local/")
     args = parser.parse_args(argv)
     try:

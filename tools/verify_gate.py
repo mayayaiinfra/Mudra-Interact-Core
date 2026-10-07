@@ -866,7 +866,7 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
         report["prerequisites"] = prerequisites
         if matrix_report is not None:
             report["limitations"] = [
-                "This gate receipt includes the verified twelve-cell OS/Python matrix.",
+                "This gate receipt includes the verified eight-cell OS/Python matrix.",
                 "It does not establish package publication, camera-adapter runtime, cultural-review or private production-integration readiness.",
             ]
         else:

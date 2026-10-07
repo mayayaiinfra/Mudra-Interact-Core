@@ -1,6 +1,6 @@
 {
   "ledger_version": "1.0.0",
-  "specification_version": "0.2",
+  "specification_version": "0.3",
   "reviewed_on": "2026-10-07",
   "baseline_commit": "eae92b7",
   "implementation_started": true,
@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M2 and MI-01-07 are current and verified. MI-08 has a current Linux CPython 3.11 qualification (15/15); MI-09 design verification passed 5/5. M3 remains open only for all 12 current-source hosted platform cells and the combined gate.",
-    "baseline_tests": "Current-source M0: 23/23; M1 closure: 120/120; M2 closure: 165/165 including 12 semantic mutations; MI-08 Linux: 15/15; MI-09: 5/5; Windows/Linux focused packaging tests passed; actionlint passed.",
-    "verification_claim": "M0-M2 and MI-01-07/MI-09 have current luna_self_verified receipts. MI-08 remains IN_PROGRESS pending the 12-cell hosted matrix; M3 remains IN_PROGRESS. M4 is NOT_STARTED."
+    "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
+    "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
+    "verification_claim": "Specification 0.3 platform-scope change invalidates prior gate receipts. M0-M3 evidence refresh is in progress; MI-08 requires all 8 Linux/Windows cells and a fresh aggregate. macOS is outside the supported matrix. M4 remains NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
@@ -60,13 +60,9 @@
       {
         "os": "windows",
         "architecture": "x86_64"
-      },
-      {
-        "os": "macos",
-        "architecture": "arm64"
       }
     ],
-    "required_cells": 12
+    "required_cells": 8
   },
   "gates": [
     {

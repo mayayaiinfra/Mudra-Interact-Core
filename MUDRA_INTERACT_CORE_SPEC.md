@@ -1,9 +1,10 @@
 # Mudra Interact Core: Implementation and Release Specification
 
-Specification **0.2**, Astra review **2026-10-06**. Owner: MAYAYAI.
+Specification **0.3**, owner-approved platform scope update **2026-10-07**;
+core contract review: Astra **2026-10-06**. Owner: MAYAYAI.
 Implementation baseline: `eae92b7`, package `0.1.0`.
 Target: package `0.2.0`, protocol/schema `2.0.0`, catalogue `2.0.0`.
-Status: reviewed plan; target behaviour is **not implemented**.
+Status: normative implementation contract; progress is tracked in the JSON ledger.
 
 Read [acceptance cases](docs/ACCEPTANCE.md), [Luna handoff](docs/LUNA_HANDOFF.md)
 and [dependency/status ledger](IMPLEMENTATION_BACKLOG.json). This document owns
@@ -364,10 +365,12 @@ frameworks to satisfy the public core. Runtime remains standard-library only.
 
 ## 9. Packaging, CI and publication
 
-Target support: CPython 3.11/3.12/3.13/3.14 on Linux x86_64, Windows x86_64 and
-macOS arm64: 12 required cells. No untested interpreters/architectures implied.
-Pin runner families and record actual OS/interpreter builds. A missing cell
-blocks M3; removing it requires explicit scope approval, not an agent exception.
+Target support: CPython 3.11/3.12/3.13/3.14 on Linux x86_64 and Windows x86_64:
+8 required cells. macOS is outside the supported and qualified platform scope;
+no compatibility claim is made for it. No untested interpreters/architectures
+are implied. Pin runner families and record actual OS/interpreter builds. A
+missing cell blocks M3; changing this platform scope requires explicit owner
+approval, not an agent exception.
 
 MI-08 pins development/build/test dependencies and hashes; no runtime dependency
 is added. Fetch approved tools during explicit setup, then build/test offline.

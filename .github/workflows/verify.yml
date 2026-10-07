@@ -29,10 +29,6 @@ jobs:
           - {os: windows-2025, python-version: '3.12'}
           - {os: windows-2025, python-version: '3.13'}
           - {os: windows-2025, python-version: '3.14'}
-          - {os: macos-14, python-version: '3.11'}
-          - {os: macos-14, python-version: '3.12'}
-          - {os: macos-14, python-version: '3.13'}
-          - {os: macos-14, python-version: '3.14'}
     steps:
       - name: Check out source
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -96,7 +92,6 @@ jobs:
         env:
           PIP_NO_INDEX: '1'
           PYTHONNOUSERSITE: '1'
-          MUDRA_MACOS_NETWORK_ISOLATION: ${{ runner.os == 'macOS' && 'sandbox-exec' || '' }}
         run: |
           case "$RUNNER_OS" in
             Linux)
@@ -104,9 +99,6 @@ jobs:
               python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
               runuser_path="$(command -v runuser)"
               sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
-              ;;
-            macOS)
-              sandbox-exec -p '(version 1)(allow default)(deny network*)' "$RUNNER_TEMP/mudra-verifier/bin/python" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             *)
               echo "Unsupported runner OS: $RUNNER_OS" >&2
