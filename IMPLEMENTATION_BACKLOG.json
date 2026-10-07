@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0 is refreshed for source commit 7ab8edf with 23/23 required acceptance executions passing after the offline E53 fix. M1 and M2 requalification are next; MI-08 remains active for the hosted matrix.",
-    "baseline_tests": "Current-source M0: 23/23; E53 offline wheel build passed on Windows and Linux; focused E52/E79/E84 passed on both; clean verifier pip check and actionlint passed.",
-    "verification_claim": "M0/MI-01 have current luna_self_verified receipts. M1-M2 and MI-02-09 are being refreshed; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M0-M1 now have current-source receipts after the offline E53 fix: 23/23 M0 required executions and 120/120 M1 dependency-closure executions passed. M2 is next; MI-08 remains active for the hosted matrix.",
+    "baseline_tests": "Current-source M0: 23/23; M1 dependency closure: 120/120. E53 offline wheel build passed on Windows and Linux; focused E52/E79/E84 passed on both; clean verifier pip check and actionlint passed.",
+    "verification_claim": "M0-M1 and MI-01-04 have current luna_self_verified receipts. M2 and MI-05-07/MI-09 are being refreshed next; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [
@@ -97,8 +97,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-ec3a85c.json",
-          "sha256": "fd8e11ba1c78073524d30c8487a275f135772bf18f4466707c39723692783748"
+          "path": "evidence/local/M1-current-7ab8edf.json",
+          "sha256": "eead8634374c721cce7e6606090c1574701cac8155857f263f54e7c6a0d16b44"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -227,8 +227,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-ec3a85c.json",
-          "sha256": "fd8e11ba1c78073524d30c8487a275f135772bf18f4466707c39723692783748"
+          "path": "evidence/local/M1-current-7ab8edf.json",
+          "sha256": "eead8634374c721cce7e6606090c1574701cac8155857f263f54e7c6a0d16b44"
         }
       ],
       "blocker": null
@@ -260,8 +260,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-ec3a85c.json",
-          "sha256": "fd8e11ba1c78073524d30c8487a275f135772bf18f4466707c39723692783748"
+          "path": "evidence/local/M1-current-7ab8edf.json",
+          "sha256": "eead8634374c721cce7e6606090c1574701cac8155857f263f54e7c6a0d16b44"
         }
       ],
       "blocker": null
@@ -303,8 +303,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-ec3a85c.json",
-          "sha256": "fd8e11ba1c78073524d30c8487a275f135772bf18f4466707c39723692783748"
+          "path": "evidence/local/M1-current-7ab8edf.json",
+          "sha256": "eead8634374c721cce7e6606090c1574701cac8155857f263f54e7c6a0d16b44"
         }
       ],
       "blocker": null
