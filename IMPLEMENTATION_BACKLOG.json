@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-linux-3.11-d4b3c5a.json",
-          "sha256": "9aef04056e78ee57fb2d00dae0d4a23aa39843e121559c47716fb9a767ce5c6f"
+          "path": "evidence/local/M0-windows-3.14-b20b817.json",
+          "sha256": "e18b7d064c31038963cac62abd8c75856a473af984984acb6136dd2e05f3ec26"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -187,8 +187,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-linux-3.11-d4b3c5a.json",
-          "sha256": "9aef04056e78ee57fb2d00dae0d4a23aa39843e121559c47716fb9a767ce5c6f"
+          "path": "evidence/local/M0-windows-3.14-b20b817.json",
+          "sha256": "e18b7d064c31038963cac62abd8c75856a473af984984acb6136dd2e05f3ec26"
         }
       ],
       "blocker": null
