@@ -16,11 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "MI-01 through MI-06 implemented and self-verified; CLI, privacy, distribution, adapter and publication items remain",
-    "baseline_tests": "135 local tests passed on Windows CPython 3.14.2; no required skips or xfails",
-    "verification_claim": "M0 and M1, plus MI-02 through MI-06, verified by fresh luna_self_verified receipts"
+    "scope": "MI-01 through MI-06 and the MI-05 CLI workflow implemented and self-verified; privacy, distribution, adapter and publication items remain",
+    "baseline_tests": "146 local tests passed on Windows CPython 3.14.2; no required skips or xfails",
+    "verification_claim": "M0 and M1, plus MI-02 through MI-06 and MI-05, verified by fresh luna_self_verified receipts"
   },
-  "active_item": "MI-05",
+  "active_item": "MI-07",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -78,8 +78,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-mi06.json",
-          "sha256": "51db157e507d0f4cb5ec3ff9b7bb11090104496a004390ccee5128dc71c07cd2"
+          "path": "evidence/local/M0-cli.json",
+          "sha256": "1a8c88631c04e84913265b275c9b7653ff581d5739567048e87be07d8a6760ad"
         }
       ]
     },
@@ -96,8 +96,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-mi06.json",
-          "sha256": "48733a88e1fad084b42647bfc400536ebe7cbdd0b9e3b29e96746d466767c416"
+          "path": "evidence/local/M1-cli.json",
+          "sha256": "613d41b940f7174cc4650749f232ccebe99744cd4268d72ac0ddaf82a4b1c9f9"
         }
       ]
     },
@@ -181,8 +181,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-01-mi06.json",
-          "sha256": "bbd82717eb3803ba0126314c08bd471b2e1efa0c92cf600b43c6bd01576885d1"
+          "path": "evidence/local/MI-01-cli.json",
+          "sha256": "d338f7bfa24f80cabc3b4d47c2b2a6068b4cc7a47b55970c01db156457db7bc1"
         }
       ],
       "blocker": null
@@ -219,8 +219,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-02-mi06.json",
-          "sha256": "9d66536cd8697e7c0f380cafbcb3b15ab530b06d3e71a06dcfbe03ded6dfd72d"
+          "path": "evidence/local/MI-02-cli.json",
+          "sha256": "506ecd1abf51f70c4435fb54903164a97b8ddc8a22bae891cba6ebe7eeaee563"
         }
       ],
       "blocker": null
@@ -252,8 +252,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-03-mi06.json",
-          "sha256": "878b4f1b75c8997787dc3138ec9ae0aed3bb68e3a41a488cde3acbb2d732e774"
+          "path": "evidence/local/MI-03-cli.json",
+          "sha256": "bd4d4f349afce52829cbf81a9abe8af192fe714388e839954e1aa01db7a53cd7"
         }
       ],
       "blocker": null
@@ -295,8 +295,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-04-mi06.json",
-          "sha256": "8a8069beae6c316a4dabc42a9a470e80a3462b86d4e01459684ef48d37b94f03"
+          "path": "evidence/local/MI-04-cli.json",
+          "sha256": "21eef35c0a0d674fe4b42dc45eb6a4d7e70d6b69b8e783470519914b37dea250"
         }
       ],
       "blocker": null
@@ -330,9 +330,14 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-05.json",
+          "sha256": "85880663b81e3ca1910ac9a75b6e21da12a01736997879caf68b249464149641"
+        }
+      ],
       "blocker": null
     },
     {
@@ -362,8 +367,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-06.json",
-          "sha256": "bd032bed2affc6aceee8721322882554ab07f5a916d51ee17000c64b5f67b460"
+          "path": "evidence/local/MI-06-cli.json",
+          "sha256": "f40bbeb80e867be15d7f54c300f2695c0329ca5af59a4b33205c691c31396487"
         }
       ],
       "blocker": null
@@ -401,7 +406,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "blocker": null

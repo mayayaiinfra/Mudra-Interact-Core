@@ -9,6 +9,7 @@ import pytest
 
 from tools.verify_gate import (
     CommandResult,
+    _safe_display_argv,
     acceptance_owners,
     check_fresh_identity,
     command_error_codes,
@@ -186,3 +187,21 @@ def test_tampered_receipts_and_invalid_ledger_graphs_are_rejected(failure: str) 
         expected = "ledger_verified_without_evidence"
     with pytest.raises(VerificationError, match=expected):
         validate_ledger(ROOT, ledger, acceptance_owners(ROOT))
+
+
+@pytest.mark.acceptance("E71")
+def test_verification_output_is_bounded_and_display_paths_are_sanitized(tmp_path: Path) -> None:
+    result = run_command(
+        [sys.executable, "-c", "print('PRIVATE_DIAGNOSTIC_' * 100000)"],
+        cwd=tmp_path,
+        log_directory=tmp_path / "logs",
+        timeout_seconds=5,
+        command_id="bounded-output",
+    )
+    assert result.exit_code == 0
+    assert result.stdout_truncated is True
+    assert result.stdout_bytes > 512 * 1024
+    assert Path(result.stdout_path).stat().st_size <= 512 * 1024  # type: ignore[arg-type]
+    display = _safe_display_argv([sys.executable, str(ROOT / "PRIVATE_DIAGNOSTIC.py")], Path("evidence/local/report.json"), ROOT)
+    assert str(ROOT) not in " ".join(display)
+    assert "PRIVATE_DIAGNOSTIC.py" in display[-1]
