@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0 and M1 are refreshed for the current source identity. M0 recorded 23 required acceptance executions passing; M1 recorded 120 passing, including all M0 cases. M2 is next; MI-08 remains active for the hosted qualification.",
-    "baseline_tests": "Current-source M0: 23/23 required executions passed. M1 dependency closure: 120/120 passed. Linux CPython 3.11 MI-08: 15/15; focused Windows workflow/helper tests: 2/2; actionlint passed.",
-    "verification_claim": "M0-M1 and MI-01-04 have current luna_self_verified receipts. M2 and MI-05-07/MI-09 are being refreshed next; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M2 requalification exposed a missing verifier-environment console entrypoint and a Windows-only launcher name in the cross-platform CLI test. CI now installs the package from local source with network disabled, and the test selects the platform launcher. Requalify M0-M2 before the hosted matrix.",
+    "baseline_tests": "Focused Windows E52/E79/E84: 3 passed; focused Linux E52/E79/E84: 3 passed; isolated verifier pip check clean; actionlint passed. Previous M0/M1 reports are stale after the acceptance/workflow changes and are being refreshed.",
+    "verification_claim": "M0-M2 receipts must be refreshed for the latest source identity. MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [

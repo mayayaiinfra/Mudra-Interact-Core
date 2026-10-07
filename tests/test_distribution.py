@@ -198,6 +198,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert '"$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check' in workflow
     assert '.mudra-verifier' not in workflow
     assert "--require-hashes --no-deps -r requirements-dev.lock" in workflow
+    assert "pip install --no-deps --no-build-isolation ." in workflow
+    assert "pip check" in workflow
+    assert workflow.index("pip install --no-deps --no-build-isolation .") < workflow.index("Block outbound networking")
     assert re.search(r"actions/checkout@[0-9a-f]{40}", workflow)
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow

@@ -226,7 +226,10 @@ def test_module_entrypoint_shorthand_help_and_version_parity(tmp_path: Path) -> 
     path = _write_json(tmp_path / "frame.json", _frame())
     environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
     module = subprocess.run([sys.executable, "-m", "mudra_interact_core", "--input", str(path)], cwd=ROOT, env=environment, capture_output=True, text=True, check=False)
-    script = subprocess.run([str(Path(sys.executable).with_name("mudra-interact.exe")), "--input", str(path)], cwd=ROOT, env=environment, capture_output=True, text=True, check=False)
+    launcher_name = "mudra-interact.exe" if os.name == "nt" else "mudra-interact"
+    launcher = Path(sys.executable).with_name(launcher_name)
+    assert launcher.is_file()
+    script = subprocess.run([str(launcher), "--input", str(path)], cwd=ROOT, env=environment, capture_output=True, text=True, check=False)
     assert module.returncode == script.returncode == 0
     assert json.loads(module.stdout) == json.loads(script.stdout)
     assert subprocess.run([sys.executable, "-m", "mudra_interact_core", "--help"], cwd=ROOT, env=environment, capture_output=True, text=True, check=False).returncode == 0

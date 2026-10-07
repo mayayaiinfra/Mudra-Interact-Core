@@ -54,14 +54,18 @@ jobs:
         shell: bash
         run: |
           "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --require-hashes --no-deps -r requirements-dev.lock
-          "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --no-deps --no-build-isolation .
+          PIP_NO_INDEX=1 "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check
       - name: Install and validate locked verification tools
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          $env:PIP_NO_INDEX = '1'
           $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
           & $python -m pip install --require-hashes --no-deps -r requirements-dev.lock
           if ($LASTEXITCODE -ne 0) { throw 'locked verifier install failed' }
+          & $python -m pip install --no-deps --no-build-isolation .
+          if ($LASTEXITCODE -ne 0) { throw 'offline package install into verifier failed' }
           & $python -m pip check
           if ($LASTEXITCODE -ne 0) { throw 'locked verifier dependency check failed' }
       - name: Block outbound networking for the Python process
