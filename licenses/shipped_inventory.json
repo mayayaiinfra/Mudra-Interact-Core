@@ -51,6 +51,13 @@
       "status": "included"
     },
     {
+      "path": "docs/ADAPTER_SPEC.md",
+      "sha256": "b314d2e1a45a3b810d1752ee8a00a8ff69dd5ab2c3ad0db7d318330487b5d81c",
+      "component": "Mudra Interact Core",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
       "path": "docs/API.md",
       "sha256": "87351eb63cefe64aadf97b0a8c2a930a6d0c6aa1b4d32c8cce2c6dbae0db9369",
       "component": "Mudra Interact Core",
