@@ -119,9 +119,10 @@ The normal `push`/PR workflow qualifies each MI-08 platform cell. After all
 eight current-source receipts and the aggregate matrix report are committed,
 dispatch `.github/workflows/verify.yml` to execute the complete M3 gate on an
 isolated Ubuntu runner. The manual job runs the gate against the committed
-matrix and prerequisite receipts inside a network namespace and emits a
-sanitized gate report plus its linked pytest evidence. This avoids treating a
-local WSL namespace limitation or an unelevated desktop firewall as evidence.
+matrix and prerequisite receipts inside a network namespace, fetches full Git
+history for receipt ancestry validation, and emits a sanitized gate report plus
+its linked pytest evidence. This avoids treating a local WSL namespace
+limitation or an unelevated desktop firewall as evidence.
 
 Every runner returns zero only for its declared successful scope. Nonzero means
 FAILED or BLOCKED, with safe error code and missing conditions. Timeout, signal,

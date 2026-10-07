@@ -236,6 +236,7 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "workflow_dispatch:" in workflow
     assert "if: github.event_name != 'workflow_dispatch'" in workflow
     assert "if: github.event_name == 'workflow_dispatch'" in workflow
+    assert "fetch-depth: 0" in workflow.split("  m3-gate:\n", 1)[1]
     assert "timeout-minutes: 20" in workflow
     assert 'python -m venv "$RUNNER_TEMP/mudra-verifier"' in workflow
     assert "Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'" in workflow

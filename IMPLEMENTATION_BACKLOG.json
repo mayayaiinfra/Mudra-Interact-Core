@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; MI-08 hosted acceptance passed on all 8 supported Linux/Windows x86_64 × CPython 3.11-3.14 cells.",
-    "verification_claim": "The Windows verifier scopes its egress block to the native GetModuleFileNameW process image while confirming acceptance executes from the isolated venv. Hosted workflow run 37639493937 succeeded for all eight Linux/Windows × CPython 3.11-3.14 cells. Sanitized receipts and linked pytest reports are imported and hash-validated; the strict aggregator reports M3 platform matrix VERIFIED (8/8), source tree 3b0614b475e4c463397dbbc1cf5385f0451ad96ea1ad680b1e4c67ac19928757. The remaining M3 action is the full M3 gate via workflow_dispatch; M4 remains NOT_STARTED."
+    "baseline_tests": "Current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; the current-source MI-08 platform matrix is being regenerated after the M3 workflow history-validation correction.",
+    "verification_claim": "The full M3 hosted gate correctly rejected its first dispatch because the shallow checkout could not establish ancestry for the committed matrix. The workflow now fetches full history for this check. M0, M1 and M2 have been freshly reverified on the corrected source tree; the eight-cell MI-08 matrix and full M3 gate must be regenerated on this tree. M4 remains NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
@@ -74,8 +74,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-m3ci.json",
-          "sha256": "b541fa3248dc46dfe368a98efd2068ce731a819f269b2e01bd8cf76b1ddb9ba9"
+          "path": "evidence/local/M0-current-m3ci-depth0.json",
+          "sha256": "b2df9d73932aad210a1c02d017d195cf4f60541eeb44e246024b648c0a25abb9"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -93,8 +93,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci.json",
-          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
+          "path": "evidence/local/M1-current-m3ci-depth0.json",
+          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -112,8 +112,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-check.json",
-          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
+          "path": "evidence/local/M2-current-m3ci-depth0.json",
+          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -187,8 +187,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-m3ci.json",
-          "sha256": "b541fa3248dc46dfe368a98efd2068ce731a819f269b2e01bd8cf76b1ddb9ba9"
+          "path": "evidence/local/M0-current-m3ci-depth0.json",
+          "sha256": "b2df9d73932aad210a1c02d017d195cf4f60541eeb44e246024b648c0a25abb9"
         }
       ],
       "blocker": null
@@ -225,8 +225,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci.json",
-          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
+          "path": "evidence/local/M1-current-m3ci-depth0.json",
+          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
         }
       ],
       "blocker": null
@@ -258,8 +258,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci.json",
-          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
+          "path": "evidence/local/M1-current-m3ci-depth0.json",
+          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
         }
       ],
       "blocker": null
@@ -301,8 +301,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-current-m3ci.json",
-          "sha256": "1c80fd5041df17125a6842ae1e8c0d9c4bbf37a9a2be655b75de11ce555434ed"
+          "path": "evidence/local/M1-current-m3ci-depth0.json",
+          "sha256": "2bce472d59c18902bad40ad4c26a4eeabf0745b12a38b8ed304f4476f42e094c"
         }
       ],
       "blocker": null
@@ -340,8 +340,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-check.json",
-          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
+          "path": "evidence/local/M2-current-m3ci-depth0.json",
+          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
         }
       ],
       "blocker": null
@@ -373,8 +373,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-check.json",
-          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
+          "path": "evidence/local/M2-current-m3ci-depth0.json",
+          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
         }
       ],
       "blocker": null
@@ -416,8 +416,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-m3ci-check.json",
-          "sha256": "1e2761777b2d2a208bcc9ac0f9e8147727bfbe33aceb57993651f819f4428ba5"
+          "path": "evidence/local/M2-current-m3ci-depth0.json",
+          "sha256": "5ccf0b502041c2dd5aa6c457b2036a58df84f8e28887e250885e265d1a781ee8"
         }
       ],
       "blocker": null
