@@ -1,7 +1,7 @@
 # Mudra Core v2 wire contract
 
-This document describes the target wire contract for package 0.2.0. It is not
-a claim that the v2 runtime is implemented yet. The bundled schema source is
+This document describes the wire contract implemented by package 0.2.0. The
+bundled schema source is
 [`contract.schema.json`](../src/mudra_interact_core/schemas/v2/contract.schema.json);
 it uses Draft 2020-12 and local `#/$defs/...` references. No schema lookup needs
 network access. Schema validity does not establish frame freshness, stability,
@@ -48,3 +48,39 @@ null }`; it is not a shareable event and does not require a sharing grant.
 The complete field lists and constraints live in the schema and normative
 [specification](../MUDRA_INTERACT_CORE_SPEC.md). The example fixture files are
 the complete, validated forms used by the contract tests.
+
+## CLI
+
+The installed `mudra-interact` command is offline and reads exactly one caller
+selected local regular file. It rejects URLs, `-`, UNC paths, directories,
+symlinks/reparse points, pipes and devices. Input bytes are bounded before JSON
+parsing; errors are one fixed JSON line on stderr and never include a path or
+exception text.
+
+```text
+mudra-interact recognize --input examples/v2/frame.json
+mudra-interact recognize --input examples/v2/batch.json --stabilize
+mudra-interact recognize --input examples/v2/batch.json --stabilize \
+  --emit-event --consent --confirm
+mudra-interact validate-event --input event.json
+```
+
+Without `--stabilize`, the input is one v2 `Frame` and the result is a local
+candidate report. With it, the input is a v2 `{schema_version, frames}` batch
+and all frames are parsed before one `RecognitionSession` processes them. A
+single frame remains non-stable. The report has exactly `schema_version`,
+`recognition`, and `reason_code`; it is never a shareable event.
+
+`--emit-event` is allowed only with `--stabilize`. The caller must supply both
+`--consent` and `--confirm` flags for the selected batch. They are command-line
+attestations, never values read from JSON or environment variables. A successful
+event has closed v2 fields, explicit sender/recipient (defaults are human and
+agent), and both raw-media flags set to false. `validate-event` only returns
+`{"schema_version":"2.0.0","valid":true}` after strict event validation; it
+does not reauthorize or echo the submitted event.
+
+The CLI uses the same exit classes in every platform: 0 for valid output, 2 for
+usage or validation input, 3 for consent/confirmation denial, 4 for local I/O,
+platform or internal failure, and 130 for interruption. A caller owns any
+retention caused by redirecting stdout; the core does not write files or retain
+raw landmarks after recognition.

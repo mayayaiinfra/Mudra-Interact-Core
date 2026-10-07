@@ -8,13 +8,13 @@ Canonical public source: [mayayaiinfra/Mudra-Interact-Core](https://github.com/m
 Implementation and release work is tracked in the
 [Mudra Interact Core specification](MUDRA_INTERACT_CORE_SPEC.md).
 
-Current source is the `0.1.0` reference baseline. The Astra-reviewed `0.2`
-specification targets package `0.2.0` and event schema `2.0.0`; that target is
-not yet implemented. Start with the [Luna handoff](docs/LUNA_HANDOFF.md),
+The source implements the package `0.2.0` and event schema `2.0.0` contract
+through the strict API, geometry oracle, bounded session lifecycle, neutral
+catalogue and installed CLI gates. The remaining ledger items cover privacy and
+mutation proof, the full distribution matrix, adapter design and authorized
+publication. Start with the [Luna handoff](docs/LUNA_HANDOFF.md),
 [acceptance cases](docs/ACCEPTANCE.md), and
 [implementation ledger](IMPLEMENTATION_BACKLOG.json).
-The baseline has reproduced consent, validation and stability defects described
-in the spec; five passing legacy tests do not establish release readiness.
 
 ```text
 local camera or device landmark adapter
@@ -43,7 +43,7 @@ local camera or device landmark adapter
 - distinguish Gyan from Chin from contact points alone;
 - auto-execute an action in ALLYK or any other system.
 
-## Baseline Development Check
+## Development and CLI check
 
 ```powershell
 git clone https://github.com/mayayaiinfra/Mudra-Interact-Core.git
@@ -51,13 +51,18 @@ cd Mudra-Interact-Core
 python -m venv .venv
 .venv\Scripts\python -m pip install -e . pytest
 .venv\Scripts\python -m pytest -q
+.venv\Scripts\mudra-interact.exe --input examples/v2/frame.json
 ```
 
-On Linux/macOS use `.venv/bin/python`. These are legacy development tests;
-they do not implement or verify the revised release. The spec defines the v2
-API/CLI and its installed-package examples as required implementation outputs.
-Do not treat default consent or a stable result from the baseline as authority
-to share participant data or execute actions.
+On Linux/macOS use `.venv/bin/python` and `.venv/bin/mudra-interact`. The
+acceptance tests exercise the v2 API/CLI and installed-package examples. A
+candidate or stable local recognition is not authority to share participant
+data or execute an action; event output requires both explicit CLI attestations.
+
+The compact examples in [`examples/v2`](examples/v2) contain synthetic,
+image-free 21-point frames. `frame.json` produces a local candidate report;
+`batch.json` contains three distinct observations and can be stabilized into a
+local stable report or an explicitly confirmed event.
 
 An adapter, not the core, is responsible for converting camera/video input into
 these landmarks. The intended browser/mobile adapter uses MediaPipe Hand
