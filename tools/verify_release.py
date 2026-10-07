@@ -9,6 +9,7 @@ development requirements before this command is run.
 from __future__ import annotations
 
 import argparse
+import errno
 import hashlib
 import json
 import os
@@ -79,15 +80,26 @@ def safe_relative(root: Path, path: Path) -> str:
 def source_files(root: Path) -> list[Path]:
     """Return the source snapshot used for both identity and clean staging."""
     selected: list[Path] = []
-    for path in root.rglob("*"):
-        if not path.is_file() or path.is_symlink():
-            continue
-        rel = path.relative_to(root)
-        if any(part in EXCLUDED_PARTS or part.endswith(".egg-info") for part in rel.parts):
-            continue
-        if path.name in EXCLUDED_NAMES or path.suffix == ".pyc":
-            continue
-        selected.append(path)
+    for directory, directory_names, file_names in os.walk(root, topdown=True, followlinks=False):
+        current = Path(directory)
+        directory_names[:] = sorted(
+            name for name in directory_names
+            if name not in EXCLUDED_PARTS
+            and not name.endswith(".egg-info")
+            and not (current / name).is_symlink()
+        )
+        for name in file_names:
+            path = current / name
+            if path.is_symlink() or not path.is_file():
+                continue
+            relative_parts = path.relative_to(root).parts
+            if (
+                any(part in EXCLUDED_PARTS or part.endswith(".egg-info") for part in relative_parts)
+                or name in EXCLUDED_NAMES
+                or path.suffix == ".pyc"
+            ):
+                continue
+            selected.append(path)
     return sorted(selected, key=lambda item: item.relative_to(root).as_posix())
 
 
@@ -324,8 +336,121 @@ def artifact_record(path: Path, *, kind: str) -> dict[str, Any]:
     }
 
 
+def _egress_connect_code() -> int:
+    """Make a connection-only probe to a fixed public endpoint."""
+    probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    probe.settimeout(1.0)
+    try:
+        return probe.connect_ex(("1.1.1.1", 443))
+    except OSError as exc:
+        return int(exc.errno or -1)
+    finally:
+        probe.close()
+
+
+def _linux_default_route_present() -> bool | None:
+    try:
+        ipv4 = Path("/proc/net/route").read_text(encoding="ascii")
+        ipv6 = Path("/proc/net/ipv6_route").read_text(encoding="ascii")
+    except OSError:
+        return None
+    for line in ipv4.splitlines()[1:]:
+        fields = line.split()
+        if len(fields) >= 4 and fields[1] == "00000000":
+            try:
+                if int(fields[3], 16) & 1:
+                    return True
+            except ValueError:
+                return None
+    for line in ipv6.splitlines():
+        fields = line.split()
+        if len(fields) >= 10 and fields[0] == "0" * 32 and fields[1] == "00":
+            try:
+                flags = int(fields[8], 16)
+            except ValueError:
+                return None
+            # Linux network namespaces retain a rejected ::/0 loopback route.
+            # It has RTF_REJECT set and RTF_UP clear, so it cannot carry egress.
+            if flags & 1 and not flags & 0x200:
+                return True
+    return False
+
+
+def _windows_firewall_rule_matches() -> bool:
+    rule_name = os.environ.get("MUDRA_FIREWALL_RULE_NAME", "").strip()
+    powershell = shutil.which("powershell.exe") or shutil.which("powershell")
+    if not rule_name or not powershell:
+        return False
+    script = r"""
+$ErrorActionPreference = 'Stop'
+$rule = Get-NetFirewallRule -PolicyStore ActiveStore -Name $env:MUDRA_FIREWALL_RULE_NAME -ErrorAction SilentlyContinue
+if ($null -eq $rule) { exit 2 }
+$application = Get-NetFirewallApplicationFilter -AssociatedNetFirewallRule $rule
+$address = Get-NetFirewallAddressFilter -AssociatedNetFirewallRule $rule
+$target = [IO.Path]::GetFullPath($env:MUDRA_PYTHON_EXE)
+$program = [IO.Path]::GetFullPath($application.Program)
+$remote = @($address.RemoteAddress)
+$valid = ($rule.Enabled -eq 'True' -and $rule.Direction -eq 'Outbound' -and $rule.Action -eq 'Block' -and $rule.Profile -eq 'Any' -and $program -ieq $target -and $remote.Count -eq 1 -and $remote[0] -eq 'Any')
+if ($valid) { exit 0 }
+exit 3
+"""
+    env = os.environ.copy()
+    env["MUDRA_PYTHON_EXE"] = str(Path(sys.executable).resolve())
+    try:
+        completed = subprocess.run(
+            [powershell, "-NoProfile", "-NonInteractive", "-Command", script],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            env=env,
+            check=False,
+            timeout=8,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return completed.returncode == 0
+
+
+def runner_network_isolation_probe() -> tuple[str, str, str]:
+    """Verify a runner-level network boundary from the process being tested."""
+    if sys.platform.startswith("linux"):
+        has_default_route = _linux_default_route_present()
+        if has_default_route is None:
+            return "UNAVAILABLE", "linux_network_namespace", "route_table_unavailable"
+        if has_default_route:
+            return "UNAVAILABLE", "linux_network_namespace", "default_route_present"
+        code = _egress_connect_code()
+        if code in {errno.ENETUNREACH, errno.EHOSTUNREACH, errno.ENETDOWN}:
+            return "VERIFIED", "linux_network_namespace", "egress_denied"
+        if code == 0:
+            return "FAILED", "linux_network_namespace", "egress_connected"
+        return "UNAVAILABLE", "linux_network_namespace", "unexpected_egress_result"
+
+    if os.name == "nt":
+        if not _windows_firewall_rule_matches():
+            return "UNAVAILABLE", "windows_firewall_program_rule", "matching_rule_unavailable"
+        code = _egress_connect_code()
+        if code == 10013:
+            return "VERIFIED", "windows_firewall_program_rule", "egress_denied"
+        if code == 0:
+            return "FAILED", "windows_firewall_program_rule", "egress_connected"
+        return "UNAVAILABLE", "windows_firewall_program_rule", "unexpected_egress_result"
+
+    if platform.system().lower() == "darwin":
+        if os.environ.get("MUDRA_MACOS_NETWORK_ISOLATION") != "sandbox-exec":
+            return "UNAVAILABLE", "macos_sandbox_exec", "sandbox_marker_unavailable"
+        code = _egress_connect_code()
+        if code in {errno.EPERM, errno.EACCES}:
+            return "VERIFIED", "macos_sandbox_exec", "egress_denied"
+        if code == 0:
+            return "FAILED", "macos_sandbox_exec", "egress_connected"
+        return "UNAVAILABLE", "macos_sandbox_exec", "unexpected_egress_result"
+
+    return "UNAVAILABLE", "unsupported_runner", "unsupported_platform"
+
+
 def offline_negative_probe() -> dict[str, str]:
-    """Exercise the egress-denial branch without touching a real network."""
+    """Exercise synthetic denial and verify actual runner isolation separately."""
     original = socket.socket.connect
     attempted = {"value": False}
 
@@ -341,10 +466,13 @@ def offline_negative_probe() -> dict[str, str]:
             pass
     finally:
         socket.socket.connect = original  # type: ignore[assignment]
+    isolation_state, isolation_method, isolation_result = runner_network_isolation_probe()
     return {
         "attempted_egress": "VERIFIED" if attempted["value"] else "FAILED",
-        "runner_network_isolation": "UNAVAILABLE",
-        "method": "synthetic_socket_denial",
+        "runner_network_isolation": isolation_state,
+        "method": isolation_method,
+        "isolation_result": isolation_result,
+        "synthetic_probe": "VERIFIED" if attempted["value"] else "FAILED",
     }
 
 
@@ -516,7 +644,10 @@ def qualify(mode: str) -> dict[str, Any]:
     missing_cells = sum(1 for row in matrix if row["state"] != "VERIFIED")
     if missing_cells:
         limitations.append(f"{missing_cells} required OS/Python cells are unavailable on this runner")
-    if checks["offline"]["negative_egress"]["runner_network_isolation"] != "VERIFIED":
+    isolation_state = checks["offline"]["negative_egress"]["runner_network_isolation"]
+    if isolation_state == "FAILED":
+        errors.append("runner_network_isolation_failed")
+    elif isolation_state != "VERIFIED":
         limitations.append("OS-level runner network blocking was not supplied; synthetic egress denial only")
     if mode == "published":
         errors.append("publication_access_required")

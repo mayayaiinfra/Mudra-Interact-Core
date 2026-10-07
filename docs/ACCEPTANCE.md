@@ -115,7 +115,7 @@ targets; files not present at baseline must be implemented before verification.
 | E73 | MI-08 / test_distribution.py | Clean wheel/sdist builds, twine metadata checks, expected files only; correct licence/schema/catalogue/typing data. |
 | E74 | MI-08 / test_distribution.py | Wheel built from sdist offline imports outside repo; no editable/source-path fallback or runtime dependencies. |
 | E75 | MI-08 / test_distribution.py | 12 OS/Python cells run required core tests/installed smoke without required skip/xfail; versions/digests retained. |
-| E76 | MI-08 / test_distribution.py | Denied network at OS/runner and negative-egress probe demonstrate offline run; cold missing build dependency causes explicit setup failure. |
+| E76 | MI-08 / test_distribution.py | OS/runner isolation is observed (Linux: no default route plus denied connect; Windows: active interpreter-scoped outbound block plus denied connect; macOS: sandbox network denial), alongside the synthetic negative-egress probe; cold missing build dependency causes explicit setup failure. Missing isolation is not a pass. |
 | E77 | MI-08 / test_distribution.py | Two clean builds same environment produce same wheel/sdist hashes; any mismatch blocks, not normalize away unexplained content. |
 | E78 | MI-08 / test_distribution.py | Actual artifact SBOM/inventory/notices and independent hashes agree; no unexpected bundled model/key/cache/raw corpus. |
 | E79 | MI-08 / test_distribution.py | CI ignores no required failures, has pinned actions/timeouts/permissions and no secrets for untrusted PR execution. |

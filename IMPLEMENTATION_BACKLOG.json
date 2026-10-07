@@ -448,6 +448,7 @@
         ".gitignore",
         "requirements-dev.lock",
         "tools/verify_release.py",
+        "tools/aggregate_platform_matrix.py",
         "docs/COMPATIBILITY.md",
         ".github/workflows/verify.yml",
         "tests/test_distribution.py"

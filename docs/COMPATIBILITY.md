@@ -23,8 +23,17 @@ The checked-in workflow enumerates these twelve cells.  The local release
 verifier records the current cell from `platform.system()`,
 `platform.machine()` and the running interpreter.  It reports every absent
 cell as `BLOCKED`; it does not emulate a platform with a string or an
-environment variable.  M3 cannot close until all twelve actual cells have
-fresh receipts.
+environment variable.  Each workflow runner emits its sanitized MI-08 receipt
+and the receipt's acceptance artifact in the job log.  Restore those exact files
+under `evidence/local/mi08-platform-receipts/` and their declared artifact paths,
+then run `python tools/aggregate_platform_matrix.py --receipt-dir
+evidence/local/mi08-platform-receipts --report
+evidence/local/M3-platform-matrix.json`.  The aggregator checks the receipt
+hashes, all E73-E84 outcomes, shared source/tool identities, exact cell set,
+unique cells and candidate commit ancestry.  `python tools/verify_gate.py
+--gate M3 --report evidence/local/M3.json` refuses to verify M3 unless that
+aggregate is fresh and complete.  M3 cannot close until all twelve actual
+cells have fresh receipts.
 
 ## Offline and reproducibility contract
 
@@ -35,9 +44,13 @@ pip with `--no-index`.  It builds two clean wheel/sdist pairs, compares their
 bytes, extracts the deterministic sdist and builds a wheel from that source.
 It installs only that wheel into a fresh virtual environment outside the
 checkout, with `--no-index --no-deps`, and confirms that the imported module is
-owned by the environment.  A synthetic socket-denial probe is retained as a
-negative egress test.  OS/runner-level network isolation is a separate CI
-property; its absence remains a limitation and cannot be turned into a pass.
+owned by the environment.  A synthetic socket-denial probe and a separate real
+egress probe run under OS-level network isolation.  Linux uses a network
+namespace with no default route, Windows uses an active outbound firewall block
+scoped to the test interpreter, and macOS runs under a sandbox profile that
+denies network operations.  The verifier records isolation as `VERIFIED` only
+when the platform boundary is present and a real egress attempt is denied;
+missing isolation blocks E76.
 
 The release report records the source commit, source-tree digest, specification
 and acceptance digests, lock digest, exact artifact hashes, metadata/data

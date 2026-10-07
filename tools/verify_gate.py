@@ -38,6 +38,7 @@ from tools.verification_report import (
     validate_fixture_manifest,
     validate_receipt_file,
 )
+from tools.aggregate_platform_matrix import validate_aggregate_report
 
 
 ACCEPTANCE_PATTERN = re.compile(r"^\|\s*(E\d{2})\s*\|\s*(MI-\d{2})\s*/\s*([^|]+)\|")
@@ -76,6 +77,8 @@ SAFE_REPORT_ERROR_CODES = {
     "pytest_case_missing", "pytest_case_unexpected", "pytest_case_not_passed", "source_changed_during_run",
     "specification_unavailable", "acceptance_document_unavailable", "tool_lock_unavailable",
     "fixture_case_not_executed", "verification_error",
+    "platform_matrix_unavailable", "platform_matrix_report_invalid", "platform_matrix_report_stale",
+    "platform_matrix_incomplete",
 }
 
 
@@ -830,15 +833,46 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
         current_after = _current_identity(root)
         if current_after != current_before:
             errors.append({"code": "source_changed_during_run"})
+        matrix_report: dict[str, Any] | None = None
+        if selector_kind == "gate" and selector_id == "M3":
+            try:
+                matrix_path = Path("evidence/local/M3-platform-matrix.json")
+                matrix_report = validate_aggregate_report(
+                    root,
+                    matrix_path.as_posix(),
+                    current_identity=current_after,
+                    current_commit=source_commit(root),
+                )
+            except VerificationError as error:
+                errors.append(_safe_error(error))
+            else:
+                prerequisites.append({
+                    "id": "M3_platform_matrix",
+                    "state": "VERIFIED",
+                    "report_sha256": matrix_report["report_sha256"],
+                })
+                matrix_file = root / matrix_path
+                report["artifacts"].append({
+                    "path": matrix_path.as_posix(),
+                    "sha256": sha256_file(matrix_file),
+                    "size_bytes": matrix_file.stat().st_size,
+                    "kind": "platform_matrix_report",
+                })
         report.update(current_after)
         report["source_commit"] = source_commit(root)
         report["finished_at"] = utc_now()
         report["items"] = selected_item_ids
         report["prerequisites"] = prerequisites
-        report["limitations"] = [
-            "This receipt covers only the declared local acceptance scope and actual current platform.",
-            "It does not establish cross-platform, release, camera-adapter, cultural-review or production-integration readiness.",
-        ]
+        if matrix_report is not None:
+            report["limitations"] = [
+                "This gate receipt includes the verified twelve-cell OS/Python matrix.",
+                "It does not establish package publication, camera-adapter runtime, cultural-review or private production-integration readiness.",
+            ]
+        else:
+            report["limitations"] = [
+                "This receipt covers only the declared local acceptance scope and actual current platform.",
+                "It does not establish cross-platform, release, camera-adapter, cultural-review or production-integration readiness.",
+            ]
         report["errors"] = errors
         if not errors and report["test_counts"]["collected"] > 0:
             report["state"] = "VERIFIED"

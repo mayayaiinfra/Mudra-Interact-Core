@@ -12,12 +12,26 @@ from pathlib import Path
 
 import pytest
 
+from tools.aggregate_platform_matrix import (
+    EXPECTED_CELLS,
+    REQUIRED_CASES,
+    aggregate_receipt_documents,
+    validate_aggregate_report,
+    write_report as write_matrix_report,
+)
 from tools.verify_release import (
     PACKAGE_VERSION,
     REQUIRED_PYTHONS,
     REQUIRED_PLATFORMS,
     current_platform,
     validate_release_identity,
+)
+from tools.verification_report import (
+    canonical_json_bytes,
+    seal_report,
+    sha256_bytes,
+    source_tree_sha256 as independent_source_tree_sha256,
+    VerificationError,
 )
 
 
@@ -95,9 +109,16 @@ def test_all_twelve_cells_are_enumerated_without_fake_success(release_report: di
 def test_offline_negative_egress_and_cold_setup_failure_are_explicit(release_report: dict) -> None:
     offline = release_report["checks"]["offline"]
     assert offline["pip_no_index"] is True
-    assert offline["negative_egress"]["attempted_egress"] == "VERIFIED"
+    assert offline["negative_egress"]["synthetic_probe"] == "VERIFIED"
     assert offline["cold_dependency"]["explicit_setup_failure"] == "VERIFIED"
-    assert offline["negative_egress"]["runner_network_isolation"] in {"VERIFIED", "UNAVAILABLE"}
+    assert offline["negative_egress"]["runner_network_isolation"] == "VERIFIED"
+    expected_methods = {
+        "linux": "linux_network_namespace",
+        "windows": "windows_firewall_program_rule",
+        "macos": "macos_sandbox_exec",
+    }
+    assert offline["negative_egress"]["method"] == expected_methods[current_platform()["os"]]
+    assert offline["negative_egress"]["isolation_result"] == "egress_denied"
 
 
 @pytest.mark.acceptance("E77")
@@ -127,6 +148,11 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow
     assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 12
+    assert "unshare --user --map-root-user --net" in workflow
+    assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
+    assert "sandbox-exec" in workflow
+    assert "MUDRA_CI_RECEIPT_JSON" in workflow
+    assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow
 
 
 @pytest.mark.acceptance("E80")
@@ -185,7 +211,94 @@ def test_release_report_is_reproducible_and_blocks_missing_cells(release_report:
     for key in ("source_commit", "source_tree_sha256", "spec_sha256", "acceptance_sha256", "tool_lock_sha256"):
         assert release_report[key]
     assert release_report["report_sha256"]
+    assert release_report["source_tree_sha256"] == independent_source_tree_sha256(ROOT)
     assert release_report["state"] in {"VERIFIED", "BLOCKED"}
     if len([row for row in release_report["platform_matrix"] if row["state"] == "VERIFIED"]) < 12:
         assert release_report["state"] == "BLOCKED"
         assert any("cells" in item for item in release_report["limitations"])
+
+    identity = {
+        key: release_report[key]
+        for key in ("source_tree_sha256", "spec_sha256", "acceptance_sha256", "tool_lock_sha256")
+    }
+    candidate_commit = release_report["source_commit"]
+    synthetic_receipts = []
+    for os_name, architecture, python_version in EXPECTED_CELLS:
+        report = seal_report({
+            "report_schema_version": 1,
+            "scope": {"kind": "item", "id": "MI-08"},
+            "state": "VERIFIED",
+            "verification_kind": "luna_self_verified",
+            "source_commit": candidate_commit,
+            **identity,
+            "platform": {
+                "os": os_name,
+                "architecture": architecture,
+                "python": f"{python_version}.17",
+                "implementation": "CPython",
+                "release": "synthetic_test_fixture",
+            },
+            "started_at": "2026-01-01T00:00:00Z",
+            "finished_at": "2026-01-01T00:00:01Z",
+            "commands": [],
+            "test_counts": {
+                "collected": len(REQUIRED_CASES),
+                "passed": len(REQUIRED_CASES),
+                "failed": 0,
+                "skipped": 0,
+                "xfailed": 0,
+                "xpassed": 0,
+            },
+            "acceptance_cases": [
+                {"acceptance_id": case_id, "outcome": "passed"}
+                for case_id in REQUIRED_CASES
+            ],
+            "mutation_results": [],
+            "artifacts": [],
+            "prerequisites": [{"id": "MI-07", "state": "VERIFIED"}],
+            "limitations": [],
+            "errors": [],
+            "items": ["MI-08"],
+        })
+        receipt_path = f"evidence/local/mi08-platform-receipts/test-{os_name}-py{python_version}.json"
+        receipt_digest = sha256_bytes(canonical_json_bytes(report))
+        synthetic_receipts.append((receipt_path, receipt_digest, report))
+
+    aggregate_args = {
+        "current_identity": identity,
+        "candidate_is_ancestor": True,
+        "collector_platform": current_platform(),
+        "collector_commit": candidate_commit,
+    }
+    partial = aggregate_receipt_documents(synthetic_receipts[:-1], **aggregate_args)
+    assert partial["state"] == "BLOCKED"
+    assert partial["matrix"]["verified_cells"] == 11
+    assert partial["matrix"]["missing_cells"] == 1
+    complete = aggregate_receipt_documents(synthetic_receipts, **aggregate_args)
+    assert complete["state"] == "VERIFIED"
+    assert complete["matrix"]["verified_cells"] == 12
+    aggregate_path = Path("evidence/local") / f"matrix-fixture-{os.getpid()}.json"
+    try:
+        write_matrix_report(ROOT, aggregate_path.as_posix(), complete)
+        validated = validate_aggregate_report(
+            ROOT,
+            aggregate_path.as_posix(),
+            current_identity=identity,
+            current_commit=candidate_commit,
+        )
+        assert validated["matrix"]["verified_cells"] == 12
+        incomplete = dict(complete)
+        incomplete["matrix"] = {**complete["matrix"], "cells": complete["matrix"]["cells"][:-1], "verified_cells": 11, "missing_cells": 1}
+        write_matrix_report(ROOT, aggregate_path.as_posix(), seal_report(incomplete))
+        with pytest.raises(VerificationError):
+            validate_aggregate_report(
+                ROOT,
+                aggregate_path.as_posix(),
+                current_identity=identity,
+                current_commit=candidate_commit,
+            )
+    finally:
+        (ROOT / aggregate_path).unlink(missing_ok=True)
+    duplicate = aggregate_receipt_documents(synthetic_receipts + synthetic_receipts[:1], **aggregate_args)
+    assert duplicate["state"] == "FAILED"
+    assert any(item["code"] == "duplicate_platform_cell" for item in duplicate["errors"])
