@@ -392,7 +392,7 @@ def parse_pytest_document(document: Any, required_case_ids: Iterable[str], *, pa
     required = set(required_case_ids)
     seen_node_ids: set[str] = set()
     case_outcomes: dict[str, list[str]] = {}
-    counts = {"collected": len(nodes), "passed": 0, "failed": 0, "skipped": 0, "xfailed": 0, "xpassed": 0}
+    counts = {"collected": 0, "passed": 0, "failed": 0, "skipped": 0, "xfailed": 0, "xpassed": 0}
     normalized_nodes: list[dict[str, Any]] = []
     for node in nodes:
         if not isinstance(node, dict):
@@ -402,8 +402,16 @@ def parse_pytest_document(document: Any, required_case_ids: Iterable[str], *, pa
         outcome = node.get("outcome")
         if not isinstance(node_id, str) or not node_id or node_id in seen_node_ids:
             raise VerificationError("pytest_node_duplicate")
-        if not isinstance(case_id, str) or case_id not in required or outcome not in {"passed", "failed", "skipped", "xfailed", "xpassed"}:
+        if not isinstance(case_id, str) or outcome not in {"passed", "failed", "skipped", "xfailed", "xpassed"}:
             raise VerificationError("pytest_node_invalid")
+        # A required module can own acceptance cases for more than one item
+        # (for example the shared verification-tool module). The test command
+        # intentionally runs that module as a unit; receipts retain only the
+        # cases owned by this scope while command exit status still fails the
+        # scope if any extra test fails.
+        if case_id not in required:
+            continue
+        counts["collected"] += 1
         phases = node.get("phases")
         if not isinstance(phases, list) or not phases:
             raise VerificationError("pytest_node_invalid")

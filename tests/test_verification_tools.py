@@ -205,3 +205,10 @@ def test_verification_output_is_bounded_and_display_paths_are_sanitized(tmp_path
     display = _safe_display_argv([sys.executable, str(ROOT / "PRIVATE_DIAGNOSTIC.py")], Path("evidence/local/report.json"), ROOT)
     assert str(ROOT) not in " ".join(display)
     assert "PRIVATE_DIAGNOSTIC.py" in display[-1]
+
+
+@pytest.mark.acceptance("E04")
+def test_shared_acceptance_module_receipt_filters_cases_owned_by_other_scope() -> None:
+    counts, cases = parse_pytest_document(_test_document(["E04", "E71"]), {"E04"})
+    assert counts["collected"] == 1
+    assert [case["acceptance_id"] for case in cases] == ["E04"]
