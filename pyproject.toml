@@ -29,3 +29,4 @@ mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json", "py.typed"]
 
 [tool.pytest.ini_options]
 markers = ["acceptance(case_id): required Mudra contract or verification case"]
+pythonpath = ["src"]
