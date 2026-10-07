@@ -12,6 +12,7 @@ from .protocol import (
     parse_event,
 )
 from .validation import InteractionConfig
+from .session import RecognitionSession
 from .recognition import LandmarkRuleRecognizer, RecognitionStabilizer, extract_contact_features
 
 __all__ = [
@@ -30,6 +31,7 @@ __all__ = [
     "PrivacyMode",
     "Recognition",
     "RecognitionState",
+    "RecognitionSession",
     "LandmarkRuleRecognizer",
     "RecognitionStabilizer",
     "extract_contact_features",
