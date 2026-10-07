@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Prior specification 0.2 evidence: M0 23/23; M1 120/120; M2 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11 15/15; MI-09 5/5. These receipts are stale against specification 0.3 and must not be used for gate completion.",
-    "verification_claim": "The Windows verifier originally reported the venv launcher from sys.executable while the OS process image was the base python.exe. MI-08 now scopes its firewall proof to the native GetModuleFileNameW image and separately proves pytest remains in the isolated venv. A full M3 workflow_dispatch job was added so the aggregate gate can run under a hosted Linux network namespace without local elevation. M0, M1 and M2 were freshly reverified on the updated source tree (M2 includes its semantic mutation checks). Fresh eight-cell MI-08 receipts and the complete M3 gate remain to be regenerated on this source tree; M4 remains NOT_STARTED."
+    "baseline_tests": "Current source tree: M0 23/23, M1 120/120, M2 165/165 including semantic mutation checks on Windows CPython 3.14; MI-08 hosted acceptance passed on all 8 supported Linux/Windows x86_64 × CPython 3.11-3.14 cells.",
+    "verification_claim": "The Windows verifier scopes its egress block to the native GetModuleFileNameW process image while confirming acceptance executes from the isolated venv. Hosted workflow run 37639493937 succeeded for all eight Linux/Windows × CPython 3.11-3.14 cells. Sanitized receipts and linked pytest reports are imported and hash-validated; the strict aggregator reports M3 platform matrix VERIFIED (8/8), source tree 3b0614b475e4c463397dbbc1cf5385f0451ad96ea1ad680b1e4c67ac19928757. The remaining M3 action is the full M3 gate via workflow_dispatch; M4 remains NOT_STARTED."
   },
   "active_item": "MI-08",
   "states": [
