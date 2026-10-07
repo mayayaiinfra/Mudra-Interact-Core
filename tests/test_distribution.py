@@ -148,7 +148,8 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
     assert "secrets." not in workflow
     assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 12
-    assert "unshare --user --map-root-user --net" in workflow
+    assert "sudo unshare --net" in workflow
+    assert 'runuser_path="$(command -v runuser)"' in workflow
     assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
     assert "sandbox-exec" in workflow
     assert "MUDRA_CI_RECEIPT_JSON" in workflow

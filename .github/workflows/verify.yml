@@ -63,7 +63,10 @@ jobs:
         run: |
           case "$RUNNER_OS" in
             Linux)
-              unshare --user --map-root-user --net python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+              runner_user="$USER"
+              python_path="$(command -v python)"
+              runuser_path="$(command -v runuser)"
+              sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             Windows)
               python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
