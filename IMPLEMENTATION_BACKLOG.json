@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 (including semantic mutations), MI-09 5/5, and the current-source MI-08 Linux/Windows × CPython 3.11-3.14 matrix 8/8 (17 accepted test nodes per cell). The hosted M3 full gate is next.",
-    "verification_claim": "The owner approved Mudra Interact / mudra-interact as the public name. M0-M2, MI-09 and all eight MI-08 platform cells now have current-source receipts. The M3 full hosted acceptance gate remains in progress. M4 remains blocked until package ownership, Trusted Publishers, protected GitHub environments, and exact candidate/version authorization are established."
+    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including semantic mutations, MI-09 5/5, MI-08 matrix 8/8 cells with 17 nodes each, and hosted M3 187/187 (run 37666664343).",
+    "verification_claim": "M0-M3 are VERIFIED on the approved public package name Mudra Interact / mudra-interact. The 8-cell Linux/Windows × CPython 3.11-3.14 matrix and hosted M3 gate pass. M4/MI-10 is BLOCKED only on owner-controlled package-index identity/publisher setup, protected release environments, private vulnerability-reporting channel, and exact candidate/version authorization. No package has been published."
   },
   "active_item": null,
   "states": [
@@ -127,9 +127,14 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-hosted-mudra-interact-37666664343.json",
+          "sha256": "32c441d2a51c4c5b4b55052a3ddf2a67301923021e75806c5101b7fc2b2dc382"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -142,7 +147,7 @@
       "state": "BLOCKED",
       "evidence": [],
       "verification_kind": null,
-      "blocker": "Owner approved the public name Mudra Interact / mudra-interact, but package ownership on TestPyPI/PyPI is not established. Configure Trusted Publishers and protected GitHub environments; authorize the exact candidate/version. Prior release evidence targets the old distribution name and must be regenerated for this candidate."
+      "blocker": "Public release is the only remaining gate. Owner setup still required: establish control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for .github/workflows/publish.yml and create protected pypi-test/pypi-production GitHub environments (production requires reviewer and no self-review); enable GitHub private vulnerability reporting or provide a private report channel. The repository currently has zero GitHub environments. After setup, authorize the exact candidate commit and version 0.2.0 for the public release. No published manifest or downloaded-install proof exists."
     }
   ],
   "recommended_order": [
@@ -489,6 +494,10 @@
         {
           "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.14.json",
           "sha256": "6bf00e4841eb003bb38970c80f6279925cc405fdcba1274b8fbdbbba0f1efd72"
+        },
+        {
+          "path": "evidence/local/M3-hosted-mudra-interact-37666664343.json",
+          "sha256": "32c441d2a51c4c5b4b55052a3ddf2a67301923021e75806c5101b7fc2b2dc382"
         }
       ],
       "blocker": null
@@ -519,6 +528,10 @@
         {
           "path": "evidence/local/MI-09-firewall-timeout-7f22.json",
           "sha256": "df69720be8b8541c163986842054b5d6ed06cc205e8916e9ce3ffdacc7411e3b"
+        },
+        {
+          "path": "evidence/local/M3-hosted-mudra-interact-37666664343.json",
+          "sha256": "32c441d2a51c4c5b4b55052a3ddf2a67301923021e75806c5101b7fc2b2dc382"
         }
       ],
       "blocker": null
@@ -565,7 +578,7 @@
           "sha256": "b85d9bc7e6c060fa9fa0b930c6726509aaeee3e8254771b19a12ac83cf67ae62"
         }
       ],
-      "blocker": "Owner approved the public name Mudra Interact / mudra-interact, but package ownership on TestPyPI/PyPI is not established. Configure Trusted Publishers and protected GitHub environments; authorize the exact candidate/version. Prior release evidence targets the old distribution name and must be regenerated for this candidate."
+      "blocker": "Public release is the only remaining gate. Owner setup still required: establish control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for .github/workflows/publish.yml and create protected pypi-test/pypi-production GitHub environments (production requires reviewer and no self-review); enable GitHub private vulnerability reporting or provide a private report channel. The repository currently has zero GitHub environments. After setup, authorize the exact candidate commit and version 0.2.0 for the public release. No published manifest or downloaded-install proof exists."
     }
   ]
 }
