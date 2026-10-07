@@ -1,13 +1,17 @@
-"""Landmark-only Mudra recognition with explicit uncertainty."""
+"""Deterministic v2 contact-rule recognition and a small local stabilizer."""
 
 from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
 from math import sqrt
-from typing import Iterable
+from typing import Any
 
-from .protocol import Landmark, Recognition, RecognitionState
+from .coordinates import to_cartesian
+from .errors import MudraValidationError
+from .frame import Frame, Landmark
+from .protocol import Recognition, RecognitionState
+from .validation import InteractionConfig, fail
 
 
 WRIST = 0
@@ -22,17 +26,20 @@ def _distance(left: Landmark, right: Landmark) -> float:
     return sqrt((left.x - right.x) ** 2 + (left.y - right.y) ** 2 + (left.z - right.z) ** 2)
 
 
-def _landmarks(value: Iterable[Landmark]) -> tuple[Landmark, ...]:
-    landmarks = tuple(value)
-    if len(landmarks) != 21:
-        raise ValueError("Mudra Interact requires exactly 21 hand landmarks in MediaPipe order.")
-    scale = _distance(landmarks[WRIST], landmarks[MIDDLE_MCP])
-    if scale < 0.0001:
-        raise ValueError("Hand landmark scale is invalid or too small.")
-    return landmarks
+def _landmarks(value: Any) -> tuple[Landmark, ...]:
+    if isinstance(value, Frame):
+        return to_cartesian(value)
+    if type(value) not in (list, tuple) or len(value) != 21:
+        fail("invalid_shape")
+    result: list[Landmark] = []
+    for point in value:
+        if not isinstance(point, Landmark):
+            fail("invalid_shape")
+        result.append(Landmark(point.x, point.y, point.z))
+    return tuple(result)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class ContactFeatures:
     palm_scale: float
     thumb_index: float
@@ -40,6 +47,8 @@ class ContactFeatures:
     thumb_ring: float
 
     def contacts(self, threshold: float) -> dict[str, bool]:
+        if type(threshold) not in (int, float):
+            fail("invalid_configuration")
         return {
             "thumb_index": self.thumb_index <= threshold,
             "thumb_middle": self.thumb_middle <= threshold,
@@ -47,9 +56,11 @@ class ContactFeatures:
         }
 
 
-def extract_contact_features(value: Iterable[Landmark]) -> ContactFeatures:
+def extract_contact_features(value: Any) -> ContactFeatures:
     landmarks = _landmarks(value)
     palm_scale = _distance(landmarks[WRIST], landmarks[MIDDLE_MCP])
+    if palm_scale < 0.0001:
+        fail("invalid_geometry")
     return ContactFeatures(
         palm_scale=palm_scale,
         thumb_index=_distance(landmarks[THUMB_TIP], landmarks[INDEX_TIP]) / palm_scale,
@@ -58,100 +69,101 @@ def extract_contact_features(value: Iterable[Landmark]) -> ContactFeatures:
     )
 
 
+RULES: dict[tuple[bool, bool, bool], tuple[str, RecognitionState, float, tuple[str, ...]]] = {
+    (False, False, False): ("unknown", RecognitionState.UNCERTAIN, 0.0, ("unsupported_pattern",)),
+    (True, False, False): ("contact_thumb_index", RecognitionState.CANDIDATE, 0.72, ("posture_unverified",)),
+    (False, True, False): ("contact_thumb_middle", RecognitionState.CANDIDATE, 0.70, ("posture_unverified",)),
+    (False, False, True): ("contact_thumb_ring", RecognitionState.CANDIDATE, 0.70, ("posture_unverified",)),
+    (False, True, True): ("contact_thumb_middle_ring", RecognitionState.CANDIDATE, 0.78, ("posture_unverified",)),
+    (True, True, False): ("unknown", RecognitionState.UNCERTAIN, 0.0, ("ambiguous_contacts",)),
+    (True, False, True): ("unknown", RecognitionState.UNCERTAIN, 0.0, ("ambiguous_contacts",)),
+    (True, True, True): ("unknown", RecognitionState.UNCERTAIN, 0.0, ("ambiguous_contacts",)),
+}
+
+
 class LandmarkRuleRecognizer:
-    """Conservative contact-pattern recognizer.
+    """Recognize only the four neutral geometric contact patterns."""
 
-    This release purposely treats Gyan and Chin as one ambiguous pair. Palm
-    orientation and tradition-specific context must be evaluated before a
-    system distinguishes them. It does not attempt medical interpretation.
-    """
+    def __init__(self, contact_threshold: float = 0.34, *, config: InteractionConfig | None = None) -> None:
+        if config is not None:
+            if type(config) is not InteractionConfig:
+                fail("invalid_configuration")
+            if contact_threshold != 0.34:
+                fail("invalid_configuration")
+            self.config = config
+        else:
+            self.config = InteractionConfig(contact_threshold=contact_threshold)
 
-    def __init__(self, contact_threshold: float = 0.34) -> None:
-        self.contact_threshold = max(0.05, min(float(contact_threshold), 0.75))
+    @property
+    def contact_threshold(self) -> float:
+        return self.config.contact_threshold
 
-    def recognize(self, value: Iterable[Landmark]) -> Recognition:
+    def recognize(self, value: Any) -> Recognition:
         features = extract_contact_features(value)
-        contacts = features.contacts(self.contact_threshold)
-        active = tuple(name for name, present in contacts.items() if present)
+        contacts = features.contacts(self.config.contact_threshold)
+        bits = (contacts["thumb_index"], contacts["thumb_middle"], contacts["thumb_ring"])
+        gesture_id, state, confidence, uncertainties = RULES[bits]
         observations = tuple(
-            f"{name.replace('_', ' ')} normalized distance={getattr(features, name):.3f}"
-            for name in active
+            code
+            for active, code in (
+                (contacts["thumb_index"], "thumb_index_contact"),
+                (contacts["thumb_middle"], "thumb_middle_contact"),
+                (contacts["thumb_ring"], "thumb_ring_contact"),
+            )
+            if active
         )
-        if contacts["thumb_middle"] and contacts["thumb_ring"] and not contacts["thumb_index"]:
-            return Recognition(
-                gesture_id="apana_mudra",
-                confidence=0.78,
-                state=RecognitionState.CANDIDATE,
-                observations=observations,
-                uncertainties=("Confirm the finger posture before using this as a learning label.",),
-            )
-        if active == ("thumb_index",):
-            return Recognition(
-                gesture_id="gyan_or_chin_mudra",
-                confidence=0.72,
-                state=RecognitionState.CANDIDATE,
-                observations=observations,
-                uncertainties=("Palm orientation and context are needed to distinguish Gyan from Chin.",),
-            )
-        if active == ("thumb_middle",):
-            return Recognition(
-                gesture_id="shunya_mudra",
-                confidence=0.7,
-                state=RecognitionState.CANDIDATE,
-                observations=observations,
-                uncertainties=("Confirm posture with the participant before sharing the label.",),
-            )
-        if active == ("thumb_ring",):
-            return Recognition(
-                gesture_id="prithvi_mudra",
-                confidence=0.7,
-                state=RecognitionState.CANDIDATE,
-                observations=observations,
-                uncertainties=("Confirm posture with the participant before sharing the label.",),
-            )
         return Recognition(
-            gesture_id="unknown",
-            confidence=0.0,
-            state=RecognitionState.UNCERTAIN,
+            gesture_id=gesture_id,
+            confidence=confidence,
+            state=state,
+            method="contact_rules_v2",
             observations=observations,
-            uncertainties=("No supported contact pattern was detected. Adjust framing or choose a catalog gesture.",),
+            uncertainties=uncertainties,
+            catalog_version="2.0.0",
         )
 
 
 class RecognitionStabilizer:
-    """Promotes a repeated candidate to stable without training an LSTM."""
+    """A bounded compatibility stabilizer; session timing is MI-04's concern."""
 
     def __init__(self, required_frames: int = 3, minimum_confidence: float = 0.6) -> None:
-        self.required_frames = max(2, min(int(required_frames), 12))
-        self.minimum_confidence = max(0.0, min(float(minimum_confidence), 1.0))
-        self._recent: deque[Recognition] = deque(maxlen=self.required_frames)
+        self.config = InteractionConfig(required_frames=required_frames, minimum_confidence=minimum_confidence)
+        self._recent: deque[Recognition] = deque(maxlen=self.config.required_frames)
 
     def reset(self) -> None:
         self._recent.clear()
 
     def update(self, recognition: Recognition) -> Recognition:
-        if recognition.state is RecognitionState.UNCERTAIN or recognition.confidence < self.minimum_confidence:
+        if not isinstance(recognition, Recognition):
+            fail("invalid_shape")
+        if recognition.state is not RecognitionState.CANDIDATE or recognition.confidence < self.config.minimum_confidence:
             self.reset()
             return recognition
-        self._recent.append(recognition)
-        if len(self._recent) < self.required_frames:
-            return recognition
-        gesture_ids = {item.gesture_id for item in self._recent}
-        if len(gesture_ids) != 1:
+        if self._recent and recognition.gesture_id != self._recent[-1].gesture_id:
+            self.reset()
+            self._recent.append(recognition)
             return Recognition(
                 gesture_id="unknown",
                 confidence=0.0,
                 state=RecognitionState.UNCERTAIN,
+                method="contact_rules_v2",
                 observations=recognition.observations,
-                uncertainties=("The observed gesture changed between frames. Keep the hand steady and retry.",),
+                uncertainties=("gesture_changed",),
+                catalog_version="2.0.0",
             )
-        average_confidence = sum(item.confidence for item in self._recent) / len(self._recent)
+        self._recent.append(recognition)
+        if len(self._recent) < self.config.required_frames:
+            return recognition
+        confidence = sum(item.confidence for item in self._recent) / len(self._recent)
         return Recognition(
             gesture_id=recognition.gesture_id,
-            confidence=average_confidence,
+            confidence=confidence,
             state=RecognitionState.STABLE,
-            method=recognition.method,
+            method="contact_rules_v2",
             observations=recognition.observations,
             uncertainties=recognition.uncertainties,
-            catalog_version=recognition.catalog_version,
+            catalog_version="2.0.0",
         )
+
+
+__all__ = ["ContactFeatures", "LandmarkRuleRecognizer", "RecognitionStabilizer", "RULES", "extract_contact_features"]

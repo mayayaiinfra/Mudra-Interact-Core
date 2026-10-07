@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from mudra_interact_core.protocol import Landmark, MudraEvent, RecognitionState
+from mudra_interact_core.protocol import Landmark, MudraEvent, PrivacyMode, RecognitionState
 from mudra_interact_core.recognition import LandmarkRuleRecognizer, RecognitionStabilizer
 
 
@@ -21,9 +21,9 @@ def test_recognizes_thumb_index_pattern_as_ambiguous_gyan_or_chin() -> None:
     landmarks = sample_landmarks()
     landmarks[8] = Landmark(0.23, 0.62)
     result = LandmarkRuleRecognizer().recognize(landmarks)
-    assert result.gesture_id == "gyan_or_chin_mudra"
+    assert result.gesture_id == "contact_thumb_index"
     assert result.state is RecognitionState.CANDIDATE
-    assert "distinguish Gyan from Chin" in result.uncertainties[0]
+    assert "posture_unverified" in result.uncertainties
 
 
 def test_recognizes_apana_before_single_contacts() -> None:
@@ -31,7 +31,7 @@ def test_recognizes_apana_before_single_contacts() -> None:
     landmarks[12] = Landmark(0.22, 0.61)
     landmarks[16] = Landmark(0.24, 0.62)
     result = LandmarkRuleRecognizer().recognize(landmarks)
-    assert result.gesture_id == "apana_mudra"
+    assert result.gesture_id == "contact_thumb_middle_ring"
 
 
 def test_stabilizer_promotes_repeated_candidate() -> None:
@@ -50,14 +50,24 @@ def test_stabilizer_promotes_repeated_candidate() -> None:
 def test_shareable_event_has_no_raw_media_or_landmarks() -> None:
     landmarks = sample_landmarks()
     landmarks[8] = Landmark(0.23, 0.62)
-    event = MudraEvent(recognition=LandmarkRuleRecognizer().recognize(landmarks))
+    recognition = LandmarkRuleRecognizer().recognize(landmarks)
+    stabilizer = RecognitionStabilizer()
+    stabilizer.update(recognition)
+    stabilizer.update(recognition)
+    stable = stabilizer.update(recognition)
+    event = MudraEvent(
+        recognition=stable,
+        privacy_mode=PrivacyMode.EVENT_ONLY,
+        participant_confirmed=True,
+        occurred_at="2026-10-07T01:00:00.000000Z",
+    )
     payload = event.payload()
-    assert payload["raw_media_retained"] is False
-    assert payload["raw_landmarks_retained"] is False
+    assert payload["raw_media_included"] is False
+    assert payload["raw_landmarks_included"] is False
     assert "landmarks" not in payload
     assert "landmarks" not in payload["recognition"]
 
 
 def test_requires_twenty_one_landmarks() -> None:
-    with pytest.raises(ValueError, match="exactly 21"):
+    with pytest.raises(ValueError):
         LandmarkRuleRecognizer().recognize([Landmark(0, 0)] * 20)

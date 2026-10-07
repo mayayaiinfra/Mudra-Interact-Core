@@ -33,6 +33,8 @@ FRAME_FIELDS = {
     "landmarks",
 }
 IMAGE_FRAME_FIELDS = FRAME_FIELDS | {"image_width", "image_height"}
+WRIST_INDEX = 0
+MIDDLE_MCP_INDEX = 9
 
 
 def _uuid_text(value: Any) -> str:
@@ -110,19 +112,22 @@ class Frame:
                 fail("invalid_configuration")
             object.__setattr__(self, "image_width", self.image_width)
             object.__setattr__(self, "image_height", self.image_height)
-        scale = self.palm_scale
-        if scale < MIN_PALM_SCALE:
-            fail("invalid_geometry")
         if self.coordinate_space == "mediapipe_image_v1":
             factor = self.image_height / self.image_width
             converted = tuple(Landmark(point.x, point.y * factor, point.z) for point in self.landmarks)
-            if any(abs(point.y) > 16.0 for point in converted):
-                fail("invalid_geometry")
+        else:
+            converted = self.landmarks
+        wrist = converted[WRIST_INDEX]
+        middle = converted[MIDDLE_MCP_INDEX]
+        scale = sqrt((wrist.x - middle.x) ** 2 + (wrist.y - middle.y) ** 2 + (wrist.z - middle.z) ** 2)
+        if scale < MIN_PALM_SCALE:
+            fail("invalid_geometry")
 
     @property
     def palm_scale(self) -> float:
-        wrist = self.landmarks[0]
-        middle = self.landmarks[9]
+        converted = self.converted_landmarks()
+        wrist = converted[WRIST_INDEX]
+        middle = converted[MIDDLE_MCP_INDEX]
         return sqrt((wrist.x - middle.x) ** 2 + (wrist.y - middle.y) ** 2 + (wrist.z - middle.z) ** 2)
 
     def converted_landmarks(self) -> tuple[Landmark, ...]:
