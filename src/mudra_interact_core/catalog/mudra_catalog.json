@@ -1,34 +1,65 @@
 {
-  "catalog_version": "1.0.0",
-  "scope": "Learning labels only. This catalog does not provide health, therapeutic, diagnostic, or religious authority claims.",
+  "catalog_version": "2.0.0",
   "entries": [
     {
-      "gesture_id": "gyan_or_chin_mudra",
-      "display_name": "Gyan or Chin Mudra",
-      "transliteration": "jnana/chin mudra",
-      "learning_note": "This contact pattern needs palm orientation and participant confirmation before it is labeled more specifically.",
-      "content_status": "reviewed_learning_label"
+      "gesture_id": "contact_thumb_index",
+      "display_name": "Thumb-index contact",
+      "contact_pattern": "I",
+      "confidence": 0.72,
+      "limitations": [
+        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "Palm orientation and participant context are outside the core rule."
+      ],
+      "provenance": {
+        "status": "specification_source",
+        "reference": "MUDRA_INTERACT_CORE_SPEC.md section 4 contact rule table",
+        "content_license": "Apache-2.0"
+      }
     },
     {
-      "gesture_id": "shunya_mudra",
-      "display_name": "Shunya Mudra",
-      "transliteration": "shunya mudra",
-      "learning_note": "The local recognizer uses a thumb-to-middle-finger contact pattern as a tentative learning cue.",
-      "content_status": "reviewed_learning_label"
+      "gesture_id": "contact_thumb_middle",
+      "display_name": "Thumb-middle contact",
+      "contact_pattern": "M",
+      "confidence": 0.70,
+      "limitations": [
+        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "Participant confirmation is required before any sharing or action."
+      ],
+      "provenance": {
+        "status": "specification_source",
+        "reference": "MUDRA_INTERACT_CORE_SPEC.md section 4 contact rule table",
+        "content_license": "Apache-2.0"
+      }
     },
     {
-      "gesture_id": "prithvi_mudra",
-      "display_name": "Prithvi Mudra",
-      "transliteration": "prithvi mudra",
-      "learning_note": "The local recognizer uses a thumb-to-ring-finger contact pattern as a tentative learning cue.",
-      "content_status": "reviewed_learning_label"
+      "gesture_id": "contact_thumb_ring",
+      "display_name": "Thumb-ring contact",
+      "contact_pattern": "R",
+      "confidence": 0.70,
+      "limitations": [
+        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "Participant confirmation is required before any sharing or action."
+      ],
+      "provenance": {
+        "status": "specification_source",
+        "reference": "MUDRA_INTERACT_CORE_SPEC.md section 4 contact rule table",
+        "content_license": "Apache-2.0"
+      }
     },
     {
-      "gesture_id": "apana_mudra",
-      "display_name": "Apana Mudra",
-      "transliteration": "apana mudra",
-      "learning_note": "The local recognizer uses simultaneous thumb-to-middle and thumb-to-ring contact as a tentative learning cue.",
-      "content_status": "reviewed_learning_label"
+      "gesture_id": "contact_thumb_middle_ring",
+      "display_name": "Thumb-middle-ring contact",
+      "contact_pattern": "M+R",
+      "confidence": 0.78,
+      "limitations": [
+        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "The rule is neutral and does not infer a named tradition or efficacy claim."
+      ],
+      "provenance": {
+        "status": "specification_source",
+        "reference": "MUDRA_INTERACT_CORE_SPEC.md section 4 contact rule table",
+        "content_license": "Apache-2.0"
+      }
     }
   ]
 }

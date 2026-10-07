@@ -1,6 +1,7 @@
 """Apache-2.0 Mudra Interact Core."""
 
 from .errors import MudraValidationError
+from .catalog import load_catalog, lookup
 from .coordinates import convert_landmarks, to_cartesian
 from .frame import Frame, FrameBatch, Landmark, parse_batch, parse_frame
 from .protocol import (
@@ -18,6 +19,8 @@ from .recognition import LandmarkRuleRecognizer, RecognitionStabilizer, extract_
 __all__ = [
     "InteractionParty",
     "InteractionConfig",
+    "load_catalog",
+    "lookup",
     "convert_landmarks",
     "Frame",
     "FrameBatch",
