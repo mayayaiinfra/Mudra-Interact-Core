@@ -84,7 +84,7 @@ jobs:
           & $python -c $probe
           if ($LASTEXITCODE -ne 0) { throw 'Pre-block outbound connectivity control failed' }
           "MUDRA_WINDOWS_EGRESS_CONTROL=VERIFIED" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          $name = "Mudra-MI08-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
+          $name = "Mudra-MI08-$env:GITHUB_RUN_ID-$env:GITHUB_JOB-py${{ matrix.python-version }}"
           "MUDRA_FIREWALL_RULE_NAME=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           "MUDRA_PYTHON_EXE=$target" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           New-NetFirewallRule -Name $name -DisplayName $name -Direction Outbound -Action Block -Program $target -RemoteAddress Any -Profile Any -Enabled True | Out-Null

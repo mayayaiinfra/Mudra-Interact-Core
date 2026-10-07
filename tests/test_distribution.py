@@ -257,6 +257,7 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "sudo unshare --net" in workflow
     assert 'runuser_path="$(command -v runuser)"' in workflow
     assert "New-NetFirewallRule" in workflow and "Remove-NetFirewallRule" in workflow
+    assert '$env:GITHUB_JOB-py${{ matrix.python-version }}' in workflow
     assert "GetModuleFileNameW" in workflow
     assert "MUDRA_PYTHON_EXE=$target" in workflow
     assert "Path(sys.executable).resolve()" not in workflow
