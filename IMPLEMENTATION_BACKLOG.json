@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "M0-M2: 23/23, 120/120, and 165/165 including semantic mutations; MI-08 platform matrix 8/8; full M3 gate 187/187 on hosted Ubuntu 24.04 with network isolation.",
-    "verification_claim": "M0, M1 and M2 have fresh current-source receipts (23/23, 120/120 and 165/165); MI-01 through MI-07 item receipts are also refreshed. MI-10 release workflow, read-only publisher verifier, Linux/Python 3.12 hash lock, release runbook and E90-E99 recovery tests are implemented. The focused release tests pass 10/10; the applicable local suite passes 201 tests with only the Windows firewall-isolation case reserved for hosted Windows CI. M3 current-source matrix and full-gate proof are in progress. M4 publication remains blocked until the owner confirms package-name control, configures trusted publishers/protected environments, and authorizes this exact candidate/version."
+    "baseline_tests": "M0-M2: 23/23, 120/120, and 165/165 including semantic mutations; current-source MI-08 platform matrix 8/8; hosted M3 full gate 187/187 on Ubuntu 24.04 with network isolation (run 37654020643, source c46dac8).",
+    "verification_claim": "M0-M3 are verified. Hosted M3 run 37654020643 on source c46dac8 passed all 187/187 required cases with zero failures or skips; the supported Linux/Windows CPython 3.11-3.14 matrix is 8/8. MI-10 engineering is complete and its E90-E99 acceptance passed 10/10. The single remaining gate, M4, is blocked because owner-controlled package identity and publisher setup are not established, the GitHub repository has no configured environments, and the exact candidate/version has not been authorized. No public package was released."
   },
   "active_item": null,
   "states": [
@@ -127,10 +127,14 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "blocker": "Current-source MI-08 platform matrix and full M3 gate evidence are being refreshed.",
-      "verification_kind": null
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-hosted-gate-37654020643.json",
+          "sha256": "0246fb429881e304904868186dcd2e90fcbe9d38606db69270f1f4c85f53c8ae"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -143,7 +147,7 @@
       "state": "BLOCKED",
       "evidence": [],
       "verification_kind": null,
-      "blocker": "Publication requires owner-confirmed package ownership, TestPyPI/PyPI Trusted Publisher configuration, protected GitHub environments and approval for this exact candidate/version."
+      "blocker": "External release proof is unavailable: MI-10 acceptance passed 10/10, but evidence/releases/published.json is absent (manifest_file_missing). The repository currently has no configured GitHub environments. The owner must confirm control of the intended package name, configure TestPyPI/PyPI Trusted Publishers and protected GitHub environments, and authorize this exact candidate/version before release."
     }
   ],
   "recommended_order": [
@@ -558,10 +562,15 @@
         "Live upload/download/hash/installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IMPLEMENTED",
+      "state": "BLOCKED",
       "verification_kind": null,
-      "evidence": [],
-      "blocker": "Owner must confirm package-name ownership, configure TestPyPI/PyPI Trusted Publishers and protected environments, and authorize this exact candidate/version before external publication."
+      "evidence": [
+        {
+          "path": "evidence/local/MI-10-m4-blocked-3765.json",
+          "sha256": "b85d9bc7e6c060fa9fa0b930c6726509aaeee3e8254771b19a12ac83cf67ae62"
+        }
+      ],
+      "blocker": "External release proof is unavailable: MI-10 acceptance passed 10/10, but evidence/releases/published.json is absent (manifest_file_missing). The repository currently has no configured GitHub environments. The owner must confirm control of the intended package name, configure TestPyPI/PyPI Trusted Publishers and protected GitHub environments, and authorize this exact candidate/version before release."
     }
   ]
 }
