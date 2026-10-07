@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M2 are refreshed on the current source identity. M2 recorded 165/165 required executions, including all 12 E69 semantic mutations; M3 qualification now proceeds with MI-08/MI-09 local receipts and the hosted matrix.",
-    "baseline_tests": "Current-source M0: 23/23; M1 closure: 120/120; M2 closure: 165/165, 0 failed/skipped; Linux CPython 3.11 MI-08 distribution suite: 15/15. Windows and Linux E53 offline wheel tests passed; actionlint passed.",
-    "verification_claim": "M0-M2 and MI-01-07 have current luna_self_verified receipts. MI-08 and MI-09 require fresh current-source receipts; M3 remains IN_PROGRESS pending all 12 hosted platform cells and combined gate. No current-source hosted matrix exists."
+    "scope": "M0-M2 are current and verified. MI-08 has a fresh isolated Linux CPython 3.11 receipt with 15/15 required executions; cross-platform cells and combined M3 remain pending. MI-09 is next for current-source refresh.",
+    "baseline_tests": "Current-source M0: 23/23; M1 closure: 120/120; M2 closure: 165/165 including 12 semantic mutations; MI-08 Linux CPython 3.11: 15/15; Windows/Linux focused offline packaging checks passed; actionlint passed.",
+    "verification_claim": "M0-M2 and MI-01-08 have current local evidence, but MI-08 remains IN_PROGRESS until all 12 hosted platform cells aggregate. MI-09 needs a current-source receipt. M3 and M4 remain open."
   },
   "active_item": "MI-08",
   "states": [
@@ -460,8 +460,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-08-linux-local-smoke.json",
-          "sha256": "5b94ebbcd588fb7a70f5f80c3b08bea4d4361be75ac25df3a91b81f6c6791667"
+          "path": "evidence/local/MI-08-linux-current-8fc3af0.json",
+          "sha256": "31f09c8d3953b8fbe3973a593e12448c57b928be7a97799281409fafeac428b6"
         }
       ],
       "blocker": null
