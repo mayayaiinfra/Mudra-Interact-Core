@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including semantic mutations, MI-09 5/5, MI-08 matrix 8/8 cells with 17 nodes each, hosted M3 187/187 (run 37666664343), and full M4 197/197 with zero skips on elevated Windows 3.14. M4 remains BLOCKED solely because the published release manifest/download proof is absent; no package was published.",
-    "verification_claim": "M0-M3 are VERIFIED on Mudra Interact / mudra-interact. M4 ran all 197 acceptance nodes with zero skips and is BLOCKED only on owner-controlled PyPI/TestPyPI identity and Trusted Publisher setup, protected GitHub environments, private reporting, and exact candidate/version release authorization. No package has been published."
+    "baseline_tests": "Prior core qualification source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including mutations, MI-09 5/5, hosted M3 187/187, and prior M4 197/197; those receipts predate the solo-approval policy source identity. Current policy-change verification on 5a5a945: release recovery 11/11 and all 15 semantic mutations pass. Full Windows suite 202 passed and one admin-only egress-isolation check was unavailable. WSL Linux run passed 197 with 6 failures: 5 due mounted-checkout launcher/source-inventory limitations and 1 mutation run was stopped after slow WSL checkout scanning. The Linux isolated-egress case passed. Current published-mode proof is BLOCKED because evidence/releases/published.json is missing; no package was published.",
+    "verification_claim": "M0-M3 were previously verified against source 7f221d3; their receipts predate the current policy-source identity and must be refreshed before an exact production candidate. The solo-owner production approval configuration is live-verified on pypi-production: the owner is the required reviewer, self-approval is allowed, administrator bypass is disabled, and only main is permitted. M4 remains BLOCKED on confirmed PyPI/TestPyPI ownership and login, trusted publishers, the pypi-test environment, explicit exact-candidate authorization, and actual TestPyPI/PyPI upload/download/install proof. No package has been published."
   },
   "active_item": null,
   "states": [
@@ -147,8 +147,8 @@
       "state": "BLOCKED",
       "evidence": [
         {
-          "path": "evidence/local/M4-admin-blocked-f78.json",
-          "sha256": "5bcee4d1c498ff56647e27ff94b0da6f4c64a2a25086692e61075d8c3c1d1459"
+          "path": "evidence/local/M4-solo-owner-policy-blocked-5a5a945.json",
+          "sha256": "4aa0ca488590b0429d016a5cedd1f7e7c844c55cde20f1327302c81a2b0006e2"
         }
       ],
       "verification_kind": "luna_self_verified",
