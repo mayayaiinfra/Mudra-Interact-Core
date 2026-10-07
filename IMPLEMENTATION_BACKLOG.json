@@ -1,7 +1,7 @@
 {
   "ledger_version": "1.0.0",
   "specification_version": "0.3",
-  "reviewed_on": "2026-10-07",
+  "reviewed_on": "2026-10-08",
   "baseline_commit": "eae92b7",
   "implementation_started": true,
   "target": {
@@ -17,8 +17,8 @@
   },
   "review": {
     "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including semantic mutations, MI-09 5/5, MI-08 matrix 8/8 cells with 17 nodes each, and hosted M3 187/187 (run 37666664343).",
-    "verification_claim": "M0-M3 are VERIFIED on the approved public package name Mudra Interact / mudra-interact. The 8-cell Linux/Windows × CPython 3.11-3.14 matrix and hosted M3 gate pass. M4/MI-10 is BLOCKED only on owner-controlled package-index identity/publisher setup, protected release environments, private vulnerability-reporting channel, and exact candidate/version authorization. No package has been published."
+    "baseline_tests": "Current source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including semantic mutations, MI-09 5/5, MI-08 matrix 8/8 cells with 17 nodes each, and hosted M3 187/187 (run 37666664343). MI-10 item E90-E99 passes 10/10 but is blocked by missing published manifest; no package was published. Local M4 aggregate could not verify E76 OS-level isolation.",
+    "verification_claim": "M0-M3 are VERIFIED on Mudra Interact / mudra-interact. M4 remains BLOCKED on owner-controlled package/index setup, protected GitHub environments, private reporting channel, and exact candidate/version release authorization. MI-10 passed its 10 acceptance cases but has no publication manifest or downloaded-install proof. No package has been published."
   },
   "active_item": null,
   "states": [
@@ -147,7 +147,7 @@
       "state": "BLOCKED",
       "evidence": [],
       "verification_kind": null,
-      "blocker": "Public release is the only remaining gate. Owner setup still required: establish control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for .github/workflows/publish.yml and create protected pypi-test/pypi-production GitHub environments (production requires reviewer and no self-review); enable GitHub private vulnerability reporting or provide a private report channel. The repository currently has zero GitHub environments. After setup, authorize the exact candidate commit and version 0.2.0 for the public release. No published manifest or downloaded-install proof exists."
+      "blocker": "Owner action required for the only remaining gate: confirm control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create protected GitHub environments pypi-test and pypi-production (production requires a reviewer, prevents self-review, and is restricted to main); enable private vulnerability reporting or provide a private reporting channel; then authorize the exact release candidate commit and version 0.2.0. The repository currently has zero GitHub environments. MI-10 E90-E99 passed 10/10, but publication proof is BLOCKED because evidence/releases/published.json is missing. After owner setup and release, run the aggregate M4 gate in a runner with verified OS-level network isolation; the local unelevated aggregate attempt could not prove E76."
     }
   ],
   "recommended_order": [
@@ -571,14 +571,14 @@
       ],
       "completion_kind": "published_artifact",
       "state": "BLOCKED",
-      "verification_kind": null,
+      "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-10-m4-blocked-3765.json",
-          "sha256": "b85d9bc7e6c060fa9fa0b930c6726509aaeee3e8254771b19a12ac83cf67ae62"
+          "path": "evidence/local/MI-10-current-blocked-a361.json",
+          "sha256": "24d8a964b6e36a3189b34e9bc80a5e37f9738dcbc0ea3b50791a08b6b62eb565"
         }
       ],
-      "blocker": "Public release is the only remaining gate. Owner setup still required: establish control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for .github/workflows/publish.yml and create protected pypi-test/pypi-production GitHub environments (production requires reviewer and no self-review); enable GitHub private vulnerability reporting or provide a private report channel. The repository currently has zero GitHub environments. After setup, authorize the exact candidate commit and version 0.2.0 for the public release. No published manifest or downloaded-install proof exists."
+      "blocker": "Owner action required for the only remaining gate: confirm control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create protected GitHub environments pypi-test and pypi-production (production requires a reviewer, prevents self-review, and is restricted to main); enable private vulnerability reporting or provide a private reporting channel; then authorize the exact release candidate commit and version 0.2.0. The repository currently has zero GitHub environments. MI-10 E90-E99 passed 10/10, but publication proof is BLOCKED because evidence/releases/published.json is missing. After owner setup and release, run the aggregate M4 gate in a runner with verified OS-level network isolation; the local unelevated aggregate attempt could not prove E76."
     }
   ]
 }
