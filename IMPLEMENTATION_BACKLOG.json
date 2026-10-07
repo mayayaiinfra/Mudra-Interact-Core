@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0-M2 and MI-01 through MI-09 have fresh receipts for the current source identity. MI-08 passed its clean isolated Linux Python 3.11 qualification; the 12-cell hosted matrix and combined M3 gate are pending.",
-    "baseline_tests": "Current clean Linux CPython 3.11 distribution suite: 14 passed; focused Windows checks: 3 passed; current-source MI-08 Linux gate: VERIFIED.",
-    "verification_claim": "M0-M2 and MI-01 through MI-09 are freshly luna_self_verified for the current source. MI-08 has one current isolated Linux receipt; M3 remains IN_PROGRESS until all 12 hosted cells aggregate and the combined gate passes."
+    "scope": "MI-08/M3 are IN_PROGRESS. The prior source passed the 12-cell matrix; the latest isolated-verifier attempt found in-checkout venv source-identity contamination, now corrected by moving venvs to runner temp. Current-source local Linux distribution tests pass 14/14; a fresh hosted matrix is pending.",
+    "baseline_tests": "Current clean Linux CPython 3.11 distribution suite: 14 passed; focused Windows workflow and lock checks: 2 passed; actionlint passed. The 15e0694 hosted run did not qualify because its venv was inside the checkout.",
+    "verification_claim": "M0-M2 and MI-01 through MI-09 receipts are historical until refreshed against the current source identity. MI-08/M3 are not yet VERIFIED; the isolated runner-temp workflow fix requires a fresh 12-cell run and combined gate."
   },
   "active_item": null,
   "states": [
@@ -456,14 +456,9 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/MI-08-linux-local-smoke.json",
-          "sha256": "c61256d0b51d2e4762b740832c5c03c0a0ca6560d1ca9b3c5e76fa8a3a48079b"
-        }
-      ],
+      "evidence": [],
       "blocker": null
     },
     {

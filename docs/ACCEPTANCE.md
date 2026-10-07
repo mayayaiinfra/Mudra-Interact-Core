@@ -118,7 +118,7 @@ targets; files not present at baseline must be implemented before verification.
 | E76 | MI-08 / test_distribution.py | OS/runner isolation is observed (Linux: no default route plus denied connect; Windows: active interpreter-scoped outbound block plus denied connect; macOS: sandbox network denial), alongside the synthetic negative-egress probe; cold missing build dependency causes explicit setup failure. Missing isolation is not a pass. |
 | E77 | MI-08 / test_distribution.py | Two clean builds same environment produce same wheel/sdist hashes; any mismatch blocks, not normalize away unexplained content. |
 | E78 | MI-08 / test_distribution.py | Actual artifact SBOM/inventory/notices and independent hashes agree; no unexpected bundled model/key/cache/raw corpus. |
-| E79 | MI-08 / test_distribution.py | CI ignores no required failures, installs hash-pinned tools into an isolated environment with a clean dependency check, has pinned actions/timeouts/permissions and no secrets for untrusted PR execution. |
+| E79 | MI-08 / test_distribution.py | CI ignores no required failures, installs hash-pinned tools into a runner-temp environment outside the checkout with a clean dependency check, has pinned actions/timeouts/permissions and no secrets for untrusted PR execution. |
 | E80 | MI-08 / test_distribution.py | Stale source/tag/version/hash/evidence mismatch rejects release packet. |
 | E81 | MI-08 / test_distribution.py | Windows path/encoding and POSIX regular-file checks tested on actual respective OS; simulated platform strings don't qualify. |
 | E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue and module ownership stay consistent. |

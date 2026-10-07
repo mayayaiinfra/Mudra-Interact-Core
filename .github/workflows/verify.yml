@@ -42,18 +42,24 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
       - name: Create isolated verifier environment
-        run: python -m venv .mudra-verifier
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python -m venv "$RUNNER_TEMP/mudra-verifier"
+      - name: Create isolated verifier environment
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python -m venv (Join-Path $env:RUNNER_TEMP 'mudra-verifier')
       - name: Install and validate locked verification tools
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          .mudra-verifier/bin/python -m pip install --require-hashes --no-deps -r requirements-dev.lock
-          .mudra-verifier/bin/python -m pip check
+          "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip install --require-hashes --no-deps -r requirements-dev.lock
+          "$RUNNER_TEMP/mudra-verifier/bin/python" -m pip check
       - name: Install and validate locked verification tools
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $python = Join-Path $PWD '.mudra-verifier/Scripts/python.exe'
+          $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
           & $python -m pip install --require-hashes --no-deps -r requirements-dev.lock
           if ($LASTEXITCODE -ne 0) { throw 'locked verifier install failed' }
           & $python -m pip check
@@ -63,13 +69,14 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $python = Join-Path $PWD '.mudra-verifier/Scripts/python.exe'
+          $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
           $name = "Mudra-MI08-$env:GITHUB_RUN_ID-$env:GITHUB_JOB"
           "MUDRA_FIREWALL_RULE_NAME=$name" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           New-NetFirewallRule -Name $name -DisplayName $name -Direction Outbound -Action Block -Program $python -RemoteAddress Any -Profile Any -Enabled True | Out-Null
           $rule = Get-NetFirewallRule -PolicyStore ActiveStore -Name $name -ErrorAction Stop
           if ($rule.Enabled -ne 'True' -or $rule.Action -ne 'Block' -or $rule.Direction -ne 'Outbound') { throw 'Outbound block rule was not activated' }
       - name: Run acceptance suite in an isolated network context
+        if: runner.os != 'Windows'
         shell: bash
         env:
           PIP_NO_INDEX: '1'
@@ -79,21 +86,28 @@ jobs:
           case "$RUNNER_OS" in
             Linux)
               runner_user="$USER"
-              python_path="$GITHUB_WORKSPACE/.mudra-verifier/bin/python"
+              python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
               runuser_path="$(command -v runuser)"
               sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
-            Windows)
-              .mudra-verifier/Scripts/python.exe tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
-              ;;
             macOS)
-              sandbox-exec -p '(version 1)(allow default)(deny network*)' .mudra-verifier/bin/python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+              sandbox-exec -p '(version 1)(allow default)(deny network*)' "$RUNNER_TEMP/mudra-verifier/bin/python" tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
               ;;
             *)
               echo "Unsupported runner OS: $RUNNER_OS" >&2
               exit 2
               ;;
           esac
+      - name: Run acceptance suite with Windows firewall isolation
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          PIP_NO_INDEX: '1'
+          PYTHONNOUSERSITE: '1'
+        run: |
+          $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
+          & $python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Record sanitized qualification receipt in the job log
         if: always()
         shell: bash
@@ -111,6 +125,7 @@ jobs:
           report_path = Path('evidence/local/MI-08-ci.json')
           report = json.loads(report_path.read_text(encoding='utf-8'))
           print('MUDRA_CI_RECEIPT_JSON=' + json.dumps(report, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+          recorded_paths = set()
           for artifact in report.get('artifacts', []):
               relative = Path(artifact['path'])
               data = relative.read_bytes()
@@ -118,6 +133,21 @@ jobs:
                   raise SystemExit('acceptance artifact digest mismatch')
               payload = {'path': relative.as_posix(), 'sha256': artifact['sha256'], 'data_base64': base64.b64encode(data).decode('ascii')}
               print('MUDRA_CI_ARTIFACT_BASE64_JSON=' + json.dumps(payload, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+              recorded_paths.add(relative.as_posix())
+          for command in report.get('commands', []):
+              for argument in command.get('argv', []):
+                  prefix = '--acceptance-report='
+                  if not isinstance(argument, str) or not argument.startswith(prefix):
+                      continue
+                  relative = Path(argument[len(prefix):])
+                  if relative.is_absolute() or '..' in relative.parts:
+                      raise SystemExit('unsafe pytest report path')
+                  if relative.as_posix() in recorded_paths or not relative.is_file():
+                      continue
+                  data = relative.read_bytes()
+                  payload = {'path': relative.as_posix(), 'sha256': hashlib.sha256(data).hexdigest(), 'data_base64': base64.b64encode(data).decode('ascii')}
+                  print('MUDRA_CI_ARTIFACT_BASE64_JSON=' + json.dumps(payload, ensure_ascii=False, separators=(',', ':'), sort_keys=True))
+                  recorded_paths.add(relative.as_posix())
           PY
       - name: Remove temporary Windows firewall rule
         if: always() && runner.os == 'Windows'
