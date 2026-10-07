@@ -8,5 +8,7 @@ build/
 dist/
 *.egg-info/
 evidence/local/
+evidence/releases/
+release-artifacts/
 tests/.pytest-acceptance-*.json
 *.log

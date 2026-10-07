@@ -2,8 +2,15 @@
   "inventory_version": "1.0.0",
   "files": [
     {
+      "path": ".github/workflows/verify.yml",
+      "sha256": "16bec73a4b566f2818830bd7c26830e618fe42aaf9736315fcde3c922c7e23ad",
+      "component": "Mudra Interact Core",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
       "path": ".gitignore",
-      "sha256": "f308bfc7a063e2d6570af5c8aaca79061d2f1ed38abf0d19b382e98a2fc845f8",
+      "sha256": "3c91c0c193ae1db324a0fd95e6fd5b908b2a2c66372994543e8db285c5878d17",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"
@@ -53,6 +60,13 @@
     {
       "path": "docs/CATALOG_REVIEW.md",
       "sha256": "d892f2f500f5ae3ebcbd85127d4747d245f4c74d741a2602efa14a9380ca5211",
+      "component": "Mudra Interact Core",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
+      "path": "docs/COMPATIBILITY.md",
+      "sha256": "5578bf4db7ba2ca42fa710bf827140ab16bc8d59dacb4abf995d13b39cececa5",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"
@@ -115,14 +129,14 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "6a3dcf6661ee953c2348226101ce20a09dcd8ad6d0f3f905b9566406f86f0035",
+      "sha256": "212e139dd7e01be429b05a589a857f2fbc99893af4da62cc7ee0c6950aa5a177",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"
     },
     {
       "path": "requirements-dev.lock",
-      "sha256": "bbb5825f24c71f99e53521d56ebe0d25bb140784ca1f6d55bfe15f6cb0d53c46",
+      "sha256": "1975b6fe86986c797017465c74eacdcd24a0cc9dc6c2a9172a09ea9c2dc4913c",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"
@@ -186,6 +200,13 @@
     {
       "path": "src/mudra_interact_core/protocol.py",
       "sha256": "7732e2f0ef6e411670df9d35eeb9ddbeaade9445a42cde5cced2a5d0057ede11",
+      "component": "Mudra Interact Core",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
+      "path": "src/mudra_interact_core/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"
@@ -269,7 +290,14 @@
     },
     {
       "path": "tools/verify_gate.py",
-      "sha256": "bf84933613adc729a197d9582239d31d42fd11012b2809cb5771ce51d1d8afde",
+      "sha256": "90547592194884e8dfd5dc4cd85cb1bd09bdbd0c86904b282d284270b31587dc",
+      "component": "Mudra Interact Core",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
+      "path": "tools/verify_release.py",
+      "sha256": "dbce6cd788e7dfe55b1e1f2c139bba2b27191f11ac895a0900a0ca22c644ca96",
       "component": "Mudra Interact Core",
       "license": "Apache-2.0",
       "status": "included"

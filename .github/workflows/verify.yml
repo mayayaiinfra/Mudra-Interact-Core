@@ -1,0 +1,50 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mudra-verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acceptance:
+    name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: ubuntu-24.04, python-version: '3.11'}
+          - {os: ubuntu-24.04, python-version: '3.12'}
+          - {os: ubuntu-24.04, python-version: '3.13'}
+          - {os: ubuntu-24.04, python-version: '3.14'}
+          - {os: windows-2025, python-version: '3.11'}
+          - {os: windows-2025, python-version: '3.12'}
+          - {os: windows-2025, python-version: '3.13'}
+          - {os: windows-2025, python-version: '3.14'}
+          - {os: macos-14, python-version: '3.11'}
+          - {os: macos-14, python-version: '3.12'}
+          - {os: macos-14, python-version: '3.13'}
+          - {os: macos-14, python-version: '3.14'}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Set up Python
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      - name: Install locked verification tools
+        run: python -m pip install --require-hashes --no-deps -r requirements-dev.lock
+      - name: Run acceptance suite
+        run: python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
+        env:
+          PIP_NO_INDEX: '1'
+          PYTHONNOUSERSITE: '1'

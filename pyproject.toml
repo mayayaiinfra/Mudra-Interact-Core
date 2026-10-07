@@ -16,12 +16,16 @@ mudra-interact = "mudra_interact_core.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.data-files]
+"" = ["LICENSE", "NOTICE"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json"]
+mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json", "py.typed"]
 
 [tool.pytest.ini_options]
 markers = ["acceptance(case_id): required Mudra contract or verification case"]

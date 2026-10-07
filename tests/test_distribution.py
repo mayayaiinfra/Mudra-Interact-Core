@@ -1,0 +1,191 @@
+"""MI-08 distribution, identity and compatibility acceptance cases."""
+
+from __future__ import annotations
+
+import json
+import os
+import platform
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+from tools.verify_release import (
+    PACKAGE_VERSION,
+    REQUIRED_PYTHONS,
+    REQUIRED_PLATFORMS,
+    current_platform,
+    validate_release_identity,
+)
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
+    # Release receipts are deliberately repository-relative.  `build/` is an
+    # ignored scratch location and is excluded from source identity.
+    report_relative = Path("build") / f"mi08-release-{os.getpid()}.json"
+    report_path = ROOT / report_relative
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    completed = subprocess.run(
+        [sys.executable, "tools/verify_release.py", "--offline", "--report", report_relative.as_posix()],
+        cwd=ROOT,
+        env={**os.environ, "PYTHONPATH": "", "PIP_NO_INDEX": "1", "PYTHONNOUSERSITE": "1"},
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        timeout=300,
+    )
+    assert completed.returncode in {0, 2}, completed.stderr[-2000:]
+    return json.loads(report_path.read_text(encoding="utf-8"))
+
+
+@pytest.mark.acceptance("E73")
+def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
+    assert release_report["checks"]["wheel"]["metadata_name"] == "mudra-interact-core"
+    assert release_report["checks"]["wheel"]["metadata_version"] == PACKAGE_VERSION
+    assert release_report["checks"]["wheel"]["requires_dist"] is None
+    assert release_report["checks"]["wheel"]["metadata_validator"] == "stdlib_pep427_pep566_equivalent"
+    assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {"mudra_interact_core-0.2.0.data/data/LICENSE", "mudra_interact_core-0.2.0.data/data/NOTICE"}
+    assert set(release_report["checks"]["wheel"]["package_data"]) == {
+        "mudra_interact_core/catalog/mudra_catalog.json",
+        "mudra_interact_core/schemas/v2/contract.schema.json",
+        "mudra_interact_core/schemas/v2/version-map.json",
+        "mudra_interact_core/py.typed",
+    }
+    assert {item["kind"] for item in release_report["artifacts"]} >= {"wheel", "sdist", "wheel_from_sdist"}
+
+
+@pytest.mark.acceptance("E74")
+def test_wheel_from_sdist_is_offline_and_owned_by_fresh_environment(release_report: dict) -> None:
+    install = release_report["checks"]["fresh_install"]
+    assert install["install_exit"] == 0
+    assert install["uninstall_exit"] == 0
+    assert install["reinstall_exit"] == 0
+    assert install["smoke_exit"] == 0
+    assert install["outside_checkout"] is True
+    assert install["module_owned_by_venv"] is True
+    assert install["runtime_dependencies"] == "none"
+    assert release_report["checks"]["sdist_rebuild"]["offline"] is True
+
+
+@pytest.mark.acceptance("E75")
+def test_all_twelve_cells_are_enumerated_without_fake_success(release_report: dict) -> None:
+    matrix = release_report["platform_matrix"]
+    assert len(matrix) == 12
+    assert {(row["os"], row["architecture"]) for row in matrix} == set(REQUIRED_PLATFORMS)
+    assert {row["python"] for row in matrix} == set(REQUIRED_PYTHONS)
+    actual = current_platform()
+    matching = [
+        row for row in matrix
+        if (row["os"], row["architecture"], row["python"])
+        == (actual["os"], actual["architecture"], f"{sys.version_info.major}.{sys.version_info.minor}")
+    ]
+    assert len(matching) == 1
+    assert matching[0]["evidence"] == "actual_local_run"
+    assert all(row["state"] in {"VERIFIED", "BLOCKED"} for row in matrix)
+
+
+@pytest.mark.acceptance("E76")
+def test_offline_negative_egress_and_cold_setup_failure_are_explicit(release_report: dict) -> None:
+    offline = release_report["checks"]["offline"]
+    assert offline["pip_no_index"] is True
+    assert offline["negative_egress"]["attempted_egress"] == "VERIFIED"
+    assert offline["cold_dependency"]["explicit_setup_failure"] == "VERIFIED"
+    assert offline["negative_egress"]["runner_network_isolation"] in {"VERIFIED", "UNAVAILABLE"}
+
+
+@pytest.mark.acceptance("E77")
+def test_repeat_build_hashes_are_identical(release_report: dict) -> None:
+    repeat = release_report["checks"]["repeat_build"]
+    assert repeat["wheel_identical"] is True
+    assert repeat["sdist_identical"] is True
+    for key in ("wheel_a_sha256", "wheel_b_sha256", "sdist_a_sha256", "sdist_b_sha256"):
+        assert re.fullmatch(r"[0-9a-f]{64}", repeat[key])
+
+
+@pytest.mark.acceptance("E78")
+def test_artifact_inventory_contains_hashes_not_unexpected_payload(release_report: dict) -> None:
+    inventory = release_report["checks"]["inventory"]
+    assert inventory["no_credentials_or_model_payload"] is True
+    assert inventory["legal_files"] == ["LICENSE", "NOTICE"]
+    assert all(re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) for item in release_report["artifacts"])
+    assert all("\\" not in item["path"] and not item["path"].startswith(("C:", "/")) for item in release_report["artifacts"])
+
+
+@pytest.mark.acceptance("E79")
+def test_ci_is_pinned_read_only_and_bounded() -> None:
+    workflow = (ROOT / ".github" / "workflows" / "verify.yml").read_text(encoding="utf-8")
+    assert "permissions:\n  contents: read" in workflow
+    assert "timeout-minutes: 20" in workflow
+    assert re.search(r"actions/checkout@[0-9a-f]{40}", workflow)
+    assert re.search(r"actions/setup-python@[0-9a-f]{40}", workflow)
+    assert "secrets." not in workflow
+    assert len(re.findall(r"python-version: '[0-9]+\.[0-9]+'", workflow)) == 12
+
+
+@pytest.mark.acceptance("E80")
+def test_stale_release_identity_is_rejected(release_report: dict) -> None:
+    with pytest.raises(Exception) as error:
+        validate_release_identity(
+            source_commit_value=release_report["source_commit"],
+            source_tree_value=release_report["source_tree_sha256"],
+            package_version=PACKAGE_VERSION,
+            expected_commit="0" * 40,
+            expected_source_tree=release_report["source_tree_sha256"],
+        )
+    assert getattr(error.value, "code", None) == "stale_source_commit"
+    with pytest.raises(Exception) as error:
+        validate_release_identity(
+            source_commit_value=release_report["source_commit"],
+            source_tree_value="0" * 64,
+            package_version=PACKAGE_VERSION,
+            expected_commit=release_report["source_commit"],
+            expected_source_tree=release_report["source_tree_sha256"],
+        )
+    assert getattr(error.value, "code", None) == "stale_source_tree"
+
+
+@pytest.mark.acceptance("E81")
+def test_platform_identity_is_observed_from_running_host(release_report: dict) -> None:
+    actual = current_platform()
+    assert release_report["platform"]["os"] == actual["os"]
+    assert release_report["platform"]["architecture"] == actual["architecture"]
+    assert release_report["platform"]["python"] == platform.python_version()
+    assert all("simulated" not in str(row).lower() for row in release_report["platform_matrix"])
+
+
+@pytest.mark.acceptance("E82")
+def test_exact_wheel_install_smoke_and_version_consistency(release_report: dict) -> None:
+    install = release_report["checks"]["fresh_install"]
+    metadata = release_report["checks"]["sdist_rebuild"]["metadata"]
+    assert install["install_exit"] == 0 and install["smoke_exit"] == 0
+    assert install["uninstall_exit"] == 0 and install["reinstall_exit"] == 0
+    assert metadata["metadata_version"] == PACKAGE_VERSION
+    assert metadata["metadata_name"] == "mudra-interact-core"
+
+
+@pytest.mark.acceptance("E83")
+def test_allyk_compatibility_inventory_keeps_private_boundary() -> None:
+    document = (ROOT / "docs" / "COMPATIBILITY.md").read_text(encoding="utf-8")
+    assert "ALLYK" in document
+    assert "private downstream consumer" in document
+    assert "no ALLYK source" in document
+    assert "automatic upgrade" in document
+    assert "schema" in document.lower() and "licensing" in document.lower()
+
+
+@pytest.mark.acceptance("E84")
+def test_release_report_is_reproducible_and_blocks_missing_cells(release_report: dict) -> None:
+    for key in ("source_commit", "source_tree_sha256", "spec_sha256", "acceptance_sha256", "tool_lock_sha256"):
+        assert release_report[key]
+    assert release_report["report_sha256"]
+    assert release_report["state"] in {"VERIFIED", "BLOCKED"}
+    if len([row for row in release_report["platform_matrix"] if row["state"] == "VERIFIED"]) < 12:
+        assert release_report["state"] == "BLOCKED"
+        assert any("cells" in item for item in release_report["limitations"])
