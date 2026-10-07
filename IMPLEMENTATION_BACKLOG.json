@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "M0 was refreshed on source commit 6b9ba3b with 23 required acceptance executions passing, including the clean src/ package import. M1 and M2 receipts are being refreshed next; MI-08 remains active for the hosted matrix.",
-    "baseline_tests": "Current-source M0 gate: 23 acceptance executions passed, 0 failed/skipped; direct M0 modules: 24 passed. Current-source Linux CPython 3.11 distribution suite: 15 passed; focused Windows workflow/helper tests: 2 passed; actionlint passed.",
-    "verification_claim": "M0/MI-01 are current-source luna_self_verified. M1-M2 and MI-02-09 receipts are being refreshed in dependency order; MI-08 and M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
+    "scope": "M0 and M1 are refreshed for the current source identity. M0 recorded 23 required acceptance executions passing; M1 recorded 120 passing, including all M0 cases. M2 is next; MI-08 remains active for the hosted qualification.",
+    "baseline_tests": "Current-source M0: 23/23 required executions passed. M1 dependency closure: 120/120 passed. Linux CPython 3.11 MI-08: 15/15; focused Windows workflow/helper tests: 2/2; actionlint passed.",
+    "verification_claim": "M0-M1 and MI-01-04 have current luna_self_verified receipts. M2 and MI-05-07/MI-09 are being refreshed next; MI-08/M3 remain IN_PROGRESS. No current-source hosted matrix or combined M3 receipt exists."
   },
   "active_item": "MI-08",
   "states": [
@@ -97,8 +97,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-mi09.json",
-          "sha256": "cd561778aa2a05f6848de0fc3e855d5a7b6b2ba90820eeb00add4136f9c04333"
+          "path": "evidence/local/M1-current-6b9ba3b.json",
+          "sha256": "1f87b9aca8602c77d31a8473a6902ea7ab4603a3c3f75f2d43656da3ccbcce68"
         }
       ],
       "verification_kind": "luna_self_verified"
@@ -227,8 +227,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-02-mi09.json",
-          "sha256": "294fd46ca0e080258e76806a0d68bf54a4868b357a50447b57f09f0ad1e5c28d"
+          "path": "evidence/local/M1-current-6b9ba3b.json",
+          "sha256": "1f87b9aca8602c77d31a8473a6902ea7ab4603a3c3f75f2d43656da3ccbcce68"
         }
       ],
       "blocker": null
@@ -260,8 +260,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-03-mi09.json",
-          "sha256": "e519d28e81c3891f82bbb87faf64e7ec89c2aa66b155c31aa019b8cecd9edd2e"
+          "path": "evidence/local/M1-current-6b9ba3b.json",
+          "sha256": "1f87b9aca8602c77d31a8473a6902ea7ab4603a3c3f75f2d43656da3ccbcce68"
         }
       ],
       "blocker": null
@@ -303,8 +303,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-04-mi09.json",
-          "sha256": "accca92871cce60c0c04a3c45d500f0e7e37ef44869ae3dd7cc42ad6b93bf9a1"
+          "path": "evidence/local/M1-current-6b9ba3b.json",
+          "sha256": "1f87b9aca8602c77d31a8473a6902ea7ab4603a3c3f75f2d43656da3ccbcce68"
         }
       ],
       "blocker": null
