@@ -18,7 +18,7 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "M0-M2 are VERIFIED on the corrected package source: 23/23, 140/140 and 185/185 acceptance tests, with zero skips; all 15 semantic mutations were detected. PyPI summary and README are corrected and wheel/sdist text parity is tested. Current matrix run 37764886392 passed five cells (four Linux and Windows/Python 3.12); Windows/Python 3.11, 3.13 and 3.14 failed E76 outbound-isolation verification. M3 dispatch 37766139538 is BLOCKED because the required aggregate is stale. MI-08 remains active; 0.3.0 is not yet published.",
+    "verification_claim": "M0-M2 have been reverified on source commit 392dd86: 23/23, 140/140 and 185/185 acceptance tests passed with zero skips, and all 15 semantic mutations were detected. Prior matrix run 37780065469 stopped before acceptance because its committed gate receipts referenced uncommitted pytest artifacts. The current source prefers pwsh for Windows firewall rule inspection; fresh Linux/Windows E76 and eight-cell matrix evidence remain pending. M3 is active; 0.3.0 has not been published.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
@@ -76,8 +76,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-refresh-efbefb6.json",
-          "sha256": "f3a130b18324448bc17d6454b33a864928f207b7016975cb4dbecaa7cc9bec8d"
+          "path": "evidence/local/M0-refresh-392dd86.json",
+          "sha256": "dbd5adc6501c38c3746dabcb7f253c0531aebb17f6dd64e722d7ba8181a0ec46"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -96,8 +96,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-refresh-efbefb6.json",
-          "sha256": "2bd99361a7341c5137ff3ecc9d32850bcb961d1c429a618553beeb5acc0fbdea"
+          "path": "evidence/local/M1-refresh-392dd86.json",
+          "sha256": "9e2f873f17d7eac268be97246c6b6fcb6ae342221c1bd2a3bb437aedf254939b"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -116,16 +116,16 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-refresh-efbefb6.json",
-          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
+          "path": "evidence/local/M2-refresh-392dd86.json",
+          "sha256": "814790f065fc164c60fe832341fdf800d73eca87925daa589d657278d8785335"
         }
       ],
       "verification_kind": "luna_self_verified",
       "supplemental_evidence": [
         {
           "kind": "semantic_mutation_suite",
-          "path": "evidence/local/mutations-0.3.0-index-copy.json",
-          "sha256": "74e392863df1d7da22c161462aab1d56fadf8688b165a103d0f9674617c4ec85",
+          "path": "evidence/local/mutations-refresh-392dd86.json",
+          "sha256": "0ce7b13d93b5eceb331e945cf3db21f11a2aa77c851b165dfb8d68542ab75376",
           "mutations_detected": 15
         }
       ],
@@ -202,8 +202,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-refresh-efbefb6.json",
-          "sha256": "f3a130b18324448bc17d6454b33a864928f207b7016975cb4dbecaa7cc9bec8d"
+          "path": "evidence/local/M0-refresh-392dd86.json",
+          "sha256": "dbd5adc6501c38c3746dabcb7f253c0531aebb17f6dd64e722d7ba8181a0ec46"
         }
       ],
       "prior_state": "VERIFIED"
@@ -240,8 +240,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-refresh-efbefb6.json",
-          "sha256": "2bd99361a7341c5137ff3ecc9d32850bcb961d1c429a618553beeb5acc0fbdea"
+          "path": "evidence/local/M1-refresh-392dd86.json",
+          "sha256": "9e2f873f17d7eac268be97246c6b6fcb6ae342221c1bd2a3bb437aedf254939b"
         }
       ],
       "prior_state": "VERIFIED"
@@ -273,8 +273,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-refresh-efbefb6.json",
-          "sha256": "2bd99361a7341c5137ff3ecc9d32850bcb961d1c429a618553beeb5acc0fbdea"
+          "path": "evidence/local/M1-refresh-392dd86.json",
+          "sha256": "9e2f873f17d7eac268be97246c6b6fcb6ae342221c1bd2a3bb437aedf254939b"
         }
       ],
       "prior_state": "VERIFIED"
@@ -316,8 +316,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-refresh-efbefb6.json",
-          "sha256": "2bd99361a7341c5137ff3ecc9d32850bcb961d1c429a618553beeb5acc0fbdea"
+          "path": "evidence/local/M1-refresh-392dd86.json",
+          "sha256": "9e2f873f17d7eac268be97246c6b6fcb6ae342221c1bd2a3bb437aedf254939b"
         }
       ],
       "prior_state": "VERIFIED"
@@ -355,8 +355,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-refresh-efbefb6.json",
-          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
+          "path": "evidence/local/M2-refresh-392dd86.json",
+          "sha256": "814790f065fc164c60fe832341fdf800d73eca87925daa589d657278d8785335"
         }
       ],
       "prior_state": "IN_PROGRESS"
@@ -388,8 +388,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-refresh-efbefb6.json",
-          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
+          "path": "evidence/local/M2-refresh-392dd86.json",
+          "sha256": "814790f065fc164c60fe832341fdf800d73eca87925daa589d657278d8785335"
         }
       ],
       "prior_state": "VERIFIED"
@@ -431,8 +431,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-refresh-efbefb6.json",
-          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
+          "path": "evidence/local/M2-refresh-392dd86.json",
+          "sha256": "814790f065fc164c60fe832341fdf800d73eca87925daa589d657278d8785335"
         }
       ],
       "prior_state": "VERIFIED"
