@@ -18,11 +18,11 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "The 0.2.0 gesture/event foundation remains published and historically verified, including its 8/8 Linux/Windows × CPython 3.11–3.14 matrix and live TestPyPI/PyPI/GitHub release proof. Those receipts do not qualify the changed 0.3.0 source. The 0.3.0 candidate is being requalified gate by gate; all M0–M4 gates must be refreshed, and ML-05/ML-06 remain separate human and integration work.",
+    "verification_claim": "The 0.2.0 gesture/event foundation remains published and historically verified. The 0.3.0 candidate adds the experimental communication-language SDK without changing the v2 contract and is being requalified gate by gate. M0 passed on source commit e905d2d with 23/23 acceptance cases. M1–M4 and fresh ML-01–ML-03 receipts remain pending; ML-05/ML-06 remain separate human and integration work.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -73,15 +73,14 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-4ed5bef.json",
-          "sha256": "c659864f4cf2f6550889f153b3f803f2e160aada19a23c1bc1fc4b969e871635"
+          "path": "evidence/local/M0-0.3.0-e905d2d.json",
+          "sha256": "bff77cae0aaba77bb6fa4200feb29390dc9a1d7e6efc0ee02a3fafb882372722"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M1",
@@ -199,15 +198,14 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-current-4ed5bef.json",
-          "sha256": "c659864f4cf2f6550889f153b3f803f2e160aada19a23c1bc1fc4b969e871635"
+          "path": "evidence/local/M0-0.3.0-e905d2d.json",
+          "sha256": "bff77cae0aaba77bb6fa4200feb29390dc9a1d7e6efc0ee02a3fafb882372722"
         }
-      ],
-      "prior_state": "VERIFIED"
+      ]
     },
     {
       "id": "MI-02",
