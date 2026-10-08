@@ -1,7 +1,7 @@
 {
   "ledger_version": "1.0.0",
   "specification_version": "0.3.1",
-  "reviewed_on": "2026-10-08",
+  "reviewed_on": "2026-10-09",
   "baseline_commit": "eae92b7",
   "implementation_started": true,
   "target": {
@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. A 0.4.0 candidate previously passed M0-M2 and all eight MI-08 cells, but its receipts were superseded when the M3 verifier gained a versioned matrix path to protect the 0.3.0 aggregate. Current 0.4.0 requalification restarts at M0; fresh M0-M4 evidence, matrix, publication, and downloaded-install proof are pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
+    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0 and MI-01 evidence is now verified at source commit 7da1893845227c7fd1b7db7d8d0f0d27a297d33e. M1-M4, the versioned platform matrix, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -95,7 +95,7 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -111,7 +111,14 @@
           "sha256": "0d26e743840479533db9608e54835d3c3b77c224bc8d97b1e81a9978ed67be71"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M0.json",
+          "sha256": "7c5c01965bae92a77602f42b818795d699c71502071dd8b6e3f8c37670da59db"
+        }
+      ]
     },
     {
       "id": "M1",
@@ -248,7 +255,7 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -264,7 +271,14 @@
           "sha256": "37a1d960c03f9bf96d7581681f9b16f94d64ee4f025af610ce9dad62222b779b"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-01.json",
+          "sha256": "d9fc4196b5b16b2e218eb00774698de6200fa8d0c5eef9081d7ce787979aa5a7"
+        }
+      ]
     },
     {
       "id": "MI-02",
@@ -294,7 +308,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -694,10 +708,12 @@
   "candidate_progress": {
     "version": "0.4.0",
     "state": "IN_PROGRESS",
-    "completed_gates": [],
-    "active_gate": "M0",
-    "active_item": "MI-01",
+    "completed_gates": [
+      "M0"
+    ],
+    "active_gate": "M1",
+    "active_item": "MI-02",
     "updated_on": "2026-10-09",
-    "note": "A versioned M3 matrix-report path was added so the candidate can retain the historical 0.3.0 aggregate. This verifier/source change superseded prior 0.4.0 receipts; requalification restarts at M0."
+    "note": "Fresh M0/MI-01 candidate evidence is verified at source commit 7da1893845227c7fd1b7db7d8d0f0d27a297d33e; continue with MI-02."
   }
 }
