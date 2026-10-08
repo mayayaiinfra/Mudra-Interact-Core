@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Fresh 0.4.0 M0–M2 pass on the corrected source; the current-source M2 recheck passed 186/186 with zero skips, and all 15 MI-07 semantic mutations were detected. MI-08 and MI-09 acceptance pass; the full local M3 gate passed 217/217 with zero skips and an 8/8 platform matrix. The hosted manual Ubuntu M3 gate remains pending before M3 can close; M4 publication remains pending.",
+    "verification_claim": "Fresh 0.4.0 M0–M2 pass on corrected source; M2 passed 186/186 with zero skips and all 15 MI-07 semantic mutations were detected. MI-08 and MI-09 are verified, the local M3 gate passed 217/217, the eight-cell Windows/Linux Python 3.11–3.14 matrix passed, and the required hosted Ubuntu 24.04 M3 gate passed 217/217 with zero skips on source d504561. M0–M3 are verified; M4 exact-artifact publication and downloaded-install verification remain in progress.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -67,16 +67,21 @@
       {
         "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
         "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae",
-        "description": "Fresh current-source Linux/Windows x86_64 × CPython 3.11–3.14 aggregate; all eight cells passed."
+        "description": "Fresh current-source Linux/Windows x86_64 × CPython 3.11–3.14 aggregate; all eight cells passed and were included in the hosted M3 gate."
       },
       {
         "path": "evidence/local/v0.4.0/M3-r4.json",
         "sha256": "80a3b4704ebc7bf6f93cfeb267c9775de691e8c37372d09162e3848fd2d948f8",
-        "description": "Full local M3 acceptance run: 217 passed, zero skipped; hosted manual Ubuntu workflow remains pending."
+        "description": "Full local M3 acceptance run: 217 passed, zero skipped; independently supplemented by the required passing hosted Ubuntu M3 workflow."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M3-ci-ubuntu-37841106601.json",
+        "sha256": "bc0e3aef95ca3fc8e328cc648452b77690b6279ab27d3ee23423506063b5eb3d",
+        "description": "Hosted Ubuntu 24.04 M3 full gate from GitHub Actions run 37841106601 (https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37841106601), source d504561, 217 passed and zero skipped."
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -243,7 +248,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -264,8 +269,21 @@
         {
           "path": "evidence/local/v0.4.0/M3-r4.json",
           "sha256": "80a3b4704ebc7bf6f93cfeb267c9775de691e8c37372d09162e3848fd2d948f8"
+        },
+        {
+          "path": "evidence/local/v0.4.0/M3-ci-ubuntu-37841106601.json",
+          "sha256": "bc0e3aef95ca3fc8e328cc648452b77690b6279ab27d3ee23423506063b5eb3d"
+        },
+        {
+          "path": "evidence/local/pytest-m3-3b9d273b36b1.json",
+          "sha256": "d7c70dfb0e406251fae76e3f03557d7b0226b0266252ef5c39e636bdb069645a"
+        },
+        {
+          "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
+          "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae"
         }
-      ]
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -275,7 +293,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -890,7 +908,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -908,11 +926,12 @@
     "completed_gates": [
       "M0",
       "M1",
-      "M2"
+      "M2",
+      "M3"
     ],
-    "active_gate": "M3",
-    "active_item": null,
+    "active_gate": "M4",
+    "active_item": "MI-10",
     "updated_on": "2026-10-09",
-    "note": "MI-08 and MI-09 plus the local M3 suite are verified; commit evidence and run the hosted manual Ubuntu M3 gate before M4."
+    "note": "M3 passed the required hosted Ubuntu 24.04 gate (217/217, zero skips) on source d504561; report and acceptance receipt are committed. MI-10 exact-artifact TestPyPI/PyPI publication, provenance verification, install proof, and release remain in progress."
   }
 }
