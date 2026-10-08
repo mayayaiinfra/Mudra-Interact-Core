@@ -18,7 +18,7 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Updated release-candidate source tree 044944e4: M0-M2 passed 185/185 with zero skips; MI-07 semantic mutations detected 15/15 with unchanged source. MI-08 distribution and platform evidence is active; MI-09 design checks, hosted eight-cell Linux/Windows Python 3.11-3.14 qualification, and M4 publication proof remain. Version 0.3.0 remains unpublished.",
+    "verification_claim": "Source tree 044944e4: M0-M2 passed 185/185 and M3 local acceptance passed 216/216 with zero skips; MI-07 semantic mutations detected 15/15; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix is 8/8 with 26/26 cases per cell; MI-09 passed 5/5. The M3 local gate and matrix are verified, but M3 remains IN_PROGRESS until its required manual Ubuntu workflow run is recorded. The 0.3.0 TestPyPI/PyPI publication and downloaded-install proof remain pending.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -26,10 +26,25 @@
         "path": "evidence/local/semantic-mutations-mi07-refresh.json",
         "sha256": "b6ed0d013f57f89e743dbc984fd62fa1a3a36a4edcfc71602c7b5aea5cd8da32",
         "description": "Independent 15-mutant semantic proof for MI-07; source tree hash is unchanged before and after."
+      },
+      {
+        "description": "Current-source MI-08 matrix aggregate: all eight supported OS/Python cells verified; M3 is still open pending the manual Ubuntu workflow run.",
+        "path": "evidence/local/M3-platform-matrix.json",
+        "sha256": "c47f862eae9bb2559470fd12d46e67c50ec3c444512a7b3d3667beb1db433b17"
+      },
+      {
+        "description": "Local full M3 gate on Windows 3.14: 216/216 passed, zero skips; supplemental to the required manual Ubuntu workflow.",
+        "path": "evidence/local/M3.json",
+        "sha256": "ae47f7a02c67fd5684f6f90b2931f724c97353baa471ef77289997e50d27d643"
+      },
+      {
+        "description": "Sanitized Windows 3.13 firewall junction diagnostic; documents the exact-image plus canonical-target rules used for the passing cell.",
+        "path": "evidence/local/MI-08-Windows-firewall-diagnostic.md",
+        "sha256": "0a0a240922a97f6be3fe80ea0a7c2aa396f676ecd719819674c31d946cddb81d"
       }
     ]
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -468,9 +483,42 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/linux-py3.11.json",
+          "sha256": "2bfe23cd9ba119eec1f3bb9ca2e919199d0d18e62a64b223b756775e43a2230c"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/linux-py3.12.json",
+          "sha256": "672abb2c28a4b0868c901504f97c7084aebd0b9dbf58857e08423e36dbd6520f"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/linux-py3.13.json",
+          "sha256": "dab56f4f8b11ff6465bf2c1482f906c85d1698f1e5ce52632467b62bbb9f9231"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/linux-py3.14.json",
+          "sha256": "230a6038c737b6781ea1855202d621a7cd0ba06eef48b5490a620faddaaa09d1"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/windows-py3.11.json",
+          "sha256": "bd795f323e812494894280564933c67117fac2d6f2ef3fa68c553a8304802db8"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/windows-py3.12.json",
+          "sha256": "5c7592ea39e7f1f22ff01aa9bbdcceea310330a5724a5d9291432c31ae3e28a8"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/windows-py3.13.json",
+          "sha256": "7ed7d5971860220cf235c433b5993d4fb0932c41cd1ab87fb9bf90823d661947"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/windows-py3.14.json",
+          "sha256": "68c55e624da04cae3143ff1718d403d51868aa85bba58dd2c92c51a954e8342e"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
     {
@@ -493,9 +541,14 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-09-changelog-refresh.json",
+          "sha256": "c8343621e3dbf8167a904bfe242d730fe0171be9c8213d3c803072b1137e16ae"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
     {
