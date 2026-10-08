@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Fresh 0.4.0 M0-M1 are verified on source c82a852. M2-M4, platform requalification, and publication proof remain pending.",
+    "verification_claim": "Fresh 0.4.0 M0-M2 are verified on source c82a852; all 15 MI-07 semantic mutations are detected. M3 platform requalification, M4, and publication proof remain pending.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -53,7 +53,13 @@
         "sha256": "550e72b00bdb4846a196d5aea19d9ccc25463ad570e33484f5d34b985a73326d"
       }
     ],
-    "supplemental_evidence": []
+    "supplemental_evidence": [
+      {
+        "description": "Fresh 0.4.0 MI-07 semantic proof on source c82a852: tools/run_mutations.py detected all 15 required mutations; source tree digest unchanged.",
+        "path": "evidence/local/v0.4.0/semantic-mutations-MI-07-r2.json",
+        "sha256": "fc7f7e5e91a500665f9907fc6d5ae2efaa39a3a116497a329693199fed463d4c"
+      }
+    ]
   },
   "active_item": null,
   "states": [
@@ -184,7 +190,7 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -204,7 +210,14 @@
           "sha256": "38f5b81711296279a89ff337c4b280c05cebaa00b9781bf76b68a751c86dcb21"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M2-r2.json",
+          "sha256": "d3305c7a5ce71ed50bcf1e1dc32ee400089af73e2ef5d153ac3b649155bc50e0"
+        }
+      ]
     },
     {
       "id": "M3",
@@ -521,7 +534,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -541,7 +554,14 @@
           "sha256": "07d946c0f3a965ee054f9e70e271d55e8f0785ae15124e9b919bd292641b7645"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M2-r2.json",
+          "sha256": "d3305c7a5ce71ed50bcf1e1dc32ee400089af73e2ef5d153ac3b649155bc50e0"
+        }
+      ]
     },
     {
       "id": "MI-06",
@@ -566,7 +586,7 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -586,7 +606,14 @@
           "sha256": "ef077b530bace1ee9b28470d0609adddbc4ac9d348862b08d9e4f6130c6e60ce"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M2-r2.json",
+          "sha256": "d3305c7a5ce71ed50bcf1e1dc32ee400089af73e2ef5d153ac3b649155bc50e0"
+        }
+      ]
     },
     {
       "id": "MI-07",
@@ -621,7 +648,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -641,7 +668,14 @@
           "sha256": "e9f23d38a58e5424bc1014250416067aa34a15bc872a24390a33a466829d8ffa"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M2-r2.json",
+          "sha256": "d3305c7a5ce71ed50bcf1e1dc32ee400089af73e2ef5d153ac3b649155bc50e0"
+        }
+      ]
     },
     {
       "id": "MI-08",
@@ -838,11 +872,12 @@
     "state": "IN_PROGRESS",
     "completed_gates": [
       "M0",
-      "M1"
+      "M1",
+      "M2"
     ],
-    "active_gate": "M2",
+    "active_gate": "M3",
     "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "Fresh M1 passed; M2 aggregate checks are next."
+    "note": "Fresh M0-M2 passed; MI-08 and MI-09 M3 qualification is next."
   }
 }
