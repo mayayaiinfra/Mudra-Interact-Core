@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 and 0.3.0 releases remain historical. Version 0.4.0 adds the experimental communication-language SDK and standard-library A2A JSON-RPC client while preserving the v2 gesture/event contract. M0-M4 and MI-01 through MI-10 are verified for the exact 0.4.0 release candidate. No human/cultural/accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "M0-M4 and MI-01 through MI-10 passed on frozen source commit 875a611da5cc63557563e64644c4a00e03749d23. The hosted M3 Ubuntu 24.04 run passed 217/217 with zero skips; the full M4 gate passed 232/232 with zero skips in the prepared egress-isolated namespace. The eight-cell Windows/Linux CPython 3.11-3.14 matrix passed. MI-10 passed 15/15, and the exact 0.4.0 wheel/sdist were downloaded, hash-checked and freshly installed from TestPyPI and PyPI; two PyPI attestations and the immutable GitHub release were verified. Release publication is complete. Human/cultural/accessibility qualification and live production-host integration are not claimed.",
+    "verification_claim": "The exact 0.4.0 release from source 875a611 is published and its artifacts, attestations, downloaded installs and GitHub release are verified. README/changelog status corrections form a documentation-only post-release source tree (9f3055). M0-M2 have been freshly requalified on that tree; current M3 platform and full-gate receipts are being refreshed. The published M4 proof remains correctly bound to the immutable 875a611 release candidate. No human/cultural/accessibility validation or production-host integration is claimed.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -67,7 +67,7 @@
       {
         "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
         "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae",
-        "description": "Fresh current-source Linux/Windows x86_64 × CPython 3.11–3.14 aggregate; all eight cells passed and were included in the hosted M3 gate."
+        "description": "Fresh current-source Linux/Windows x86_64 Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 aggregate; all eight cells passed and were included in the hosted M3 gate."
       },
       {
         "path": "evidence/local/v0.4.0/M3-r4.json",
@@ -98,6 +98,36 @@
         "path": "evidence/releases/published-verification.json",
         "sha256": "a2c95a1e6374c82c660d8dc48b5fe962e043cab8821839f55ad42d7ed6365326",
         "description": "Final published-release verifier: TestPyPI/PyPI, exact artifact hashes, attestations, installed wheel and immutable GitHub release verified."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M0-post-release-r1.json",
+        "sha256": "587897f49c7dabb433ab66951576177ed1fd937998b05e64b01b5e86f96d44c0",
+        "description": "Fresh M0 gate after published-doc status correction; 24/24 passed, zero skips on source tree 9f3055."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+        "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9",
+        "description": "Fresh M1 gate after published-doc status correction; 141/141 passed, zero skips on source tree 9f3055."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+        "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935",
+        "description": "Fresh M2 gate after published-doc status correction: 186/186 passed, zero skips on source tree 9f3055; all semantic mutation acceptance cases passed."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M0-post-release-r1.json",
+        "sha256": "587897f49c7dabb433ab66951576177ed1fd937998b05e64b01b5e86f96d44c0",
+        "description": "Fresh M0 verification after published-doc status correction: 24/24 passed, zero skips on source tree 9f3055. Core contract fixtures and reporter checks."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+        "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9",
+        "description": "Fresh M1 verification after published-doc status correction: 141/141 passed, zero skips on source tree 9f3055. Runtime parser and compatibility checks."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+        "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935",
+        "description": "Fresh M2 verification after published-doc status correction: 186/186 passed, zero skips on source tree 9f3055. Privacy, fuzzing, licensing and semantic mutation checks."
       }
     ]
   },
@@ -176,8 +206,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M0-r2.json",
-          "sha256": "332a2a4709f435630a49ae2a0dcc7425a7fcf37c96cfd9794c315d36b12a815e"
+          "path": "evidence/local/v0.4.0/M0-post-release-r1.json",
+          "sha256": "587897f49c7dabb433ab66951576177ed1fd937998b05e64b01b5e86f96d44c0"
         }
       ]
     },
@@ -215,8 +245,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M1-r2.json",
-          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+          "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+          "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9"
         }
       ]
     },
@@ -254,8 +284,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M2-r2.json",
-          "sha256": "df71a95a07c07f5a9a27232b591526546901ce382c368922c2e6c68483a99cc2"
+          "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+          "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935"
         }
       ]
     },
@@ -387,8 +417,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M0-r2.json",
-          "sha256": "332a2a4709f435630a49ae2a0dcc7425a7fcf37c96cfd9794c315d36b12a815e"
+          "path": "evidence/local/v0.4.0/M0-post-release-r1.json",
+          "sha256": "587897f49c7dabb433ab66951576177ed1fd937998b05e64b01b5e86f96d44c0"
         }
       ]
     },
@@ -444,8 +474,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M1-r2.json",
-          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+          "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+          "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9"
         }
       ]
     },
@@ -496,8 +526,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M1-r2.json",
-          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+          "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+          "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9"
         }
       ]
     },
@@ -558,8 +588,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M1-r2.json",
-          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+          "path": "evidence/local/v0.4.0/M1-post-release-r1.json",
+          "sha256": "1b26aae146c93b3fa69451d61986ae7ec5335fe34ed29f891a1dfb8e490ec9d9"
         }
       ]
     },
@@ -616,8 +646,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M2-r2.json",
-          "sha256": "df71a95a07c07f5a9a27232b591526546901ce382c368922c2e6c68483a99cc2"
+          "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+          "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935"
         }
       ]
     },
@@ -668,8 +698,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M2-r2.json",
-          "sha256": "df71a95a07c07f5a9a27232b591526546901ce382c368922c2e6c68483a99cc2"
+          "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+          "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935"
         }
       ]
     },
@@ -730,8 +760,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.0/M2-r2.json",
-          "sha256": "df71a95a07c07f5a9a27232b591526546901ce382c368922c2e6c68483a99cc2"
+          "path": "evidence/local/v0.4.0/M2-post-release-r1.json",
+          "sha256": "c7ab42a00815b043447961b0f400edea80a7281060a3eaaeed83845edf5e0935"
         }
       ]
     },
@@ -959,7 +989,7 @@
     "active_gate": null,
     "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "M0-M4 and MI-01 through MI-10 are verified for the exact 0.4.0 candidate from source 875a611da5cc63557563e64644c4a00e03749d23. Published to TestPyPI and PyPI; exact wheel/sdist downloads, fresh install, two PyPI attestations, protected authorization and immutable GitHub release verified. Full M4 gate: 232/232, zero skips. See the M4 and MI-10 receipts and evidence/releases/published-verification.json.",
+    "note": "The exact 0.4.0 candidate from source 875a611 is published and M4/MI-10 release proof is verified. M0-M2 have been freshly requalified on the post-release documentation tree 9f3055; current-source M3 platform and full-gate receipts are being refreshed.",
     "release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
