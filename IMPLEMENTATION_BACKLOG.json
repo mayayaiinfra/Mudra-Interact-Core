@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-06",
+  "active_item": "MI-05",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -475,7 +475,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -516,7 +516,7 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -532,7 +532,14 @@
           "sha256": "0a4146717c1b3dace48c20e0ce8a26da3d005ba38e6883af56d30e9fca294f29"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-06.json",
+          "sha256": "ef077b530bace1ee9b28470d0609adddbc4ac9d348862b08d9e4f6130c6e60ce"
+        }
+      ]
     },
     {
       "id": "MI-07",
@@ -741,8 +748,8 @@
       "M1"
     ],
     "active_gate": "M2",
-    "active_item": "MI-06",
+    "active_item": "MI-05",
     "updated_on": "2026-10-09",
-    "note": "M2 dependency order starts with MI-06; MI-05 depends on both MI-04 and MI-06."
+    "note": "MI-06 is verified; MI-05 is now eligible because its full prerequisite set is verified."
   }
 }
