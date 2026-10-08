@@ -76,8 +76,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-index-copy.json",
-          "sha256": "6e48e0b67602cb2ff83740b4410aebe3e7ebd854ceb422a662ebd1c678b44a8c"
+          "path": "evidence/local/M0-refresh-efbefb6.json",
+          "sha256": "f3a130b18324448bc17d6454b33a864928f207b7016975cb4dbecaa7cc9bec8d"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -202,8 +202,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-index-copy.json",
-          "sha256": "6e48e0b67602cb2ff83740b4410aebe3e7ebd854ceb422a662ebd1c678b44a8c"
+          "path": "evidence/local/M0-refresh-efbefb6.json",
+          "sha256": "f3a130b18324448bc17d6454b33a864928f207b7016975cb4dbecaa7cc9bec8d"
         }
       ],
       "prior_state": "VERIFIED"
