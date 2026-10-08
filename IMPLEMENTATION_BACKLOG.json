@@ -18,7 +18,7 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Updated release-candidate source tree 044944e4: M0-M1 and M2 items MI-05/MI-06/MI-07 passed with zero skips; MI-07 semantic mutations detected 15/15 in an unchanged-source run. MI-08 package/distribution qualification is active. M3-M4 and hosted eight-cell Linux/Windows Python 3.11-3.14 matrix remain. Version 0.3.0 remains unpublished.",
+    "verification_claim": "Updated release-candidate source tree 044944e4: M0-M2 passed 185/185 with zero skips; MI-07 semantic mutations detected 15/15 with unchanged source. MI-08 distribution and platform evidence is active; MI-09 design checks, hosted eight-cell Linux/Windows Python 3.11-3.14 qualification, and M4 publication proof remain. Version 0.3.0 remains unpublished.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -120,9 +120,14 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M2-changelog-refresh.json",
+          "sha256": "b6752da89318608bd27896e8e1a6da99e63f3dfd24de494f7f7b18c9414c900e"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "IN_PROGRESS"
     },
     {
@@ -134,7 +139,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "evidence": [],
       "verification_kind": null,
       "prior_state": "VERIFIED"
