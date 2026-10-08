@@ -30,8 +30,7 @@ Prepared release contents:
   explicit consent and single-use event confirmation.
 - Image-free local CLI and reproducible wheel/source distribution.
 - Linux x86_64 and Windows x86_64 support qualification on CPython 3.11–3.14.
-- No runtime dependencies, camera capture, model assets, hosted service or
-  private ALLYK implementation.
+- No runtime dependencies, camera capture, model assets or hosted service.
 
 This file describes the candidate contents; it does not itself prove that the
 package was published. The release workflow attaches the exact frozen wheel
