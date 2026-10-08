@@ -1,7 +1,9 @@
 # Mudra Interact Core: Implementation and Release Specification
 
-Specification **0.3**, owner-approved platform scope and public distribution-name update **2026-10-07**;
-core contract review: Astra **2026-10-06**. Owner: MAYAYAI.
+Specification **0.3.1**, Astra model review and initial-publication clarification
+**2026-10-08**; owner-approved platform scope and public distribution-name update
+**2026-10-07**. Owner: MAYAYAI. This is technical model review, not human,
+cultural or accessibility validation. See [review and release handoff](docs/ASTRA_REVIEW_2026-10-08.md).
 Implementation baseline: `eae92b7`, package `0.1.0`.
 Target distribution `mudra-interact` (`Mudra Interact`) version `0.2.0`;
 protocol/schema `2.0.0`, catalogue `2.0.0`. The Python import namespace
@@ -423,7 +425,18 @@ upload/download/exact-version install -> manual owner approval in the protected
 production environment for this exact run/version/commit/fingerprint ->
 production upload of SAME artifacts -> download/hash/installed verification
 -> GitHub release/tag/artifact links.
-Verify repository/package-name/publisher ownership first. Separate indexes and
+Verify repository/publishing authority first. For an existing index project,
+verify owner control and its exact Trusted Publisher. For a first publication,
+an authenticated owner may configure an owner-authorized pending Trusted
+Publisher for the exact project/repository/workflow/environment. A pending
+publisher does not reserve a name or establish project ownership; a missing
+project page is not enough. Confirm successful project creation and publisher
+identity after upload. Name collision or ambiguous authority blocks promotion.
+Bind each cryptographically verified production artifact attestation to the
+full candidate source commit and workflow run, as well as artifact digest,
+repository, workflow and environment. A separate matching GitHub run record
+does not establish that the artifact's attestation came from that run.
+Separate indexes and
 accounts; single-index downloads with --no-deps, no extra-index fallback.
 No rebuild after acceptance, overwritten tag or reused published version.
 Ambiguous upload: inspect exact remote version/hashes before retry; matching

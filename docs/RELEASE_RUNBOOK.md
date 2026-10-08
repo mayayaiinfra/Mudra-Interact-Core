@@ -11,9 +11,16 @@ Before starting a release, an owner with repository and index administration
 access must complete and verify all of the following:
 
 1. Confirm that `mayayaiinfra/Mudra-Interact-Core` is the intended public
-   repository and that the package name `mudra-interact` is controlled by
-   the project owner on both PyPI and TestPyPI. An index `404` is not proof that
-   a name is available or owned.
+   repository and verify publishing authority separately on PyPI and TestPyPI.
+   For an existing `mudra-interact` project, verify owner control and the exact
+   Trusted Publisher. For its first release, use the authenticated owner's
+   account to configure an owner-authorized **pending** GitHub publisher:
+   project `mudra-interact`, owner `mayayaiinfra`, repository
+   `Mudra-Interact-Core`, workflow filename `publish.yml`, and the index's
+   environment from step 2. The account UI uses the filename, not the full
+   `.github/workflows/` path. Record a sanitized setup receipt without secrets.
+   A pending publisher does not reserve the name or prove project ownership;
+   first successful use creates the project. A `404` alone is insufficient.
 2. Configure PyPI Trusted Publishers for this repository and
    `.github/workflows/publish.yml`, with the `pypi-production` environment.
    Configure the corresponding TestPyPI publisher with the `pypi-test`
@@ -44,8 +51,14 @@ separation only; it does not waive manual approval, branch restrictions,
 candidate identity, TestPyPI qualification, provenance, or downloaded-install
 proof.
 
-If the package page or exact version is missing, stop; a `404` is not evidence
-that the project name is available or permission to claim it.
+Before the first upload, a missing package page or version is expected only
+when the authorized pending-publisher setup above is verified. A `404` is not
+permission by itself. A name collision, rejected pending publisher or ambiguous
+account authority stops publication; never switch names or use a token fallback.
+After an upload, missing exact-version metadata (`index_version_missing`)
+blocks promotion until the index result can be resolved. Check that the new
+project is owner-controlled and that its pending publisher became active.
+This setup follows [PyPI's first-project Trusted Publishing documentation](https://docs.pypi.org/trusted-publishers/creating-a-project-through-oidc/).
 
 ## Candidate qualification
 
@@ -85,7 +98,10 @@ that the project name is available or permission to claim it.
 3. The workflow queries PyPI for the exact version, downloads and hashes each
    production file, verifies the PyPI Trusted Publisher attestations and runs a
    second fresh isolated install smoke. TestPyPI evidence cannot stand in for
-   this production proof.
+   this production proof. Each cryptographically verified attestation must
+   bind the artifact digest, repository, workflow, environment, full candidate
+   source commit and workflow run. Matching unsigned publisher metadata plus
+   an unrelated successful GitHub run does not meet this requirement.
 4. After production verification, create the immutable `v0.2.0` tag/release
    against the candidate commit and attach the same wheel and sdist. Existing
    tags/releases are never overwritten. The workflow exports a sanitized

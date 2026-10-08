@@ -1,0 +1,55 @@
+{
+  "design_revision": "0.1",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "review_kind": "astra_technical_model_review",
+  "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
+  "planned_package_version": "0.3.0",
+  "language_protocol_version": "1.0.0",
+  "current_release_dependency": "Publish and verify the bounded 0.2.0 foundation first; this backlog does not expand its completion claim.",
+  "items": [
+    {
+      "id": "ML-01",
+      "state": "NOT_STARTED",
+      "requires": [],
+      "outputs": ["schemas/language/v1 closed JSON Schema", "independent synthetic fixture manifest", "language version mapping", "distinct Lxx acceptance reporter and gate configuration"],
+      "acceptance": ["L01: all acts and all four role directions have independent valid/invalid fixtures", "L02: unknown versions/namespaces/fields/remote refs and stale or tampered fixtures reject", "L03: reporter rejects missing IDs, skip/xfail/empty suites, stale source, forged and missing evidence"]
+    },
+    {
+      "id": "ML-02",
+      "state": "NOT_STARTED",
+      "requires": ["ML-01"],
+      "outputs": ["language.py immutable Message and LanguageValidationError", "parse_message", "check_freshness", "bundled schema resources"],
+      "acceptance": ["L10: constructor/parser parity, detached payloads, deterministic bytes", "L11: byte/depth/string/count boundaries, duplicates, booleans, overflow, Unicode and control cases", "L12: each act payload, participant/mode rules and strict version/intent checks", "L13: expiry at boundary, past expiry and 30/31-second future-skew cases; imports cannot execute or authorize"]
+    },
+    {
+      "id": "ML-03",
+      "state": "NOT_STARTED",
+      "requires": ["ML-02"],
+      "outputs": ["validate_transcript", "render_message", "synthetic human-human/human-agent/agent-agent creative planning examples"],
+      "acceptance": ["L20: reply graph, scope, unique IDs, reversed participants, role consistency and chronological invariants", "L21: per-proposal single disposition, revisions do not inherit accept, terminal status rules and acknowledgement loop prevention", "L22: deterministic literal rendering, no supported-locale fallback, visible non-authorization and provenance assertions", "L23: malicious prose and spoofed accept/review/role/confidence never cause network, subprocess or action; incomplete histories and invalid late messages reject wholly"]
+    },
+    {
+      "id": "ML-04",
+      "state": "NOT_STARTED",
+      "requires": ["ML-03"],
+      "outputs": ["language API documentation and migration notes", "experimental creative planning demonstration", "later-version release tooling and fresh artifact evidence"],
+      "acceptance": ["L30: v2 regressions and full existing Linux/Windows x86_64 Python 3.11-3.14 matrix remain passing", "L31: installed wheel/sdist contains exact schema, examples run outside source, runtime has zero dependencies/egress", "L32: new version full release evidence and downloaded installation; never claim completed creative host plugin or live model integration"]
+    },
+    {
+      "id": "ML-05",
+      "state": "NOT_STARTED",
+      "requires": ["ML-03"],
+      "completion_kind": "external_human_qualification",
+      "outputs": ["consented representative-user study plan and actual results", "cultural and accessibility review with reviewer scope and limitations"],
+      "acceptance": ["L40: actual participants evaluate comprehension, interpretation correction, refusal and alternatives across intended communication paths", "L41: document languages, access needs, study limits, disagreement and remediation; do not substitute model review or synthetic tests for humans", "L42: broad usability/accessibility/cultural claims remain blocked until scoped evidence supports them; experimental SDK may release with explicit limits"]
+    },
+    {
+      "id": "ML-06",
+      "state": "NOT_STARTED",
+      "requires": ["ML-04"],
+      "completion_kind": "separate_integration_contract_required",
+      "outputs": ["chosen creative host or A2A/MCP adapter specification", "pinned upstream versions and mapping vectors", "host action authorization and credential policy"],
+      "acceptance": ["L50: exact-host/plugin installation and live end-to-end positive/negative interoperability evidence", "L51: identity, scope, replay, cancellation, stale approval, refusal and provider failure tested against real integration", "L52: no provider call, account grant or spending inferred from schema validity; obtain only missing task-specific authority"]
+    }
+  ]
+}

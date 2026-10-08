@@ -1,6 +1,7 @@
 # Mudra Core acceptance contract
 
-Revision 0.3, owner-approved platform scope update 2026-10-07. This is a
+Revision 0.3.1, Astra technical model review 2026-10-08; owner-approved platform
+scope update 2026-10-07. This is a
 required test design, not a passing report.
 Authority: [specification](../MUDRA_INTERACT_CORE_SPEC.md).
 Progress: [ledger](../IMPLEMENTATION_BACKLOG.json).
@@ -78,7 +79,7 @@ targets; files not present at baseline must be implemented before verification.
 | E35 | MI-04 / test_session.py | Gesture conflict restarts count, conflict frame uncertain, next compatible frames build fresh streak; no mixed-method/catalogue promotion. |
 | E36 | MI-04 / test_session.py | Scope/stream changes reject; reset doesn't rewind ordering; stop cannot restart implicitly; revoke needs new observations. |
 | E37 | MI-04 / test_session.py | External stable recognition cannot be fed as proof; independent sessions isolate history; shared-thread limitation documented/tested at adapter. |
-| E38 | MI-04 / test_consent.py | Missing/false/string/integer consent/confirmation denied; both true and current stable required for every sender type; denial after an earlier grant invalidates it and needs new observations. |
+| E38 | MI-04 / test_consent.py | Missing/false/string/integer consent/confirmation denied; both true and current stable required for every sender type; denial after an earlier grant invalidates it and needs new observations. Malformed confirmation time (bool/string/float/negative/above safe-integer bound) also clears pending recognition/grants; correcting only the time cannot recover the old stable revision. Fresh valid observations can recover without rewinding sequence/operation watermarks. |
 | E39 | MI-04 / test_consent.py | Confirmation tied to exact scope/stream/revision; later same-gesture OR malformed frame/reset/revoke invalidates it; no last-good result fallback. |
 | E40 | MI-04 / test_consent.py | Exact expiry age5000 allowed, 5001 denied; now before frame or prior session clock denied; wall-clock jump doesn't affect hold/expiry. |
 | E41 | MI-04 / test_consent.py | One emission per confirmed revision; second emit/reconfirm consumed revision denied; new stable frame+confirmation works. |
@@ -130,15 +131,15 @@ targets; files not present at baseline must be implemented before verification.
 | E87 | MI-09 / test_adapter_contract.py | DESIGN defines track identity/aspect/mirror/clock and no duplicate-frame hold bypass. |
 | E88 | MI-09 / test_adapter_contract.py | DESIGN defines bounded latest-frame queue, model failure/offline/cold-cache handling, local-only telemetry and no BYOK probe. |
 | E89 | MI-09 / test_adapter_contract.py | DESIGN lists real browser/quality/accessibility/cultural/asset proof still needed and alternative input path; never claims live evaluation. |
-| E90 | MI-10 / test_release_recovery.py | Actual repository/package/publisher ownership and protected, version-specific manual release authorization are required; the approved single-owner policy may use owner self-approval but is not independent review; missing/ambiguous ownership or authorization blocks and no secret is stored in evidence. |
+| E90 | MI-10 / test_release_recovery.py | Actual repository/publishing authority and protected, version-specific manual release authorization are required. Existing project: verify owner control and exact publisher. First publication: an authenticated owner-authorized pending Trusted Publisher must match project/repository/workflow/environment; 404 alone is insufficient, no name reservation is claimed, collision blocks, and successful creation/publisher identity must be checked after upload. The approved single-owner policy may use owner self-approval but is not independent review; missing/ambiguous authority blocks and no secret is stored in evidence. |
 | E91 | MI-10 / test_release_recovery.py | Exact frozen candidate matches current source/spec/acceptance/tool-lock identity, all verified gates, offline qualification and exact artifact hashes before upload. |
 | E92 | MI-10 / test_release_recovery.py | TestPyPI exact-version metadata and downloaded bytes match the frozen candidate; a fresh isolated install smoke passes; TestPyPI cannot stand in for production. |
-| E93 | MI-10 / test_release_recovery.py | Production download and signed publisher provenance match the tested artifact hashes; no rebuild/index fallback; fresh isolated install smoke passes. |
+| E93 | MI-10 / test_release_recovery.py | Production download and signed publisher provenance match the tested artifact hashes and exact candidate full source commit/workflow run; no rebuild/index fallback; fresh isolated install smoke passes. |
 | E94 | MI-10 / test_release_recovery.py | Protected workflow uses pinned actions and separate environments; production requires a reviewer, permits the sole owner’s deliberate self-approval, disables administrator bypass, and allows only `main`; verifier rejects missing reviewers, self-review prevention, bypass, unrestricted/wrong branches; immutable release assets and documentation point to the exact candidate. |
 | E95 | MI-10 / test_release_recovery.py | Synthetic ambiguous upload resumes only when existing hashes match; mismatch/version collision denies retry or overwrite. |
 | E96 | MI-10 / test_release_recovery.py | Synthetic rollback/yank plan preserves published history and requires applicable authorization; never deletes user data. |
 | E97 | MI-10 / test_release_recovery.py | Public quickstart/download links resolve to exact-version sources; observed live release/package state is recorded, no mock release acceptance. |
-| E98 | MI-10 / test_release_recovery.py | Wrong publisher/repo/artifact/expired authorization or missing signing identity blocks; no long-lived secret fallback. |
+| E98 | MI-10 / test_release_recovery.py | Wrong publisher/repo/artifact/expired authorization or missing signing identity blocks; absent/malformed/wrong source-commit or workflow-run claims in cryptographically verified attestation evidence block even when artifact digest and unsigned publisher envelope match. A separate successful GitHub run is insufficient linkage. No long-lived secret fallback. |
 | E99 | MI-10 / test_release_recovery.py | Gate aggregator rejects missing or stale external proof; final report separates published core, unimplemented adapter, and unverified accuracy/cultural claims. |
 
 ## 3. Required semantic mutations

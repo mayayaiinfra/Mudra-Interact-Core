@@ -1,6 +1,6 @@
 {
   "ledger_version": "1.0.0",
-  "specification_version": "0.3",
+  "specification_version": "0.3.1",
   "reviewed_on": "2026-10-08",
   "baseline_commit": "eae92b7",
   "implementation_started": true,
@@ -16,9 +16,11 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "Owner-approved specification 0.3 supports Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS remains unsupported and unqualified. Current MI-08 matrix and complete M3 gate have both passed on source tree 981aec9c.",
-    "baseline_tests": "M0 23/23, M1 120/120, M2 165/165 including 15 semantic mutations, and MI-01 through MI-09 are verified on source tree 981aec9c. Hosted run 37716341667 passed the complete MI-08 matrix: eight Linux/Windows x86_64 cells on Python 3.11-3.14, each with E73-E84 represented and no failures or skips; the matrix aggregator verified 8/8. Workflow-dispatch run 37717500467 passed the complete M3 gate with 187/187 tests, 83/83 acceptance IDs, zero failures/skips/xfails/xpasses, and a fresh matrix receipt. M3 is VERIFIED. M4 published proof remains blocked because PyPI/TestPyPI ownership, Trusted Publisher setup, exact-candidate authorization, live upload/download/install proof, and evidence/releases/published.json are incomplete; no package was published.",
-    "verification_claim": "M0-M3 and MI-01 through MI-09 have fresh luna_self_verified evidence for source tree 981aec9c. The full M3 gate and 8-cell Linux/Windows matrix are VERIFIED. The pypi-production environment is live-verified: the owner is the required reviewer, self-approval is enabled, administrator bypass is disabled, and only main is permitted. M4 remains BLOCKED on owner-controlled PyPI/TestPyPI setup and actual publication/download-install proof; no package has been published."
+    "scope": "Astra technical model review of 7c95adc approved the bounded 0.2.0 foundation direction conditionally; no human/cultural/accessibility validation is claimed. See docs/ASTRA_REVIEW_2026-10-08.md. The future language contract is design-only and does not expand 0.2.0.",
+    "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
+    "verification_claim": "Current source is not VERIFIED. AR-01 malformed confirmation time retains stable recognition and permits reconfirmation without fresh observations; AR-02 requires cryptographically verified candidate commit/run binding. MI-04/M1 are FAILED pending regression repair; remaining implemented scopes require fresh evidence. Root restored protected pypi-production and created main-only pypi-test on 2026-10-08; index pending publishers and TestPyPI sign-in were still outstanding at review. No package has been published.",
+    "review_kind": "astra_technical_model_review",
+    "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
   "active_item": null,
   "states": [
@@ -71,14 +73,16 @@
       "items": [
         "MI-01"
       ],
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "evidence": [
         {
           "path": "evidence/local/M0-solo-owner-policy-5a5a945.json",
           "sha256": "4584302086f2b93ed056790bc522b059ac3887ec55ec6000f2ff4bb36cf5d8c1"
         }
       ],
-      "verification_kind": "luna_self_verified"
+      "verification_kind": "luna_self_verified",
+      "prior_state": "VERIFIED",
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
     },
     {
       "id": "M1",
@@ -90,14 +94,16 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "VERIFIED",
+      "state": "FAILED",
       "evidence": [
         {
           "path": "evidence/local/M1-solo-owner-policy-5a5a945.json",
           "sha256": "a1ac8e6210a91e948a5996846ad09ec626316e7d029b79b7e30b7190925a1f37"
         }
       ],
-      "verification_kind": "luna_self_verified"
+      "verification_kind": "luna_self_verified",
+      "prior_state": "VERIFIED",
+      "blocker": "AR-01 violates E38/E40; repair MI-04 and refresh prerequisite/current evidence."
     },
     {
       "id": "M2",
@@ -109,14 +115,16 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "evidence": [
         {
           "path": "evidence/local/M2-solo-owner-policy-5a5a945.json",
           "sha256": "8b5da0c4ccf1da7af7eeb2df70bb9bef495723338a4769b0f71a62f520983c0f"
         }
       ],
-      "verification_kind": "luna_self_verified"
+      "verification_kind": "luna_self_verified",
+      "prior_state": "VERIFIED",
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
     },
     {
       "id": "M3",
@@ -127,14 +135,16 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "evidence": [
         {
           "path": "evidence/local/M3-hosted-mudra-interact-37717500467.json",
           "sha256": "322a8b5ce6019108eeb028fa8d28cfccfedcc84f11f094e13ce69d56b41677f4"
         }
       ],
-      "verification_kind": "luna_self_verified"
+      "verification_kind": "luna_self_verified",
+      "prior_state": "VERIFIED",
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
     },
     {
       "id": "M4",
@@ -152,7 +162,7 @@
         }
       ],
       "verification_kind": "luna_self_verified",
-      "blocker": "Owner actions remain to confirm PyPI device login and control of mudra-interact on PyPI and TestPyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create pypi-test; then authorize exact candidate commit/version 0.2.0. The solo-owner policy allows deliberate owner self-approval, disables administrator bypass, and restricts production to main; it is not independent review. pypi-production is live-verified with this configuration and private vulnerability reporting is enabled. M0-M3 are now VERIFIED, including the current-source eight-cell MI-08 matrix and complete M3 gate. M4 remains BLOCKED because package identity/publishers, exact authorization, live uploads/downloads, and evidence/releases/published.json are incomplete."
+      "blocker": "Fix AR-01 confirmation lifecycle and AR-02 signed candidate commit/run provenance binding; obtain fresh matching MI-01..MI-09 and M0..M3 evidence including 8/8 platform cells and full hosted M3. Root live-verified corrected pypi-production (owner reviewer, self-approval allowed, administrator bypass false, main-only) and created pypi-test (main-only, no bypass) on 2026-10-08; recheck before release. Configure/verify owner-authorized pending Trusted Publishers separately on PyPI/TestPyPI, or verified publishers for existing owner-controlled projects. TestPyPI sign-in and index publisher submission were outstanding at review. Existing user publication authorization applies; preserve required exact-candidate manual production approval. Actual same-artifact upload/download/attestation/install proof and evidence/releases/published.json are still missing. No package was published."
     }
   ],
   "recommended_order": [
@@ -194,7 +204,7 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -202,7 +212,8 @@
           "sha256": "910973ec2fb08c91efa1c680e65bd4bf1f2cc9ef4579383ff10db56846e74833"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-02",
@@ -232,7 +243,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -240,7 +251,8 @@
           "sha256": "b86ef344f47214f12032d277d96fbdae51d1b47fae050b621c2861b9ac2632d5"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-03",
@@ -265,7 +277,7 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -273,7 +285,8 @@
           "sha256": "b04771b0790903d286d71c870cc6a420beff5e55c401acad7eee392ea2d48df7"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-04",
@@ -308,7 +321,7 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "FAILED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -316,7 +329,8 @@
           "sha256": "e412bdc074fa2dcdb966f922e9b13a841808f4884e87212b6d99ac11fef413d7"
         }
       ],
-      "blocker": null
+      "blocker": "AR-01: malformed confirm time retains stable recognition; correcting time reuses old revision. Add E38/E40 regressions, clear pending recognition on every malformed confirmation while preserving watermarks, then rerun.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-05",
@@ -347,7 +361,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -355,7 +369,8 @@
           "sha256": "bdfe8d7bd9ea805ae138dd83c09f4ebdd4a70e102678babcc8b0a428e61d1c29"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-06",
@@ -380,7 +395,7 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -388,7 +403,8 @@
           "sha256": "51f7fef40d77291ccee750d4dd843cb64f5304a6ed2f5501d35092bb90debf86"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-07",
@@ -423,7 +439,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -431,7 +447,8 @@
           "sha256": "841a0b2418d256d294c67993bc14c0b006e48b97dd71cb89679fdb419c0ce9b2"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-08",
@@ -465,7 +482,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -500,7 +517,9 @@
           "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/windows-x86_64-py3.14.json",
           "sha256": "773afa8111c2c837dfd84d90ebc0911ba7d260eec07163dc5d99215ac39d8a29"
         }
-      ]
+      ],
+      "prior_state": "VERIFIED",
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
     },
     {
       "id": "MI-09",
@@ -522,7 +541,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "VERIFIED",
+      "state": "IMPLEMENTED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
@@ -530,7 +549,8 @@
           "sha256": "a615d097a5c79f50cf2c844801a7754471861159b0cbb9ee86e48be0a98744ee"
         }
       ],
-      "blocker": null
+      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
+      "prior_state": "VERIFIED"
     },
     {
       "id": "MI-10",
@@ -561,9 +581,9 @@
         "E99"
       ],
       "external_requirements": [
-        "Package-name and publishing identity access on TestPyPI/PyPI",
-        "Release authorization tied to candidate/version",
-        "Live upload/download/hash/installed verification"
+        "Verified repository/index publishing authority: existing controlled project or authenticated owner-authorized pending publisher, separately for TestPyPI/PyPI",
+        "Existing user release authorization plus exact-candidate protected manual production approval",
+        "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
       "state": "BLOCKED",
@@ -578,7 +598,7 @@
           "sha256": "5bcee4d1c498ff56647e27ff94b0da6f4c64a2a25086692e61075d8c3c1d1459"
         }
       ],
-      "blocker": "Owner action required for the only remaining gate: confirm control of mudra-interact on both TestPyPI and PyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create protected GitHub environments pypi-test and pypi-production (production requires a reviewer, prevents self-review, and is restricted to main); enable private vulnerability reporting or provide a private reporting channel; then authorize the exact release candidate commit and version 0.2.0. The repository currently has zero GitHub environments. PyPI returns 404 for this project, which does not establish that the name is claimable; TestPyPI ownership must also be verified. M4 E90-E99 all pass, but publication/download proof is blocked because evidence/releases/published.json is missing."
+      "blocker": "Fix AR-01 confirmation lifecycle and AR-02 signed candidate commit/run provenance binding; obtain fresh matching MI-01..MI-09 and M0..M3 evidence including 8/8 platform cells and full hosted M3. Root live-verified corrected pypi-production (owner reviewer, self-approval allowed, administrator bypass false, main-only) and created pypi-test (main-only, no bypass) on 2026-10-08; recheck before release. Configure/verify owner-authorized pending Trusted Publishers separately on PyPI/TestPyPI, or verified publishers for existing owner-controlled projects. TestPyPI sign-in and index publisher submission were outstanding at review. Existing user publication authorization applies; preserve required exact-candidate manual production approval. Actual same-artifact upload/download/attestation/install proof and evidence/releases/published.json are still missing. No package was published."
     }
   ]
 }

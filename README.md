@@ -7,9 +7,11 @@ conservative, image-free gesture interaction protocol. It accepts normalized
 confirmation.
 
 The target package version is `mudra-interact==0.2.0`. It has **not yet
-been published**: package-ownership verification, Trusted Publisher setup and
+been published**: publishing-authority verification, Trusted Publisher setup and
 candidate-specific release approval are still required. A missing package or
 release page does not prove the name is available or authorize claiming it.
+First publication may use an owner-authorized pending Trusted Publisher as
+described in the [release runbook](docs/RELEASE_RUNBOOK.md).
 Once published, these exact-version pages are the distribution sources:
 
 - [PyPI project, version 0.2.0](https://pypi.org/project/mudra-interact/0.2.0/)
@@ -43,6 +45,12 @@ the package is available. Check both exact-version pages and verify the
 published artifacts before following these commands.
 
 ## What it provides
+
+The longer-term direction is a communication language for human-human,
+human-agent and agent-agent interaction. This release supplies the gesture/event
+foundation only. The [reviewed follow-on design](docs/COMMUNICATION_LANGUAGE_CONTRACT.md)
+is not implemented or claimed as language, creative-plugin, MCP or A2A support
+in `0.2.0`.
 
 - Strict validation for MediaPipe-order 21-point landmarks, bounded JSON and
   protocol versions.

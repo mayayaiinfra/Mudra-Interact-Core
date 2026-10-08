@@ -1,10 +1,13 @@
 # Mudra Interact as a communication language — proposal
 
-**Status: proposal for Astra review.** The normative specification remains
-`MUDRA_INTERACT_CORE_SPEC.md` 0.3. This file does not change the current wire
-contract, implementation ledger, or release candidate. Review and approve a
-new contract before implementation claims or package metadata adopt this
-direction.
+**Status: historical direction proposal, technically reviewed 2026-10-08.**
+The [review decision](ASTRA_REVIEW_2026-10-08.md) and
+[follow-on contract](COMMUNICATION_LANGUAGE_CONTRACT.md) settle the bounded
+next step. The current `0.2.0` implementation remains governed by
+`MUDRA_INTERACT_CORE_SPEC.md` 0.3.1 and event schema `2.0.0`.
+No language runtime or creative host plugin is implemented by this document.
+As a tracked document, this proposal changes source identity and requires
+candidate evidence to be refreshed even though it changes no wire behaviour.
 
 ## Product direction
 

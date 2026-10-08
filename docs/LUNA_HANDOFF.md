@@ -7,6 +7,13 @@ implementation state, active gate/item and verification evidence live in
 `IMPLEMENTATION_BACKLOG.json`. Update that ledger at each gate completion; do
 not duplicate volatile status here, where edits would change source identity.
 
+The [2026-10-08 Astra technical review](ASTRA_REVIEW_2026-10-08.md) supplies
+the current release repair/qualification handoff. Fix its concrete runtime and
+attestation-binding findings within this contract, then publish the bounded
+`0.2.0` foundation under the existing authorization. The separately reviewed
+[language contract](COMMUNICATION_LANGUAGE_CONTRACT.md) is a future design,
+not an additional `0.2.0` completion claim or a reason to delay its release.
+
 ## 1. Working protocol
 
 Use the existing primary checkout as the single development worktree for this
