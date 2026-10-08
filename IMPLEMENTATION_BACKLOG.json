@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M1 evidence is verified. M2-M4, the versioned platform matrix, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
+    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M2 evidence is verified. M3/M4, the versioned platform matrix, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -49,7 +49,7 @@
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-09",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -170,7 +170,7 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -186,7 +186,14 @@
           "sha256": "1b0f230ad8c9817580eccd86ead004e7aa88050738c46b13f94c7136a2aa2368"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M2.json",
+          "sha256": "38f5b81711296279a89ff337c4b280c05cebaa00b9781bf76b68a751c86dcb21"
+        }
+      ]
     },
     {
       "id": "M3",
@@ -702,7 +709,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -764,11 +771,12 @@
     "state": "IN_PROGRESS",
     "completed_gates": [
       "M0",
-      "M1"
+      "M1",
+      "M2"
     ],
-    "active_gate": "M2",
-    "active_item": null,
+    "active_gate": "M3",
+    "active_item": "MI-09",
     "updated_on": "2026-10-09",
-    "note": "All M2 items are verified; validating aggregate M2 gate."
+    "note": "M2 is verified. MI-09 is eligible alongside MI-08 and is being completed before the eight-cell platform qualification."
   }
 }
