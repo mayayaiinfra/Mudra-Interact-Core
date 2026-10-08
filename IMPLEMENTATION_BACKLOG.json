@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "Owner-approved specification 0.3 limits supported qualification to Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS is unsupported and unqualified. Prior evidence predates this platform contract and is being refreshed.",
-    "baseline_tests": "Prior core qualification source 7f221d3: M0 23/23, M1 120/120, M2 165/165 including mutations, MI-09 5/5, hosted M3 187/187, and prior M4 197/197; those receipts predate the current source identity. On source tree 981aec9c / commit d7de7de, refreshed M0 23/23, M1 120/120, M2 165/165, MI-01 through MI-07 and MI-09 all pass with zero skips; the 15 semantic mutations pass. Current M3 local Windows attempt collected 170 tests, passed 169, and failed E76 because elevated firewall isolation was unavailable. GitHub Actions run 37681406531 stopped all eight MI-08 cells with receipt_stale before collection; it ran before prerequisite receipts were refreshed. M3 remains BLOCKED pending a new hosted matrix and aggregate. M4 published proof remains BLOCKED because evidence/releases/published.json is missing; no package was published.",
-    "verification_claim": "M0-M2 and MI-01 through MI-07 and MI-09 have fresh luna_self_verified receipts for source tree 981aec9c. M3 and MI-08 are BLOCKED pending a fresh eight-cell hosted platform matrix and current M3 aggregate. The solo-owner production approval configuration is live-verified on pypi-production: the owner is the required reviewer, self-approval is allowed, administrator bypass is disabled, and only main is permitted. M4 remains BLOCKED on confirmed PyPI/TestPyPI ownership and login, trusted publishers, the pypi-test environment, explicit exact-candidate authorization, and actual TestPyPI/PyPI upload/download/install proof. No package has been published."
+    "scope": "Owner-approved specification 0.3 supports Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS remains unsupported and unqualified. Current MI-08 matrix evidence has been refreshed and independently aggregated; full M3 gate qualification is still pending.",
+    "baseline_tests": "M0 23/23, M1 120/120, M2 165/165 including 15 semantic mutations, and MI-01 through MI-07 and MI-09 are verified on source tree 981aec9c. Hosted run 37716341667 passed all eight MI-08 cells, 17 test nodes per cell, with E73-E84 represented and no failures or skips; tools/aggregate_platform_matrix.py independently verified 8/8 on source commit 383caa4. The separate full M3 gate has not yet run. The local Windows full-gate attempt remains non-qualifying because it lacked elevated firewall isolation. The earlier run 37713767205 stopped before test collection on missing ignored prerequisite artifacts; those artifacts are now committed. M4 published proof remains blocked because evidence/releases/published.json is missing; no package was published.",
+    "verification_claim": "M0-M2 and MI-01 through MI-09 have verified luna_self_verified evidence on current source tree 981aec9c, including the complete 8-cell MI-08 matrix from run 37716341667. M3 is BLOCKED only on the separate full acceptance gate and its fresh receipt. The pypi-production approval environment is live-verified: owner is required reviewer, self-approval is permitted, administrator bypass is disabled, and only main is allowed. M4 remains BLOCKED on confirmed PyPI/TestPyPI ownership and login, trusted publishers, the pypi-test environment, exact-candidate authorization, and actual TestPyPI/PyPI upload/download/install proof. No package has been published."
   },
   "active_item": null,
   "states": [
@@ -135,7 +135,7 @@
         }
       ],
       "verification_kind": "luna_self_verified",
-      "blocker": "Current-source M3 is not qualified. Local Windows verification ran 170 acceptance tests: 169 passed, then E76 failed because the required elevated interpreter-scoped outbound firewall control was unavailable; the report also rejects the prior platform-matrix receipt as stale. GitHub Actions run 37681406531 failed all eight MI-08 jobs with receipt_stale before test collection because the M0-M2 and prerequisite item receipts were refreshed only after that run. Those local prerequisite receipts are now current on source tree 981aec9c; a new eight-cell hosted matrix and M3 aggregate are still required."
+      "blocker": "MI-08 is verified from hosted run 37716341667: all eight Linux/Windows x86_64 cells on Python 3.11-3.14 passed E73-E84 with no skips, and the committed-source matrix aggregator reports 8/8. M3 remains BLOCKED until the separate complete M3 acceptance gate runs on the current matrix and its receipt is recorded."
     },
     {
       "id": "M4",
@@ -153,7 +153,7 @@
         }
       ],
       "verification_kind": "luna_self_verified",
-      "blocker": "Owner actions remain to confirm PyPI device login and control of mudra-interact on PyPI and TestPyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create pypi-test; then authorize exact candidate commit/version 0.2.0. The adopted solo-maintainer policy requires deliberate manual approval by the owner, permits self-approval, disables administrator bypass, and restricts production to main; it is not independent review. pypi-production is live-verified with this configuration, and private vulnerability reporting is enabled. M0-M2 and non-matrix prerequisites now have fresh receipts; M3/MI-08 remain blocked pending a new hosted 8-cell matrix and aggregate. PyPI 404 does not establish name availability. M4 remains BLOCKED because package identity/publishers, exact authorization, live uploads/downloads, and evidence/releases/published.json are incomplete."
+      "blocker": "Owner actions remain to confirm PyPI device login and control of mudra-interact on PyPI and TestPyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create pypi-test; then authorize exact candidate commit/version 0.2.0. The solo-owner policy allows deliberate owner self-approval, disables administrator bypass, and restricts production to main; it is not independent review. pypi-production is live-verified with this configuration and private vulnerability reporting is enabled. MI-08 has a fresh verified 8-cell platform matrix from run 37716341667; M3 still needs its separate full acceptance gate and current receipt. M4 remains BLOCKED because package identity/publishers, exact authorization, live uploads/downloads, and evidence/releases/published.json are incomplete."
     }
   ],
   "recommended_order": [
@@ -466,47 +466,42 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "BLOCKED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.11.json",
-          "sha256": "78ec7b7222c20df24542133ee9f57de1d4132a828a0244e0c54ee6641ac2d2d0"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/linux-x86_64-py3.11.json",
+          "sha256": "0bd8493a7bf1755b93f71ee8d3f7a47640a91919b58ca809068f771e7cb3a9de"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.12.json",
-          "sha256": "dbc1c3ccfb3316c17a31082f1d86f41911fcfe456d3bf18d298c68b00bf3da5e"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/linux-x86_64-py3.12.json",
+          "sha256": "879026c67039b26170d7c86e5cca70c291edae7ec4a9c32886c49f21755b842d"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.13.json",
-          "sha256": "3a83929fa42eebfd2a9b8df2337adb6a4df0e19958b23e71d68b9ed8fb65e9a5"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/linux-x86_64-py3.13.json",
+          "sha256": "d3c8455d508139d3af8c7edb59ed4997cc2c69b462fcec628c7c96761db88542"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/linux-x86_64-py3.14.json",
-          "sha256": "195e96971c87e7a4412e11b49c0d9dfda0a442c30fe5745b9c792fd409f13f88"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/linux-x86_64-py3.14.json",
+          "sha256": "ee016dfd1ebdbb9b2d0069898f2916f671d89d51ac97b71dfc76c649291570b8"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.11.json",
-          "sha256": "4c9d688de768a745cfd71e3dcb0c33e81b18405cbdc08de74e4c2d1d9a68dd4f"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/windows-x86_64-py3.11.json",
+          "sha256": "848e809a4a2334380a314b45bf95b251e3fea26d0151a738f5814978a1b35e49"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.12.json",
-          "sha256": "053af8ea92bd3b2375d629218dc9dec8776fc1bed9972a441efa135ce792fff4"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/windows-x86_64-py3.12.json",
+          "sha256": "4573b8190f4dabf499a2575ed84f79b964b70e3e9c09cf6387e583b6131c4c2e"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.13.json",
-          "sha256": "58eb2ef3ac952ed13543af2e4e48588f5b6465548fc9e09e247d8086fe2ffed2"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/windows-x86_64-py3.13.json",
+          "sha256": "3161614485cdfd07167ff7228c00954ba9958706c8c05a2fef3a35105fe3846e"
         },
         {
-          "path": "evidence/local/mi08-platform-receipts/mudra-interact-7f221d3-run37665619148/windows-x86_64-py3.14.json",
-          "sha256": "6bf00e4841eb003bb38970c80f6279925cc405fdcba1274b8fbdbbba0f1efd72"
-        },
-        {
-          "path": "evidence/local/M3-hosted-mudra-interact-37666664343.json",
-          "sha256": "32c441d2a51c4c5b4b55052a3ddf2a67301923021e75806c5101b7fc2b2dc382"
+          "path": "evidence/local/mi08-platform-receipts/mudra-interact-383caa4-run37716341667/windows-x86_64-py3.14.json",
+          "sha256": "773afa8111c2c837dfd84d90ebc0911ba7d260eec07163dc5d99215ac39d8a29"
         }
-      ],
-      "blocker": "Current-platform MI-08 proof is stale. Run 37681406531 attempted eight cells but each stopped with receipt_stale before collecting tests; prerequisite item receipts are now refreshed. A new eight-cell hosted matrix is required. The local Windows E76 attempt lacked elevated firewall isolation."
+      ]
     },
     {
       "id": "MI-09",
