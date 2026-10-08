@@ -78,6 +78,11 @@
         "path": "evidence/local/v0.4.0/M3-ci-ubuntu-37841106601.json",
         "sha256": "bc0e3aef95ca3fc8e328cc648452b77690b6279ab27d3ee23423506063b5eb3d",
         "description": "Hosted Ubuntu 24.04 M3 full gate from GitHub Actions run 37841106601 (https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37841106601), source d504561, 217 passed and zero skipped."
+      },
+      {
+        "path": "evidence/local/pytest-m3-3b9d273b36b1.json",
+        "sha256": "d7c70dfb0e406251fae76e3f03557d7b0226b0266252ef5c39e636bdb069645a",
+        "description": "Raw pytest acceptance artifact emitted by hosted M3 run 37841106601 and hash-bound by the hosted gate report; retained as supplemental evidence, not as a verification report."
       }
     ]
   },
@@ -273,14 +278,6 @@
         {
           "path": "evidence/local/v0.4.0/M3-ci-ubuntu-37841106601.json",
           "sha256": "bc0e3aef95ca3fc8e328cc648452b77690b6279ab27d3ee23423506063b5eb3d"
-        },
-        {
-          "path": "evidence/local/pytest-m3-3b9d273b36b1.json",
-          "sha256": "d7c70dfb0e406251fae76e3f03557d7b0226b0266252ef5c39e636bdb069645a"
-        },
-        {
-          "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
-          "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae"
         }
       ],
       "verification_kind": "luna_self_verified"
