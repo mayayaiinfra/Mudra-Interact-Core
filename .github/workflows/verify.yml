@@ -122,6 +122,10 @@ jobs:
           PYTHONNOUSERSITE: '1'
         run: |
           $python = Join-Path $env:RUNNER_TEMP 'mudra-verifier/Scripts/python.exe'
+          $probeCode = "import json; from tools.verify_release import runner_network_isolation_probe; print(json.dumps(runner_network_isolation_probe()))"
+          $probeJson = & $python -c $probeCode
+          if ($LASTEXITCODE -ne 0) { throw 'Windows isolation diagnostic could not run' }
+          Write-Output "MUDRA_WINDOWS_ISOLATION_PROBE=$probeJson"
           & $python tools/verify_gate.py --item MI-08 --report evidence/local/MI-08-ci.json
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Record sanitized qualification receipt in the job log

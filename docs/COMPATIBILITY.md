@@ -52,7 +52,13 @@ egress probe run under OS-level network isolation.  Linux uses a network
 namespace with no default route, and Windows uses an active outbound firewall
 block scoped to the test interpreter. The verifier records isolation as `VERIFIED` only
 when the platform boundary is present and a real egress attempt is denied;
-missing isolation blocks E76.
+missing isolation blocks E76. Windows CI emits the probe's safe status,
+method and result label before pytest so a missing process rule, failed control
+connection or unexpected egress result can be distinguished without publishing
+raw command output or host-specific paths. `sys.executable` is checked
+separately to confirm tests still run from the isolated virtual environment;
+the firewall rule must match the process image reported by
+`GetModuleFileNameW`.
 
 The release report records the source commit, source-tree digest, specification
 and acceptance digests, lock digest, exact artifact hashes, metadata/data
