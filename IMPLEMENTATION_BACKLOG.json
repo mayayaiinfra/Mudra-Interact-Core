@@ -209,8 +209,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0-corrected.json",
-          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+          "path": "evidence/local/v0.4.1/M0-final2.json",
+          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -240,6 +240,14 @@
         {
           "path": "evidence/local/v0.4.1/M0-corrected.json",
           "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M0-final2.json",
+          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -266,8 +274,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-corrected.json",
-          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -297,6 +305,14 @@
         {
           "path": "evidence/local/v0.4.1/M1-corrected.json",
           "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -323,8 +339,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-corrected.json",
-          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -354,6 +370,10 @@
         {
           "path": "evidence/local/v0.4.1/M2-final.json",
           "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -480,8 +500,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0-corrected.json",
-          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+          "path": "evidence/local/v0.4.1/M0-final2.json",
+          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -511,6 +531,14 @@
         {
           "path": "evidence/local/v0.4.1/M0-corrected.json",
           "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M0-final2.json",
+          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -555,8 +583,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-corrected.json",
-          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -586,6 +614,14 @@
         {
           "path": "evidence/local/v0.4.1/M1-corrected.json",
           "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -625,8 +661,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-corrected.json",
-          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -656,6 +692,14 @@
         {
           "path": "evidence/local/v0.4.1/M1-corrected.json",
           "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -705,8 +749,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-corrected.json",
-          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -736,6 +780,14 @@
         {
           "path": "evidence/local/v0.4.1/M1-corrected.json",
           "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M1-final2.json",
+          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -781,8 +833,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-corrected.json",
-          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -812,6 +864,10 @@
         {
           "path": "evidence/local/v0.4.1/M2-final.json",
           "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -851,8 +907,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-corrected.json",
-          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -882,6 +938,10 @@
         {
           "path": "evidence/local/v0.4.1/M2-final.json",
           "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -931,8 +991,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-corrected.json",
-          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -962,6 +1022,10 @@
         {
           "path": "evidence/local/v0.4.1/M2-final.json",
           "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "superseded_candidate_verification_kind": "luna_self_verified"
@@ -1203,7 +1267,7 @@
     "active_gate": "M3",
     "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "On corrected source commit 6b540f8, M0 passed 24/24, M1 passed 141/141, and M2 passed 186/186 acceptance cases with zero skips. The hosted matrix previously found and rejected a line-break split in a required compatibility phrase; that copy is fixed and its targeted E83 test passes. Commit refreshed evidence, then rerun M3 for the eight-cell platform matrix. M4 remains pending publication and exact downloaded-install proof.",
+    "note": "On final source commit 91bb6ec, M0 passed 24/24, M1 passed 141/141, and M2 passed 186/186 acceptance cases with zero skips. The final platform matrix must run on this source tree; M4 remains pending exact TestPyPI/PyPI publication and downloaded-install proof.",
     "previous_release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
