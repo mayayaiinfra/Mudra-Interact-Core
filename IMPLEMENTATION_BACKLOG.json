@@ -186,7 +186,7 @@
       }
     ]
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -1129,7 +1129,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1219,7 +1219,14 @@
           "sha256": "993f4fbfa91871ea6b443b37ee73b89ce12593cc3783e973004ff176ce4f0457",
           "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/mi08-platform-receipts/v0.4.1/linux-py3.14.json"
         }
-      ]
+      ],
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.2/linux-py3.14.json",
+          "sha256": "e6b21e97c71c4e04197fca422c7a409bd8b65568b85fc216d094100235153e25"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-09",
@@ -1241,7 +1248,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1275,7 +1282,14 @@
           "sha256": "a6fcf7fc7f89d6cdabcb16541e65745aebfe0208ead9cde11f5c60318d7bb3c1",
           "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/MI-09.json"
         }
-      ]
+      ],
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-09.json",
+          "sha256": "70d04c25c9a07ad004e925ae6f4bdd9c339b0e99de6d7161a998f1d5e9ddbc80"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-10",
@@ -1353,9 +1367,9 @@
       "M2"
     ],
     "active_gate": "M3",
-    "active_item": "MI-08",
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "M0-M2 are freshly VERIFIED for 0.4.2. M0 passed 24/24, M1 141/141, and M2 186/186 acceptance cases on Windows CPython 3.14, all with zero skips. MI-07 included the independent semantic mutation suite. M3 is active; MI-08 requires fresh eight-cell Linux/Windows CPython 3.11-3.14 evidence.",
+    "note": "M0-M2 are freshly VERIFIED. MI-08 and MI-09 are individually VERIFIED for 0.4.2; the required platform aggregator confirms all eight Linux/Windows x86_64 and CPython 3.11-3.14 cells. M3 full acceptance remains open pending its hosted isolated Ubuntu aggregate run.",
     "previous_release": {
       "version": "0.4.1",
       "state": "VERIFIED",
