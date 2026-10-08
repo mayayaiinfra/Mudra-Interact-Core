@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Fresh 0.4.0 M0 is verified on source c82a852 after the versioned-matrix workflow fix. M1-M4 and publication proof remain pending.",
+    "verification_claim": "Fresh 0.4.0 M0-M1 are verified on source c82a852. M2-M4, platform requalification, and publication proof remain pending.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -145,7 +145,7 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -165,7 +165,14 @@
           "sha256": "c2956724f924618f7ff14989372fe7380a8ba38ed765c3690d2401c851d453fc"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M1-r2.json",
+          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+        }
+      ]
     },
     {
       "id": "M2",
@@ -342,7 +349,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -362,7 +369,14 @@
           "sha256": "067304b5ac91ed9f1bf982d8b5647b3e7c4d7afbe4fd62453915a5864bbb67cc"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M1-r2.json",
+          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+        }
+      ]
     },
     {
       "id": "MI-03",
@@ -387,7 +401,7 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -407,7 +421,14 @@
           "sha256": "097c5923cd4cd21309f520aef6fa36e34101e710df4e5189265fd26b8c1d7613"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M1-r2.json",
+          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+        }
+      ]
     },
     {
       "id": "MI-04",
@@ -442,7 +463,7 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -462,7 +483,14 @@
           "sha256": "186aa7652029690b2efd793b46e062eff5879d652aec71de458b1105821e5cd7"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M1-r2.json",
+          "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
+        }
+      ]
     },
     {
       "id": "MI-05",
@@ -809,11 +837,12 @@
     "version": "0.4.0",
     "state": "IN_PROGRESS",
     "completed_gates": [
-      "M0"
+      "M0",
+      "M1"
     ],
-    "active_gate": "M1",
+    "active_gate": "M2",
     "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "Fresh M0 passed on source c82a852; aggregate M1 is next."
+    "note": "Fresh M1 passed; M2 aggregate checks are next."
   }
 }
