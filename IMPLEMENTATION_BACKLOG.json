@@ -209,8 +209,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0-final.json",
-          "sha256": "e3980b0038b78e4e4eb9e9e52159c082d8759cf94d6e3747ef7086794e4e9720"
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -235,7 +235,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "M1",
@@ -259,8 +266,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-final.json",
-          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -285,7 +292,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "M2",
@@ -309,8 +323,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-final.json",
-          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -335,7 +349,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "M3",
@@ -459,8 +480,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0-final.json",
-          "sha256": "e3980b0038b78e4e4eb9e9e52159c082d8759cf94d6e3747ef7086794e4e9720"
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -485,7 +506,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M0-corrected.json",
+          "sha256": "a5633fd6cf383088f0739ecf8e6ae469dde6019a1d707673b125c7c03db8f3eb"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-02",
@@ -527,8 +555,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-final.json",
-          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -553,7 +581,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-03",
@@ -590,8 +625,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-final.json",
-          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -616,7 +651,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-04",
@@ -663,8 +705,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1-final.json",
-          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -689,7 +731,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M1-corrected.json",
+          "sha256": "848fd2826ed975186d5b6d7a48d9c923b2f05428cecb89bf1ced8d7ccf35ab93"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-05",
@@ -732,8 +781,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-final.json",
-          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -758,7 +807,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-06",
@@ -795,8 +851,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-final.json",
-          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -821,7 +877,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-07",
@@ -868,8 +931,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-final.json",
-          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+          "path": "evidence/local/v0.4.1/M2-corrected.json",
+          "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -894,7 +957,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
+        }
+      ],
+      "superseded_candidate_verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-08",
@@ -1133,7 +1203,7 @@
     "active_gate": "M3",
     "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "Exact-commit candidate gates passed: M0 24/24, M1 141/141, M2 186/186; zero skips. The first hosted matrix attempt could not find uncommitted prerequisite receipts. The receipts and their required acceptance artifacts are now committed; rerun CI to qualify the fresh Linux/Windows matrix. M4 remains pending publication and exact downloaded-install proof.",
+    "note": "On corrected source commit 6b540f8, M0 passed 24/24, M1 passed 141/141, and M2 passed 186/186 acceptance cases with zero skips. The hosted matrix previously found and rejected a line-break split in a required compatibility phrase; that copy is fixed and its targeted E83 test passes. Commit refreshed evidence, then rerun M3 for the eight-cell platform matrix. M4 remains pending publication and exact downloaded-install proof.",
     "previous_release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
