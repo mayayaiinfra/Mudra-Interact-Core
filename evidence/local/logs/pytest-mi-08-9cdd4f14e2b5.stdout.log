@@ -1,0 +1,8 @@
+..........................                                               [100%]
+============================== warnings summary ===============================
+tests/test_distribution.py::test_real_deterministic_sdist_uses_frozen_candidate_filename
+  C:\Users\MAYAYAI\MAPROJECTS\Mudra-Interact-Core\tools\verify_release.py:375: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+    tar.extractall(destination)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+26 passed, 1 warning in 50.60s
