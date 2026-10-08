@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Earlier 0.4.0 M0-M3 and platform receipts are preserved as superseded candidate evidence because the release workflows used the historical default matrix path. A regression test reproduced the defect; verification and publication workflows now resolve the versioned 0.4.0 matrix. Fresh 0.4.0 M0-M4 qualification and publication evidence must be regenerated.",
+    "verification_claim": "Fresh 0.4.0 M0 is verified on source c82a852 after the versioned-matrix workflow fix. M1-M4 and publication proof remain pending.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -55,7 +55,7 @@
     ],
     "supplemental_evidence": []
   },
-  "active_item": "MI-01",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -106,7 +106,7 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -126,7 +126,14 @@
           "sha256": "7c5c01965bae92a77602f42b818795d699c71502071dd8b6e3f8c37670da59db"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M0-r2.json",
+          "sha256": "332a2a4709f435630a49ae2a0dcc7425a7fcf37c96cfd9794c315d36b12a815e"
+        }
+      ]
     },
     {
       "id": "M1",
@@ -278,7 +285,7 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -298,7 +305,14 @@
           "sha256": "d9fc4196b5b16b2e218eb00774698de6200fa8d0c5eef9081d7ce787979aa5a7"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M0-r2.json",
+          "sha256": "332a2a4709f435630a49ae2a0dcc7425a7fcf37c96cfd9794c315d36b12a815e"
+        }
+      ]
     },
     {
       "id": "MI-02",
@@ -794,10 +808,12 @@
   "candidate_progress": {
     "version": "0.4.0",
     "state": "IN_PROGRESS",
-    "completed_gates": [],
-    "active_gate": "M0",
-    "active_item": "MI-01",
+    "completed_gates": [
+      "M0"
+    ],
+    "active_gate": "M1",
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "Candidate requalification restarts at M0 after the publish and verify workflows were fixed to consume the versioned M3 matrix."
+    "note": "Fresh M0 passed on source c82a852; aggregate M1 is next."
   }
 }
