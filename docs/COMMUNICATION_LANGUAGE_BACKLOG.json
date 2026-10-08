@@ -21,13 +21,13 @@
     },
     {
       "id": "ML-02",
-      "state": "REVERIFY_REQUIRED",
+      "state": "VERIFIED",
       "requires": ["ML-01"],
       "outputs": ["language.py immutable Message and LanguageValidationError", "parse_message", "check_freshness", "bundled schema resources"],
       "acceptance": ["L10: constructor/parser parity, detached payloads, deterministic bytes", "L11: byte/depth/string/count boundaries, duplicates, booleans, overflow, Unicode and control cases", "L12: each act payload, participant/mode rules and strict version/intent checks", "L13: expiry at boundary, past expiry and 30/31-second future-skew cases; imports cannot execute or authorize"],
       "verification_receipt": {
         "path": "evidence/language/ML-02.json",
-        "sha256": "b4f83888e64c8f02d1b3dfea18d39117f11242130da68c50a9c6a2529503f867"
+        "sha256": "81402d4ca1361410284488de617c316c80fffb5e4f16a24b9d781e6613c8d1ab"
       }
     },
     {
