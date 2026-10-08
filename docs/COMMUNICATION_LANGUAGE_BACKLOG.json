@@ -6,7 +6,7 @@
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "M0-M2, MI-08, MI-09 and the current-source eight-cell platform matrix are verified. The local M3 full gate passed 216/216 with zero skips; M3 remains open until its required manual Ubuntu workflow result is recorded. The exact 0.3.0 TestPyPI/PyPI publication, provenance and downloaded-install proofs remain before ML-04 can close.",
+  "current_release_dependency": "M0-M3 are verified, including all eight current-source Linux/Windows x86_64 Python 3.11-3.14 cells and the full Ubuntu M3 gate. M4/MI-10 is active. Exact 0.3.0 TestPyPI/PyPI publication, protected approval evidence, signed provenance and downloaded-install proofs remain before ML-04 can close.",
   "items": [
     {
       "id": "ML-01",

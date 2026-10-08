@@ -18,7 +18,7 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Source tree 044944e4: M0-M2 passed 185/185 and M3 local acceptance passed 216/216 with zero skips; MI-07 semantic mutations detected 15/15; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix is 8/8 with 26/26 cases per cell; MI-09 passed 5/5. The M3 local gate and matrix are verified, but M3 remains IN_PROGRESS until its required manual Ubuntu workflow run is recorded. The 0.3.0 TestPyPI/PyPI publication and downloaded-install proof remain pending.",
+    "verification_claim": "Current source tree 044944e4: M0-M3 are verified. The full M3 acceptance suite passed 216/216 with zero skips on both the local Windows 3.14 verifier and the required GitHub Ubuntu 24.04 workflow; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix passed 8/8 cells with 26/26 cases per cell. MI-07 detected 15/15 semantic mutations and MI-09 passed 5/5. M4/MI-10 is now active; version 0.3.0 publication, signed provenance, protected release evidence, and downloaded-install proof remain.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -154,9 +154,14 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "3e7a48b4ddbf1500b54cac8f8e4bd2a3bf0942c6e98cce31bbef6f73ce737c43"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
     {
@@ -167,7 +172,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "evidence": [],
       "verification_kind": null,
       "prior_state": "IN_PROGRESS"
@@ -585,7 +590,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "prior_state": "IN_PROGRESS"
