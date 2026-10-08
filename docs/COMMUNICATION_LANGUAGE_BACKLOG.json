@@ -6,7 +6,7 @@
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "The public changelog correction changed the release-candidate source tree. M0/MI-01, MI-02, and MI-03 are refreshed on the updated tree; MI-04 and subsequent M1-M3 gates, plus the eight-cell hosted Linux/Windows x86_64 Python 3.11-3.14 matrix, must be refreshed before release. ML-04 also depends on exact 0.3.0 TestPyPI/PyPI publication and downloaded-install proofs.",
+  "current_release_dependency": "The public changelog correction changed the release-candidate source tree. M0-M1 are refreshed on the updated tree; M2-M3, the eight-cell hosted Linux/Windows x86_64 Python 3.11-3.14 matrix, and exact 0.3.0 publication proofs must be completed or refreshed before release. ML-04 also depends on exact 0.3.0 TestPyPI/PyPI publication and downloaded-install proofs.",
   "items": [
     {
       "id": "ML-01",
