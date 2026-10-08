@@ -18,11 +18,11 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "The E79 active-item recheck fix is committed on source 04a1ed7. On the current source, M0 passed 23/23, M1 passed 140/140, and M2 passed 185/185 on Windows Python 3.14; all 15 standalone semantic mutations were detected with source unchanged. The current-source Linux/Windows x86_64 × Python 3.11-3.14 matrix passed 8/8 on GitHub Actions run 37757670204. The complete M3 gate is the next dependency. Fresh ML-01-ML-03 receipts and authorized M4 publication/download proof remain required. No human or live host integration is claimed.",
+    "verification_claim": "Current-source M0 passed 23/23, M1 140/140 and M2 185/185 tests on Windows Python 3.14; all 15 standalone semantic mutations were detected. The current-source Linux/Windows x86_64 Python 3.11-3.14 platform matrix passed 8/8. M3 is VERIFIED on source afe219bf3d91a9425efe17e6eeaf5b625e31b02e with 212/212 tests, all 83 required acceptance IDs, and an independently validated 8/8 matrix; GitHub Actions Ubuntu 24.04 / Python 3.14 run 37758112067 also completed successfully. ML-01 through ML-03 require fresh receipts before release; M4 exact-artifact TestPyPI/PyPI publication and downloaded-install proof remain.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-08",
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -137,9 +137,13 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "prior_state": "VERIFIED",
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "8394e2d9e59a52ea14df507e4ce1b52c6e0410c0ad9631140c3f50da602bad55"
+        }
+      ],
       "verification_kind": "luna_self_verified"
     },
     {
@@ -150,7 +154,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "evidence": [],
       "verification_kind": "luna_self_verified"
     }
@@ -464,14 +468,22 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "prior_state": "VERIFIED",
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "8394e2d9e59a52ea14df507e4ce1b52c6e0410c0ad9631140c3f50da602bad55"
+        }
+      ],
       "verification_kind": "luna_self_verified",
       "supplemental_evidence": [
         {
           "path": "evidence/local/M3-platform-matrix.json",
           "sha256": "fcdf1586933b3dd8e29cd593c303e5b60da8e6605b26e0bb0574be4bb02890aa"
+        },
+        {
+          "path": "evidence/local/M3-hosted-run-37758112067.json",
+          "sha256": "f7ffaffbaddd7f1f6be83607d69d4e95a2c1f99923c15b5a19b36feb92f87ae3"
         }
       ]
     },
@@ -495,9 +507,13 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
-      "evidence": [],
-      "prior_state": "VERIFIED",
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "8394e2d9e59a52ea14df507e4ce1b52c6e0410c0ad9631140c3f50da602bad55"
+        }
+      ],
       "verification_kind": "luna_self_verified"
     },
     {
@@ -534,7 +550,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": "luna_self_verified",
       "evidence": []
     }

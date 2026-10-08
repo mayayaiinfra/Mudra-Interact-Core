@@ -1,0 +1,41 @@
+{
+  "record_schema_version": 1,
+  "scope": "M3 hosted Linux qualification run",
+  "verification_kind": "luna_self_verified",
+  "run": {
+    "id": 37758112067,
+    "url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37758112067",
+    "branch": "main",
+    "head_sha": "afe219bf3d91a9425efe17e6eeaf5b625e31b02e",
+    "status": "completed",
+    "conclusion": "success",
+    "job_id": 113247613071,
+    "job_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37758112067/job/113247613071",
+    "job_name": "M3 full acceptance gate / Ubuntu 24.04",
+    "python": "3.14.7",
+    "steps": [
+      {
+        "name": "Create isolated verifier environment",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install and validate locked verification tools",
+        "conclusion": "success"
+      },
+      {
+        "name": "Run the complete M3 gate in an isolated network namespace",
+        "conclusion": "success"
+      },
+      {
+        "name": "Record sanitized M3 gate report and acceptance artifacts",
+        "conclusion": "success"
+      }
+    ],
+    "logged_gate_summary": {
+      "state": "VERIFIED",
+      "errors": [],
+      "report_sha256": "4c1b6a938c20d1edba5279a1bd2652465b41a5c3750c5d6b325b6e67f28e2579"
+    },
+    "artifact_note": "GitHub Actions did not retain a downloadable artifact for this run; local receipt evidence is listed separately."
+  }
+}
