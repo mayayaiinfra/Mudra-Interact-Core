@@ -50,6 +50,7 @@ REQUIRED_TEST_REPORT_FIELDS = {
     "report_schema_version", "complete", "pytest_exit_status", "started_at",
     "finished_at", "collected_count", "nodes",
 }
+DEFAULT_PLATFORM_MATRIX_REPORT = "evidence/local/M3-platform-matrix.json"
 SAFE_REPORT_ERROR_CODES = {
     "invalid_json", "duplicate_json_key", "invalid_json_number", "invalid_unicode",
     "file_unavailable", "file_too_large", "source_inventory_unavailable",
@@ -711,6 +712,21 @@ def _counts_for(cases: list[dict[str, Any]]) -> dict[str, int]:
     return counts
 
 
+def _platform_matrix_report_path(value: str | None) -> PurePosixPath:
+    relative_value = DEFAULT_PLATFORM_MATRIX_REPORT if value is None else value
+    if type(relative_value) is not str or "\\" in relative_value:
+        raise VerificationError("platform_matrix_report_invalid")
+    relative = PurePosixPath(relative_value)
+    if (
+        relative.is_absolute()
+        or ".." in relative.parts
+        or relative.parts[:2] != ("evidence", "local")
+        or len(relative.parts) < 3
+    ):
+        raise VerificationError("platform_matrix_report_invalid")
+    return relative
+
+
 def _write_report(root: Path, path: Path, report: dict[str, Any]) -> str:
     try:
         # The caller supplies a repository-relative report path under evidence/local.
@@ -805,7 +821,15 @@ def _validate_active_item_selection(
         raise VerificationError("active_item_mismatch")
 
 
-def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path: str, *, timeout_seconds: float = 180.0) -> tuple[int, dict[str, Any]]:
+def execute_scope(
+    root: Path,
+    selector_kind: str,
+    selector_id: str,
+    report_path: str,
+    *,
+    timeout_seconds: float = 180.0,
+    platform_matrix_report: str | None = None,
+) -> tuple[int, dict[str, Any]]:
     root = root.resolve()
     scope = {"kind": selector_kind, "id": selector_id}
     started_at = utc_now()
@@ -815,6 +839,8 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
         backlog = read_json(root / "IMPLEMENTATION_BACKLOG.json")
         owners = acceptance_owners(root)
         items, gates = validate_ledger(root, backlog, owners)
+        if platform_matrix_report is not None and (selector_kind, selector_id) != ("gate", "M3"):
+            raise VerificationError("platform_matrix_report_invalid")
         selected_item_ids, required_case_ids, test_modules, prerequisites = _prepare_scope(
             root, selector_kind, selector_id, items, gates
         )
@@ -889,7 +915,7 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
         matrix_report: dict[str, Any] | None = None
         if selector_kind == "gate" and selector_id == "M3":
             try:
-                matrix_path = Path("evidence/local/M3-platform-matrix.json")
+                matrix_path = _platform_matrix_report_path(platform_matrix_report)
                 matrix_report = validate_aggregate_report(
                     root,
                     matrix_path.as_posix(),
@@ -904,7 +930,7 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
                     "state": "VERIFIED",
                     "report_sha256": matrix_report["report_sha256"],
                 })
-                matrix_file = root / matrix_path
+                matrix_file = root.joinpath(*matrix_path.parts)
                 report["artifacts"].append({
                     "path": matrix_path.as_posix(),
                     "sha256": sha256_file(matrix_file),
@@ -987,6 +1013,10 @@ def main(argv: list[str] | None = None) -> int:
     selector.add_argument("--item")
     selector.add_argument("--gate")
     parser.add_argument("--report", required=True, help="Report path under evidence/local/")
+    parser.add_argument(
+        "--platform-matrix",
+        help="M3 aggregate report path under evidence/local/ (defaults to evidence/local/M3-platform-matrix.json)",
+    )
     parser.add_argument("--root", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--timeout-seconds", type=float, default=180.0, help=argparse.SUPPRESS)
     arguments = parser.parse_args(argv)
@@ -1000,6 +1030,7 @@ def main(argv: list[str] | None = None) -> int:
             scope_id,
             arguments.report,
             timeout_seconds=arguments.timeout_seconds,
+            platform_matrix_report=arguments.platform_matrix,
         )
         print(json.dumps({"scope": report["scope"], "state": report["state"], "report_sha256": report["report_sha256"], "errors": report["errors"]}, sort_keys=True))
         return exit_code

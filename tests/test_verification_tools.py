@@ -9,6 +9,8 @@ import pytest
 
 from tools.verify_gate import (
     CommandResult,
+    DEFAULT_PLATFORM_MATRIX_REPORT,
+    _platform_matrix_report_path,
     _safe_display_argv,
     acceptance_owners,
     check_fresh_identity,
@@ -27,6 +29,21 @@ from tools.verification_report import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_platform_matrix_report_supports_versioned_evidence_and_rejects_unsafe_paths() -> None:
+    assert _platform_matrix_report_path(None).as_posix() == DEFAULT_PLATFORM_MATRIX_REPORT
+    assert _platform_matrix_report_path(
+        "evidence/local/v0.4.0/M3-platform-matrix.json"
+    ).as_posix() == "evidence/local/v0.4.0/M3-platform-matrix.json"
+    for unsafe in (
+        "../M3-platform-matrix.json",
+        "evidence/local/../../outside.json",
+        "evidence\\local\\M3-platform-matrix.json",
+        "reports/M3-platform-matrix.json",
+    ):
+        with pytest.raises(VerificationError, match="platform_matrix_report_invalid"):
+            _platform_matrix_report_path(unsafe)
 
 
 def _test_document(case_ids: list[str], outcome: str = "passed", *, complete: bool = True, exit_status: int = 0) -> dict:
