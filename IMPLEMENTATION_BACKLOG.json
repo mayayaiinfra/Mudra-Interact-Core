@@ -76,8 +76,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-status-ledger-fix.json",
-          "sha256": "6d8c7111445d9bb922126eeb6b581d50c27947856534f52d21ce629bf6305fb6"
+          "path": "evidence/local/M0-gate-status-ledger-fix.json",
+          "sha256": "53b9a01cf03aa1b6cc6935f98134cb9218b087ad59d187483a74b9f669eb8b00"
         }
       ],
       "verification_kind": "luna_self_verified",
