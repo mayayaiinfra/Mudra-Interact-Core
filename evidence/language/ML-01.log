@@ -1,13 +1,14 @@
 STDOUT
-============================= test session starts =============================
-platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
-rootdir: C:\Users\MAYAYAI\MAPROJECTS\Mudra-Interact-Core
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.2, pluggy-1.6.0
+rootdir: /mnt/c/Users/MAYAYAI/MAPROJECTS/Mudra-Interact-Core
 configfile: pyproject.toml
+plugins: platformdirs-4.12.3
 collected 28 items
 
-tests\test_language_contract.py ......                                   [ 21%]
-tests\test_language_verification.py ......................               [100%]
+tests/test_language_contract.py ......                                   [ 21%]
+tests/test_language_verification.py ......................               [100%]
 
-============================= 28 passed in 2.21s ==============================
+============================= 28 passed in 17.73s ==============================
 
 STDERR

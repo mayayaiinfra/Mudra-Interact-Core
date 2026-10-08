@@ -1,7 +1,7 @@
 {
   "design_revision": "0.1",
   "status": "CURRENT_SOURCE_REQUALIFICATION_IN_PROGRESS",
-  "active_item": "ML-01",
+  "active_item": "ML-02",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.4.0",
@@ -10,7 +10,7 @@
   "items": [
     {
       "id": "ML-01",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": [],
       "outputs": [
         "schemas/language/v1 closed JSON Schema",
@@ -25,14 +25,18 @@
       ],
       "verification_receipt": {
         "path": "evidence/language/ML-01.json",
-        "sha256": "f12f790314c8a0add22f1568aa56a7251d3db60bfc4c12f079633b8f6a56f583"
+        "sha256": "e6121ae5b857b202abf267d63248cabb5d0f35a77c3caad00a9a0103ac3da1ee"
       },
       "prior_state": "VERIFIED",
-      "progress": "Fresh 0.4.0 requalification started after the exact release and M0-M4 verification; prior receipt is retained as historical evidence."
+      "progress": "Requalified on the published 0.4.0 source after the release/docs commit: all 28 L01-L03 acceptance tests passed, zero skips. Prior 0.3.0 receipt is preserved in the historical archive.",
+      "historical_receipt": {
+        "path": "evidence/language/archive/pre-v0.4.0/ML-01.json",
+        "sha256": "f12f790314c8a0add22f1568aa56a7251d3db60bfc4c12f079633b8f6a56f583"
+      }
     },
     {
       "id": "ML-02",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "requires": [
         "ML-01"
       ],
@@ -52,8 +56,8 @@
         "path": "evidence/language/ML-02.json",
         "sha256": "f7530e483eac5bde1cbeb90ee0d8c86d802afce5da9533df5b71541d4d37a655"
       },
-      "prior_state": "VERIFIED",
-      "progress": "Await fresh dependency-ordered 0.4.0 language receipt."
+      "prior_state": "NOT_STARTED",
+      "progress": "Fresh 0.4.0 runtime parsing/freshness qualification is active after ML-01 passed."
     },
     {
       "id": "ML-03",
@@ -201,7 +205,7 @@
       "reason": "The previous language receipts are historical and must be regenerated against the released 0.4.0 source. ML-04 core/distribution/release requirements are now covered by current M0-M4 evidence."
     }
   ],
-  "next_scope": "Requalify ML-01, ML-02 and ML-03 in dependency order on the released 0.4.0 source, then run ML-06 current-source A2A verification. ML-05 remains blocked until actual consented participants and independent scoped cultural/accessibility reviewers are available.",
+  "next_scope": "Run ML-02 and ML-03 in dependency order against the released source, then run ML-06 current-source A2A verification. ML-05 remains externally blocked until real consented participants and independent scoped cultural/accessibility reviewers are available.",
   "current_release": {
     "package": "mudra-interact",
     "version": "0.4.0",
