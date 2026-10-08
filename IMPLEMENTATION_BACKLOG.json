@@ -73,16 +73,15 @@
       "items": [
         "MI-01"
       ],
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-solo-owner-policy-5a5a945.json",
-          "sha256": "4584302086f2b93ed056790bc522b059ac3887ec55ec6000f2ff4bb36cf5d8c1"
+          "path": "evidence/local/M0-luna-c428a52.json",
+          "sha256": "ada07f52a6e8521fa80174289d760ef5e53aba66093d69160c5eaa5990a557c4"
         }
       ],
       "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED",
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
+      "prior_state": "VERIFIED"
     },
     {
       "id": "M1",
@@ -94,16 +93,15 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "FAILED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-solo-owner-policy-5a5a945.json",
-          "sha256": "a1ac8e6210a91e948a5996846ad09ec626316e7d029b79b7e30b7190925a1f37"
+          "path": "evidence/local/M1-luna-c428a52.json",
+          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
         }
       ],
       "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED",
-      "blocker": "AR-01 violates E38/E40; repair MI-04 and refresh prerequisite/current evidence."
+      "prior_state": "VERIFIED"
     },
     {
       "id": "M2",
@@ -115,16 +113,15 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-solo-owner-policy-5a5a945.json",
-          "sha256": "8b5da0c4ccf1da7af7eeb2df70bb9bef495723338a4769b0f71a62f520983c0f"
+          "path": "evidence/local/M2-luna-c428a52.json",
+          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
         }
       ],
       "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED",
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope."
+      "prior_state": "VERIFIED"
     },
     {
       "id": "M3",
@@ -204,15 +201,14 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-01-solo-owner-policy-5a5a945.json",
-          "sha256": "910973ec2fb08c91efa1c680e65bd4bf1f2cc9ef4579383ff10db56846e74833"
+          "path": "evidence/local/M0-luna-c428a52.json",
+          "sha256": "ada07f52a6e8521fa80174289d760ef5e53aba66093d69160c5eaa5990a557c4"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
@@ -243,15 +239,14 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-02-solo-owner-policy-5a5a945.json",
-          "sha256": "b86ef344f47214f12032d277d96fbdae51d1b47fae050b621c2861b9ac2632d5"
+          "path": "evidence/local/M1-luna-c428a52.json",
+          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
@@ -277,15 +272,14 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-03-solo-owner-policy-5a5a945.json",
-          "sha256": "b04771b0790903d286d71c870cc6a420beff5e55c401acad7eee392ea2d48df7"
+          "path": "evidence/local/M1-luna-c428a52.json",
+          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
@@ -321,15 +315,14 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "FAILED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-04-solo-owner-policy-5a5a945.json",
-          "sha256": "e412bdc074fa2dcdb966f922e9b13a841808f4884e87212b6d99ac11fef413d7"
+          "path": "evidence/local/M1-luna-c428a52.json",
+          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
         }
       ],
-      "blocker": "AR-01: malformed confirm time retains stable recognition; correcting time reuses old revision. Add E38/E40 regressions, clear pending recognition on every malformed confirmation while preserving watermarks, then rerun.",
       "prior_state": "VERIFIED"
     },
     {
@@ -361,15 +354,14 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-05-solo-owner-policy-5a5a945.json",
-          "sha256": "bdfe8d7bd9ea805ae138dd83c09f4ebdd4a70e102678babcc8b0a428e61d1c29"
+          "path": "evidence/local/M2-luna-c428a52.json",
+          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
@@ -395,15 +387,14 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-06-solo-owner-policy-5a5a945.json",
-          "sha256": "51f7fef40d77291ccee750d4dd843cb64f5304a6ed2f5501d35092bb90debf86"
+          "path": "evidence/local/M2-luna-c428a52.json",
+          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
@@ -439,15 +430,14 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-07-solo-owner-policy-5a5a945.json",
-          "sha256": "841a0b2418d256d294c67993bc14c0b006e48b97dd71cb89679fdb419c0ce9b2"
+          "path": "evidence/local/M2-luna-c428a52.json",
+          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
         }
       ],
-      "blocker": "Historical VERIFIED receipts are retained but stale for current source/specification 0.3.1; rerun fixed-candidate verification without changing required scope.",
       "prior_state": "VERIFIED"
     },
     {
