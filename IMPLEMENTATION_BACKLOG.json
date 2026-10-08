@@ -18,11 +18,11 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "The 0.2.0 gesture/event foundation remains published and historically verified. For the 0.3.0 candidate after the Windows fixture and source-digest fixes, M0 passed 23/23 and M1 passed 140/140 on the current source tree. M2 is being rerun with the full semantic mutation proof. M3-M4 and fresh ML-01-ML-03 language receipts remain pending. No broad human or live integration qualification is claimed.",
+    "verification_claim": "The 0.2.0 gesture/event foundation remains published and historically verified. On the current 0.3.0 source, M0 passed 23/23, M1 passed 140/140, and M2 passed 185/185 on Windows Python 3.14. The standalone semantic mutation proof detected all 15 required mutations and confirmed the source tree remained unchanged. M3-M4, current Linux/Windows platform matrix, and fresh ML-01-ML-03 language receipts remain pending. No broad human or live integration qualification is claimed.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-05",
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -111,15 +111,22 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-4ed5bef.json",
-          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
+          "path": "evidence/local/M2-0.3.0-55a53f4.json",
+          "sha256": "e0dae12f6e37737e38ac2c34da11f5fcc9fcaadc3c203ff4c3d49f4d3794acd2"
         }
       ],
       "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "supplemental_evidence": [
+        {
+          "kind": "semantic_mutation_suite",
+          "path": "evidence/local/mutations-0.3.0-55a53f4.json",
+          "sha256": "dd09b83be9d89892aab0566cd60847fb7e976129296dafc8927a28f0e1269c4e",
+          "mutations_detected": 15
+        }
+      ]
     },
     {
       "id": "M3",
@@ -346,15 +353,14 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-4ed5bef.json",
-          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
+          "path": "evidence/local/M2-0.3.0-55a53f4.json",
+          "sha256": "e0dae12f6e37737e38ac2c34da11f5fcc9fcaadc3c203ff4c3d49f4d3794acd2"
         }
-      ],
-      "prior_state": "VERIFIED"
+      ]
     },
     {
       "id": "MI-06",
@@ -379,15 +385,14 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-4ed5bef.json",
-          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
+          "path": "evidence/local/M2-0.3.0-55a53f4.json",
+          "sha256": "e0dae12f6e37737e38ac2c34da11f5fcc9fcaadc3c203ff4c3d49f4d3794acd2"
         }
-      ],
-      "prior_state": "VERIFIED"
+      ]
     },
     {
       "id": "MI-07",
@@ -422,15 +427,14 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-current-4ed5bef.json",
-          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
+          "path": "evidence/local/M2-0.3.0-55a53f4.json",
+          "sha256": "e0dae12f6e37737e38ac2c34da11f5fcc9fcaadc3c203ff4c3d49f4d3794acd2"
         }
-      ],
-      "prior_state": "VERIFIED"
+      ]
     },
     {
       "id": "MI-08",
@@ -464,7 +468,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "evidence": [
         {
           "path": "evidence/local/M3-ci.json",
