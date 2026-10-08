@@ -76,9 +76,9 @@ diagnostics.
 
 ## Downstream consumer boundary
 
-Mudra Interact defines a public interoperability contract for independent
-applications. This repository does not contain application credentials,
-private catalogues, host-specific adapters, or deployment policy. A consumer
+Mudra Interact defines a public interoperability contract for independent applications.
+This repository does not contain application credentials, private catalogues,
+host-specific adapters, or deployment policy. A consumer
 upgrade should be accepted only after its compatibility inventory confirms:
 
 | Contract surface | Current public value | Consumer check | Upgrade risk |
