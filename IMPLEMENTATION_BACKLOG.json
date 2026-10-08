@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
+    "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Current source tree 044944e4: M0-M3 are verified. The full M3 acceptance suite passed 216/216 with zero skips on both the local Windows 3.14 verifier and the required GitHub Ubuntu 24.04 workflow; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix passed 8/8 cells with 26/26 cases per cell. MI-07 detected 15/15 semantic mutations and MI-09 passed 5/5. M4/MI-10 is now active; version 0.3.0 publication, signed provenance, protected release evidence, and downloaded-install proof remain.",
+    "verification_claim": "Current source tree 044944e4: M0-M4 are verified. M3 passed 216/216 on Windows 3.14 and Ubuntu 24.04; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix passed 8/8 cells with 26/26 cases per cell. MI-07 detected 15/15 semantic mutations and MI-09 passed 5/5. M4 passed 231/231 with zero skips, including MI-10 E90-E99 (15/15). Mudra Interact 0.3.0 is published on TestPyPI and PyPI from 1d57c069; the same frozen wheel/sdist passed downloaded-byte, provenance, protected-approval and fresh-install verification and is attached to immutable GitHub release v0.3.0. Human qualification, field accuracy, camera adapter and live host/transport integration are outside this verified core release.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-10",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -172,9 +172,14 @@
       "items": [
         "MI-10"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M4-published.json",
+          "sha256": "3ed956e1c0c217060e36ad115d07a0188e9812713be9206259ae14a448b1d883"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "IN_PROGRESS"
     }
   ],
@@ -590,9 +595,14 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-10-published.json",
+          "sha256": "07179ea87959dc0c311bf00bdad33c2edde7b6d72097eb7a33eafd8900eeb567"
+        }
+      ],
       "prior_state": "IN_PROGRESS"
     }
   ]

@@ -1,20 +1,20 @@
 {
   "acceptance_cases": [],
-  "acceptance_sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
+  "acceptance_sha256": "8147cf8da5c0404f23009e36ee32776e0ffafa59cbfabad51703445b236277a6",
   "artifacts": [],
   "candidate_status": "published_verified",
   "checks": {
     "adapter_status": "not_implemented_in_public_core",
     "artifacts": [
       {
-        "filename": "mudra_interact-0.2.0-py3-none-any.whl",
-        "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
-        "size_bytes": 38903
+        "filename": "mudra_interact-0.3.0-py3-none-any.whl",
+        "sha256": "92287f74af813c4e49b03730ffbbaee8e99e8ebad5b3e32c24400b43aa62e869",
+        "size_bytes": 51366
       },
       {
-        "filename": "mudra_interact-0.2.0.tar.gz",
-        "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
-        "size_bytes": 59393
+        "filename": "mudra_interact-0.3.0.tar.gz",
+        "sha256": "dd9ae25c4399f37a5ee12e5258055069395136b6dd65ba08422816ee893dd6cc",
+        "size_bytes": 82620
       }
     ],
     "authorization": {
@@ -27,21 +27,21 @@
       "required_reviewers": 1,
       "self_approval_allowed": true
     },
-    "candidate_fingerprint": "2a8a0dba8fe3f428ae5a0df651250c4338baba23d1fe52ba5a8494d938315059",
+    "candidate_fingerprint": "75bbf82521e4478803d42fdbc18e8ca221d4b2739f03faeadaf30b8fc892fcf6",
     "cultural_review": "not_established_by_public_core",
     "errors": [],
     "github": {
       "github_release": "VERIFIED",
-      "tag_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
+      "tag_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
       "workflow_path": ".github/workflows/publish.yml",
       "workflow_run": "VERIFIED"
     },
     "indexes": {
       "pypi": {
         "artifact_count": 2,
-        "attestation_source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
+        "attestation_source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
         "attestation_workflow_run_attempt": 1,
-        "attestation_workflow_run_id": 37728616097,
+        "attestation_workflow_run_id": 37805781843,
         "candidate_workflow_environment_binding": true,
         "downloaded_and_hashed": true,
         "fresh_installed_wheel_smoke": true,
@@ -50,7 +50,7 @@
         "publisher_environment_assertion": "pypi-production",
         "state": "VERIFIED",
         "trusted_publisher_attestations": 2,
-        "version": "0.2.0"
+        "version": "0.3.0"
       },
       "testpypi": {
         "artifact_count": 2,
@@ -60,21 +60,21 @@
         "package": "mudra-interact",
         "state": "VERIFIED",
         "trusted_publisher_attestations": 0,
-        "version": "0.2.0"
+        "version": "0.3.0"
       }
     },
     "package": "mudra-interact",
     "publication_state": "verified",
     "recognition_quality": "not_established_by_synthetic_tests",
-    "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
-    "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+    "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
+    "source_tree_sha256": "044944e454eec695b18ab71dea95f34a6e252c5205e513b9d467da87371dc780",
     "state": "VERIFIED",
     "verification_kind": "luna_self_verified",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "commands": [],
   "errors": [],
-  "finished_at": "2026-10-08T04:50:50.325888Z",
+  "finished_at": "2026-10-08T16:59:28.474517Z",
   "items": [
     "MI-10"
   ],
@@ -97,15 +97,15 @@
     "protected_release_authorization"
   ],
   "report_schema_version": 1,
-  "report_sha256": "7c467f7dc2463112151d4d88146401b3b5ea12dafd6909323c2edfc1c25055ae",
+  "report_sha256": "4cb6a658b863128829f1f61a3db78a9a6a14e8e672c50d778cc1c1c56b49f3ae",
   "scope": {
     "id": "published",
     "kind": "release"
   },
-  "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
-  "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+  "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
+  "source_tree_sha256": "044944e454eec695b18ab71dea95f34a6e252c5205e513b9d467da87371dc780",
   "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
-  "started_at": "2026-10-08T04:50:17.400514Z",
+  "started_at": "2026-10-08T16:58:55.687477Z",
   "state": "VERIFIED",
   "test_counts": {
     "required_platform_cells": 8,

@@ -1,16 +1,16 @@
 {
   "acceptance_cases": [],
-  "acceptance_sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
+  "acceptance_sha256": "8147cf8da5c0404f23009e36ee32776e0ffafa59cbfabad51703445b236277a6",
   "artifacts": [
     {
-      "filename": "mudra_interact-0.2.0-py3-none-any.whl",
-      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
-      "size_bytes": 38903
+      "filename": "mudra_interact-0.3.0-py3-none-any.whl",
+      "sha256": "92287f74af813c4e49b03730ffbbaee8e99e8ebad5b3e32c24400b43aa62e869",
+      "size_bytes": 51366
     },
     {
-      "filename": "mudra_interact-0.2.0.tar.gz",
-      "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
-      "size_bytes": 59393
+      "filename": "mudra_interact-0.3.0.tar.gz",
+      "sha256": "dd9ae25c4399f37a5ee12e5258055069395136b6dd65ba08422816ee893dd6cc",
+      "size_bytes": 82620
     }
   ],
   "candidate_status": "verified",
@@ -22,11 +22,11 @@
     "package": "mudra-interact",
     "state": "VERIFIED",
     "trusted_publisher_attestations": 0,
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "commands": [],
   "errors": [],
-  "finished_at": "2026-10-08T04:42:08.504063Z",
+  "finished_at": "2026-10-08T16:05:05.381365Z",
   "items": [
     "MI-10"
   ],
@@ -46,15 +46,15 @@
     "single_index_download"
   ],
   "report_schema_version": 1,
-  "report_sha256": "f8bf7b3e2088594eaed0f350359105ad99bf97cb51a2cf62a804e23199781101",
+  "report_sha256": "a6acb7fe477129d39228ced63e13a28a2c53e3ff8eccec8dec91bb2d83a5e82f",
   "scope": {
     "id": "testpypi_download",
     "kind": "release"
   },
-  "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
-  "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+  "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
+  "source_tree_sha256": "044944e454eec695b18ab71dea95f34a6e252c5205e513b9d467da87371dc780",
   "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
-  "started_at": "2026-10-08T04:42:04.018371Z",
+  "started_at": "2026-10-08T16:05:00.579087Z",
   "state": "VERIFIED",
   "test_counts": {
     "collected": 1

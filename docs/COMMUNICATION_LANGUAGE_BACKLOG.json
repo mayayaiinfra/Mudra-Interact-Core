@@ -1,12 +1,12 @@
 {
   "design_revision": "0.1",
-  "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-04",
+  "status": "CORE_IMPLEMENTATION_VERIFIED",
+  "active_item": null,
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "M0-M3 are verified, including all eight current-source Linux/Windows x86_64 Python 3.11-3.14 cells and the full Ubuntu M3 gate. M4/MI-10 is active. Exact 0.3.0 TestPyPI/PyPI publication, protected approval evidence, signed provenance and downloaded-install proofs remain before ML-04 can close.",
+  "current_release_dependency": "ML-04 is verified. Mudra Interact 0.3.0 is live on TestPyPI and PyPI, with immutable GitHub release v0.3.0. M0-M3 and all eight Linux/Windows x86_64 Python 3.11-3.14 cells passed; MI-10 E90-E99 and the final published-release verifier passed. ML-05 human qualification and ML-06 live host/transport integration remain separate, unstarted follow-on scopes; this release makes no human-evaluation or live-integration claim.",
   "items": [
     {
       "id": "ML-01",
@@ -78,7 +78,7 @@
     },
     {
       "id": "ML-04",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": [
         "ML-03"
       ],
@@ -91,7 +91,56 @@
         "L30: all existing gesture/event regressions remain passing and the full Linux/Windows x86_64 Python 3.11-3.14 matrix is current (core evidence E73-E84 and M0-M3)",
         "L31: installed 0.3.0 wheel/sdist contain byte-exact schemas and all examples; the downloaded installed wheel validates and renders all examples outside source with zero runtime dependencies and verified egress isolation (E73-E78)",
         "L32: exact 0.3.0 TestPyPI and PyPI artifacts, signed publication evidence, protected authorization, immutable GitHub release and downloaded installation are verified by M4/MI-10 E90-E99; never claim a completed creative host plugin or live model integration"
-      ]
+      ],
+      "verification_receipts": [
+        {
+          "kind": "M3 full acceptance gate",
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "3e7a48b4ddbf1500b54cac8f8e4bd2a3bf0942c6e98cce31bbef6f73ce737c43"
+        },
+        {
+          "kind": "current-source Linux/Windows platform matrix",
+          "path": "evidence/local/M3-platform-matrix.json",
+          "sha256": "c47f862eae9bb2559470fd12d46e67c50ec3c444512a7b3d3667beb1db433b17"
+        },
+        {
+          "kind": "M4 gate including E90-E99",
+          "path": "evidence/local/M4-published.json",
+          "sha256": "3ed956e1c0c217060e36ad115d07a0188e9812713be9206259ae14a448b1d883"
+        },
+        {
+          "kind": "M4 MI-10 E90-E99 gate",
+          "path": "evidence/local/MI-10-published.json",
+          "sha256": "07179ea87959dc0c311bf00bdad33c2edde7b6d72097eb7a33eafd8900eeb567"
+        },
+        {
+          "kind": "published-release final verifier",
+          "path": "evidence/releases/published-verification.json",
+          "sha256": "dce1972013934d05c0e6449916a5dbdc3eadee61ba656ba35ba27786cdacab98"
+        }
+      ],
+      "verified_release": {
+        "package": "mudra-interact",
+        "version": "0.3.0",
+        "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
+        "candidate_fingerprint": "75bbf82521e4478803d42fdbc18e8ca221d4b2739f03faeadaf30b8fc892fcf6",
+        "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37805781843",
+        "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.3.0/",
+        "pypi_url": "https://pypi.org/project/mudra-interact/0.3.0/",
+        "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0",
+        "artifacts": [
+          {
+            "filename": "mudra_interact-0.3.0-py3-none-any.whl",
+            "sha256": "92287f74af813c4e49b03730ffbbaee8e99e8ebad5b3e32c24400b43aa62e869",
+            "size_bytes": 51366
+          },
+          {
+            "filename": "mudra_interact-0.3.0.tar.gz",
+            "sha256": "dd9ae25c4399f37a5ee12e5258055069395136b6dd65ba08422816ee893dd6cc",
+            "size_bytes": 82620
+          }
+        ]
+      }
     },
     {
       "id": "ML-05",
@@ -129,5 +178,6 @@
       ]
     }
   ],
-  "reverification_required": []
+  "reverification_required": [],
+  "next_scope": "ML-05 requires an actual consented representative-user study and scoped cultural/accessibility review. ML-06 requires a separately selected host or transport contract and live end-to-end qualification."
 }
