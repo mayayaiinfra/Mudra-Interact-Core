@@ -6,7 +6,7 @@
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "ML-01 through ML-03 are reverified against the final current source after the PowerShell firewall-inspection and Windows/Python 3.11 architecture-detection fixes. ML-04 still depends on current-source M3 eight-cell Linux/Windows Python 3.11-3.14 qualification, the full M3 gate, and exact 0.3.0 TestPyPI/PyPI publication and downloaded-install proofs.",
+  "current_release_dependency": "ML-01 through ML-03 are reverified against the release-candidate source. The current M3 gate is VERIFIED: its hosted eight-cell Linux/Windows x86_64 Python 3.11-3.14 matrix and full E01-E89 acceptance run passed. ML-04 still depends on exact 0.3.0 TestPyPI/PyPI publication and downloaded-install proofs.",
   "items": [
     {
       "id": "ML-01",
