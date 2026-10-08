@@ -11,4 +11,5 @@ evidence/local/
 evidence/releases/
 release-artifacts/
 tests/.pytest-acceptance-*.json
+tests/.pytest-language-tmp/
 *.log

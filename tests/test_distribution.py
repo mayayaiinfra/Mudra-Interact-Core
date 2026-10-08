@@ -103,6 +103,8 @@ def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
         "mudra_interact_core/catalog/mudra_catalog.json",
         "mudra_interact_core/schemas/v2/contract.schema.json",
         "mudra_interact_core/schemas/v2/version-map.json",
+        "mudra_interact_core/schemas/language/v1/language.schema.json",
+        "mudra_interact_core/schemas/language/v1/version-map.json",
         "mudra_interact_core/py.typed",
     }
     assert {item["kind"] for item in release_report["artifacts"]} >= {"wheel", "sdist", "wheel_from_sdist"}

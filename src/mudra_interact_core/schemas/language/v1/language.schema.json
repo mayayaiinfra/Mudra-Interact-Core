@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:allyk:mudra-interact:language:1.0.0",
+  "title": "Mudra Interaction Language Message 1.0.0",
+  "$comment": "Normative closed structural schema. Runtime validation adds byte, depth, timestamp, Unicode, and cross-message invariants. All $ref values are local.",
+  "$defs": {
+    "UUID": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "Participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participant_id", "kind"],
+      "properties": {
+        "participant_id": {"$ref": "#/$defs/UUID"},
+        "kind": {"enum": ["human", "agent"]}
+      }
+    },
+    "Step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "description"],
+      "properties": {
+        "step_id": {"type": "integer", "minimum": 1, "maximum": 16},
+        "description": {"type": "string", "minLength": 1, "maxLength": 1024}
+      }
+    },
+    "RequestPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["brief", "medium"],
+      "properties": {
+        "brief": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "medium": {"enum": ["text", "image", "audio", "video"]}
+      }
+    },
+    "ProposalPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "steps"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {"$ref": "#/$defs/Step"}
+        }
+      }
+    },
+    "ClarificationPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "about"],
+      "properties": {
+        "text": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "about": {"enum": ["brief", "proposal"]}
+      }
+    },
+    "EmptyPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "maxProperties": 0
+    },
+    "DeclinePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "properties": {
+        "reason": {"enum": ["not_intended", "needs_revision", "not_now"]}
+      }
+    },
+    "StatusPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "text"],
+      "properties": {
+        "state": {"enum": ["planning", "waiting_for_input"]},
+        "text": {"type": "string", "minLength": 1, "maxLength": 1024}
+      }
+    },
+    "ResultPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": {"type": "string", "minLength": 1, "maxLength": 4096}
+      }
+    },
+    "ErrorPayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": {"enum": ["unsupported_request", "permission_denied", "provider_unavailable", "internal_error"]}
+      }
+    },
+    "Message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_version", "message_id", "conversation_id", "sender", "recipient",
+        "reply_to", "created_at", "expires_at", "act", "intent", "provenance"
+      ],
+      "properties": {
+        "protocol_version": {"const": "1.0.0"},
+        "message_id": {"$ref": "#/$defs/UUID"},
+        "conversation_id": {"$ref": "#/$defs/UUID"},
+        "sender": {"$ref": "#/$defs/Participant"},
+        "recipient": {"$ref": "#/$defs/Participant"},
+        "reply_to": {"anyOf": [{"$ref": "#/$defs/UUID"}, {"type": "null"}]},
+        "created_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$"
+        },
+        "expires_at": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{6}Z$"
+        },
+        "act": {
+          "enum": ["request", "proposal", "clarification", "accept", "decline", "acknowledge", "status", "result", "error"]
+        },
+        "intent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "version", "payload"],
+          "properties": {
+            "name": {"const": "org.mayayai.creative.plan"},
+            "version": {"const": "1.0.0"},
+            "payload": {"type": "object"}
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "adapter_id", "adapter_version", "interpretation_score", "human_reviewed"],
+          "properties": {
+            "mode": {"enum": ["text", "gesture", "speech", "agent"]},
+            "adapter_id": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 128,
+              "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)+$"
+            },
+            "adapter_version": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]{0,3})\\.(0|[1-9][0-9]{0,3})\\.(0|[1-9][0-9]{0,3})$"
+            },
+            "interpretation_score": {
+              "anyOf": [
+                {"type": "null"},
+                {"type": "number", "minimum": 0, "maximum": 1}
+              ]
+            },
+            "human_reviewed": {"type": "boolean"}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"act": {"const": "request"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/RequestPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "proposal"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/ProposalPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "clarification"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/ClarificationPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "accept"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/EmptyPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "decline"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/DeclinePayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "acknowledge"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/EmptyPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "status"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/StatusPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "result"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/ResultPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"act": {"const": "error"}}, "required": ["act"]},
+          "then": {"properties": {"intent": {"properties": {"payload": {"$ref": "#/$defs/ErrorPayload"}}}}}
+        },
+        {
+          "if": {"properties": {"provenance": {"properties": {"mode": {"const": "agent"}}, "required": ["mode"]}}, "required": ["provenance"]},
+          "then": {"properties": {"sender": {"properties": {"kind": {"const": "agent"}}}}}
+        },
+        {
+          "if": {"properties": {"provenance": {"properties": {"mode": {"enum": ["text", "gesture", "speech"]}}, "required": ["mode"]}}, "required": ["provenance"]},
+          "then": {"properties": {"sender": {"properties": {"kind": {"const": "human"}}}}}
+        }
+      ]
+    },
+    "Transcript": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_version", "messages"],
+      "properties": {
+        "protocol_version": {"const": "1.0.0"},
+        "messages": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {"$ref": "#/$defs/Message"}
+        }
+      }
+    }
+  },
+  "$ref": "#/$defs/Message"
+}

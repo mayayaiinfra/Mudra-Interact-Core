@@ -45,6 +45,7 @@ _EXCLUDED_PARTS = {
     "dist",
     "htmlcov",
     "evidence",
+    ".pytest-language-tmp",
 }
 
 

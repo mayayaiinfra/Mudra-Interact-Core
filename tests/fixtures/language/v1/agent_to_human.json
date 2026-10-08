@@ -1,0 +1,591 @@
+{
+  "invalid": {
+    "accept": {
+      "act": "accept",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "8c689727-d250-50b8-ac68-2d33e5df9d8f",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "acknowledge": {
+      "act": "acknowledge",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "f024d210-fc19-5782-a5cf-6e5a3a7f05c2",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "clarification": {
+      "act": "clarification",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "about": "brief",
+          "text": "Which audience should the plan address?"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "cbbd1fdb-c874-55b0-8c7b-4c2480736137",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "decline": {
+      "act": "decline",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "reason": "not_now"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "578a82ed-1008-5c8c-b50d-e7db0aafa401",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "error": {
+      "act": "error",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "code": "provider_unavailable"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "ab3f5a2d-ac36-5217-aa73-6ff1a7800fce",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "proposal": {
+      "act": "proposal",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "steps": [
+            {
+              "description": "Outline the idea.",
+              "step_id": 1
+            },
+            {
+              "description": "Review the outline.",
+              "step_id": 2
+            }
+          ],
+          "summary": "A two-step draft plan."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "1f203bc6-7cdb-5359-9b1d-ef0e35e11c8d",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "request": {
+      "act": "request",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "brief": "Plan a synthetic idea.",
+          "medium": "text"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "b4bb3d5c-8a98-54cc-93cc-272e67570c9f",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": null,
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "result": {
+      "act": "result",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "summary": "The synthetic plan is ready for review."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "f3b20db5-81d0-53e0-87fd-d4874c964ac4",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    },
+    "status": {
+      "act": "status",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "state": "planning",
+          "text": "The plan is being drafted."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "e0b7038c-0e01-5f90-a5f8-b3a3d0594b23",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "unexpected_field": "synthetic invalid fixture"
+    }
+  },
+  "valid": {
+    "accept": {
+      "act": "accept",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "8c689727-d250-50b8-ac68-2d33e5df9d8f",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "acknowledge": {
+      "act": "acknowledge",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "f024d210-fc19-5782-a5cf-6e5a3a7f05c2",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "clarification": {
+      "act": "clarification",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "about": "brief",
+          "text": "Which audience should the plan address?"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "cbbd1fdb-c874-55b0-8c7b-4c2480736137",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "decline": {
+      "act": "decline",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "reason": "not_now"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "578a82ed-1008-5c8c-b50d-e7db0aafa401",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "error": {
+      "act": "error",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "code": "provider_unavailable"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "ab3f5a2d-ac36-5217-aa73-6ff1a7800fce",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "proposal": {
+      "act": "proposal",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "steps": [
+            {
+              "description": "Outline the idea.",
+              "step_id": 1
+            },
+            {
+              "description": "Review the outline.",
+              "step_id": 2
+            }
+          ],
+          "summary": "A two-step draft plan."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "1f203bc6-7cdb-5359-9b1d-ef0e35e11c8d",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "request": {
+      "act": "request",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "brief": "Plan a synthetic idea.",
+          "medium": "text"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "b4bb3d5c-8a98-54cc-93cc-272e67570c9f",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": null,
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "result": {
+      "act": "result",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "summary": "The synthetic plan is ready for review."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "f3b20db5-81d0-53e0-87fd-d4874c964ac4",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    "status": {
+      "act": "status",
+      "conversation_id": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      "created_at": "2026-10-08T12:00:00.000000Z",
+      "expires_at": "2026-10-08T12:05:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "state": "planning",
+          "text": "The plan is being drafted."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "e0b7038c-0e01-5f90-a5f8-b3a3d0594b23",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.synthetic_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "22222222-2222-4222-8222-222222222222"
+      },
+      "reply_to": "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    }
+  }
+}

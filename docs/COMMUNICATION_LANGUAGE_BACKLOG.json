@@ -1,6 +1,7 @@
 {
   "design_revision": "0.1",
-  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "active_item": "ML-01",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
@@ -9,7 +10,7 @@
   "items": [
     {
       "id": "ML-01",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "requires": [],
       "outputs": ["schemas/language/v1 closed JSON Schema", "independent synthetic fixture manifest", "language version mapping", "distinct Lxx acceptance reporter and gate configuration"],
       "acceptance": ["L01: all acts and all four role directions have independent valid/invalid fixtures", "L02: unknown versions/namespaces/fields/remote refs and stale or tampered fixtures reject", "L03: reporter rejects missing IDs, skip/xfail/empty suites, stale source, forged and missing evidence"]

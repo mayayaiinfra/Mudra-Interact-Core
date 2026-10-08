@@ -1,0 +1,14 @@
+{
+  "language_protocol_version": "1.0.0",
+  "schema_id": "urn:allyk:mudra-interact:language:1.0.0",
+  "target_package_version": "0.3.0",
+  "intent_profiles": {
+    "org.mayayai.creative.plan": {
+      "version": "1.0.0",
+      "status": "supported"
+    }
+  },
+  "gesture_event_protocol_version": "2.0.0",
+  "gesture_event_language_interchange": false,
+  "unsupported_version_policy": "reject_without_coercion_or_authority_migration"
+}

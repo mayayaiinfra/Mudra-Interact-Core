@@ -50,7 +50,7 @@ REQUIRED_PLATFORMS = (
 )
 EXCLUDED_PARTS = {
     ".git", ".venv", "__pycache__", ".pytest_cache", "build", "dist",
-    "htmlcov", "evidence", "release-artifacts",
+    "htmlcov", "evidence", "release-artifacts", ".pytest-language-tmp",
 }
 EXCLUDED_NAMES = {"IMPLEMENTATION_BACKLOG.json"}
 
@@ -341,6 +341,8 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
         "mudra_interact_core/catalog/mudra_catalog.json",
         "mudra_interact_core/schemas/v2/contract.schema.json",
         "mudra_interact_core/schemas/v2/version-map.json",
+        "mudra_interact_core/schemas/language/v1/language.schema.json",
+        "mudra_interact_core/schemas/language/v1/version-map.json",
         "mudra_interact_core/py.typed",
     }
     if not expected_suffixes.issubset(set(names)):

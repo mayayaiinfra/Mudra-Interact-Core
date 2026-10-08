@@ -17,7 +17,7 @@ from typing import Callable
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED = {".git", ".venv", "__pycache__", ".pytest_cache", "build", "dist", "evidence"}
+EXCLUDED = {".git", ".venv", "__pycache__", ".pytest_cache", ".pytest-language-tmp", "build", "dist", "evidence"}
 
 
 @dataclass(frozen=True)
@@ -181,7 +181,7 @@ def _copy_root(destination: Path) -> None:
     shutil.copytree(
         ROOT,
         destination,
-        ignore=shutil.ignore_patterns(".git", ".venv", "evidence", "build", "dist", ".pytest_cache", "__pycache__"),
+        ignore=shutil.ignore_patterns(".git", ".venv", "evidence", "build", "dist", ".pytest_cache", ".pytest-language-tmp", "__pycache__"),
     )
 
 
