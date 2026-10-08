@@ -22,17 +22,15 @@ structures plans and reviews; it does not create media.
 
 Applications can use their own model or other tools to draft messages, then
 validate the resulting data with Mudra. The communication-language core does
-not call an LLM, provider or tool. The 0.4.0 candidate adds an explicit A2A
-client that sends only when the host calls it with a configured endpoint and
-authenticated scope; there are no background or implicit network requests.
-
-The current unreleased source adds an experimental A2A 1.0 JSON-RPC client for
-human-to-agent and agent-to-agent sends plus agent replies. It uses the Python
-standard library, so the offline core remains dependency-free. The A2A client
-requires the host to provide authenticated principal and tenant context, a
-trusted clock, credentials when required, and an atomic durable replay store.
-Human-to-human remains schema-only; no user interface, A2A server, model call,
-or production host is included. See the [A2A integration contract](docs/A2A_INTEROPERABILITY_CONTRACT.md).
+not call an LLM, provider or tool. Version 0.4.0 adds an experimental A2A 1.0
+JSON-RPC client for human-to-agent and agent-to-agent sends and replies. It
+uses the Python standard library and sends only when the host calls it with a
+configured endpoint and authenticated scope; there are no background or
+implicit network requests. The host must provide authenticated principal and
+tenant context, a trusted clock, credentials when required, and an atomic
+durable replay store. Human-to-human remains schema-only; no user interface,
+A2A server, model call, or production host is included. See the
+[A2A integration contract](docs/A2A_INTEROPERABILITY_CONTRACT.md).
 
 The wheel includes three runnable synthetic transcripts. This example loads
 them from the installed package:
@@ -81,10 +79,7 @@ See the [gesture API](docs/API.md),
 [communication-language API](docs/COMMUNICATION_LANGUAGE_API.md),
 [compatibility policy](docs/COMPATIBILITY.md), and [changelog](CHANGELOG.md).
 The source and release history are on
-[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core); the
-[0.3.0 PyPI page](https://pypi.org/project/mudra-interact/0.3.0/) and
-[0.3.0 release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0)
-are the latest published version. The 0.4.0 candidate is not published yet;
-its exact-version pages are [PyPI 0.4.0](https://pypi.org/project/mudra-interact/0.4.0/)
-and [GitHub release v0.4.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0)
-after the protected release workflow completes.
+[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core). Version 0.4.0
+is the latest published release: [PyPI](https://pypi.org/project/mudra-interact/0.4.0/),
+[TestPyPI](https://test.pypi.org/project/mudra-interact/0.4.0/), and
+[GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0).

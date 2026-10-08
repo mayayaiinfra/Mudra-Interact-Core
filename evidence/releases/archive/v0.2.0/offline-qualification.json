@@ -1,31 +1,30 @@
 {
   "acceptance_cases": [],
-  "acceptance_sha256": "8147cf8da5c0404f23009e36ee32776e0ffafa59cbfabad51703445b236277a6",
+  "acceptance_sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
   "artifacts": [
     {
       "kind": "wheel",
-      "path": "<temporary>/mudra_interact-0.4.0-py3-none-any.whl",
-      "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
-      "size_bytes": 57948
+      "path": "<temporary>/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
     },
     {
       "kind": "sdist",
-      "path": "<temporary>/mudra_interact-0.4.0.tar.gz",
-      "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
-      "size_bytes": 95094
+      "path": "<temporary>/mudra_interact-0.2.0.tar.gz",
+      "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "size_bytes": 59393
     },
     {
       "kind": "wheel_from_sdist",
-      "path": "<temporary>/mudra_interact-0.4.0-py3-none-any.whl",
-      "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
-      "size_bytes": 57948
+      "path": "<temporary>/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
     }
   ],
   "candidate_status": "blocked",
   "checks": {
     "fresh_install": {
       "install_exit": 0,
-      "language_examples_executed": 3,
       "module_owned_by_venv": true,
       "outside_checkout": true,
       "reinstall_exit": 0,
@@ -40,7 +39,7 @@
       ],
       "lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
       "no_credentials_or_model_payload": true,
-      "source_files": 118
+      "source_files": 88
     },
     "offline": {
       "cold_dependency": {
@@ -58,88 +57,76 @@
       "pip_no_index": true
     },
     "repeat_build": {
-      "sdist_a_sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
-      "sdist_b_sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
+      "sdist_a_sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "sdist_b_sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
       "sdist_identical": true,
-      "wheel_a_sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
-      "wheel_b_sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
+      "wheel_a_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "wheel_b_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
       "wheel_identical": true
     },
     "sdist": {
-      "description_sha256": "ddc235b2c1d456a1e279d4b51e056893c2a1e6b2b3bacfb76dc8323294bcd89d",
       "metadata_version": "2.4",
       "name": "mudra-interact",
-      "package_modules": [
-        "mudra_interact_core/__init__.py",
-        "mudra_interact_core/a2a.py"
-      ],
-      "summary": "Offline gesture-event processing and structured communication for human and AI-agent workflows",
-      "version": "0.4.0"
+      "version": "0.2.0"
     },
     "sdist_rebuild": {
       "metadata": {
-        "description_sha256": "ddc235b2c1d456a1e279d4b51e056893c2a1e6b2b3bacfb76dc8323294bcd89d",
-        "file_count": 35,
+        "file_count": 26,
         "inventory": [
           {
-            "path": "mudra_interact-0.4.0.data/data/LICENSE",
+            "path": "mudra_interact-0.2.0.data/data/LICENSE",
             "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
             "size_bytes": 11337
           },
           {
-            "path": "mudra_interact-0.4.0.data/data/NOTICE",
+            "path": "mudra_interact-0.2.0.data/data/NOTICE",
             "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
             "size_bytes": 419
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/METADATA",
-            "sha256": "575aa61414febe0724c6a98e61fbdda70fe79896eb85a85e734f595dbea34ca4",
-            "size_bytes": 5337
+            "path": "mudra_interact-0.2.0.dist-info/METADATA",
+            "sha256": "07321456e2a267a434ed5dc454174708366a79b25652eecb343f0ecfdc71d057",
+            "size_bytes": 5569
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/RECORD",
-            "sha256": "1f5ce3f226949008b570dddb93751bd9e04ba9ff47d72cb397ef4bb99ba96073",
-            "size_bytes": 3320
+            "path": "mudra_interact-0.2.0.dist-info/RECORD",
+            "sha256": "72d0418d15c04e69fa4c41c8e7cc11e1d40122f0ceadfef6b9296dd8a9ee95e2",
+            "size_bytes": 2376
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/WHEEL",
+            "path": "mudra_interact-0.2.0.dist-info/WHEEL",
             "sha256": "c14c80f0e6ae95195b7f032d990b2f367806af140702f90a72f466762ce5262d",
             "size_bytes": 92
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/entry_points.txt",
+            "path": "mudra_interact-0.2.0.dist-info/entry_points.txt",
             "sha256": "b5b20aefa104ed1721ab950aa0d02744c21978dec7988dbb6e9ad09ddde7a0ff",
             "size_bytes": 64
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/licenses/LICENSE",
+            "path": "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
             "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
             "size_bytes": 11337
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/licenses/NOTICE",
+            "path": "mudra_interact-0.2.0.dist-info/licenses/NOTICE",
             "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
             "size_bytes": 419
           },
           {
-            "path": "mudra_interact-0.4.0.dist-info/top_level.txt",
+            "path": "mudra_interact-0.2.0.dist-info/top_level.txt",
             "sha256": "05f66cefd5318312d7de405e300de0f14c98caa663f804eab5be84a1a202a5f8",
             "size_bytes": 20
           },
           {
             "path": "mudra_interact_core/__init__.py",
-            "sha256": "627c3466fc2249a9d3281dee24924aaf375e9cf4a481b124166f4acbcae1feef",
-            "size_bytes": 1803
+            "sha256": "c73bf87e9621fb8e1f015dd57ca0a34b156af77420940816c2f2370c79e68c9b",
+            "size_bytes": 1040
           },
           {
             "path": "mudra_interact_core/__main__.py",
             "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
             "size_bytes": 49
-          },
-          {
-            "path": "mudra_interact_core/a2a.py",
-            "sha256": "512ac3f46ba0c890b2f06c887b7f7d2c66195b4dbf81b68e189169108dae76d7",
-            "size_bytes": 23051
           },
           {
             "path": "mudra_interact_core/catalog.py",
@@ -153,7 +140,7 @@
           },
           {
             "path": "mudra_interact_core/cli.py",
-            "sha256": "0b1a0fe48112bf81168101d471e738c75c63f61cea34df5d5be1c6f6aca3fd28",
+            "sha256": "9a4771f48ce310872fc64e157518624d74b4ba912b194fcbbf044fb98ca521d9",
             "size_bytes": 13219
           },
           {
@@ -167,29 +154,9 @@
             "size_bytes": 1182
           },
           {
-            "path": "mudra_interact_core/examples/language/agent-agent.json",
-            "sha256": "ddf458913e327a434a5bde971adb732fedfed40f80267d676c3b3437da1114a8",
-            "size_bytes": 4294
-          },
-          {
-            "path": "mudra_interact_core/examples/language/human-agent.json",
-            "sha256": "2c8be7caf7b74e554915ba9640ea437e2853cd11b66ff9e226267acb9decce94",
-            "size_bytes": 7887
-          },
-          {
-            "path": "mudra_interact_core/examples/language/human-human.json",
-            "sha256": "8f5c15eedfe984b87f738c8f7e6dffe1e2a33a311fbacda53214a3f988eb1391",
-            "size_bytes": 5261
-          },
-          {
             "path": "mudra_interact_core/frame.py",
             "sha256": "a6cf444f4284ee0c684a7ecf79af7fcdbb0ac5b6e810de4a619dbfbab941d39e",
             "size_bytes": 8605
-          },
-          {
-            "path": "mudra_interact_core/language.py",
-            "sha256": "be16793aa5469f0caa1b3a7dcc381beea2507d177be6b10c5cccae6af43481f6",
-            "size_bytes": 30123
           },
           {
             "path": "mudra_interact_core/protocol.py",
@@ -212,26 +179,6 @@
             "size_bytes": 80
           },
           {
-            "path": "mudra_interact_core/schemas/language/__init__.py",
-            "sha256": "3fb60c0bd32a868fbfea292835582fbcb4ce0403659a933fc7279979a8f15d50",
-            "size_bytes": 60
-          },
-          {
-            "path": "mudra_interact_core/schemas/language/v1/__init__.py",
-            "sha256": "84bd1ef9cf07774b7ebe2655770777cd4d77f3b9f530b5bb1a1feb0f97ba0f68",
-            "size_bytes": 59
-          },
-          {
-            "path": "mudra_interact_core/schemas/language/v1/language.schema.json",
-            "sha256": "6112d6318f42107c8bbfa4d8352bbbd0b562d5c2d4b77504e29095ab17a7b41b",
-            "size_bytes": 8418
-          },
-          {
-            "path": "mudra_interact_core/schemas/language/v1/version-map.json",
-            "sha256": "bacc841482015f06165a01424df64983de6985c9fd469035818f8b4a465281ec",
-            "size_bytes": 435
-          },
-          {
             "path": "mudra_interact_core/schemas/v2/__init__.py",
             "sha256": "39803deaeca327f61f22495c6372c42d23847fc0a19b9d8509ef6629ae2ad976",
             "size_bytes": 76
@@ -243,7 +190,7 @@
           },
           {
             "path": "mudra_interact_core/schemas/v2/version-map.json",
-            "sha256": "fdebefc81905f4b09794448a6790fd46e624e49f744b826be2b31d27af085ac2",
+            "sha256": "47f359e773c5c0a500f7d2401df3806debedf78b83ac29c8d0eb2289b31fe9e4",
             "size_bytes": 353
           },
           {
@@ -253,108 +200,92 @@
           },
           {
             "path": "mudra_interact_core/validation.py",
-            "sha256": "8454feb12be9d04d57c3d364e8f803b34af4c43d0442b86d09c4f914e9f814ac",
-            "size_bytes": 8325
+            "sha256": "fa74a8e1db07e9304673f57626bf3f17fe13871b55a03a6c502aad4c03da0d96",
+            "size_bytes": 7326
           }
         ],
         "legal_payload": [
-          "mudra_interact-0.4.0.data/data/LICENSE",
-          "mudra_interact-0.4.0.data/data/NOTICE",
-          "mudra_interact-0.4.0.dist-info/licenses/LICENSE",
-          "mudra_interact-0.4.0.dist-info/licenses/NOTICE"
+          "mudra_interact-0.2.0.data/data/LICENSE",
+          "mudra_interact-0.2.0.data/data/NOTICE",
+          "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+          "mudra_interact-0.2.0.dist-info/licenses/NOTICE"
         ],
         "metadata_files": [
-          "mudra_interact-0.4.0.dist-info/METADATA",
-          "mudra_interact-0.4.0.dist-info/WHEEL",
-          "mudra_interact-0.4.0.dist-info/RECORD"
+          "mudra_interact-0.2.0.dist-info/METADATA",
+          "mudra_interact-0.2.0.dist-info/WHEEL",
+          "mudra_interact-0.2.0.dist-info/RECORD"
         ],
         "metadata_name": "mudra-interact",
-        "metadata_summary": "Offline gesture-event processing and structured communication for human and AI-agent workflows",
         "metadata_validator": "stdlib_pep427_pep566_equivalent",
-        "metadata_version": "0.4.0",
+        "metadata_version": "0.2.0",
         "package_data": [
           "mudra_interact_core/catalog/mudra_catalog.json",
-          "mudra_interact_core/examples/language/agent-agent.json",
-          "mudra_interact_core/examples/language/human-agent.json",
-          "mudra_interact_core/examples/language/human-human.json",
           "mudra_interact_core/py.typed",
-          "mudra_interact_core/schemas/language/v1/language.schema.json",
-          "mudra_interact_core/schemas/language/v1/version-map.json",
           "mudra_interact_core/schemas/v2/contract.schema.json",
           "mudra_interact_core/schemas/v2/version-map.json"
-        ],
-        "package_modules": [
-          "mudra_interact_core/__init__.py",
-          "mudra_interact_core/a2a.py"
         ],
         "requires_dist": null
       },
       "offline": true,
-      "wheel_sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10"
+      "wheel_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf"
     },
     "wheel": {
-      "description_sha256": "ddc235b2c1d456a1e279d4b51e056893c2a1e6b2b3bacfb76dc8323294bcd89d",
-      "file_count": 35,
+      "file_count": 26,
       "inventory": [
         {
-          "path": "mudra_interact-0.4.0.data/data/LICENSE",
+          "path": "mudra_interact-0.2.0.data/data/LICENSE",
           "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
           "size_bytes": 11337
         },
         {
-          "path": "mudra_interact-0.4.0.data/data/NOTICE",
+          "path": "mudra_interact-0.2.0.data/data/NOTICE",
           "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
           "size_bytes": 419
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/METADATA",
-          "sha256": "575aa61414febe0724c6a98e61fbdda70fe79896eb85a85e734f595dbea34ca4",
-          "size_bytes": 5337
+          "path": "mudra_interact-0.2.0.dist-info/METADATA",
+          "sha256": "07321456e2a267a434ed5dc454174708366a79b25652eecb343f0ecfdc71d057",
+          "size_bytes": 5569
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/RECORD",
-          "sha256": "1f5ce3f226949008b570dddb93751bd9e04ba9ff47d72cb397ef4bb99ba96073",
-          "size_bytes": 3320
+          "path": "mudra_interact-0.2.0.dist-info/RECORD",
+          "sha256": "72d0418d15c04e69fa4c41c8e7cc11e1d40122f0ceadfef6b9296dd8a9ee95e2",
+          "size_bytes": 2376
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/WHEEL",
+          "path": "mudra_interact-0.2.0.dist-info/WHEEL",
           "sha256": "c14c80f0e6ae95195b7f032d990b2f367806af140702f90a72f466762ce5262d",
           "size_bytes": 92
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/entry_points.txt",
+          "path": "mudra_interact-0.2.0.dist-info/entry_points.txt",
           "sha256": "b5b20aefa104ed1721ab950aa0d02744c21978dec7988dbb6e9ad09ddde7a0ff",
           "size_bytes": 64
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/licenses/LICENSE",
+          "path": "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
           "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
           "size_bytes": 11337
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/licenses/NOTICE",
+          "path": "mudra_interact-0.2.0.dist-info/licenses/NOTICE",
           "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
           "size_bytes": 419
         },
         {
-          "path": "mudra_interact-0.4.0.dist-info/top_level.txt",
+          "path": "mudra_interact-0.2.0.dist-info/top_level.txt",
           "sha256": "05f66cefd5318312d7de405e300de0f14c98caa663f804eab5be84a1a202a5f8",
           "size_bytes": 20
         },
         {
           "path": "mudra_interact_core/__init__.py",
-          "sha256": "627c3466fc2249a9d3281dee24924aaf375e9cf4a481b124166f4acbcae1feef",
-          "size_bytes": 1803
+          "sha256": "c73bf87e9621fb8e1f015dd57ca0a34b156af77420940816c2f2370c79e68c9b",
+          "size_bytes": 1040
         },
         {
           "path": "mudra_interact_core/__main__.py",
           "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
           "size_bytes": 49
-        },
-        {
-          "path": "mudra_interact_core/a2a.py",
-          "sha256": "512ac3f46ba0c890b2f06c887b7f7d2c66195b4dbf81b68e189169108dae76d7",
-          "size_bytes": 23051
         },
         {
           "path": "mudra_interact_core/catalog.py",
@@ -368,7 +299,7 @@
         },
         {
           "path": "mudra_interact_core/cli.py",
-          "sha256": "0b1a0fe48112bf81168101d471e738c75c63f61cea34df5d5be1c6f6aca3fd28",
+          "sha256": "9a4771f48ce310872fc64e157518624d74b4ba912b194fcbbf044fb98ca521d9",
           "size_bytes": 13219
         },
         {
@@ -382,29 +313,9 @@
           "size_bytes": 1182
         },
         {
-          "path": "mudra_interact_core/examples/language/agent-agent.json",
-          "sha256": "ddf458913e327a434a5bde971adb732fedfed40f80267d676c3b3437da1114a8",
-          "size_bytes": 4294
-        },
-        {
-          "path": "mudra_interact_core/examples/language/human-agent.json",
-          "sha256": "2c8be7caf7b74e554915ba9640ea437e2853cd11b66ff9e226267acb9decce94",
-          "size_bytes": 7887
-        },
-        {
-          "path": "mudra_interact_core/examples/language/human-human.json",
-          "sha256": "8f5c15eedfe984b87f738c8f7e6dffe1e2a33a311fbacda53214a3f988eb1391",
-          "size_bytes": 5261
-        },
-        {
           "path": "mudra_interact_core/frame.py",
           "sha256": "a6cf444f4284ee0c684a7ecf79af7fcdbb0ac5b6e810de4a619dbfbab941d39e",
           "size_bytes": 8605
-        },
-        {
-          "path": "mudra_interact_core/language.py",
-          "sha256": "be16793aa5469f0caa1b3a7dcc381beea2507d177be6b10c5cccae6af43481f6",
-          "size_bytes": 30123
         },
         {
           "path": "mudra_interact_core/protocol.py",
@@ -427,26 +338,6 @@
           "size_bytes": 80
         },
         {
-          "path": "mudra_interact_core/schemas/language/__init__.py",
-          "sha256": "3fb60c0bd32a868fbfea292835582fbcb4ce0403659a933fc7279979a8f15d50",
-          "size_bytes": 60
-        },
-        {
-          "path": "mudra_interact_core/schemas/language/v1/__init__.py",
-          "sha256": "84bd1ef9cf07774b7ebe2655770777cd4d77f3b9f530b5bb1a1feb0f97ba0f68",
-          "size_bytes": 59
-        },
-        {
-          "path": "mudra_interact_core/schemas/language/v1/language.schema.json",
-          "sha256": "6112d6318f42107c8bbfa4d8352bbbd0b562d5c2d4b77504e29095ab17a7b41b",
-          "size_bytes": 8418
-        },
-        {
-          "path": "mudra_interact_core/schemas/language/v1/version-map.json",
-          "sha256": "bacc841482015f06165a01424df64983de6985c9fd469035818f8b4a465281ec",
-          "size_bytes": 435
-        },
-        {
           "path": "mudra_interact_core/schemas/v2/__init__.py",
           "sha256": "39803deaeca327f61f22495c6372c42d23847fc0a19b9d8509ef6629ae2ad976",
           "size_bytes": 76
@@ -458,7 +349,7 @@
         },
         {
           "path": "mudra_interact_core/schemas/v2/version-map.json",
-          "sha256": "fdebefc81905f4b09794448a6790fd46e624e49f744b826be2b31d27af085ac2",
+          "sha256": "47f359e773c5c0a500f7d2401df3806debedf78b83ac29c8d0eb2289b31fe9e4",
           "size_bytes": 353
         },
         {
@@ -468,39 +359,29 @@
         },
         {
           "path": "mudra_interact_core/validation.py",
-          "sha256": "8454feb12be9d04d57c3d364e8f803b34af4c43d0442b86d09c4f914e9f814ac",
-          "size_bytes": 8325
+          "sha256": "fa74a8e1db07e9304673f57626bf3f17fe13871b55a03a6c502aad4c03da0d96",
+          "size_bytes": 7326
         }
       ],
       "legal_payload": [
-        "mudra_interact-0.4.0.data/data/LICENSE",
-        "mudra_interact-0.4.0.data/data/NOTICE",
-        "mudra_interact-0.4.0.dist-info/licenses/LICENSE",
-        "mudra_interact-0.4.0.dist-info/licenses/NOTICE"
+        "mudra_interact-0.2.0.data/data/LICENSE",
+        "mudra_interact-0.2.0.data/data/NOTICE",
+        "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+        "mudra_interact-0.2.0.dist-info/licenses/NOTICE"
       ],
       "metadata_files": [
-        "mudra_interact-0.4.0.dist-info/METADATA",
-        "mudra_interact-0.4.0.dist-info/WHEEL",
-        "mudra_interact-0.4.0.dist-info/RECORD"
+        "mudra_interact-0.2.0.dist-info/METADATA",
+        "mudra_interact-0.2.0.dist-info/WHEEL",
+        "mudra_interact-0.2.0.dist-info/RECORD"
       ],
       "metadata_name": "mudra-interact",
-      "metadata_summary": "Offline gesture-event processing and structured communication for human and AI-agent workflows",
       "metadata_validator": "stdlib_pep427_pep566_equivalent",
-      "metadata_version": "0.4.0",
+      "metadata_version": "0.2.0",
       "package_data": [
         "mudra_interact_core/catalog/mudra_catalog.json",
-        "mudra_interact_core/examples/language/agent-agent.json",
-        "mudra_interact_core/examples/language/human-agent.json",
-        "mudra_interact_core/examples/language/human-human.json",
         "mudra_interact_core/py.typed",
-        "mudra_interact_core/schemas/language/v1/language.schema.json",
-        "mudra_interact_core/schemas/language/v1/version-map.json",
         "mudra_interact_core/schemas/v2/contract.schema.json",
         "mudra_interact_core/schemas/v2/version-map.json"
-      ],
-      "package_modules": [
-        "mudra_interact_core/__init__.py",
-        "mudra_interact_core/a2a.py"
       ],
       "requires_dist": null
     }
@@ -520,21 +401,21 @@
     }
   ],
   "errors": [],
-  "finished_at": "2026-10-08T20:49:28.207543Z",
+  "finished_at": "2026-10-08T04:41:31.151286Z",
   "frozen_candidate_artifacts": [
     {
-      "filename": "mudra_interact-0.4.0-py3-none-any.whl",
+      "filename": "mudra_interact-0.2.0-py3-none-any.whl",
       "kind": "wheel",
-      "path": "release-artifacts/0.4.0/mudra_interact-0.4.0-py3-none-any.whl",
-      "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
-      "size_bytes": 57948
+      "path": "release-artifacts/0.2.0/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
     },
     {
-      "filename": "mudra_interact-0.4.0.tar.gz",
+      "filename": "mudra_interact-0.2.0.tar.gz",
       "kind": "sdist",
-      "path": "release-artifacts/0.4.0/mudra_interact-0.4.0.tar.gz",
-      "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
-      "size_bytes": 95094
+      "path": "release-artifacts/0.2.0/mudra_interact-0.2.0.tar.gz",
+      "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "size_bytes": 59393
     }
   ],
   "items": [
@@ -549,7 +430,7 @@
     "architecture": "x86_64",
     "implementation": "CPython",
     "os": "linux",
-    "python": "3.14.8",
+    "python": "3.14.7",
     "release": "6.17.0-1022-azure"
   },
   "platform_matrix": [
@@ -615,15 +496,15 @@
     "hash_locked_build_tools"
   ],
   "report_schema_version": 1,
-  "report_sha256": "b58b9cd251dfb4c8ebfadfd417adbc1fd11ac77ba4c7c0e50ddbdf53a807aae8",
+  "report_sha256": "88efba1e765fb09f5c8f50d722fa69dac603b9442b2db85a094bb419efe75aa1",
   "scope": {
     "id": "offline",
     "kind": "release"
   },
-  "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
-  "source_tree_sha256": "8640dd559cf0963696a72d310927e784f2eb71ec8557b8a7b22715bbd89e0060",
-  "spec_sha256": "a1350a7f2cb4c1ee73e144da8c6c415f2239ba529b028908b0626d702e60ed78",
-  "started_at": "2026-10-08T20:49:20.109448Z",
+  "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
+  "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+  "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
+  "started_at": "2026-10-08T04:41:25.306918Z",
   "state": "BLOCKED",
   "test_counts": {
     "required_platform_cells": 8,

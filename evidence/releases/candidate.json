@@ -3,54 +3,54 @@
     "acceptance_sha256": "8147cf8da5c0404f23009e36ee32776e0ffafa59cbfabad51703445b236277a6",
     "artifacts": [
       {
-        "filename": "mudra_interact-0.3.0-py3-none-any.whl",
-        "sha256": "92287f74af813c4e49b03730ffbbaee8e99e8ebad5b3e32c24400b43aa62e869",
-        "size_bytes": 51366
+        "filename": "mudra_interact-0.4.0-py3-none-any.whl",
+        "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
+        "size_bytes": 57948
       },
       {
-        "filename": "mudra_interact-0.3.0.tar.gz",
-        "sha256": "dd9ae25c4399f37a5ee12e5258055069395136b6dd65ba08422816ee893dd6cc",
-        "size_bytes": 82620
+        "filename": "mudra_interact-0.4.0.tar.gz",
+        "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
+        "size_bytes": 95094
       }
     ],
-    "candidate_fingerprint": "75bbf82521e4478803d42fdbc18e8ca221d4b2739f03faeadaf30b8fc892fcf6",
+    "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
     "package": "mudra-interact",
     "repository": "mayayaiinfra/Mudra-Interact-Core",
-    "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
-    "source_tree_sha256": "044944e454eec695b18ab71dea95f34a6e252c5205e513b9d467da87371dc780",
-    "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
-    "tag": "v0.3.0",
+    "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
+    "source_tree_sha256": "8640dd559cf0963696a72d310927e784f2eb71ec8557b8a7b22715bbd89e0060",
+    "spec_sha256": "a1350a7f2cb4c1ee73e144da8c6c415f2239ba529b028908b0626d702e60ed78",
+    "tag": "v0.4.0",
     "tool_lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "workflow_path": ".github/workflows/publish.yml",
     "workflow_run_attempt": 1,
-    "workflow_run_id": 37805781843
+    "workflow_run_id": 37842184366
   },
   "gate_evidence": [
     {
       "gate": "M0",
-      "path": "evidence/local/M0-changelog-refresh.json",
-      "sha256": "38c77e22a9566fa32b756b2e1f95e08d9c9f7a861671b9289368dbf0a9c95f90"
+      "path": "evidence/local/v0.4.0/M0-r2.json",
+      "sha256": "332a2a4709f435630a49ae2a0dcc7425a7fcf37c96cfd9794c315d36b12a815e"
     },
     {
       "gate": "M1",
-      "path": "evidence/local/M1-changelog-refresh.json",
-      "sha256": "db44b0576e52448ff3e953053f7bde31b9ae1c786f611d37879b02d5ae91976a"
+      "path": "evidence/local/v0.4.0/M1-r2.json",
+      "sha256": "84ce753e8b71ec20e0722d4d75d4c2ac4a80cc122db7683f89e0d1382fe5a969"
     },
     {
       "gate": "M2",
-      "path": "evidence/local/M2-changelog-refresh.json",
-      "sha256": "b6752da89318608bd27896e8e1a6da99e63f3dfd24de494f7f7b18c9414c900e"
+      "path": "evidence/local/v0.4.0/M2-r2.json",
+      "sha256": "df71a95a07c07f5a9a27232b591526546901ce382c368922c2e6c68483a99cc2"
     },
     {
       "gate": "M3",
-      "path": "evidence/local/M3-ci.json",
-      "sha256": "3e7a48b4ddbf1500b54cac8f8e4bd2a3bf0942c6e98cce31bbef6f73ce737c43"
+      "path": "evidence/local/v0.4.0/M3-r4.json",
+      "sha256": "80a3b4704ebc7bf6f93cfeb267c9775de691e8c37372d09162e3848fd2d948f8"
     }
   ],
   "offline_report": {
     "path": "evidence/releases/offline-qualification.json",
-    "sha256": "4902e5dea74c092911f8901209169138c6e5cc40362dfba178a29f76ba919e31"
+    "sha256": "caa6d122d8bf643a3d856b05f3c94e5db2ab478618d279d5fdaa4347529b3c06"
   },
   "schema_version": 1
 }

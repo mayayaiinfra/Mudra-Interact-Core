@@ -1,16 +1,16 @@
 {
   "design_revision": "0.1",
-  "status": "CANDIDATE_REQUALIFICATION_IN_PROGRESS",
-  "active_item": "ML-06",
+  "status": "CURRENT_SOURCE_REQUALIFICATION_IN_PROGRESS",
+  "active_item": "ML-01",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.4.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "ML-01 through ML-04 receipts and the M0-M4 release are historical evidence for Mudra Interact 0.3.0 on TestPyPI and PyPI, with immutable GitHub release v0.3.0. That release does not include the new A2A adapter. The 0.4.0 candidate must receive fresh language/core/platform/package/release evidence; the historical VERIFIED states do not qualify 0.4.0. ML-05 remains externally blocked; ML-06 transport implementation and local integration are in progress and make no human-evaluation or production-host claim.",
+  "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. Exact wheel and sdist bytes, downloaded fresh installation, two PyPI Trusted Publisher attestations, protected authorization, M0-M4 and MI-01 through MI-10 are verified for source 875a611. ML-01 through ML-03 need fresh language receipts on the released source; ML-04 is supported by current M3/M4/package evidence. ML-05 remains externally blocked. ML-06 transport is shipped and awaits current-source A2A requalification.",
   "items": [
     {
       "id": "ML-01",
-      "state": "VERIFIED",
+      "state": "IN_PROGRESS",
       "requires": [],
       "outputs": [
         "schemas/language/v1 closed JSON Schema",
@@ -27,11 +27,12 @@
         "path": "evidence/language/ML-01.json",
         "sha256": "f12f790314c8a0add22f1568aa56a7251d3db60bfc4c12f079633b8f6a56f583"
       },
-      "prior_state": "VERIFIED"
+      "prior_state": "VERIFIED",
+      "progress": "Fresh 0.4.0 requalification started after the exact release and M0-M4 verification; prior receipt is retained as historical evidence."
     },
     {
       "id": "ML-02",
-      "state": "VERIFIED",
+      "state": "NOT_STARTED",
       "requires": [
         "ML-01"
       ],
@@ -51,11 +52,12 @@
         "path": "evidence/language/ML-02.json",
         "sha256": "f7530e483eac5bde1cbeb90ee0d8c86d802afce5da9533df5b71541d4d37a655"
       },
-      "prior_state": "VERIFIED"
+      "prior_state": "VERIFIED",
+      "progress": "Await fresh dependency-ordered 0.4.0 language receipt."
     },
     {
       "id": "ML-03",
-      "state": "VERIFIED",
+      "state": "NOT_STARTED",
       "requires": [
         "ML-02"
       ],
@@ -74,7 +76,8 @@
         "path": "evidence/language/ML-03.json",
         "sha256": "188cb9fb636021e4b8b406b94269dfc1593f551f355d678621400f4baf134db3"
       },
-      "prior_state": "VERIFIED"
+      "prior_state": "VERIFIED",
+      "progress": "Await fresh dependency-ordered 0.4.0 language receipt."
     },
     {
       "id": "ML-04",
@@ -94,53 +97,55 @@
       ],
       "verification_receipts": [
         {
-          "kind": "M3 full acceptance gate",
-          "path": "evidence/local/M3-ci.json",
-          "sha256": "3e7a48b4ddbf1500b54cac8f8e4bd2a3bf0942c6e98cce31bbef6f73ce737c43"
+          "kind": "current-source M3 full gate",
+          "path": "evidence/local/v0.4.0/M3-r4.json",
+          "sha256": "80a3b4704ebc7bf6f93cfeb267c9775de691e8c37372d09162e3848fd2d948f8"
         },
         {
-          "kind": "current-source Linux/Windows platform matrix",
-          "path": "evidence/local/M3-platform-matrix.json",
-          "sha256": "c47f862eae9bb2559470fd12d46e67c50ec3c444512a7b3d3667beb1db433b17"
+          "kind": "current-source Linux/Windows CPython 3.11-3.14 matrix",
+          "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
+          "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae"
         },
         {
-          "kind": "M4 gate including E90-E99",
-          "path": "evidence/local/M4-published.json",
-          "sha256": "3ed956e1c0c217060e36ad115d07a0188e9812713be9206259ae14a448b1d883"
+          "kind": "M4 complete gate E90-E99",
+          "path": "evidence/local/v0.4.0/M4-final-r4.json",
+          "sha256": "54791f4d28088bf020bde5091d8965b7dedc0d2da1fea69f4b96d2e967ab6991"
         },
         {
-          "kind": "M4 MI-10 E90-E99 gate",
-          "path": "evidence/local/MI-10-published.json",
-          "sha256": "07179ea87959dc0c311bf00bdad33c2edde7b6d72097eb7a33eafd8900eeb567"
+          "kind": "MI-10 exact artifact E90-E99",
+          "path": "evidence/local/v0.4.0/MI-10-final.json",
+          "sha256": "b0a7289a93107ebb91c3adf35e399630bd683f1965c0029daeeb7f045600364c"
         },
         {
           "kind": "published-release final verifier",
           "path": "evidence/releases/published-verification.json",
-          "sha256": "dce1972013934d05c0e6449916a5dbdc3eadee61ba656ba35ba27786cdacab98"
+          "sha256": "a2c95a1e6374c82c660d8dc48b5fe962e043cab8821839f55ad42d7ed6365326"
         }
       ],
       "verified_release": {
         "package": "mudra-interact",
-        "version": "0.3.0",
-        "source_commit": "1d57c069dde19f5c0329bc19f1a58c4636221a61",
-        "candidate_fingerprint": "75bbf82521e4478803d42fdbc18e8ca221d4b2739f03faeadaf30b8fc892fcf6",
-        "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37805781843",
-        "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.3.0/",
-        "pypi_url": "https://pypi.org/project/mudra-interact/0.3.0/",
-        "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0",
+        "version": "0.4.0",
+        "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
+        "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
+        "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
+        "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
+        "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
+        "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
         "artifacts": [
           {
-            "filename": "mudra_interact-0.3.0-py3-none-any.whl",
-            "sha256": "92287f74af813c4e49b03730ffbbaee8e99e8ebad5b3e32c24400b43aa62e869",
-            "size_bytes": 51366
+            "filename": "mudra_interact-0.4.0-py3-none-any.whl",
+            "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
+            "size_bytes": 57948
           },
           {
-            "filename": "mudra_interact-0.3.0.tar.gz",
-            "sha256": "dd9ae25c4399f37a5ee12e5258055069395136b6dd65ba08422816ee893dd6cc",
-            "size_bytes": 82620
+            "filename": "mudra_interact-0.4.0.tar.gz",
+            "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
+            "size_bytes": 95094
           }
         ]
-      }
+      },
+      "prior_state": "VERIFIED",
+      "progress": "Current M0-M4 and MI-10 evidence verifies the exact 0.4.0 published wheel/sdist, downloaded installation, attestations and immutable release. Human/provider/host qualification remains explicitly outside this evidence."
     },
     {
       "id": "ML-05",
@@ -165,7 +170,7 @@
     },
     {
       "id": "ML-06",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "requires": [
         "ML-04"
       ],
@@ -182,8 +187,8 @@
         "L52: no side effects from parse or accept; explicit cancellation only; fixed remote errors",
         "L53: packaged dependency-free adapter and accurate qualification limits"
       ],
-      "progress": "The independent loopback A2A peer and fail-closed receipt verifier previously passed 15/15 checks. That 0.4.0 receipt is retained as superseded because the source verifier changed to preserve historical M3 evidence; ML-06 will be requalified on the frozen candidate. Candidate distribution and publication remain pending. No public third-party agent, production host, model provider, or paid operation was called.",
-      "prior_state": "NOT_STARTED",
+      "progress": "The experimental A2A client is included in published 0.4.0. Fresh current-source ML-06 loopback/receipt verification will run after ML-01 through ML-03 are requalified; no public third-party agent, production host, model provider or paid operation is claimed.",
+      "prior_state": "IN_PROGRESS",
       "superseded_candidate_receipt": {
         "path": "evidence/language/ML-06.json",
         "sha256": "bbaa2af5f2977789d9c390ac1c73c8e6b29acddf1b1ff5584860128bf057c4e2"
@@ -192,9 +197,25 @@
   ],
   "reverification_required": [
     {
-      "scope": "ML-01 through ML-04 / v0.4.0 candidate",
-      "reason": "The acceptance contract and source changed after the historical v0.3.0 receipts. Those receipts remain valid only for their recorded v0.3.0 source; the new candidate needs fresh language and core release evidence."
+      "scope": "ML-01 through ML-03 / released 0.4.0 source",
+      "reason": "The previous language receipts are historical and must be regenerated against the released 0.4.0 source. ML-04 core/distribution/release requirements are now covered by current M0-M4 evidence."
     }
   ],
-  "next_scope": "The versioned M3 evidence-path change superseded prior 0.4.0 receipts, so requalify from M0 before continuing M1-M4. ML-05 remains externally blocked pending owner-approved consent/data handling, real volunteers, and independent scoped reviewers."
+  "next_scope": "Requalify ML-01, ML-02 and ML-03 in dependency order on the released 0.4.0 source, then run ML-06 current-source A2A verification. ML-05 remains blocked until actual consented participants and independent scoped cultural/accessibility reviewers are available.",
+  "current_release": {
+    "package": "mudra-interact",
+    "version": "0.4.0",
+    "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
+    "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
+    "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
+    "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
+    "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
+    "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
+    "core_gate": "M0-M4 VERIFIED; M4 232 passed, zero skipped",
+    "limitations": [
+      "No human-comprehension, cultural or accessibility qualification.",
+      "No live public-agent or production-host qualification.",
+      "ML-05 remains blocked pending real consented participants and independent reviewers."
+    ]
+  }
 }

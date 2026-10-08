@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
+    "scope": "The 0.2.0 and 0.3.0 releases remain historical. Version 0.4.0 adds the experimental communication-language SDK and standard-library A2A JSON-RPC client while preserving the v2 gesture/event contract. M0-M4 and MI-01 through MI-10 are verified for the exact 0.4.0 release candidate. No human/cultural/accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Fresh 0.4.0 M0–M2 pass on corrected source; M2 passed 186/186 with zero skips and all 15 MI-07 semantic mutations were detected. MI-08 and MI-09 are verified, the local M3 gate passed 217/217, the eight-cell Windows/Linux Python 3.11–3.14 matrix passed, and the required hosted Ubuntu 24.04 M3 gate passed 217/217 with zero skips on source d504561. M0–M3 are verified; M4 exact-artifact publication and downloaded-install verification remain in progress.",
+    "verification_claim": "M0-M4 and MI-01 through MI-10 passed on frozen source commit 875a611da5cc63557563e64644c4a00e03749d23. The hosted M3 Ubuntu 24.04 run passed 217/217 with zero skips; the full M4 gate passed 232/232 with zero skips in the prepared egress-isolated namespace. The eight-cell Windows/Linux CPython 3.11-3.14 matrix passed. MI-10 passed 15/15, and the exact 0.4.0 wheel/sdist were downloaded, hash-checked and freshly installed from TestPyPI and PyPI; two PyPI attestations and the immutable GitHub release were verified. Release publication is complete. Human/cultural/accessibility qualification and live production-host integration are not claimed.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -83,10 +83,25 @@
         "path": "evidence/local/pytest-m3-3b9d273b36b1.json",
         "sha256": "d7c70dfb0e406251fae76e3f03557d7b0226b0266252ef5c39e636bdb069645a",
         "description": "Raw pytest acceptance artifact emitted by hosted M3 run 37841106601 and hash-bound by the hosted gate report; retained as supplemental evidence, not as a verification report."
+      },
+      {
+        "path": "evidence/local/v0.4.0/M4-final-r4.json",
+        "sha256": "54791f4d28088bf020bde5091d8965b7dedc0d2da1fea69f4b96d2e967ab6991",
+        "description": "Full M4 acceptance gate in the prepared Linux egress-isolation namespace: 232 passed, zero skipped, source 875a611."
+      },
+      {
+        "path": "evidence/local/v0.4.0/MI-10-final.json",
+        "sha256": "b0a7289a93107ebb91c3adf35e399630bd683f1965c0029daeeb7f045600364c",
+        "description": "MI-10 E90-E99 exact-artifact publication and downloaded-install gate: 15 passed, zero skipped, source 875a611."
+      },
+      {
+        "path": "evidence/releases/published-verification.json",
+        "sha256": "a2c95a1e6374c82c660d8dc48b5fe962e043cab8821839f55ad42d7ed6365326",
+        "description": "Final published-release verifier: TestPyPI/PyPI, exact artifact hashes, attestations, installed wheel and immutable GitHub release verified."
       }
     ]
   },
-  "active_item": "MI-10",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -290,7 +305,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -299,7 +314,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M4-final-r4.json",
+          "sha256": "54791f4d28088bf020bde5091d8965b7dedc0d2da1fea69f4b96d2e967ab6991"
+        }
+      ]
     }
   ],
   "recommended_order": [
@@ -905,7 +927,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -914,21 +936,49 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-10-final.json",
+          "sha256": "b0a7289a93107ebb91c3adf35e399630bd683f1965c0029daeeb7f045600364c"
+        }
+      ]
     }
   ],
   "candidate_progress": {
     "version": "0.4.0",
-    "state": "IN_PROGRESS",
+    "state": "VERIFIED",
     "completed_gates": [
       "M0",
       "M1",
       "M2",
-      "M3"
+      "M3",
+      "M4"
     ],
-    "active_gate": "M4",
-    "active_item": "MI-10",
+    "active_gate": null,
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "M3 passed the required hosted Ubuntu 24.04 gate (217/217, zero skips) on source d504561; report and acceptance receipt are committed. MI-10 exact-artifact TestPyPI/PyPI publication, provenance verification, install proof, and release remain in progress."
+    "note": "M0-M4 and MI-01 through MI-10 are verified for the exact 0.4.0 candidate from source 875a611da5cc63557563e64644c4a00e03749d23. Published to TestPyPI and PyPI; exact wheel/sdist downloads, fresh install, two PyPI attestations, protected authorization and immutable GitHub release verified. Full M4 gate: 232/232, zero skips. See the M4 and MI-10 receipts and evidence/releases/published-verification.json.",
+    "release": {
+      "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
+      "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
+      "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
+      "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
+      "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
+      "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
+      "artifacts": [
+        {
+          "filename": "mudra_interact-0.4.0-py3-none-any.whl",
+          "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
+          "size_bytes": 57948
+        },
+        {
+          "filename": "mudra_interact-0.4.0.tar.gz",
+          "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
+          "size_bytes": 95094
+        }
+      ]
+    }
   }
 }

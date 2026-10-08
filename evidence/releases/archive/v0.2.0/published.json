@@ -1,0 +1,76 @@
+{
+  "authorization": {
+    "candidate_fingerprint": "2a8a0dba8fe3f428ae5a0df651250c4338baba23d1fe52ba5a8494d938315059",
+    "environment": "pypi-production",
+    "kind": "github_protected_environment",
+    "workflow_run_attempt": 1,
+    "workflow_run_id": 37728616097
+  },
+  "candidate": {
+    "acceptance_sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
+    "artifacts": [
+      {
+        "filename": "mudra_interact-0.2.0-py3-none-any.whl",
+        "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+        "size_bytes": 38903
+      },
+      {
+        "filename": "mudra_interact-0.2.0.tar.gz",
+        "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+        "size_bytes": 59393
+      }
+    ],
+    "candidate_fingerprint": "2a8a0dba8fe3f428ae5a0df651250c4338baba23d1fe52ba5a8494d938315059",
+    "package": "mudra-interact",
+    "repository": "mayayaiinfra/Mudra-Interact-Core",
+    "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
+    "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+    "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
+    "tag": "v0.2.0",
+    "tool_lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
+    "version": "0.2.0",
+    "workflow_path": ".github/workflows/publish.yml",
+    "workflow_run_attempt": 1,
+    "workflow_run_id": 37728616097
+  },
+  "gate_evidence": [
+    {
+      "gate": "M0",
+      "path": "evidence/local/M0-current-4ed5bef.json",
+      "sha256": "c659864f4cf2f6550889f153b3f803f2e160aada19a23c1bc1fc4b969e871635"
+    },
+    {
+      "gate": "M1",
+      "path": "evidence/local/M1-current-4ed5bef.json",
+      "sha256": "1b0c86d6be1dce332022194d7eec8a6bc3d68889f53609a0436ded7c182f4737"
+    },
+    {
+      "gate": "M2",
+      "path": "evidence/local/M2-current-4ed5bef.json",
+      "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
+    },
+    {
+      "gate": "M3",
+      "path": "evidence/local/M3-ci.json",
+      "sha256": "838fc94edd0e7e2b25eaba97d43849786a8f517ff992f8226e3e17c84c868125"
+    }
+  ],
+  "index_evidence": {
+    "pypi": {
+      "path": "evidence/releases/pypi-verification.json",
+      "sha256": "35b44ea5c50a51182794d6eae1609c046b4809b7e719c4d6d6a61097ca357d43"
+    },
+    "testpypi": {
+      "path": "evidence/releases/testpypi-verification.json",
+      "sha256": "424564524f8a266cd0f57043102f136ff347926329bc00f4cf38353855eae546"
+    }
+  },
+  "offline_report": {
+    "path": "evidence/releases/offline-qualification.json",
+    "sha256": "f45b6c27f8d63b19e073a473c8cf9c106899d0cdd1b5b9f970d064a8f966a448"
+  },
+  "release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0",
+  "schema_version": 1,
+  "state": "PUBLISHED",
+  "verification_kind": "luna_self_verified"
+}
