@@ -67,6 +67,44 @@ def test_source_identity_is_stable_across_windows_checkout_newlines(tmp_path: Pa
     assert canonical_text_bytes(b"binary\x00\r\n") == b"binary\x00\r\n"
 
 
+@pytest.mark.acceptance("E84")
+def test_source_identity_excludes_mutable_status_ledgers(tmp_path: Path) -> None:
+    tree = tmp_path / "status-ledger"
+    (tree / "docs").mkdir(parents=True)
+    (tree / "src").mkdir()
+    (tree / "README.md").write_text("Mudra source\n", encoding="utf-8")
+    (tree / "IMPLEMENTATION_BACKLOG.json").write_text('{"state":"IN_PROGRESS"}\n', encoding="utf-8")
+    language_ledger = tree / "docs" / "COMMUNICATION_LANGUAGE_BACKLOG.json"
+    language_ledger.write_text('{"ML-01":"REVERIFY_REQUIRED"}\n', encoding="utf-8")
+    (tree / "src" / "module.py").write_text("value = 1\n", encoding="utf-8")
+    subprocess.run(["git", "init", "--quiet"], cwd=tree, check=True)
+    subprocess.run(["git", "add", "--all"], cwd=tree, check=True)
+
+    initial = independent_source_tree_sha256(tree)
+    language_ledger.write_text('{"ML-01":"VERIFIED"}\n', encoding="utf-8")
+    (tree / "IMPLEMENTATION_BACKLOG.json").write_text('{"state":"VERIFIED"}\n', encoding="utf-8")
+
+    assert independent_source_tree_sha256(tree) == initial
+    assert release_source_tree_sha256(tree) == initial
+    (tree / "README.md").write_text("Changed product source\n", encoding="utf-8")
+    assert independent_source_tree_sha256(tree) != initial
+    assert release_source_tree_sha256(tree) == independent_source_tree_sha256(tree)
+
+
+@pytest.mark.acceptance("E84")
+def test_reproducible_build_environment_excludes_unrelated_secrets(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("MUDRA_TEST_SECRET", "must-not-enter-build-subprocess")
+    monkeypatch.setenv("MUDRA_WINDOWS_EGRESS_CONTROL", "VERIFIED")
+    monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "mudra-test-firewall")
+    env = release_verifier.reproducible_env()
+
+    assert "MUDRA_TEST_SECRET" not in env
+    assert env["MUDRA_WINDOWS_EGRESS_CONTROL"] == "VERIFIED"
+    assert env["MUDRA_FIREWALL_RULE_NAME"] == "mudra-test-firewall"
+    assert env["PIP_NO_INDEX"] == "1"
+    assert env["PYTHONNOUSERSITE"] == "1"
+
+
 @pytest.fixture(scope="module")
 def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
     # Release receipts are deliberately repository-relative.  `build/` is an
@@ -82,7 +120,7 @@ def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
             "--report", report_relative.as_posix(),
         ],
         cwd=ROOT,
-        env={**os.environ, "PYTHONPATH": "", "PIP_NO_INDEX": "1", "PYTHONNOUSERSITE": "1"},
+        env=release_verifier.reproducible_env(),
         check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -337,7 +375,7 @@ def test_locked_verifier_environment_has_complete_dependencies() -> None:
     completed = subprocess.run(
         [sys.executable, "-m", "pip", "check"],
         cwd=ROOT,
-        env={**os.environ, "PYTHONNOUSERSITE": "1"},
+        env=release_verifier.reproducible_env(),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,

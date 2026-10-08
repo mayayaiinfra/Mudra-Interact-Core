@@ -17,6 +17,18 @@ FIXTURE_ROOT = ROOT / "tests" / "fixtures" / "language" / "v1"
 DIRECTIONS = ("human_to_human", "human_to_agent", "agent_to_human", "agent_to_agent")
 
 
+def _isolated_child_environment() -> dict[str, str]:
+    allowed = {
+        "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
+        "userprofile", "systemdrive", "comspec", "psmodulepath",
+        "mudra_firewall_rule_name", "mudra_python_exe",
+        "mudra_windows_egress_control",
+    }
+    env = {key: value for key, value in os.environ.items() if key.casefold() in allowed}
+    env.update({"PYTHONPATH": "", "PYTHONNOUSERSITE": "1"})
+    return env
+
+
 def _valid_messages() -> list[tuple[str, str, dict]]:
     output = []
     for direction in DIRECTIONS:
@@ -364,7 +376,7 @@ assert not any(hasattr(language, name) for name in ("authorize", "execute", "pub
     completed = subprocess.run(
         [sys.executable, "-c", code, str(ROOT / "src")],
         cwd=ROOT,
-        env={**os.environ, "PYTHONPATH": "", "PYTHONNOUSERSITE": "1"},
+        env=_isolated_child_environment(),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,

@@ -1,7 +1,7 @@
 {
   "design_revision": "0.1",
   "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-02",
+  "active_item": "ML-01",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
@@ -10,7 +10,7 @@
   "items": [
     {
       "id": "ML-01",
-      "state": "VERIFIED",
+      "state": "REVERIFY_REQUIRED",
       "requires": [],
       "outputs": [
         "schemas/language/v1 closed JSON Schema",
@@ -78,7 +78,7 @@
     },
     {
       "id": "ML-04",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "requires": [
         "ML-03"
       ],
@@ -130,6 +130,7 @@
     }
   ],
   "reverification_required": [
+    "ML-01",
     "ML-02",
     "ML-03"
   ]

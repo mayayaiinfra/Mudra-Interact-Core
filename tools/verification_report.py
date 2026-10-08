@@ -47,6 +47,10 @@ _EXCLUDED_PARTS = {
     "evidence",
     ".pytest-language-tmp",
 }
+_MUTABLE_STATUS_FILES = {
+    "IMPLEMENTATION_BACKLOG.json",
+    "docs/COMMUNICATION_LANGUAGE_BACKLOG.json",
+}
 
 
 class VerificationError(Exception):
@@ -373,7 +377,7 @@ def tracked_source_files(root: Path) -> list[Path]:
         parts = PurePosixPath(rel).parts
         if not parts or any(part in _EXCLUDED_PARTS or part.endswith(".egg-info") for part in parts):
             continue
-        if rel == "IMPLEMENTATION_BACKLOG.json" or rel.endswith(".pyc"):
+        if rel in _MUTABLE_STATUS_FILES or rel.endswith(".pyc"):
             continue
         path = root.joinpath(*parts)
         if path.is_symlink():

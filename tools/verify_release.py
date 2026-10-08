@@ -64,7 +64,7 @@ EXCLUDED_PARTS = {
     ".git", ".venv", "__pycache__", ".pytest_cache", "build", "dist",
     "htmlcov", "evidence", "release-artifacts", ".pytest-language-tmp",
 }
-EXCLUDED_NAMES = {"IMPLEMENTATION_BACKLOG.json"}
+EXCLUDED_NAMES = {"IMPLEMENTATION_BACKLOG.json", "COMMUNICATION_LANGUAGE_BACKLOG.json"}
 
 
 class ReleaseError(Exception):
@@ -205,7 +205,18 @@ def run(argv: list[str], *, cwd: Path, env: dict[str, str], timeout: int = 180) 
 
 
 def reproducible_env() -> dict[str, str]:
-    env = os.environ.copy()
+    allowed_environment = {
+        "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
+        "userprofile", "systemdrive", "comspec", "programfiles",
+        "programfiles(x86)", "programw6432", "psmodulepath",
+        "mudra_firewall_rule_name", "mudra_python_exe",
+        "mudra_windows_egress_control",
+    }
+    env = {
+        key: value
+        for key, value in os.environ.items()
+        if key.casefold() in allowed_environment
+    }
     env.update({
         "SOURCE_DATE_EPOCH": SOURCE_DATE_EPOCH,
         "TZ": "UTC",
@@ -500,7 +511,7 @@ $valid = ($rule.Enabled -eq 'True' -and $rule.Direction -eq 'Outbound' -and $rul
 if ($valid) { exit 0 }
 exit 3
 """
-    env = os.environ.copy()
+    env = reproducible_env()
     env["MUDRA_PYTHON_EXE"] = str(image)
     try:
         completed = subprocess.run(
