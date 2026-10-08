@@ -1,12 +1,12 @@
 {
   "design_revision": "0.1",
-  "status": "ML06_CURRENT_SOURCE_REQUALIFICATION_IN_PROGRESS",
-  "active_item": "ML-06",
+  "status": "SOFTWARE_COMPLETE_HUMAN_QUALIFICATION_BLOCKED",
+  "active_item": "ML-05",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.4.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "Mudra Interact 0.4.0 is published and exact-artifact verified; M0-M4, MI-01 through MI-10, ML-01 through ML-04 have current passing receipts. ML-06 is in final current-source A2A requalification. ML-05 remains externally blocked; no human comprehension, cultural or accessibility qualification is claimed.",
+  "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. M0-M4 and MI-01 through MI-10 are verified; ML-01 through ML-04 and ML-06 have fresh passing receipts on the released source. Only ML-05 remains blocked on external human qualification. No broad comprehension, cultural, accessibility, public-agent or production-host claims are made.",
   "items": [
     {
       "id": "ML-01",
@@ -182,7 +182,7 @@
     },
     {
       "id": "ML-06",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": [
         "ML-04"
       ],
@@ -199,21 +199,20 @@
         "L52: no side effects from parse or accept; explicit cancellation only; fixed remote errors",
         "L53: packaged dependency-free adapter and accurate qualification limits"
       ],
-      "progress": "Fresh current-source A2A loopback-peer and receipt verification is active after ML-01 through ML-03 passed. No public third-party agent, production host, provider or paid operation is claimed.",
+      "progress": "Requalified on the clean 0.4.0 source: live independent loopback A2A peer and fail-closed receipt checks passed 15/15, zero skips; L50-L53 all passed. No public third-party agent, production host, model provider, paid operation or A2A conformance certification is claimed.",
       "prior_state": "IN_PROGRESS",
       "superseded_candidate_receipt": {
         "path": "evidence/language/ML-06.json",
         "sha256": "bbaa2af5f2977789d9c390ac1c73c8e6b29acddf1b1ff5584860128bf057c4e2"
+      },
+      "verification_receipt": {
+        "path": "evidence/language/ML-06-v0.4.0-final.json",
+        "sha256": "45d07dafcc401efd9b05d2cd64148400806a41e2bd40b1a1b775e9e95bebc39a"
       }
     }
   ],
-  "reverification_required": [
-    {
-      "scope": "ML-06 / released 0.4.0 source",
-      "reason": "The A2A adapter is included in the exact published release; the separate current-source loopback peer and receipt verifier must pass after the frozen source/docs status commit."
-    }
-  ],
-  "next_scope": "Finish ML-06 current-source A2A verification. All software and release gates will then be complete; ML-05 remains blocked until actual consented participants and independent scoped cultural/accessibility reviewers are available.",
+  "reverification_required": [],
+  "next_scope": "Software implementation and release gates are complete. Resume ML-05 only when actual eligible participants can be recruited and consented under the approved notice/data flow and independent scoped cultural/accessibility reviewers are available. Synthetic tests and model review cannot replace these inputs.",
   "current_release": {
     "package": "mudra-interact",
     "version": "0.4.0",
@@ -228,6 +227,47 @@
       "No human-comprehension, cultural or accessibility qualification.",
       "No live public-agent or production-host qualification.",
       "ML-05 remains blocked pending real consented participants and independent reviewers."
+    ]
+  },
+  "closeout": {
+    "software_release_state": "COMPLETE",
+    "package": "mudra-interact",
+    "version": "0.4.0",
+    "verified_implementation_gates": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "verified_items": [
+      "MI-01",
+      "MI-02",
+      "MI-03",
+      "MI-04",
+      "MI-05",
+      "MI-06",
+      "MI-07",
+      "MI-08",
+      "MI-09",
+      "MI-10"
+    ],
+    "verified_communication_items": [
+      "ML-01",
+      "ML-02",
+      "ML-03",
+      "ML-04",
+      "ML-06"
+    ],
+    "externally_blocked_item": "ML-05",
+    "blocker": "Actual consented participants, owner-approved populated participant notice/data flow, and independent scoped cultural/accessibility reviewers are required.",
+    "claims_not_established": [
+      "Human comprehension or usability",
+      "Cultural suitability",
+      "Accessibility qualification",
+      "Gesture recognition accuracy in the field",
+      "Public third-party A2A interoperability",
+      "Production-host integration"
     ]
   }
 }
