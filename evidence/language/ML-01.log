@@ -3,13 +3,11 @@ STDOUT
 platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: C:\Users\MAYAYAI\MAPROJECTS\Mudra-Interact-Core
 configfile: pyproject.toml
-plugins: anyio-4.12.1, hypothesis-6.151.5, asyncio-1.3.0
-asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
 collected 28 items
 
 tests\test_language_contract.py ......                                   [ 21%]
 tests\test_language_verification.py ......................               [100%]
 
-============================= 28 passed in 3.02s ==============================
+============================= 28 passed in 2.53s ==============================
 
 STDERR

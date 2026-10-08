@@ -1,16 +1,16 @@
 {
   "design_revision": "0.1",
   "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-01",
+  "active_item": "ML-02",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "The 0.2.0 gesture/event foundation is published and verified. ML-04 adds the separately versioned language SDK in package 0.3.0; its release is qualified independently. ML-01–ML-03 receipts were current for the ML-03 candidate but are stale after the 0.3.0 package/docs changes; they must be refreshed in dependency order before ML-04 can close.",
+  "current_release_dependency": "The 0.2.0 gesture/event foundation is published and verified. ML-01 is reverified on the corrected source. ML-02 and ML-03 remain in dependency order before ML-04 can close; ML-04 then requires fresh cross-platform and 0.3.0 TestPyPI/PyPI proofs.",
   "items": [
     {
       "id": "ML-01",
-      "state": "REVERIFY_REQUIRED",
+      "state": "VERIFIED",
       "requires": [],
       "outputs": [
         "schemas/language/v1 closed JSON Schema",
@@ -25,13 +25,13 @@
       ],
       "verification_receipt": {
         "path": "evidence/language/ML-01.json",
-        "sha256": "a36462baf0ade86e843f92dbb5557d5c24be0c5d43160622cc58892eece1cbd1"
+        "sha256": "851965c8fa3ca8dcc1b917942f3f1865aacc66b854d371fa9facaf4fb7d96577"
       },
       "prior_state": "VERIFIED"
     },
     {
       "id": "ML-02",
-      "state": "REVERIFY_REQUIRED",
+      "state": "IN_PROGRESS",
       "requires": [
         "ML-01"
       ],
@@ -130,7 +130,6 @@
     }
   ],
   "reverification_required": [
-    "ML-01",
     "ML-02",
     "ML-03"
   ]
