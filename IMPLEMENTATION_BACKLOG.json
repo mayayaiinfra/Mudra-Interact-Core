@@ -132,9 +132,15 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IMPLEMENTED",
-      "evidence": [],
-      "prior_state": "VERIFIED"
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "838fc94edd0e7e2b25eaba97d43849786a8f517ff992f8226e3e17c84c868125"
+        }
+      ],
+      "prior_state": "VERIFIED",
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -465,9 +471,15 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IMPLEMENTED",
-      "evidence": [],
-      "prior_state": "VERIFIED"
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "838fc94edd0e7e2b25eaba97d43849786a8f517ff992f8226e3e17c84c868125"
+        }
+      ],
+      "prior_state": "VERIFIED",
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-09",
@@ -489,9 +501,15 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "IMPLEMENTED",
-      "evidence": [],
-      "prior_state": "VERIFIED"
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M3-ci.json",
+          "sha256": "838fc94edd0e7e2b25eaba97d43849786a8f517ff992f8226e3e17c84c868125"
+        }
+      ],
+      "prior_state": "VERIFIED",
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-10",
