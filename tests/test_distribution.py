@@ -96,6 +96,8 @@ def test_source_identity_excludes_mutable_status_ledgers(tmp_path: Path) -> None
 def test_reproducible_build_environment_excludes_unrelated_secrets(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("MUDRA_TEST_SECRET", "must-not-enter-build-subprocess")
     monkeypatch.setenv("USERNAME", "mudra-test-user")
+    monkeypatch.setenv("PROCESSOR_ARCHITECTURE", "AMD64")
+    monkeypatch.setenv("PROCESSOR_ARCHITEW6432", "AMD64")
     monkeypatch.setenv("MUDRA_WINDOWS_EGRESS_CONTROL", "VERIFIED")
     monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "mudra-test-firewall")
     env = release_verifier.reproducible_env()
@@ -105,6 +107,10 @@ def test_reproducible_build_environment_excludes_unrelated_secrets(monkeypatch: 
     assert "MUDRA_TEST_SECRET" not in verifier_env
     assert env.get("USERNAME") == "mudra-test-user"
     assert verifier_env.get("USERNAME") == "mudra-test-user"
+    assert env["PROCESSOR_ARCHITECTURE"] == "AMD64"
+    assert env["PROCESSOR_ARCHITEW6432"] == "AMD64"
+    assert verifier_env["PROCESSOR_ARCHITECTURE"] == "AMD64"
+    assert verifier_env["PROCESSOR_ARCHITEW6432"] == "AMD64"
     assert env["MUDRA_WINDOWS_EGRESS_CONTROL"] == "VERIFIED"
     assert env["MUDRA_FIREWALL_RULE_NAME"] == "mudra-test-firewall"
     assert env["PIP_NO_INDEX"] == "1"

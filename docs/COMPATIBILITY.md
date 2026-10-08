@@ -61,6 +61,9 @@ the firewall rule must match the process image reported by
 `GetModuleFileNameW`. Rule inspection prefers `pwsh`, matching the PowerShell
 host used by CI to install and validate the Windows firewall rule, and falls
 back to Windows PowerShell where PowerShell 7 is unavailable.
+The sanitized Windows subprocess environment also preserves
+`PROCESSOR_ARCHITECTURE` and `PROCESSOR_ARCHITEW6432`; CPython 3.11 needs these
+variables to report the x86_64 host correctly.
 
 The release report records the source commit, source-tree digest, specification
 and acceptance digests, lock digest, exact artifact hashes, metadata/data

@@ -93,7 +93,8 @@ def safe_subprocess_environment() -> dict[str, str]:
     allowed = {
         "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
         "userprofile", "username", "user", "logname", "systemdrive", "comspec", "programfiles",
-        "programfiles(x86)", "programw6432", "psmodulepath", "lc_all", "lang", "tz",
+          "programfiles(x86)", "programw6432", "psmodulepath", "processor_architecture",
+          "processor_architew6432", "lc_all", "lang", "tz",
         "mudra_firewall_rule_name", "mudra_python_exe", "mudra_windows_egress_control",
     }
     environment = {
