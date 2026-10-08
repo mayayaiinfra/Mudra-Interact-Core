@@ -516,7 +516,15 @@ def _windows_firewall_rule_status() -> tuple[bool, str]:
     """Return a safe reason when the process-scoped Windows rule is unavailable."""
     rule_name = os.environ.get("MUDRA_FIREWALL_RULE_NAME", "").strip()
     configured_image = os.environ.get("MUDRA_PYTHON_EXE", "").strip()
-    powershell = shutil.which("powershell.exe") or shutil.which("powershell")
+    # The workflow installs and runs firewall policy through PowerShell 7.
+    # Prefer the same host so its NetSecurity module path is available to this
+    # child inspection process; fall back for Windows machines without pwsh.
+    powershell = (
+        shutil.which("pwsh.exe")
+        or shutil.which("pwsh")
+        or shutil.which("powershell.exe")
+        or shutil.which("powershell")
+    )
     image = _windows_process_image_path()
     if not rule_name or not configured_image or not powershell or image is None:
         return False, "firewall_probe_configuration_unavailable"

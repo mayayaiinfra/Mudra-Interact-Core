@@ -322,6 +322,32 @@ def test_windows_firewall_rule_reports_safe_lookup_reason(
     assert release_verifier._windows_firewall_rule_status() == (False, "firewall_rule_not_found")
 
 
+@pytest.mark.acceptance("E84")
+def test_windows_firewall_rule_inspection_prefers_pwsh_module_host(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    image = tmp_path / "base-python.exe"
+    image.write_bytes(b"synthetic executable marker")
+    monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "synthetic-rule")
+    monkeypatch.setenv("MUDRA_PYTHON_EXE", str(image))
+    monkeypatch.setattr(
+        "tools.verify_release.shutil.which",
+        lambda name: {"pwsh.exe": "pwsh.exe", "powershell.exe": "powershell.exe"}.get(name),
+    )
+    monkeypatch.setattr("tools.verify_release._windows_process_image_path", lambda: image)
+    commands: list[list[str]] = []
+
+    def run(command: list[str], **_kwargs: object) -> subprocess.CompletedProcess:
+        commands.append(command)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr("tools.verify_release.subprocess.run", run)
+
+    assert release_verifier._windows_firewall_rule_status() == (True, "firewall_rule_matches")
+    assert commands[0][0] == "pwsh.exe"
+
+
 @pytest.mark.acceptance("E77")
 def test_repeat_build_hashes_are_identical(release_report: dict) -> None:
     repeat = release_report["checks"]["repeat_build"]

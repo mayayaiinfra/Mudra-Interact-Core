@@ -58,7 +58,9 @@ connection or unexpected egress result can be distinguished without publishing
 raw command output or host-specific paths. `sys.executable` is checked
 separately to confirm tests still run from the isolated virtual environment;
 the firewall rule must match the process image reported by
-`GetModuleFileNameW`.
+`GetModuleFileNameW`. Rule inspection prefers `pwsh`, matching the PowerShell
+host used by CI to install and validate the Windows firewall rule, and falls
+back to Windows PowerShell where PowerShell 7 is unavailable.
 
 The release report records the source commit, source-tree digest, specification
 and acceptance digests, lock digest, exact artifact hashes, metadata/data
