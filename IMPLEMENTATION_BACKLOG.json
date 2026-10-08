@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-06",
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -151,7 +151,7 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -160,7 +160,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/M2-v040.json",
+          "sha256": "1b0f230ad8c9817580eccd86ead004e7aa88050738c46b13f94c7136a2aa2368"
+        }
+      ]
     },
     {
       "id": "M3",
@@ -426,7 +433,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -435,7 +442,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-05-v040.json",
+          "sha256": "f263045b0313e31ccd0524445c270836e15d69a3c2cb203d39a92270a60a2cfb"
+        }
+      ]
     },
     {
       "id": "MI-06",
@@ -460,7 +474,7 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -469,7 +483,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-06-v040.json",
+          "sha256": "0a4146717c1b3dace48c20e0ce8a26da3d005ba38e6883af56d30e9fca294f29"
+        }
+      ]
     },
     {
       "id": "MI-07",
@@ -504,7 +525,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -513,7 +534,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-07-v040.json",
+          "sha256": "a8c65cb63b6bcc2b9bdf3f28170958f094e9ef48b490aadaefa4e5523839c88d"
+        }
+      ]
     },
     {
       "id": "MI-08",
@@ -547,7 +575,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -668,10 +696,11 @@
     "state": "IN_PROGRESS",
     "completed_gates": [
       "M0",
-      "M1"
+      "M1",
+      "M2"
     ],
-    "active_gate": "M2",
-    "active_item": "MI-06",
+    "active_gate": "M3",
+    "active_item": "MI-08",
     "updated_on": "2026-10-09"
   }
 }
