@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The 0.4.1 package was published to TestPyPI and PyPI and its exact artifacts, attestations, installs and immutable GitHub release were verified. M0-M3 and the eight-cell Linux/Windows CPython 3.11-3.14 matrix passed for its frozen source. MI-10 remains INCOMPLETE: its acceptance suite exposed that the README linked to generic package pages instead of exact-version pages. Candidate 0.4.2 updates the public package value statement and exact links; every gate is being requalified against the new frozen source. No human, community or accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
+    "scope": "The 0.4.1 package was published to TestPyPI and PyPI and its exact artifacts, attestations, installs and immutable GitHub release were verified. Its separate MI-10 acceptance remained incomplete because the README used generic, non-versioned package links. Candidate 0.4.2 strengthens the vendor-neutral future-value description and fixes those links. M0-M3 are freshly verified for 0.4.2; M4/MI-10 remains open until its published artifacts pass exact download, provenance, install and immutable-release checks. No human, community or accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "0.4.1 publication proof is retained as historical evidence and does not close MI-10 because the independent acceptance suite failed on missing exact-version links. Candidate 0.4.2 is active at MI-01. Its source, schema metadata, package description and exact-version links require fresh M0-M4 evidence; no 0.4.1 receipt is valid as current-candidate verification.",
+    "verification_claim": "Candidate 0.4.2 has fresh M0-M3 evidence, including 217/217 hosted M3 acceptance cases with zero skips and the complete eight-cell Linux/Windows CPython 3.11-3.14 matrix. M4/MI-10 is active; package publication and exact downloaded-install/provenance verification remain required.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -183,10 +183,15 @@
         "path": "evidence/local/v0.4.2/M2.json",
         "sha256": "492d316e6cab266fb77a6e4b492d10fb3ac447f7c09f3c5d5e7b5fd4e9b9cf72",
         "description": "Candidate 0.4.2 M2 aggregate verification report."
+      },
+      {
+        "path": "evidence/local/v0.4.2/M3.json",
+        "sha256": "4a38f3a91b7cf21a0aa558188c49825bc8e5eb6b442ae4415279042bf51909c5",
+        "description": "Candidate 0.4.2 M3 hosted aggregate on Ubuntu 24.04: 217 acceptance cases passed, zero skips, with fresh eight-cell matrix evidence; luna_self_verified."
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -432,7 +437,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -466,7 +471,14 @@
           "sha256": "26c0c42d709a324d1c88f2f0bbaa0289aa7ee5f1e3a236f51af25e6637dedd81",
           "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M3-ci.json"
         }
-      ]
+      ],
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M3.json",
+          "sha256": "4a38f3a91b7cf21a0aa558188c49825bc8e5eb6b442ae4415279042bf51909c5"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -476,7 +488,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1325,7 +1337,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1364,12 +1376,13 @@
     "completed_gates": [
       "M0",
       "M1",
-      "M2"
+      "M2",
+      "M3"
     ],
-    "active_gate": "M3",
-    "active_item": null,
+    "active_gate": "M4",
+    "active_item": "MI-10",
     "updated_on": "2026-10-09",
-    "note": "M0-M2 are freshly VERIFIED. MI-08 and MI-09 are individually VERIFIED for 0.4.2; the required platform aggregator confirms all eight Linux/Windows x86_64 and CPython 3.11-3.14 cells. M3 full acceptance remains open pending its hosted isolated Ubuntu aggregate run.",
+    "note": "M0-M3 are freshly VERIFIED for 0.4.2. The hosted M3 full gate passed 217/217 cases with zero skips, and the exact eight-cell Linux/Windows CPython 3.11-3.14 matrix passed. M4/MI-10 is active for release-acceptance preflight, TestPyPI/PyPI publication, exact artifact downloads, attestations, fresh installs and immutable release verification.",
     "previous_release": {
       "version": "0.4.1",
       "state": "VERIFIED",
