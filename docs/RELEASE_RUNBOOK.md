@@ -122,10 +122,14 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
 
    ```bash
    # Ubuntu 24.04, CPython 3.12; this is the hash-locked verifier platform.
-   python3.12 -m venv .release-verifier
-   .release-verifier/bin/python -m pip install --require-hashes -r requirements-release.lock
-   .release-verifier/bin/python tools/verify_release.py --published --report evidence/releases/published-verification.json
+   verifier_dir="$(mktemp -d "${TMPDIR:-/tmp}/mudra-release-verifier.XXXXXX")"
+   python3.12 -m venv "$verifier_dir/venv"
+   "$verifier_dir/venv/bin/python" -m pip install --require-hashes -r requirements-release.lock
+   "$verifier_dir/venv/bin/python" tools/verify_release.py --published --report evidence/releases/published-verification.json
    ```
+
+   Keep the verifier environment outside the checkout so it cannot alter the
+   source-tree digest being checked.
 
    The read-only verifier checks live index metadata and artifact bytes on both
    indexes, exact GitHub run/tag/release identity, environment protection,

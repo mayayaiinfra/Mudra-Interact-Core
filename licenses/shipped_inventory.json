@@ -150,7 +150,7 @@
     },
     {
       "path": "docs/RELEASE_RUNBOOK.md",
-      "sha256": "4abdd4b0600683f8dd036aa49da12d9729a1b0b6d17fab203bb18926a00d1c27",
+      "sha256": "fa7ead83ef45eebdd5d0be3f0dd0e5c2cf0da1742c237d90880fa2e8bb2a1d26",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -402,7 +402,7 @@
     },
     {
       "path": "tools/verify_release.py",
-      "sha256": "b8755a497879dbb35a52c0c115af24eab30c6d93f9bfc0d8423798ce179aec59",
+      "sha256": "738c276a97a7300726dd6e8bf8d4e4e973339ba2ad28c9066dda4129853498cd",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"

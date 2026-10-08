@@ -19,6 +19,7 @@ from typing import Any
 import pytest
 
 from tools import release_proof
+from tools import verify_release
 from tools.verification_report import seal_report, sha256_text_file, source_tree_sha256
 
 
@@ -292,6 +293,101 @@ def test_testpypi_default_install_callback_uses_fresh_venv_and_keyword_version(
     assert commands[0][-1].endswith(WHEEL_NAME)
     assert "0.2.0" in commands[1][-1]
     assert "import importlib.metadata" in commands[1][-1]
+
+
+@pytest.mark.acceptance("E92")
+def test_verify_release_cli_wires_candidate_download_to_default_install(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    contents = artifact_bytes()
+    source_commit = "a" * 40
+    source_tree = "b" * 64
+    artifact_root = tmp_path / "release-artifacts" / "0.2.0"
+    artifact_root.mkdir(parents=True)
+    frozen = []
+    for filename, body in contents.items():
+        (artifact_root / filename).write_bytes(body)
+        frozen.append({
+            "kind": "wheel" if filename.endswith(".whl") else "sdist",
+            "filename": filename,
+            "path": f"release-artifacts/0.2.0/{filename}",
+            "sha256": hashlib.sha256(body).hexdigest(),
+            "size_bytes": len(body),
+        })
+    offline = seal_report({
+        "mode": "offline", "source_commit": source_commit,
+        "source_tree_sha256": source_tree,
+        "checks": {
+            "repeat_build": {"wheel_identical": True, "sdist_identical": True},
+            "offline": {"negative_egress": {"runner_network_isolation": "VERIFIED"}},
+        },
+        "frozen_candidate_artifacts": frozen,
+    })
+    offline_path = tmp_path / "evidence" / "releases" / "offline-qualification.json"
+    offline_path.parent.mkdir(parents=True)
+    offline_path.write_bytes(release_proof.canonical_json_bytes(offline))
+
+    monkeypatch.setattr(verify_release, "ROOT", tmp_path)
+    monkeypatch.setattr(verify_release, "git_value", lambda *_args: source_commit)
+    monkeypatch.setattr(verify_release, "source_tree_sha256", lambda _root: source_tree)
+    monkeypatch.setattr(verify_release, "sha256_text_file", lambda _path: "c" * 64)
+    monkeypatch.setattr(verify_release, "current_platform", lambda: {
+        "os": "linux", "architecture": "x86_64", "python": "3.14.8",
+    })
+    fetch = fake_index_fetch("testpypi", contents)
+
+    class FakeResponse:
+        status = 200
+
+        def __init__(self, url: str, body: bytes) -> None:
+            self.url = url
+            self.body = body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args: Any) -> None:
+            return None
+
+        def geturl(self) -> str:
+            return self.url
+
+        def read(self, size: int = -1) -> bytes:
+            return self.body if size < 0 else self.body[:size]
+
+    class FakeOpener:
+        def open(self, request: Any, *, timeout: int):
+            del timeout
+            status, url, body = fetch(request.full_url, max_bytes=release_proof.MAX_ARTIFACT_BYTES)
+            assert status == 200
+            return FakeResponse(url, body)
+
+    class FakeBuilder:
+        def __init__(self, **_kwargs: Any) -> None:
+            pass
+
+        def create(self, path: Path) -> None:
+            path.mkdir(parents=True)
+
+    def fake_run(command: list[str], **_kwargs: Any) -> subprocess.CompletedProcess[str]:
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(release_proof.urllib.request, "build_opener", lambda *_args: FakeOpener())
+    monkeypatch.setattr(release_proof.venv, "EnvBuilder", FakeBuilder)
+    monkeypatch.setattr(release_proof.subprocess, "run", fake_run)
+
+    result = verify_release.main([
+        "--verify-index", "testpypi",
+        "--artifact-dir", "release-artifacts/0.2.0",
+        "--candidate-report", "evidence/releases/offline-qualification.json",
+        "--report", "evidence/releases/testpypi-verification.json",
+    ])
+
+    assert result == 0
+    receipt = json.loads((tmp_path / "evidence/releases/testpypi-verification.json").read_text(encoding="utf-8"))
+    assert receipt["state"] == "VERIFIED"
+    assert receipt["mode"] == "verify_testpypi"
+    assert receipt["checks"]["fresh_installed_wheel_smoke"] is True
 
 
 @pytest.mark.acceptance("E93")
@@ -724,7 +820,11 @@ def test_published_aggregator_blocks_absent_live_proof_and_separates_unverified_
     report = ROOT / "build" / "test-m10-published-blocked.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     result = subprocess.run(
-        [sys.executable, "tools/verify_release.py", "--published", "--report", report.relative_to(ROOT).as_posix()],
+        [
+            sys.executable, "tools/verify_release.py", "--published",
+            "--published-manifest", "evidence/releases/synthetic-missing-published.json",
+            "--report", report.relative_to(ROOT).as_posix(),
+        ],
         cwd=ROOT, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=60,
     )
     document = json.loads(report.read_text(encoding="utf-8"))

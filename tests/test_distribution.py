@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import platform
@@ -19,6 +20,7 @@ from tools.aggregate_platform_matrix import (
     validate_aggregate_report,
     write_report as write_matrix_report,
 )
+from tools.release_proof import ReleaseProofError
 from tools.verify_release import (
     PACKAGE_VERSION,
     REQUIRED_PYTHONS,
@@ -30,6 +32,7 @@ from tools.verify_release import (
     _windows_network_isolation_result,
     _windows_process_image_path,
 )
+from tools import verify_release as release_verifier
 from tools.verification_report import (
     canonical_text_bytes,
     canonical_json_bytes,
@@ -68,10 +71,15 @@ def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
     # Release receipts are deliberately repository-relative.  `build/` is an
     # ignored scratch location and is excluded from source identity.
     report_relative = Path("build") / f"mi08-release-{os.getpid()}.json"
+    artifact_relative = Path("build") / f"mi08-candidate-{os.getpid()}"
     report_path = ROOT / report_relative
     report_path.parent.mkdir(parents=True, exist_ok=True)
     completed = subprocess.run(
-        [sys.executable, "tools/verify_release.py", "--offline", "--report", report_relative.as_posix()],
+        [
+            sys.executable, "tools/verify_release.py", "--offline",
+            "--artifact-dir", artifact_relative.as_posix(),
+            "--report", report_relative.as_posix(),
+        ],
         cwd=ROOT,
         env={**os.environ, "PYTHONPATH": "", "PIP_NO_INDEX": "1", "PYTHONNOUSERSITE": "1"},
         check=False,
@@ -98,6 +106,37 @@ def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
         "mudra_interact_core/py.typed",
     }
     assert {item["kind"] for item in release_report["artifacts"]} >= {"wheel", "sdist", "wheel_from_sdist"}
+
+
+@pytest.mark.acceptance("E73")
+def test_actual_offline_frozen_candidate_has_expected_distribution_filenames(release_report: dict) -> None:
+    frozen = release_report["frozen_candidate_artifacts"]
+    assert {item["filename"] for item in frozen} == {
+        "mudra_interact-0.2.0-py3-none-any.whl",
+        "mudra_interact-0.2.0.tar.gz",
+    }
+    assert all(item["size_bytes"] > 0 and re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) for item in frozen)
+
+
+@pytest.mark.acceptance("E73")
+def test_real_candidate_inventory_accepts_backend_built_artifacts(release_report: dict) -> None:
+    # The local Windows run cannot establish OS-level egress isolation. Mark
+    # only that external prerequisite in a resealed fixture; the offline build,
+    # source identity, filenames, sizes, and hashes remain actual outputs.
+    fixture = json.loads(json.dumps(release_report))
+    fixture["checks"]["offline"]["negative_egress"]["runner_network_isolation"] = "VERIFIED"
+    report_path = ROOT / "build" / f"mi08-candidate-fixture-{os.getpid()}.json"
+    report_path.write_bytes(canonical_json_bytes(seal_report(fixture)))
+
+    inventory = release_verifier.frozen_candidate_inventory(
+        f"build/mi08-candidate-{os.getpid()}", report_path.relative_to(ROOT).as_posix(),
+    )
+
+    assert {row["filename"] for row in inventory} == {
+        "mudra_interact-0.2.0-py3-none-any.whl",
+        "mudra_interact-0.2.0.tar.gz",
+    }
+    assert all(row["size_bytes"] > 0 and re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) for row in inventory)
 
 
 @pytest.mark.acceptance("E74")
@@ -326,6 +365,78 @@ def test_exact_wheel_install_smoke_and_version_consistency(release_report: dict)
     assert install["uninstall_exit"] == 0 and install["reinstall_exit"] == 0
     assert metadata["metadata_version"] == PACKAGE_VERSION
     assert metadata["metadata_name"] == "mudra-interact"
+
+
+@pytest.mark.acceptance("E82")
+def test_frozen_candidate_inventory_checks_offline_report_and_exact_files(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    commit = "a" * 40
+    tree = "b" * 64
+    artifact_root = tmp_path / "release-artifacts" / "0.2.0"
+    artifact_root.mkdir(parents=True)
+    contents = {
+        "mudra_interact-0.2.0-py3-none-any.whl": b"synthetic wheel bytes",
+        "mudra_interact-0.2.0.tar.gz": b"synthetic sdist bytes",
+    }
+    frozen = []
+    for filename, data in contents.items():
+        (artifact_root / filename).write_bytes(data)
+        frozen.append({
+            "kind": "wheel" if filename.endswith(".whl") else "sdist",
+            "filename": filename,
+            "path": f"release-artifacts/0.2.0/{filename}",
+            "sha256": hashlib.sha256(data).hexdigest(),
+            "size_bytes": len(data),
+        })
+    report_path = tmp_path / "evidence" / "releases" / "offline-qualification.json"
+    report_path.parent.mkdir(parents=True)
+    offline_report = {
+        "mode": "offline",
+        "source_commit": commit,
+        "source_tree_sha256": tree,
+        "checks": {
+            "repeat_build": {"wheel_identical": True, "sdist_identical": True},
+            "offline": {"negative_egress": {"runner_network_isolation": "VERIFIED"}},
+        },
+        "frozen_candidate_artifacts": frozen,
+    }
+    report_path.write_bytes(canonical_json_bytes(seal_report(offline_report)))
+    monkeypatch.setattr(release_verifier, "ROOT", tmp_path)
+    monkeypatch.setattr(release_verifier, "git_value", lambda *_args: commit)
+    monkeypatch.setattr(release_verifier, "source_tree_sha256", lambda _root: tree)
+
+    inventory = release_verifier.frozen_candidate_inventory(
+        "release-artifacts/0.2.0", "evidence/releases/offline-qualification.json",
+    )
+
+    assert {row["filename"] for row in inventory} == set(contents)
+    assert {row["size_bytes"] for row in inventory} == {len(value) for value in contents.values()}
+
+    malformed = json.loads(json.dumps(offline_report))
+    malformed["frozen_candidate_artifacts"][0]["sha256"] = "invalid"
+    report_path.write_bytes(canonical_json_bytes(seal_report(malformed)))
+    with pytest.raises(ReleaseProofError) as error:
+        release_verifier.frozen_candidate_inventory(
+            "release-artifacts/0.2.0", "evidence/releases/offline-qualification.json",
+        )
+    assert error.value.code == "artifact_inventory_invalid"
+
+
+@pytest.mark.acceptance("E82")
+def test_real_deterministic_sdist_uses_frozen_candidate_filename(tmp_path: Path) -> None:
+    archive = release_verifier.deterministic_sdist(
+        release_verifier.make_staging(release_verifier.ROOT, tmp_path / "source"),
+        tmp_path / "sdist", release_verifier.reproducible_env(),
+    )
+
+    assert archive.name == "mudra_interact-0.2.0.tar.gz"
+    assert release_verifier.inspect_sdist(archive) == {
+        "name": "mudra-interact", "version": "0.2.0", "metadata_version": "2.4",
+    }
+    extracted = release_verifier.extract_sdist(archive, tmp_path / "extracted")
+    assert extracted.name == "mudra_interact-0.2.0"
+    assert (extracted / "pyproject.toml").is_file()
 
 
 @pytest.mark.acceptance("E83")

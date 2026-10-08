@@ -9,11 +9,13 @@ development requirements before this command is run.
 from __future__ import annotations
 
 import argparse
+from email.parser import Parser
 import errno
 import hashlib
 import json
 import os
 import platform
+import re
 import shutil
 import socket
 import subprocess
@@ -37,6 +39,7 @@ from tools.verification_report import canonical_text_bytes, sha256_text_file  # 
 
 
 PACKAGE_NAME = "mudra-interact"
+PACKAGE_NORMALIZED_NAME = "mudra_interact"
 PACKAGE_VERSION = "0.2.0"
 SOURCE_DATE_EPOCH = "1760054400"
 REPORT_VERSION = 1
@@ -221,33 +224,87 @@ def build_wheel(source: Path, destination: Path, env: dict[str, str]) -> Path:
     return wheels[0]
 
 
-def deterministic_sdist(source: Path, destination: Path) -> Path:
-    """Create a minimal deterministic source distribution from the snapshot."""
+def deterministic_sdist(source: Path, destination: Path, env: dict[str, str]) -> Path:
+    """Build a reproducible source distribution using the locked backend."""
     destination.mkdir(parents=True, exist_ok=True)
-    archive = destination / f"{PACKAGE_NAME}-{PACKAGE_VERSION}.tar.gz"
-    root_name = f"{PACKAGE_NAME}-{PACKAGE_VERSION}"
-    epoch = int(SOURCE_DATE_EPOCH)
-    with archive.open("wb") as raw:
-        import gzip
+    command = [
+        sys.executable,
+        "-c",
+        "import sys; from setuptools.build_meta import build_sdist; print(build_sdist(sys.argv[1]))",
+        str(destination / "backend"),
+    ]
+    code, output, _stderr = run(command, cwd=source, env=env, timeout=240)
+    filename = output.strip().splitlines()[-1] if output.strip() else ""
+    backend_archive = destination / "backend" / filename
+    expected_filename = f"{PACKAGE_NORMALIZED_NAME}-{PACKAGE_VERSION}.tar.gz"
+    archive = destination / expected_filename
+    if code != 0 or not backend_archive.is_file() or backend_archive.name != expected_filename:
+        raise ReleaseError("sdist_build_failed")
+    try:
+        with backend_archive.open("rb") as source_stream, archive.open("wb") as output_stream:
+            import gzip
 
-        with gzip.GzipFile(fileobj=raw, mode="wb", mtime=epoch) as compressed:
-            with tarfile.open(fileobj=compressed, mode="w") as tar:
-                for path in source_files(source):
-                    relative = path.relative_to(source).as_posix()
-                    # Tests and evidence are verification inputs, not package payload.
-                    if relative.startswith(("tests/", "evidence/")):
-                        continue
-                    info = tarfile.TarInfo(f"{root_name}/{relative}")
-                    data = path.read_bytes()
-                    info.size = len(data)
-                    info.mtime = epoch
-                    info.uid = 0
-                    info.gid = 0
-                    info.uname = ""
-                    info.gname = ""
-                    info.mode = 0o755 if path.suffix == ".py" else 0o644
-                    tar.addfile(info, __import__("io").BytesIO(data))
+            with tarfile.open(fileobj=source_stream, mode="r:gz") as source_tar:
+                with gzip.GzipFile(filename="", fileobj=output_stream, mode="wb", mtime=int(SOURCE_DATE_EPOCH)) as compressed:
+                    with tarfile.open(fileobj=compressed, mode="w", format=tarfile.PAX_FORMAT) as canonical_tar:
+                        for member in sorted(source_tar.getmembers(), key=lambda item: item.name):
+                            if not (member.isdir() or member.isfile()):
+                                raise ReleaseError("sdist_member_invalid")
+                            normalized = tarfile.TarInfo(member.name)
+                            normalized.type = member.type
+                            normalized.size = member.size if member.isfile() else 0
+                            normalized.mtime = int(SOURCE_DATE_EPOCH)
+                            normalized.uid = normalized.gid = 0
+                            normalized.uname = normalized.gname = ""
+                            normalized.mode = 0o755 if member.isdir() or member.mode & 0o111 else 0o644
+                            normalized.pax_headers = {}
+                            data = source_tar.extractfile(member) if member.isfile() else None
+                            canonical_tar.addfile(normalized, data)
+    except (OSError, tarfile.TarError):
+        raise ReleaseError("sdist_build_failed") from None
+    inspect_sdist(archive)
     return archive
+
+
+def inspect_sdist(archive: Path) -> dict[str, str]:
+    """Validate the standard sdist name, root, and backend-generated metadata."""
+    expected_root = f"{PACKAGE_NORMALIZED_NAME}-{PACKAGE_VERSION}"
+    try:
+        with tarfile.open(archive, mode="r:gz") as tar:
+            members = tar.getmembers()
+            names = [PurePosixPath(member.name) for member in members]
+            member_names = [member.name for member in members]
+            if (
+                not names
+                or len(member_names) != len(set(member_names))
+                or any(name.is_absolute() or ".." in name.parts for name in names)
+            ):
+                raise ReleaseError("sdist_path_invalid")
+            roots = {name.parts[0] for name in names if name.parts}
+            metadata_members = [member for member in members if PurePosixPath(member.name).as_posix() == f"{expected_root}/PKG-INFO"]
+            if roots != {expected_root} or len(metadata_members) != 1:
+                raise ReleaseError("sdist_metadata_missing")
+            extracted = tar.extractfile(metadata_members[0])
+            if extracted is None:
+                raise ReleaseError("sdist_metadata_invalid")
+            metadata = Parser().parsestr(extracted.read().decode("utf-8"))
+    except (OSError, tarfile.TarError, UnicodeDecodeError):
+        raise ReleaseError("sdist_invalid") from None
+    try:
+        metadata_version = tuple(int(part) for part in metadata["Metadata-Version"].split("."))
+    except (AttributeError, TypeError, ValueError):
+        raise ReleaseError("sdist_metadata_invalid") from None
+    if (
+        metadata.get("Name") != PACKAGE_NAME
+        or metadata.get("Version") != PACKAGE_VERSION
+        or metadata_version < (2, 2)
+    ):
+        raise ReleaseError("sdist_metadata_invalid")
+    license_files = metadata.get_all("License-File", [])
+    member_names = {PurePosixPath(member.name).as_posix() for member in members}
+    if any(f"{expected_root}/{name}" not in member_names for name in license_files):
+        raise ReleaseError("sdist_license_file_missing")
+    return {"name": metadata["Name"], "version": metadata["Version"], "metadata_version": metadata["Metadata-Version"]}
 
 
 def extract_sdist(archive: Path, destination: Path) -> Path:
@@ -259,7 +316,7 @@ def extract_sdist(archive: Path, destination: Path) -> Path:
             if name.is_absolute() or ".." in name.parts or member.issym() or member.islnk():
                 raise ReleaseError("sdist_path_invalid")
         tar.extractall(destination)
-    extracted = destination / f"{PACKAGE_NAME}-{PACKAGE_VERSION}"
+    extracted = destination / f"{PACKAGE_NORMALIZED_NAME}-{PACKAGE_VERSION}"
     if not (extracted / "pyproject.toml").is_file():
         raise ReleaseError("sdist_missing_build_config")
     return extracted
@@ -693,9 +750,10 @@ def qualify(mode: str, *, artifact_dir: str | None = None) -> dict[str, Any]:
         source_b = make_staging(ROOT, scratch / "build-b")
         wheel_a = build_wheel(source_a, scratch / "wheel-a", env)
         wheel_b = build_wheel(source_b, scratch / "wheel-b", env)
-        sdist_a = deterministic_sdist(ROOT, scratch / "sdist-a")
-        sdist_b = deterministic_sdist(ROOT, scratch / "sdist-b")
+        sdist_a = deterministic_sdist(source_a, scratch / "sdist-a", env)
+        sdist_b = deterministic_sdist(source_b, scratch / "sdist-b", env)
         checks["wheel"] = inspect_wheel(wheel_a)
+        checks["sdist"] = inspect_sdist(sdist_a)
         wheel_a_hash = sha256_file(wheel_a)
         wheel_b_hash = sha256_file(wheel_b)
         sdist_a_hash = sha256_file(sdist_a)
