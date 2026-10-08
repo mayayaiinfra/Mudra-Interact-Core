@@ -41,10 +41,15 @@
         "description": "Sanitized Windows 3.13 firewall junction diagnostic; documents the exact-image plus canonical-target rules used for the passing cell.",
         "path": "evidence/local/MI-08-Windows-firewall-diagnostic.md",
         "sha256": "0a0a240922a97f6be3fe80ea0a7c2aa396f676ecd719819674c31d946cddb81d"
+      },
+      {
+        "description": "0.4.0 MI-07 proof from tools/run_mutations.py --report evidence/local/v0.4.0/semantic-mutations-MI-07.json --timeout-seconds 90: all 15 named mutations applied and detected; source tree digest unchanged.",
+        "path": "evidence/local/v0.4.0/semantic-mutations-MI-07.json",
+        "sha256": "528efd30d288bb39e5cb48258ca66a8e233f3747cff0de0fc963130ab23f598f"
       }
     ]
   },
-  "active_item": "MI-07",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -581,7 +586,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -597,7 +602,14 @@
           "sha256": "a8c65cb63b6bcc2b9bdf3f28170958f094e9ef48b490aadaefa4e5523839c88d"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-07.json",
+          "sha256": "e9f23d38a58e5424bc1014250416067aa34a15bc872a24390a33a466829d8ffa"
+        }
+      ]
     },
     {
       "id": "MI-08",
@@ -755,8 +767,8 @@
       "M1"
     ],
     "active_gate": "M2",
-    "active_item": "MI-07",
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "MI-05 and MI-06 are verified; MI-07 is now eligible for M2."
+    "note": "All M2 items are verified; validating aggregate M2 gate."
   }
 }
