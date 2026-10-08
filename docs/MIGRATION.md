@@ -1,4 +1,33 @@
-# Migration from Mudra Core 0.1.0 to 0.2.0
+# Migration to Mudra Interact 0.3.0
+
+## From package 0.2.0 to 0.3.0
+
+This is an additive package release. The v2 gesture/event schema and CLI
+contract remain unchanged. Existing v2 frames, reports, batches, events and
+imports continue to use the same `mudra_interact_core` namespace and
+`2.0.0` protocol. The version map now identifies package `0.3.0`.
+
+The new experimental language surface is separate from v2 gesture events:
+
+- Import `Message`, `parse_message`, `check_freshness`,
+  `validate_transcript`, `render_message` and `LanguageValidationError` from
+  `mudra_interact_core`.
+- Keep language `protocol_version: "1.0.0"` distinct from gesture
+  `schema_version: "2.0.0"`. A gesture event is not a language message and
+  cannot be converted into a language-level approval.
+- Use the packaged synthetic transcripts through `importlib.resources` as
+  shown in [the communication-language API](COMMUNICATION_LANGUAGE_API.md).
+- Handle `LanguageValidationError` without logging submitted message content.
+  The parser enforces size and shape limits; it does not authenticate the
+  sender, verify provenance or authorize execution.
+- Keep transports, BYOK credentials, models, provider calls and consequential
+  action approvals in the host application. No MCP/A2A or publishing
+  integration is included in this release.
+
+The package has no runtime dependencies. Installing 0.3.0 does not perform an
+automatic data migration or change behavior of v2 consumers.
+
+## From package 0.1.0 to 0.2.0
 
 Version 0.2.0 is a breaking protocol and API revision. The v1 reference package
 uses event schema `1.0`; the v2 contract uses protocol and event schema `2.0.0`

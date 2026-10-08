@@ -13,6 +13,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -31,7 +32,8 @@ from tools.verification_report import (
 
 
 PACKAGE = "mudra-interact"
-VERSION = "0.2.0"
+_ROOT = Path(__file__).resolve().parents[1]
+VERSION = tomllib.loads((_ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
 REPOSITORY = "mayayaiinfra/Mudra-Interact-Core"
 WORKFLOW = ".github/workflows/publish.yml"
 PRODUCTION_ENVIRONMENT = "pypi-production"
@@ -150,7 +152,7 @@ def _verify_candidate_publish_workflow(root: Path, source_commit: str) -> dict[s
             and publish["name"] == "Publish the same files to PyPI"
             and isinstance(publish_use, str)
             and re.fullmatch(r"pypa/gh-action-pypi-publish@[0-9a-f]{40}", publish_use)
-            and publish["with"] == {"packages-dir": "candidate/release-artifacts/0.2.0/"}
+            and publish["with"] == {"packages-dir": "candidate/release-artifacts/${{ inputs.version }}/"}
         )
     except (KeyError, TypeError, ValueError):
         correct = False

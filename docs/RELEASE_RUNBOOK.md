@@ -1,6 +1,6 @@
 # Release runbook
 
-This runbook publishes only the declared package `mudra-interact==0.2.0`
+This runbook publishes only the declared package `mudra-interact==0.3.0`
 from one frozen commit. The public core is a Python library, so its production
 release is a package distribution, not a server deployment. The workflow never
 stores a PyPI API token and does not rebuild after candidate qualification.
@@ -72,7 +72,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    installing only `requirements-release.lock` with hashes. This exercises the
    locked Sigstore policy against synthetic X.509 claim extensions; it is a
    deterministic verifier regression, not live publisher proof.
-3. Dispatch **Publish Mudra Interact** with version `0.2.0` and the exact candidate
+3. Dispatch **Publish Mudra Interact** with version `0.3.0` and the exact candidate
    commit. The workflow builds twice, compares wheel and sdist bytes, validates
    the source-built wheel, installs it in a clean isolated environment, and
    freezes one wheel plus one source distribution. The output is kept as a
@@ -114,7 +114,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    the frozen candidate files. Protected-environment configuration and run
    evidence are checked independently. Unsigned publisher metadata plus an
    unrelated successful GitHub run does not meet this requirement.
-4. After production verification, create the immutable `v0.2.0` tag/release
+4. After production verification, create the immutable `v0.3.0` tag/release
    against the candidate commit and attach the same wheel and sdist. Existing
    tags/releases are never overwritten. The workflow exports a sanitized
    publication manifest as an Actions artifact.
@@ -162,8 +162,8 @@ is tested but cannot perform a yank or publish a patch.
 
 ## Post-release and limits
 
-Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact/0.2.0/)
-and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)
+Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact/0.3.0/)
+and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0)
 open, and that both expose the exact version and artifact hashes. Run the
 documented consumer smoke from the downloaded wheel. Report the source commit,
 candidate fingerprint, artifact digests, workflow run, protected environment,

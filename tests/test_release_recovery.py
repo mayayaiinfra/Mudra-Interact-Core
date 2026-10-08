@@ -24,8 +24,9 @@ from tools.verification_report import seal_report, sha256_text_file, source_tree
 
 
 ROOT = Path(__file__).resolve().parents[1]
-WHEEL_NAME = "mudra_interact-0.2.0-py3-none-any.whl"
-SDIST_NAME = "mudra_interact-0.2.0.tar.gz"
+VERSION = release_proof.VERSION
+WHEEL_NAME = f"mudra_interact-{VERSION}-py3-none-any.whl"
+SDIST_NAME = f"mudra_interact-{VERSION}.tar.gz"
 
 
 def artifact_bytes() -> dict[str, bytes]:
@@ -58,7 +59,7 @@ def valid_manifest_parts(tmp_path: Path) -> tuple[dict[str, Any], dict[str, str]
         "workflow_path": release_proof.WORKFLOW,
         "source_commit": "a" * 40,
         **hashes,
-        "tag": "v0.2.0",
+        "tag": f"v{VERSION}",
         "workflow_run_id": 12345,
         "workflow_run_attempt": 1,
         "artifacts": artifact_inventory(),
@@ -126,7 +127,7 @@ def valid_manifest_parts(tmp_path: Path) -> tuple[dict[str, Any], dict[str, str]
                           for gate in ("M0", "M1", "M2", "M3")],
         "offline_report": {"path": "evidence/releases/offline.json", "sha256": "0" * 64},
         "index_evidence": index_refs,
-        "release_url": f"https://github.com/{release_proof.REPOSITORY}/releases/tag/v0.2.0",
+        "release_url": f"https://github.com/{release_proof.REPOSITORY}/releases/tag/v{VERSION}",
     }
     return manifest, hashes
 
@@ -211,8 +212,8 @@ def fake_index_fetch(index: str, contents: dict[str, bytes], download_contents: 
         }
         for name, body in sorted(contents.items())
     ]
-    response = {"info": {"name": "mudra-interact", "version": "0.2.0"}, "urls": urls}
-    responses = {f"{base}/pypi/mudra-interact/0.2.0/json": json.dumps(response).encode()}
+    response = {"info": {"name": "mudra-interact", "version": VERSION}, "urls": urls}
+    responses = {f"{base}/pypi/mudra-interact/{VERSION}/json": json.dumps(response).encode()}
     downloaded = download_contents or contents
     responses.update({item["url"]: downloaded[item["filename"]] for item in urls})
 
@@ -235,7 +236,7 @@ def test_testpypi_exact_download_and_fresh_install_smoke_without_fallback() -> N
 
     receipt = release_proof.verify_index(
         "testpypi", artifact_inventory(contents), fetch=record,
-        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == "0.2.0",
+        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == VERSION,
     )
     assert receipt["state"] == "VERIFIED"
     assert receipt["downloaded_and_hashed"] is True
@@ -291,7 +292,7 @@ def test_testpypi_default_install_callback_uses_fresh_venv_and_keyword_version(
     assert receipt["fresh_installed_wheel_smoke"] is True
     assert len(commands) == 2
     assert commands[0][-1].endswith(WHEEL_NAME)
-    assert "0.2.0" in commands[1][-1]
+    assert VERSION in commands[1][-1]
     assert "import importlib.metadata" in commands[1][-1]
 
 
@@ -302,7 +303,7 @@ def test_verify_release_cli_wires_candidate_download_to_default_install(
     contents = artifact_bytes()
     source_commit = "a" * 40
     source_tree = "b" * 64
-    artifact_root = tmp_path / "release-artifacts" / "0.2.0"
+    artifact_root = tmp_path / "release-artifacts" / VERSION
     artifact_root.mkdir(parents=True)
     frozen = []
     for filename, body in contents.items():
@@ -310,7 +311,7 @@ def test_verify_release_cli_wires_candidate_download_to_default_install(
         frozen.append({
             "kind": "wheel" if filename.endswith(".whl") else "sdist",
             "filename": filename,
-            "path": f"release-artifacts/0.2.0/{filename}",
+            "path": f"release-artifacts/{VERSION}/{filename}",
             "sha256": hashlib.sha256(body).hexdigest(),
             "size_bytes": len(body),
         })
@@ -378,7 +379,7 @@ def test_verify_release_cli_wires_candidate_download_to_default_install(
 
     result = verify_release.main([
         "--verify-index", "testpypi",
-        "--artifact-dir", "release-artifacts/0.2.0",
+        "--artifact-dir", f"release-artifacts/{VERSION}",
         "--candidate-report", "evidence/releases/offline-qualification.json",
         "--report", "evidence/releases/testpypi-verification.json",
     ])
@@ -415,7 +416,7 @@ def test_production_download_verifies_same_hashes_and_attestation(monkeypatch: p
     receipt = release_proof.verify_index(
         "pypi", artifact_inventory(contents), fetch=fake_index_fetch("pypi", contents),
         source_commit="a" * 40, workflow_run_id=12345, workflow_run_attempt=1,
-        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == "0.2.0",
+        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == VERSION,
     )
     assert receipt["trusted_publisher_attestations"] == 2
     assert {name for name, _kwargs in attested} == {WHEEL_NAME, SDIST_NAME}
@@ -446,7 +447,7 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "python-version: '3.12'" in workflow
     normalized_runbook = " ".join(runbook.lower().split())
     assert "same frozen files" in normalized_runbook and "no rebuild" in normalized_runbook
-    assert "https://pypi.org/project/mudra-interact/0.2.0/" in readme
+    assert f"https://pypi.org/project/mudra-interact/{VERSION}/" in readme
     assert "--no-deps" in runbook and "TestPyPI" in runbook
     assert "may approve their own run" in normalized_runbook
     assert "administrator bypass is disabled" in normalized_runbook
@@ -543,9 +544,9 @@ def test_ambiguous_upload_retry_needs_exact_hashes_or_confirmed_absence() -> Non
 
 @pytest.mark.acceptance("E96")
 def test_rollback_requires_authorization_and_never_deletes_public_history() -> None:
-    assert release_proof.rollback_decision(version="0.2.0", authorization_recorded=False) == "block_unapproved_yank_or_patch"
-    assert release_proof.rollback_decision(version="0.2.0", authorization_recorded=True) == "authorized_yank_or_patch_only"
-    assert release_proof.rollback_decision(version="0.2.0", authorization_recorded=True, delete_history=True) == "stop_invalid_rollback"
+    assert release_proof.rollback_decision(version=VERSION, authorization_recorded=False) == "block_unapproved_yank_or_patch"
+    assert release_proof.rollback_decision(version=VERSION, authorization_recorded=True) == "authorized_yank_or_patch_only"
+    assert release_proof.rollback_decision(version=VERSION, authorization_recorded=True, delete_history=True) == "stop_invalid_rollback"
     assert release_proof.rollback_decision(version="0.1.0", authorization_recorded=True) == "stop_invalid_rollback"
 
 
@@ -553,8 +554,8 @@ def test_rollback_requires_authorization_and_never_deletes_public_history() -> N
 def test_public_download_and_release_links_are_exact_version_links() -> None:
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
     runbook = (ROOT / "docs/RELEASE_RUNBOOK.md").read_text(encoding="utf-8")
-    assert "https://pypi.org/project/mudra-interact/0.2.0/" in readme
-    assert "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0" in readme
+    assert f"https://pypi.org/project/mudra-interact/{VERSION}/" in readme
+    assert f"https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v{VERSION}" in readme
     assert "index_version_missing" in runbook or "package page" in runbook.lower()
     assert "--index-url https://test.pypi.org/simple" in readme
 

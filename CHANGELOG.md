@@ -3,6 +3,23 @@
 Changes are recorded by release candidate. The links point to immutable tags
 and exact-version package pages after the publication workflow completes.
 
+## Mudra Interact 0.3.0
+
+Adds an experimental, dependency-free communication-language SDK for bounded
+human-human, human-agent and agent-agent creative-planning transcripts. The
+release includes `Message`, strict message and transcript validation,
+freshness checks, deterministic plain-text rendering, the closed language v1
+schema and three packaged synthetic planning examples.
+
+The v2 gesture/event protocol and CLI remain compatible with 0.2.0. Language
+messages do not authenticate participants or authorize execution. This release
+does not include a model/provider call, content generation, camera adapter,
+MCP/A2A transport, host UI, publishing integration, or human cultural,
+accessibility or usability qualification. The release workflow attaches the
+exact wheel and source distribution to
+[GitHub release v0.3.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0)
+after publication verification.
+
 ## Mudra Interact 0.2.0
 
 Prepared release contents:

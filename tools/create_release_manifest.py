@@ -6,6 +6,7 @@ import argparse
 import os
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -34,7 +35,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--workflow-run-id", type=int, required=True)
     parser.add_argument("--workflow-run-attempt", type=int, required=True)
     parser.add_argument("--offline-report", default="evidence/releases/offline-qualification.json")
-    parser.add_argument("--artifact-dir", default="release-artifacts/0.2.0")
+    package_version = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+    parser.add_argument("--artifact-dir", default=f"release-artifacts/{package_version}")
     parser.add_argument("--candidate-path", default="evidence/releases/candidate.json")
     parser.add_argument("--testpypi-report", default="evidence/releases/testpypi-verification.json")
     parser.add_argument("--pypi-report", default="evidence/releases/pypi-verification.json")

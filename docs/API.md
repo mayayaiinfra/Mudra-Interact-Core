@@ -1,6 +1,7 @@
 # Mudra Core v2 wire contract
 
-This document describes the wire contract implemented by package 0.2.0. The
+This document describes the gesture/event wire contract included in package
+0.3.0 (and first released in package 0.2.0). The
 bundled schema source is
 [`contract.schema.json`](../src/mudra_interact_core/schemas/v2/contract.schema.json);
 it uses Draft 2020-12 and local `#/$defs/...` references. No schema lookup needs
@@ -84,3 +85,8 @@ usage or validation input, 3 for consent/confirmation denial, 4 for local I/O,
 platform or internal failure, and 130 for interruption. A caller owns any
 retention caused by redirecting stdout; the core does not write files or retain
 raw landmarks after recognition.
+
+Package 0.3.0 also includes the experimental communication-language SDK. Its
+message and transcript contracts are separate from gesture events; see the
+[communication-language API](COMMUNICATION_LANGUAGE_API.md). The v2 gesture
+wire format does not contain or import language messages.

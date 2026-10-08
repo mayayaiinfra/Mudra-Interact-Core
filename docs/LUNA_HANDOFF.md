@@ -8,11 +8,12 @@ implementation state, active gate/item and verification evidence live in
 not duplicate volatile status here, where edits would change source identity.
 
 The [2026-10-08 Astra technical review](ASTRA_REVIEW_2026-10-08.md) supplies
-the current release repair/qualification handoff. Fix its concrete runtime and
-attestation-binding findings within this contract, then publish the bounded
-`0.2.0` foundation under the existing authorization. The separately reviewed
-[language contract](COMMUNICATION_LANGUAGE_CONTRACT.md) is a future design,
-not an additional `0.2.0` completion claim or a reason to delay its release.
+the original gesture/event foundation and release repair/qualification handoff.
+The published `0.2.0` remains historical evidence for that bounded foundation.
+Package `0.3.0` adds the separately reviewed experimental
+[communication-language SDK](COMMUNICATION_LANGUAGE_CONTRACT.md) without
+changing the v2 gesture/event wire contract. Qualify and publish that candidate
+with fresh M0–M4 evidence; never reuse the 0.2.0 receipts for 0.3.0.
 
 ## 1. Working protocol
 

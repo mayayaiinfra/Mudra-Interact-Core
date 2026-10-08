@@ -17,6 +17,9 @@ counted as M0–M4 or E90–E99 evidence.
 | L21 | ML-03 / `tests/test_language_transcript.py` | Each proposal accepts at most one accept-or-decline; revised proposals have independent IDs/dispositions; acknowledgements cannot loop, repeat, or extend expiry; status/result/error terminal relationships follow the contract. |
 | L22 | ML-03 / `tests/test_language_transcript.py` | All acts render deterministically as literal plain text with explicit IDs, roles, provenance assertions, non-authorization language, visible bidi controls, and strict locale rejection. |
 | L23 | ML-03 / `tests/test_language_transcript.py` | Malicious prose and spoofed claims remain data; validation/rendering trigger no network, subprocess or action; an invalid late item returns no partial transcript. |
+| L30 | ML-04 / core M0-M3 evidence | All prior gesture/event regressions pass on a fresh eight-cell Linux/Windows x86_64 × CPython 3.11–3.14 matrix. The language release does not replace or weaken core cases; require current M0–M3 receipts and exact platform-matrix aggregate (core E73–E89). |
+| L31 | ML-04 / `tests/test_distribution.py` | The 0.3.0 wheel and sdist contain the exact closed language schema, version map, and byte-identical three synthetic transcripts. The fresh wheel installed outside the checkout validates and renders every transcript. Require zero runtime dependencies and OS-verified egress isolation (E73–E78, E82). |
+| L32 | ML-04 / M4 and `tests/test_release_recovery.py` | The exact 0.3.0 candidate is qualified, published to TestPyPI and PyPI, downloaded and hash-checked, freshly installed and smoke-tested, with signed provenance, protected production authorization and immutable GitHub release verified by E90–E99. A CI pass or upload alone is insufficient. No completed creative host plugin or live model integration is claimed. |
 
 ## Independent-fixture rules
 

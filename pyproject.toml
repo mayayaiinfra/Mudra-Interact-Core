@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mudra-interact"
-version = "0.2.0"
-description = "Apache-2.0 landmark protocol and conservative Mudra interaction recognizer"
+version = "0.3.0"
+description = "Apache-2.0 offline gesture interaction core and experimental human-agent communication language"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
@@ -13,8 +13,8 @@ authors = [{name = "MAYAYAI"}]
 keywords = ["gesture", "mudra", "landmarks", "human-agent-interaction", "privacy"]
 
 [project.urls]
-Documentation = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.2.0/docs/API.md"
-Changelog = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.2.0/CHANGELOG.md"
+Documentation = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.3.0/docs/API.md"
+Changelog = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.3.0/CHANGELOG.md"
 Issues = "https://github.com/mayayaiinfra/Mudra-Interact-Core/issues"
 Repository = "https://github.com/mayayaiinfra/Mudra-Interact-Core"
 
@@ -32,7 +32,7 @@ include-package-data = true
 where = ["src"]
 
 [tool.setuptools.package-data]
-mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json", "schemas/language/v1/*.json", "py.typed"]
+mudra_interact_core = ["catalog/*.json", "schemas/v2/*.json", "schemas/language/v1/*.json", "examples/language/*.json", "py.typed"]
 
 [tool.pytest.ini_options]
 markers = ["acceptance(case_id): required Mudra contract or verification case"]

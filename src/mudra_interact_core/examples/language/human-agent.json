@@ -1,0 +1,251 @@
+{
+  "messages": [
+    {
+      "act": "request",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:00:00.000000Z",
+      "expires_at": "2026-10-08T13:10:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "brief": "Plan three social posts for a neighborhood repair cafe.",
+          "medium": "text"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000001",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.manual_text",
+        "adapter_version": "1.0.0",
+        "human_reviewed": true,
+        "interpretation_score": null,
+        "mode": "text"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      },
+      "reply_to": null,
+      "sender": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    {
+      "act": "proposal",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:00:30.000000Z",
+      "expires_at": "2026-10-08T13:10:30.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "steps": [
+            {
+              "description": "Introduce the service and opening hours.",
+              "step_id": 1
+            },
+            {
+              "description": "Show one repair story.",
+              "step_id": 2
+            },
+            {
+              "description": "Invite residents to bring an item.",
+              "step_id": 3
+            }
+          ],
+          "summary": "A three-post sequence introducing the cafe."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000002",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.example_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.87,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000001",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      }
+    },
+    {
+      "act": "clarification",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:01:00.000000Z",
+      "expires_at": "2026-10-08T13:11:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "about": "proposal",
+          "text": "Make the second post focus on volunteers, not a repair story."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000003",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.manual_text",
+        "adapter_version": "1.0.0",
+        "human_reviewed": true,
+        "interpretation_score": null,
+        "mode": "text"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000002",
+      "sender": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    {
+      "act": "proposal",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:01:30.000000Z",
+      "expires_at": "2026-10-08T13:11:30.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "steps": [
+            {
+              "description": "Introduce the service and opening hours.",
+              "step_id": 1
+            },
+            {
+              "description": "Introduce volunteer roles and their skills.",
+              "step_id": 2
+            },
+            {
+              "description": "Invite residents to bring an item.",
+              "step_id": 3
+            }
+          ],
+          "summary": "A revised three-post sequence including volunteers."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000004",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.example_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.87,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000003",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      }
+    },
+    {
+      "act": "accept",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:02:00.000000Z",
+      "expires_at": "2026-10-08T13:12:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000005",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.manual_text",
+        "adapter_version": "1.0.0",
+        "human_reviewed": true,
+        "interpretation_score": null,
+        "mode": "text"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000004",
+      "sender": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      }
+    },
+    {
+      "act": "status",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:03:00.000000Z",
+      "expires_at": "2026-10-08T13:09:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "state": "planning",
+          "text": "Organizing the accepted outline."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000006",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.example_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.87,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000005",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      }
+    },
+    {
+      "act": "result",
+      "conversation_id": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      "created_at": "2026-10-08T13:04:00.000000Z",
+      "expires_at": "2026-10-08T13:09:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "summary": "The revised plan is ready for human review."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "20000000-0000-4000-8000-000000000007",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.example_agent",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.87,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "human",
+        "participant_id": "33333333-3333-4333-8333-333333333333"
+      },
+      "reply_to": "20000000-0000-4000-8000-000000000005",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "44444444-4444-4444-8444-444444444444"
+      }
+    }
+  ],
+  "protocol_version": "1.0.0"
+}

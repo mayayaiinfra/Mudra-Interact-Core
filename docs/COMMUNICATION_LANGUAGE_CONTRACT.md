@@ -1,9 +1,9 @@
 # Mudra Interact language: reviewed follow-on contract
 
 Design revision 0.1, Astra technical model review, 2026-10-08.
-**Normative design contract; implementation and qualification remain in progress and are not part of package 0.2.0.**
-This contract defines a bounded experimental reference SDK for a later
-`mudra-interact==0.3.0`, after the current foundation release. It does not change
+**Normative contract for the experimental SDK introduced in package 0.3.0.**
+This contract defines a bounded experimental reference SDK in
+`mudra-interact==0.3.0`, after the published foundation release. It does not change
 the existing event protocol/schema `2.0.0`, four-cue catalogue, consent lifecycle,
 or camera-design boundary. The current release remains governed by the
 [core specification](../MUDRA_INTERACT_CORE_SPEC.md).
@@ -18,7 +18,7 @@ an action. Human-human, human-agent, agent-human and agent-agent records share
 the same grammar and validation; roles do not authenticate their participants.
 
 The first implementation is a dependency-free offline validator, immutable
-message model, plain-text renderer and synthetic creative-planning transcript.
+message model, plain-text renderer and synthetic creative-planning transcripts.
 It includes no camera/model/provider calls, tool execution, credential handling,
 artifact download, browser/server transport, or named host plugin. A creative
 plugin is a separately implemented integration requiring a chosen host and real
@@ -212,8 +212,9 @@ The [follow-on backlog](COMMUNICATION_LANGUAGE_BACKLOG.json) defines engineering
 and external qualification gates. ML-01 freezes the draft-2020-12 JSON Schema,
 version map and independent synthetic vectors. ML-02 implements bounded
 message parsing and freshness. ML-03 implements bounded transcript relationships,
-synthetic exchanges and deterministic plain-text rendering. Each gate requires
-fresh, hash-bound evidence after the candidate is committed. These gates are
-separate from the gesture/event release and its M4/E90-E99 evidence. Broad
-usability/cultural/accessibility claims remain blocked without actual
-representative human evaluation.
+synthetic exchanges and deterministic plain-text rendering. ML-04 packages and
+qualifies these APIs in the 0.3.0 release while retaining the existing gesture
+matrix. Each engineering gate requires fresh, hash-bound evidence after its
+candidate is committed. ML-05 human qualification and ML-06 live host/transport
+integration remain separate. Broad usability/cultural/accessibility claims
+remain blocked without actual representative human evaluation.

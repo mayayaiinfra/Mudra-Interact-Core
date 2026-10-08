@@ -3,9 +3,9 @@
 **Status: historical direction proposal, technically reviewed 2026-10-08.**
 The [review decision](ASTRA_REVIEW_2026-10-08.md) and
 [follow-on contract](COMMUNICATION_LANGUAGE_CONTRACT.md) settle the bounded
-next step. The current `0.2.0` implementation remains governed by
-`MUDRA_INTERACT_CORE_SPEC.md` 0.3.1 and event schema `2.0.0`.
-No language runtime or creative host plugin is implemented by this document.
+next step. The original `0.2.0` gesture/event foundation remains governed by
+`MUDRA_INTERACT_CORE_SPEC.md` 0.3.1 and event schema `2.0.0`; package `0.3.0`
+adds the separately specified experimental language SDK.
 As a tracked document, this proposal changes source identity and requires
 candidate evidence to be refreshed even though it changes no wire behaviour.
 
@@ -119,8 +119,8 @@ The new acceptance matrix should include positive and negative conformance
 vectors for all three communication paths, semantic mismatch and clarification,
 unknown extension/version, tampered/stale/replayed messages, permission denial,
 localization/rendering, provider failure and real integration tests. M4
-publication evidence for the current gesture-only `0.2.0` must not be reused to
-claim conformance for a changed language implementation.
+publication evidence for the gesture-only `0.2.0` must not be reused to claim
+conformance for the language implementation or its later release.
 
 ## References
 

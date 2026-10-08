@@ -23,6 +23,7 @@ import sys
 import tarfile
 import tempfile
 import time
+import tomllib
 import venv
 import zipfile
 from shutil import copy2
@@ -40,9 +41,20 @@ from tools.verification_report import canonical_text_bytes, sha256_text_file  # 
 
 PACKAGE_NAME = "mudra-interact"
 PACKAGE_NORMALIZED_NAME = "mudra_interact"
-PACKAGE_VERSION = "0.2.0"
+PACKAGE_VERSION = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
 SOURCE_DATE_EPOCH = "1760054400"
 REPORT_VERSION = 1
+PACKAGE_RESOURCE_SOURCES = {
+    "mudra_interact_core/catalog/mudra_catalog.json": "src/mudra_interact_core/catalog/mudra_catalog.json",
+    "mudra_interact_core/schemas/v2/contract.schema.json": "src/mudra_interact_core/schemas/v2/contract.schema.json",
+    "mudra_interact_core/schemas/v2/version-map.json": "src/mudra_interact_core/schemas/v2/version-map.json",
+    "mudra_interact_core/schemas/language/v1/language.schema.json": "src/mudra_interact_core/schemas/language/v1/language.schema.json",
+    "mudra_interact_core/schemas/language/v1/version-map.json": "src/mudra_interact_core/schemas/language/v1/version-map.json",
+    "mudra_interact_core/examples/language/human-human.json": "examples/language/human-human.json",
+    "mudra_interact_core/examples/language/human-agent.json": "examples/language/human-agent.json",
+    "mudra_interact_core/examples/language/agent-agent.json": "examples/language/agent-agent.json",
+    "mudra_interact_core/py.typed": "src/mudra_interact_core/py.typed",
+}
 REQUIRED_PYTHONS = ("3.11", "3.12", "3.13", "3.14")
 REQUIRED_PLATFORMS = (
     ("linux", "x86_64"),
@@ -284,6 +296,16 @@ def inspect_sdist(archive: Path) -> dict[str, str]:
             metadata_members = [member for member in members if PurePosixPath(member.name).as_posix() == f"{expected_root}/PKG-INFO"]
             if roots != {expected_root} or len(metadata_members) != 1:
                 raise ReleaseError("sdist_metadata_missing")
+            expected_resources = {
+                f"{expected_root}/{source_path}" for source_path in PACKAGE_RESOURCE_SOURCES.values()
+            }
+            if not expected_resources.issubset(set(member_names)):
+                raise ReleaseError("sdist_package_data_missing")
+            for source_path in PACKAGE_RESOURCE_SOURCES.values():
+                packaged = tar.extractfile(f"{expected_root}/{source_path}")
+                source = ROOT / source_path
+                if packaged is None or packaged.read() != source.read_bytes():
+                    raise ReleaseError("sdist_package_data_mismatch")
             extracted = tar.extractfile(metadata_members[0])
             if extracted is None:
                 raise ReleaseError("sdist_metadata_invalid")
@@ -337,14 +359,7 @@ def wheel_files(wheel: Path) -> list[str]:
 
 def inspect_wheel(wheel: Path) -> dict[str, Any]:
     names = wheel_files(wheel)
-    expected_suffixes = {
-        "mudra_interact_core/catalog/mudra_catalog.json",
-        "mudra_interact_core/schemas/v2/contract.schema.json",
-        "mudra_interact_core/schemas/v2/version-map.json",
-        "mudra_interact_core/schemas/language/v1/language.schema.json",
-        "mudra_interact_core/schemas/language/v1/version-map.json",
-        "mudra_interact_core/py.typed",
-    }
+    expected_suffixes = set(PACKAGE_RESOURCE_SOURCES)
     if not expected_suffixes.issubset(set(names)):
         raise ReleaseError("wheel_package_data_missing")
     dist_infos = [name for name in names if name.endswith(".dist-info/METADATA")]
@@ -353,6 +368,9 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
     if len(dist_infos) != 1 or len(wheel_infos) != 1 or len(records) != 1:
         raise ReleaseError("wheel_metadata_missing")
     with zipfile.ZipFile(wheel) as archive:
+        for packaged_path, source_path in PACKAGE_RESOURCE_SOURCES.items():
+            if archive.read(packaged_path) != (ROOT / source_path).read_bytes():
+                raise ReleaseError("wheel_package_data_mismatch")
         metadata = archive.read(dist_infos[0]).decode("utf-8", errors="strict")
         inventory = [
             {
@@ -803,23 +821,36 @@ def qualify(mode: str, *, artifact_dir: str | None = None) -> dict[str, Any]:
             env={**env, "PYTHONPATH": ""},
             timeout=180,
         )
+        language_example_smoke = """import importlib.resources as resources
+import mudra_interact_core as mudra
+root = resources.files('mudra_interact_core').joinpath('examples', 'language')
+names = ('human-human.json', 'human-agent.json', 'agent-agent.json')
+for name in names:
+    messages = mudra.validate_transcript(root.joinpath(name).read_bytes())
+    assert messages and messages[0].act == 'request'
+    assert 'does not authorize execution' in mudra.render_message(messages[0])
+print(mudra.__file__)
+print(len(names))
+"""
         smoke_code, smoke_out, _smoke_err = run(
-            [str(installed_python), "-c", "import mudra_interact_core as m; print(m.__file__); print(m.__all__[0])"],
+            [str(installed_python), "-c", language_example_smoke],
             cwd=scratch,
             env={**env, "PYTHONPATH": ""},
             timeout=30,
         )
         ownership_ok = "site-packages" in smoke_out.lower() or "lib\\site-packages" in smoke_out.lower()
+        installed_examples_ok = smoke_code == 0 and smoke_out.rstrip().endswith("3")
         checks["fresh_install"] = {
             "install_exit": install_code,
             "uninstall_exit": uninstall_code,
             "reinstall_exit": reinstall_code,
             "smoke_exit": smoke_code,
+            "language_examples_executed": 3 if installed_examples_ok else 0,
             "module_owned_by_venv": ownership_ok,
             "runtime_dependencies": "none",
             "outside_checkout": True,
         }
-        if install_code != 0 or uninstall_code != 0 or reinstall_code != 0 or smoke_code != 0 or not ownership_ok:
+        if install_code != 0 or uninstall_code != 0 or reinstall_code != 0 or smoke_code != 0 or not ownership_ok or not installed_examples_ok:
             raise ReleaseError("fresh_install_failed")
         if artifact_dir is not None:
             relative = Path(artifact_dir)

@@ -98,13 +98,16 @@ def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
     assert release_report["checks"]["wheel"]["metadata_version"] == PACKAGE_VERSION
     assert release_report["checks"]["wheel"]["requires_dist"] is None
     assert release_report["checks"]["wheel"]["metadata_validator"] == "stdlib_pep427_pep566_equivalent"
-    assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {"mudra_interact-0.2.0.data/data/LICENSE", "mudra_interact-0.2.0.data/data/NOTICE"}
+    assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {f"mudra_interact-{PACKAGE_VERSION}.data/data/LICENSE", f"mudra_interact-{PACKAGE_VERSION}.data/data/NOTICE"}
     assert set(release_report["checks"]["wheel"]["package_data"]) == {
         "mudra_interact_core/catalog/mudra_catalog.json",
         "mudra_interact_core/schemas/v2/contract.schema.json",
         "mudra_interact_core/schemas/v2/version-map.json",
         "mudra_interact_core/schemas/language/v1/language.schema.json",
         "mudra_interact_core/schemas/language/v1/version-map.json",
+        "mudra_interact_core/examples/language/human-human.json",
+        "mudra_interact_core/examples/language/human-agent.json",
+        "mudra_interact_core/examples/language/agent-agent.json",
         "mudra_interact_core/py.typed",
     }
     assert {item["kind"] for item in release_report["artifacts"]} >= {"wheel", "sdist", "wheel_from_sdist"}
@@ -114,8 +117,8 @@ def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
 def test_actual_offline_frozen_candidate_has_expected_distribution_filenames(release_report: dict) -> None:
     frozen = release_report["frozen_candidate_artifacts"]
     assert {item["filename"] for item in frozen} == {
-        "mudra_interact-0.2.0-py3-none-any.whl",
-        "mudra_interact-0.2.0.tar.gz",
+        f"mudra_interact-{PACKAGE_VERSION}-py3-none-any.whl",
+        f"mudra_interact-{PACKAGE_VERSION}.tar.gz",
     }
     assert all(item["size_bytes"] > 0 and re.fullmatch(r"[0-9a-f]{64}", item["sha256"]) for item in frozen)
 
@@ -135,8 +138,8 @@ def test_real_candidate_inventory_accepts_backend_built_artifacts(release_report
     )
 
     assert {row["filename"] for row in inventory} == {
-        "mudra_interact-0.2.0-py3-none-any.whl",
-        "mudra_interact-0.2.0.tar.gz",
+        f"mudra_interact-{PACKAGE_VERSION}-py3-none-any.whl",
+        f"mudra_interact-{PACKAGE_VERSION}.tar.gz",
     }
     assert all(row["size_bytes"] > 0 and re.fullmatch(r"[0-9a-f]{64}", row["sha256"]) for row in inventory)
 
@@ -148,6 +151,7 @@ def test_wheel_from_sdist_is_offline_and_owned_by_fresh_environment(release_repo
     assert install["uninstall_exit"] == 0
     assert install["reinstall_exit"] == 0
     assert install["smoke_exit"] == 0
+    assert install["language_examples_executed"] == 3
     assert install["outside_checkout"] is True
     assert install["module_owned_by_venv"] is True
     assert install["runtime_dependencies"] == "none"
@@ -375,11 +379,11 @@ def test_frozen_candidate_inventory_checks_offline_report_and_exact_files(
 ) -> None:
     commit = "a" * 40
     tree = "b" * 64
-    artifact_root = tmp_path / "release-artifacts" / "0.2.0"
+    artifact_root = tmp_path / "release-artifacts" / PACKAGE_VERSION
     artifact_root.mkdir(parents=True)
     contents = {
-        "mudra_interact-0.2.0-py3-none-any.whl": b"synthetic wheel bytes",
-        "mudra_interact-0.2.0.tar.gz": b"synthetic sdist bytes",
+        f"mudra_interact-{PACKAGE_VERSION}-py3-none-any.whl": b"synthetic wheel bytes",
+        f"mudra_interact-{PACKAGE_VERSION}.tar.gz": b"synthetic sdist bytes",
     }
     frozen = []
     for filename, data in contents.items():
@@ -387,7 +391,7 @@ def test_frozen_candidate_inventory_checks_offline_report_and_exact_files(
         frozen.append({
             "kind": "wheel" if filename.endswith(".whl") else "sdist",
             "filename": filename,
-            "path": f"release-artifacts/0.2.0/{filename}",
+            "path": f"release-artifacts/{PACKAGE_VERSION}/{filename}",
             "sha256": hashlib.sha256(data).hexdigest(),
             "size_bytes": len(data),
         })
@@ -409,7 +413,7 @@ def test_frozen_candidate_inventory_checks_offline_report_and_exact_files(
     monkeypatch.setattr(release_verifier, "source_tree_sha256", lambda _root: tree)
 
     inventory = release_verifier.frozen_candidate_inventory(
-        "release-artifacts/0.2.0", "evidence/releases/offline-qualification.json",
+        f"release-artifacts/{PACKAGE_VERSION}", "evidence/releases/offline-qualification.json",
     )
 
     assert {row["filename"] for row in inventory} == set(contents)
@@ -420,7 +424,7 @@ def test_frozen_candidate_inventory_checks_offline_report_and_exact_files(
     report_path.write_bytes(canonical_json_bytes(seal_report(malformed)))
     with pytest.raises(ReleaseProofError) as error:
         release_verifier.frozen_candidate_inventory(
-            "release-artifacts/0.2.0", "evidence/releases/offline-qualification.json",
+            f"release-artifacts/{PACKAGE_VERSION}", "evidence/releases/offline-qualification.json",
         )
     assert error.value.code == "artifact_inventory_invalid"
 
@@ -432,12 +436,12 @@ def test_real_deterministic_sdist_uses_frozen_candidate_filename(tmp_path: Path)
         tmp_path / "sdist", release_verifier.reproducible_env(),
     )
 
-    assert archive.name == "mudra_interact-0.2.0.tar.gz"
+    assert archive.name == f"mudra_interact-{PACKAGE_VERSION}.tar.gz"
     assert release_verifier.inspect_sdist(archive) == {
-        "name": "mudra-interact", "version": "0.2.0", "metadata_version": "2.4",
+        "name": "mudra-interact", "version": PACKAGE_VERSION, "metadata_version": "2.4",
     }
     extracted = release_verifier.extract_sdist(archive, tmp_path / "extracted")
-    assert extracted.name == "mudra_interact-0.2.0"
+    assert extracted.name == f"mudra_interact-{PACKAGE_VERSION}"
     assert (extracted / "pyproject.toml").is_file()
 
 

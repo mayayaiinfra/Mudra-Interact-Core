@@ -1,0 +1,3 @@
+include examples/language/agent-agent.json
+include examples/language/human-agent.json
+include examples/language/human-human.json

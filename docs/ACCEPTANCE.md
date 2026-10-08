@@ -114,8 +114,8 @@ targets; files not present at baseline must be implemented before verification.
 | E70 | MI-07 / test_privacy.py | 10,000-frame session run keeps <=N recent records, no retained point arrays; confirm/revoke/stop clears owned references (no zeroization claim). |
 | E71 | MI-07 / test_verification_tools.py | Report output escapes synthetic diagnostics and removes private path fields; bounded output/timeouts kill owned child process tree and fail gate. |
 | E72 | MI-07 / test_privacy.py | Threat-model checklist maps all public parse/API/import/output channels to actual negative tests; no global no-leak guarantee asserted. |
-| E73 | MI-08 / test_distribution.py | Clean wheel/sdist builds, twine metadata checks, expected files only; correct licence/schema/catalogue/typing data. |
-| E74 | MI-08 / test_distribution.py | Wheel built from sdist offline imports outside repo; no editable/source-path fallback or runtime dependencies. |
+| E73 | MI-08 / test_distribution.py | Clean wheel/sdist builds, metadata checks, expected files only; exact licence, v2/language schemas, version maps, catalogue, typing data and three packaged language examples. |
+| E74 | MI-08 / test_distribution.py | Wheel built from sdist offline imports outside repo, validates/renders all packaged language examples there, and has no editable/source-path fallback or runtime dependencies. |
 | E75 | MI-08 / test_distribution.py | All 8 supported Linux/Windows x86_64 × Python 3.11–3.14 cells run required core tests/installed smoke without required skip/xfail; versions/digests retained. macOS is unsupported and outside this matrix. |
 | E76 | MI-08 / test_distribution.py | OS/runner isolation is observed (Linux: no default route plus denied connect; Windows: a successful pre-rule connection control, an active canonical-interpreter-scoped outbound block, and a subsequent denied/timed-out connect), alongside the synthetic negative-egress probe; cold missing build dependency causes explicit setup failure. A Windows timeout qualifies only when both controls are present. Missing isolation is not a pass. |
 | E77 | MI-08 / test_distribution.py | Two clean builds same environment produce same wheel/sdist hashes; any mismatch blocks, not normalize away unexplained content. |
@@ -123,7 +123,7 @@ targets; files not present at baseline must be implemented before verification.
 | E79 | MI-08 / test_distribution.py | CI ignores no required failures, installs hash-pinned tools into a runner-temp environment outside the checkout, installs the package from local source without network/build isolation, verifies a clean dependency check, and has pinned actions/timeouts/permissions with no secrets for untrusted PR execution. |
 | E80 | MI-08 / test_distribution.py | Stale source/tag/version/hash/evidence mismatch rejects release packet. |
 | E81 | MI-08 / test_distribution.py | Windows path/encoding and POSIX regular-file checks tested on actual respective OS; simulated platform strings don't qualify. |
-| E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue and module ownership stay consistent. |
+| E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue/language resources and module ownership stay consistent. |
 | E83 | MI-08 / test_distribution.py | Dependent ALLYK consumer compatibility inventory records upgrade risk without exporting private sources or assuming automatic upgrade. |
 | E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; the isolated verifier has a complete dependency closure; text identity is stable across LF/CRLF checkouts while binary identity remains byte-exact; absent required artifact/tool/platform blocks aggregation. |
 | E85 | MI-09 / test_adapter_contract.py | DESIGN specifies asset pin/hash/licence and absence of core camera dependency; no implementation status fabricated. |

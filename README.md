@@ -1,102 +1,93 @@
 # Mudra Interact
 
-Mudra Interact is an Apache-2.0, offline-capable Python library for a
-conservative, image-free gesture interaction protocol. It accepts normalized
-21-point hand landmarks, reports bounded recognition states, and emits a
-`MudraEvent` only after distinct-frame stability plus explicit consent and
-confirmation.
+Mudra Interact is an Apache-2.0, offline-capable Python library for two related
+capabilities: a conservative image-free gesture/event protocol and an
+experimental structured communication language for human-human, human-agent
+and agent-agent workflows. Version `0.3.0` adds the language SDK while keeping
+the established v2 gesture/event wire contract intact.
 
-This release is `mudra-interact==0.2.0`. The [release runbook](docs/RELEASE_RUNBOOK.md)
-defines the evidence required before treating a published artifact as verified.
-Check the exact-version pages and artifact digests before installing; a missing
-package page alone does not prove that its name is available or authorize
-claiming it. First publication may use an owner-authorized pending Trusted
-Publisher as described in the runbook.
+The release candidate is `mudra-interact==0.3.0`. Treat it as published only
+after the [release runbook](docs/RELEASE_RUNBOOK.md) verifies the exact PyPI and
+GitHub artifacts and the downloaded-install proof. The source push or a
+successful CI run alone does not establish package availability.
 
-These exact-version pages are the distribution sources:
-
-- [PyPI project, version 0.2.0](https://pypi.org/project/mudra-interact/0.2.0/)
-- [GitHub release, tag v0.2.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)
+- [PyPI project, version 0.3.0](https://pypi.org/project/mudra-interact/0.3.0/)
+- [GitHub release, tag v0.3.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0)
 - [Source repository](https://github.com/mayayaiinfra/Mudra-Interact-Core)
 
-After publication is verified, install the exact release and run the synthetic
-example from a source checkout (the examples are repository fixtures):
+After publication is verified, install the exact package with no runtime
+dependencies:
 
 ```powershell
-python -m pip install --no-deps mudra-interact==0.2.0
-git clone --branch v0.2.0 --depth 1 https://github.com/mayayaiinfra/Mudra-Interact-Core.git
-Set-Location Mudra-Interact-Core
-mudra-interact --input examples/v2/frame.json
+python -m pip install --no-deps mudra-interact==0.3.0
 ```
 
-On Windows, use `mudra-interact.exe` if the scripts directory is not on PATH.
-The runtime has no third-party Python dependencies; `--no-deps` prevents an
-unreviewed dependency from being pulled into the environment.
+The wheel includes three runnable synthetic language transcripts. This uses
+the installed package resources, so it works outside a source checkout:
 
-For an owner-authorized TestPyPI candidate, select that index explicitly. Do
-not add PyPI as an extra index fallback:
+```python
+from importlib.resources import files
+from mudra_interact_core import render_message, validate_transcript
+
+examples = files("mudra_interact_core").joinpath("examples", "language")
+messages = validate_transcript(examples.joinpath("human-agent.json").read_bytes())
+for message in messages:
+    print(render_message(message))
+```
+
+For an owner-authorized TestPyPI candidate, select that index explicitly and do
+not add PyPI as a fallback:
 
 ```powershell
-python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.2.0
+python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.3.0
 ```
 
-TestPyPI may not host runtime dependencies required by another package; this
-library has none. A successful source push or GitHub Actions run does not mean
-the package is available. Check both exact-version pages and verify the
-published artifacts before following these commands.
+## Communication language
 
-## What it provides
+The language API provides a bounded envelope, nine explicit acts (`request`,
+`proposal`, `clarification`, `accept`, `decline`, `acknowledge`, `status`,
+`result`, `error`), participant roles, versioned creative-planning intent,
+modality provenance, transcript validation, freshness checks and deterministic
+English text rendering. It can carry a planning conversation between people
+and agents. Read the [language API and workflow](docs/COMMUNICATION_LANGUAGE_API.md)
+and [migration notes](docs/MIGRATION.md) before adopting it.
 
-The longer-term direction is a communication language for human-human,
-human-agent and agent-agent interaction. This release supplies the gesture/event
-foundation only. The [reviewed follow-on design](docs/COMMUNICATION_LANGUAGE_CONTRACT.md)
-is not implemented or claimed as language, creative-plugin, MCP or A2A support
-in `0.2.0`.
+The bundled examples show a human-to-human plan, a human request with agent
+proposal and clarification, and an agent-to-agent plan. An application or
+model can create candidate messages, then pass them to Mudra for structural
+and transcript checks. Mudra itself does not call a model, provider, tool,
+network, social platform or publishing API. The creative profile demonstrates
+structured planning and review; it does not generate images or videos.
 
-- Strict validation for MediaPipe-order 21-point landmarks, bounded JSON and
-  protocol versions.
-- A small geometric rule oracle with explicit candidate, stable, uncertain and
-  rejected states; scores are heuristic and are not calibrated probabilities.
-- Distinct-frame temporal stability, scope-bound consent and one-use event
-  confirmation.
+## Gesture interaction foundation
+
+The v2 gesture/event protocol remains in the same package. It accepts normalized
+21-point hand landmarks, reports bounded recognition states, and emits a
+`MudraEvent` only after distinct-frame stability plus explicit consent and
+confirmation. It has no camera capture or model assets.
+
+- Strict parsing of landmarks, bounded JSON and protocol versions.
+- Geometric contact rules with candidate, stable, uncertain and rejected
+  states. Scores are heuristic, not calibrated probabilities.
+- Explicit temporal stability and one-use event confirmation.
 - A neutral catalogue, closed schemas, local CLI and reproducible wheel/sdist.
-- Image-free events that can be consumed by ALLYK or another compatible client.
 
-## What it does not provide
+## Limits and integration boundary
 
-- Camera capture, browser UI, model downloads, hosted services or remote
-  inference. A local camera adapter is designed separately and is not
-  implemented in this package.
-- Identity, sensitive-trait or health inference; therapeutic, religious or
-  cultural authority; or an automatic action in ALLYK.
-- A claim of state-of-the-art recognition accuracy, independent user research,
-  accessibility qualification or human cultural review.
-- A way to distinguish Gyan from Chin using contact points alone.
+Message validity is not identity, consent, authentication, permission or
+authorization. An `accept` act is data and must not itself trigger execution.
+Applications remain responsible for identity, transport security, replay
+controls, consequential-action confirmation, retention and provider policy.
+The package ships no A2A or MCP adapter, model integration, camera adapter,
+host UI, hosted service, telemetry or private ALLYK implementation.
 
-The intended data path is:
+No human comprehension study, cultural review, accessibility qualification,
+recognition accuracy study or independent security assessment is claimed.
+Gesture labels do not assert universal, religious or cultural meanings.
+ALLYK remains a private downstream consumer and must verify compatibility
+before upgrading.
 
-```text
-local device adapter -> normalized landmarks -> conservative candidate
--> temporal stability and explicit confirmation -> image-free MudraEvent
--> ALLYK or another compatible application
-```
-
-For the contract and integration boundary, see [API](docs/API.md),
-[migration notes](docs/MIGRATION.md), [support matrix](docs/COMPATIBILITY.md),
-and the [release runbook](docs/RELEASE_RUNBOOK.md). Implementation and
-verification status is tracked in the [backlog ledger](IMPLEMENTATION_BACKLOG.json)
-and [acceptance contract](docs/ACCEPTANCE.md).
-
-## Development check
-
-Use the locked verification dependencies and run the applicable acceptance
-gate. See [Luna handoff](docs/LUNA_HANDOFF.md) for the repository verification
-rules. The checked-in synthetic examples contain no camera frames or user data.
-
-## Licensing and cultural boundary
-
-The core is Apache-2.0 and ships `LICENSE` and `NOTICE`. Runtime dependencies
-are empty. Optional adapters, model weights, datasets and expanded meanings
-need their own source, licence, provenance and domain review before inclusion.
-The bundled catalogue contains constrained learning labels only; it does not
-establish cultural or religious interpretation.
+For the implemented surfaces, see [API](docs/API.md),
+[communication-language API](docs/COMMUNICATION_LANGUAGE_API.md),
+[compatibility](docs/COMPATIBILITY.md), [release runbook](docs/RELEASE_RUNBOOK.md),
+and the [implementation ledger](IMPLEMENTATION_BACKLOG.json).
