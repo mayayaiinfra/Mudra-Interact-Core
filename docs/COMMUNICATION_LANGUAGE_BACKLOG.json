@@ -1,12 +1,12 @@
 {
   "design_revision": "0.1",
   "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-03",
+  "active_item": "ML-04",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "The 0.2.0 gesture/event foundation is published and verified. ML-01 and ML-02 are reverified on the corrected source. ML-03 remains before ML-04 can close; ML-04 then requires fresh cross-platform and 0.3.0 TestPyPI/PyPI proofs.",
+  "current_release_dependency": "ML-01 through ML-03 are reverified on the corrected source. ML-04 is active and depends on the current core M3 eight-cell Linux/Windows Python 3.11-3.14 matrix, full M3 gate, and exact 0.3.0 TestPyPI/PyPI publication and downloaded-install proofs. These release dependencies remain open.",
   "items": [
     {
       "id": "ML-01",
@@ -55,7 +55,7 @@
     },
     {
       "id": "ML-03",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": [
         "ML-02"
       ],
@@ -72,13 +72,13 @@
       ],
       "verification_receipt": {
         "path": "evidence/language/ML-03.json",
-        "sha256": "d686306ece06f1a3412f15ba2da3dfbc7eabe029b11b3203e2c03f51fe2fa869"
+        "sha256": "659c0b2655f3e6d6dbc66c1261636c6de4ba21aaf73696d88c44f56504c8692a"
       },
       "prior_state": "VERIFIED"
     },
     {
       "id": "ML-04",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "requires": [
         "ML-03"
       ],
@@ -129,7 +129,5 @@
       ]
     }
   ],
-  "reverification_required": [
-    "ML-03"
-  ]
+  "reverification_required": []
 }
