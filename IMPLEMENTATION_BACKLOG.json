@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "Owner-approved specification 0.3 supports Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS remains unsupported and unqualified. Current MI-08 matrix evidence has been refreshed and independently aggregated; full M3 gate qualification is still pending.",
-    "baseline_tests": "M0 23/23, M1 120/120, M2 165/165 including 15 semantic mutations, and MI-01 through MI-07 and MI-09 are verified on source tree 981aec9c. Hosted run 37716341667 passed all eight MI-08 cells, 17 test nodes per cell, with E73-E84 represented and no failures or skips; tools/aggregate_platform_matrix.py independently verified 8/8 on source commit 383caa4. The separate full M3 gate has not yet run. The local Windows full-gate attempt remains non-qualifying because it lacked elevated firewall isolation. The earlier run 37713767205 stopped before test collection on missing ignored prerequisite artifacts; those artifacts are now committed. M4 published proof remains blocked because evidence/releases/published.json is missing; no package was published.",
-    "verification_claim": "M0-M2 and MI-01 through MI-09 have verified luna_self_verified evidence on current source tree 981aec9c, including the complete 8-cell MI-08 matrix from run 37716341667. M3 is BLOCKED only on the separate full acceptance gate and its fresh receipt. The pypi-production approval environment is live-verified: owner is required reviewer, self-approval is permitted, administrator bypass is disabled, and only main is allowed. M4 remains BLOCKED on confirmed PyPI/TestPyPI ownership and login, trusted publishers, the pypi-test environment, exact-candidate authorization, and actual TestPyPI/PyPI upload/download/install proof. No package has been published."
+    "scope": "Owner-approved specification 0.3 supports Linux x86_64 and Windows x86_64 on CPython 3.11-3.14 (8 cells); macOS remains unsupported and unqualified. Current MI-08 matrix and complete M3 gate have both passed on source tree 981aec9c.",
+    "baseline_tests": "M0 23/23, M1 120/120, M2 165/165 including 15 semantic mutations, and MI-01 through MI-09 are verified on source tree 981aec9c. Hosted run 37716341667 passed the complete MI-08 matrix: eight Linux/Windows x86_64 cells on Python 3.11-3.14, each with E73-E84 represented and no failures or skips; the matrix aggregator verified 8/8. Workflow-dispatch run 37717500467 passed the complete M3 gate with 187/187 tests, 83/83 acceptance IDs, zero failures/skips/xfails/xpasses, and a fresh matrix receipt. M3 is VERIFIED. M4 published proof remains blocked because PyPI/TestPyPI ownership, Trusted Publisher setup, exact-candidate authorization, live upload/download/install proof, and evidence/releases/published.json are incomplete; no package was published.",
+    "verification_claim": "M0-M3 and MI-01 through MI-09 have fresh luna_self_verified evidence for source tree 981aec9c. The full M3 gate and 8-cell Linux/Windows matrix are VERIFIED. The pypi-production environment is live-verified: the owner is the required reviewer, self-approval is enabled, administrator bypass is disabled, and only main is permitted. M4 remains BLOCKED on owner-controlled PyPI/TestPyPI setup and actual publication/download-install proof; no package has been published."
   },
   "active_item": null,
   "states": [
@@ -127,15 +127,14 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "BLOCKED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M3-solo-owner-policy-blocked-5a5a945.json",
-          "sha256": "70b5ef0b04e9c7ad9337189d3461815038dec240fd4c9c0ce887c69ebccdc317"
+          "path": "evidence/local/M3-hosted-mudra-interact-37717500467.json",
+          "sha256": "322a8b5ce6019108eeb028fa8d28cfccfedcc84f11f094e13ce69d56b41677f4"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "blocker": "MI-08 is verified from hosted run 37716341667: all eight Linux/Windows x86_64 cells on Python 3.11-3.14 passed E73-E84 with no skips, and the committed-source matrix aggregator reports 8/8. M3 remains BLOCKED until the separate complete M3 acceptance gate runs on the current matrix and its receipt is recorded."
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -153,7 +152,7 @@
         }
       ],
       "verification_kind": "luna_self_verified",
-      "blocker": "Owner actions remain to confirm PyPI device login and control of mudra-interact on PyPI and TestPyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create pypi-test; then authorize exact candidate commit/version 0.2.0. The solo-owner policy allows deliberate owner self-approval, disables administrator bypass, and restricts production to main; it is not independent review. pypi-production is live-verified with this configuration and private vulnerability reporting is enabled. MI-08 has a fresh verified 8-cell platform matrix from run 37716341667; M3 still needs its separate full acceptance gate and current receipt. M4 remains BLOCKED because package identity/publishers, exact authorization, live uploads/downloads, and evidence/releases/published.json are incomplete."
+      "blocker": "Owner actions remain to confirm PyPI device login and control of mudra-interact on PyPI and TestPyPI; configure separate Trusted Publishers for mayayaiinfra/Mudra-Interact-Core and .github/workflows/publish.yml; create pypi-test; then authorize exact candidate commit/version 0.2.0. The solo-owner policy allows deliberate owner self-approval, disables administrator bypass, and restricts production to main; it is not independent review. pypi-production is live-verified with this configuration and private vulnerability reporting is enabled. M0-M3 are now VERIFIED, including the current-source eight-cell MI-08 matrix and complete M3 gate. M4 remains BLOCKED because package identity/publishers, exact authorization, live uploads/downloads, and evidence/releases/published.json are incomplete."
     }
   ],
   "recommended_order": [
