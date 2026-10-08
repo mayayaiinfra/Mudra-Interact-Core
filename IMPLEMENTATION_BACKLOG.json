@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-03",
+  "active_item": "MI-04",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -356,7 +356,7 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -372,7 +372,14 @@
           "sha256": "a1757736e314652e18abb149de670c800140407278c6cb77a914645c4d5b3a31"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-03.json",
+          "sha256": "097c5923cd4cd21309f520aef6fa36e34101e710df4e5189265fd26b8c1d7613"
+        }
+      ]
     },
     {
       "id": "MI-04",
@@ -407,7 +414,7 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -719,8 +726,8 @@
       "M0"
     ],
     "active_gate": "M1",
-    "active_item": "MI-03",
+    "active_item": "MI-04",
     "updated_on": "2026-10-09",
-    "note": "M0 and MI-02 are verified; continue M1 in dependency order."
+    "note": "M0, MI-02 and MI-03 are verified; continue M1 in dependency order."
   }
 }
