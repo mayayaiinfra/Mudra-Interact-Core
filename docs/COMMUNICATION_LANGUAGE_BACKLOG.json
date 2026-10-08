@@ -1,12 +1,12 @@
 {
   "design_revision": "0.1",
-  "status": "CURRENT_SOURCE_REQUALIFICATION_IN_PROGRESS",
-  "active_item": "ML-03",
+  "status": "ML06_CURRENT_SOURCE_REQUALIFICATION_IN_PROGRESS",
+  "active_item": "ML-06",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.4.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. Exact wheel and sdist bytes, downloaded fresh installation, two PyPI Trusted Publisher attestations, protected authorization, M0-M4 and MI-01 through MI-10 are verified for source 875a611. ML-01 through ML-03 need fresh language receipts on the released source; ML-04 is supported by current M3/M4/package evidence. ML-05 remains externally blocked. ML-06 transport is shipped and awaits current-source A2A requalification.",
+  "current_release_dependency": "Mudra Interact 0.4.0 is published and exact-artifact verified; M0-M4, MI-01 through MI-10, ML-01 through ML-04 have current passing receipts. ML-06 is in final current-source A2A requalification. ML-05 remains externally blocked; no human comprehension, cultural or accessibility qualification is claimed.",
   "items": [
     {
       "id": "ML-01",
@@ -65,7 +65,7 @@
     },
     {
       "id": "ML-03",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": [
         "ML-02"
       ],
@@ -82,10 +82,14 @@
       ],
       "verification_receipt": {
         "path": "evidence/language/ML-03.json",
-        "sha256": "188cb9fb636021e4b8b406b94269dfc1593f551f355d678621400f4baf134db3"
+        "sha256": "32a829eabdf655c18af9aafcf9360fce47e6f84c208c3a4b1660c61368a9d798"
       },
-      "prior_state": "NOT_STARTED",
-      "progress": "Fresh 0.4.0 transcript, rendering and no-side-effect qualification is active after ML-02 passed."
+      "prior_state": "VERIFIED",
+      "progress": "Requalified on published 0.4.0 source: all 71 L20-L23 acceptance tests passed, zero skips; ML-02 prerequisite receipt hash-verified.",
+      "historical_receipt": {
+        "path": "evidence/language/archive/pre-v0.4.0/ML-03.json",
+        "sha256": "188cb9fb636021e4b8b406b94269dfc1593f551f355d678621400f4baf134db3"
+      }
     },
     {
       "id": "ML-04",
@@ -178,7 +182,7 @@
     },
     {
       "id": "ML-06",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "requires": [
         "ML-04"
       ],
@@ -195,7 +199,7 @@
         "L52: no side effects from parse or accept; explicit cancellation only; fixed remote errors",
         "L53: packaged dependency-free adapter and accurate qualification limits"
       ],
-      "progress": "The experimental A2A client is included in published 0.4.0. Fresh current-source ML-06 loopback/receipt verification will run after ML-01 through ML-03 are requalified; no public third-party agent, production host, model provider or paid operation is claimed.",
+      "progress": "Fresh current-source A2A loopback-peer and receipt verification is active after ML-01 through ML-03 passed. No public third-party agent, production host, provider or paid operation is claimed.",
       "prior_state": "IN_PROGRESS",
       "superseded_candidate_receipt": {
         "path": "evidence/language/ML-06.json",
@@ -205,11 +209,11 @@
   ],
   "reverification_required": [
     {
-      "scope": "ML-01 through ML-03 / released 0.4.0 source",
-      "reason": "The previous language receipts are historical and must be regenerated against the released 0.4.0 source. ML-04 core/distribution/release requirements are now covered by current M0-M4 evidence."
+      "scope": "ML-06 / released 0.4.0 source",
+      "reason": "The A2A adapter is included in the exact published release; the separate current-source loopback peer and receipt verifier must pass after the frozen source/docs status commit."
     }
   ],
-  "next_scope": "Run ML-03 against the released source, then run ML-06 current-source A2A verification. ML-05 remains externally blocked pending real consented participants and independent scoped cultural/accessibility reviewers.",
+  "next_scope": "Finish ML-06 current-source A2A verification. All software and release gates will then be complete; ML-05 remains blocked until actual consented participants and independent scoped cultural/accessibility reviewers are available.",
   "current_release": {
     "package": "mudra-interact",
     "version": "0.4.0",
