@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-05",
+  "active_item": "MI-07",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -475,7 +475,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -491,7 +491,14 @@
           "sha256": "f263045b0313e31ccd0524445c270836e15d69a3c2cb203d39a92270a60a2cfb"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-05.json",
+          "sha256": "07d946c0f3a965ee054f9e70e271d55e8f0785ae15124e9b919bd292641b7645"
+        }
+      ]
     },
     {
       "id": "MI-06",
@@ -574,7 +581,7 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -748,8 +755,8 @@
       "M1"
     ],
     "active_gate": "M2",
-    "active_item": "MI-05",
+    "active_item": "MI-07",
     "updated_on": "2026-10-09",
-    "note": "MI-06 is verified; MI-05 is now eligible because its full prerequisite set is verified."
+    "note": "MI-05 and MI-06 are verified; MI-07 is now eligible for M2."
   }
 }
