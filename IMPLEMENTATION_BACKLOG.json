@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M2 are verified; MI-08 has eight fresh Windows/Linux x86_64 Python 3.11-3.14 receipts, and MI-09 design is verified. The aggregate M3 gate, M4, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
+    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M3 are verified, including all eight Windows/Linux x86_64 Python 3.11-3.14 cells. M4 publication on TestPyPI and PyPI and exact-version downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -54,7 +54,7 @@
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -209,7 +209,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -218,7 +218,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/M3.json",
+          "sha256": "ebe0586070cad17572e6fa7ddde41f3bb093cb8dc338f9e962c69334e3beb579"
+        }
+      ]
     },
     {
       "id": "M4",
@@ -801,7 +808,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -819,11 +826,12 @@
     "completed_gates": [
       "M0",
       "M1",
-      "M2"
+      "M2",
+      "M3"
     ],
-    "active_gate": "M3",
-    "active_item": null,
+    "active_gate": "M4",
+    "active_item": "MI-10",
     "updated_on": "2026-10-09",
-    "note": "MI-08 has eight verified OS/Python receipts and the M3 aggregate; MI-08 and MI-09 are verified, so the M3 gate is ready."
+    "note": "M3 is verified. MI-10 requires exact-artifact publication and downloaded-install proof on TestPyPI and PyPI."
   }
 }
