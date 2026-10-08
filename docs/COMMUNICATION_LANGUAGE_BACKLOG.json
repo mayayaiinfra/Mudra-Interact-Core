@@ -1,7 +1,7 @@
 {
   "design_revision": "0.1",
   "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-03",
+  "active_item": "ML-04",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
@@ -32,10 +32,14 @@
     },
     {
       "id": "ML-03",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": ["ML-02"],
       "outputs": ["validate_transcript", "render_message", "synthetic human-human/human-agent/agent-agent creative planning examples"],
-      "acceptance": ["L20: reply graph, scope, unique IDs, reversed participants, role consistency and chronological invariants", "L21: per-proposal single disposition, revisions do not inherit accept, terminal status rules and acknowledgement loop prevention", "L22: deterministic literal rendering, no supported-locale fallback, visible non-authorization and provenance assertions", "L23: malicious prose and spoofed accept/review/role/confidence never cause network, subprocess or action; incomplete histories and invalid late messages reject wholly"]
+      "acceptance": ["L20: reply graph, scope, unique IDs, reversed participants, role consistency and chronological invariants", "L21: per-proposal single disposition, revisions do not inherit accept, terminal status rules and acknowledgement loop prevention", "L22: deterministic literal rendering, no supported-locale fallback, visible non-authorization and provenance assertions", "L23: malicious prose and spoofed accept/review/role/confidence never cause network, subprocess or action; incomplete histories and invalid late messages reject wholly"],
+      "verification_receipt": {
+        "path": "evidence/language/ML-03.json",
+        "sha256": "d686306ece06f1a3412f15ba2da3dfbc7eabe029b11b3203e2c03f51fe2fa869"
+      }
     },
     {
       "id": "ML-04",
