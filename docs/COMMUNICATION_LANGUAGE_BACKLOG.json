@@ -10,13 +10,13 @@
   "items": [
     {
       "id": "ML-01",
-      "state": "REVERIFY_REQUIRED",
+      "state": "VERIFIED",
       "requires": [],
       "outputs": ["schemas/language/v1 closed JSON Schema", "independent synthetic fixture manifest", "language version mapping", "distinct Lxx acceptance reporter and gate configuration"],
       "acceptance": ["L01: all acts and all four role directions have independent valid/invalid fixtures", "L02: unknown versions/namespaces/fields/remote refs and stale or tampered fixtures reject", "L03: reporter rejects missing IDs, skip/xfail/empty suites, stale source, forged and missing evidence"],
       "verification_receipt": {
         "path": "evidence/language/ML-01.json",
-        "sha256": "209cddf5f922bfa06067078cff8dd56b9bed5764058f43fce1ec5e6ba88c0dda"
+        "sha256": "7a3920c8cce69fd5e3d3d8cb6504168370d70677c29a40bcba3404b491e71027"
       }
     },
     {
