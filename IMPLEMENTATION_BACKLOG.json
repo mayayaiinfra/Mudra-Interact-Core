@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M2 evidence is verified. M3/M4, the versioned platform matrix, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
+    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0, published on TestPyPI and PyPI from 1d57c069 with immutable GitHub release v0.3.0. Those receipts are preserved as historical evidence and do not qualify 0.4.0. Fresh 0.4.0 M0-M2 are verified; MI-08 has eight fresh Windows/Linux x86_64 Python 3.11-3.14 receipts, and MI-09 design is verified. The aggregate M3 gate, M4, publication, and downloaded-install proof remain pending. Human qualification, field accuracy, camera adapter, and live host/transport integration remain outside the verified core contract.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -46,10 +46,15 @@
         "description": "0.4.0 MI-07 proof from tools/run_mutations.py --report evidence/local/v0.4.0/semantic-mutations-MI-07.json --timeout-seconds 90: all 15 named mutations applied and detected; source tree digest unchanged.",
         "path": "evidence/local/v0.4.0/semantic-mutations-MI-07.json",
         "sha256": "528efd30d288bb39e5cb48258ca66a8e233f3747cff0de0fc963130ab23f598f"
+      },
+      {
+        "description": "0.4.0 MI-08 aggregate: eight fresh Windows/Linux x86_64 cells across Python 3.11-3.14, all acceptance cases passed and no skips.",
+        "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
+        "sha256": "550e72b00bdb4846a196d5aea19d9ccc25463ad570e33484f5d34b985a73326d"
       }
     ]
   },
-  "active_item": "MI-08",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -650,7 +655,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -687,7 +692,42 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/linux-py3.11.json",
+          "sha256": "a997379c575fd10619688b5c8f818b06b59225d2ab4726ccc5b1c9406027f735"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/linux-py3.12.json",
+          "sha256": "9782e424adae1de4d27f81adfd706b750ed48c40ef77feb8b2d23311ac1d23c4"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/linux-py3.13.json",
+          "sha256": "7693951a2dc0f407f7dd831d08331f694e03fd6804158b02fbd5d0c2edf89ccb"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/linux-py3.14.json",
+          "sha256": "a4f960d818c8f00c66302ca3b138dbfec769020e007a313b03a6a7b6b53a2a28"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/windows-py3.11.json",
+          "sha256": "b6cdcfcf8994eb6da1a022afb97fb3d5ba7a9582c5adf44cae65ab5172a32741"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/windows-py3.12.json",
+          "sha256": "ce509456a33d20ed7c145077786772a95e27bba22441add9ddb9affdf7177b2a"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/windows-py3.13.json",
+          "sha256": "e5353dfb17ed9113f04c309b371ea7a3cd7e8f8a954401df57aae979952f5748"
+        },
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.0/windows-py3.14.json",
+          "sha256": "8b2b257ff794ea88b5f3cff0bf65a90b4681ef2d24690af6e517ed2560727c3d"
+        }
+      ]
     },
     {
       "id": "MI-09",
@@ -782,8 +822,8 @@
       "M2"
     ],
     "active_gate": "M3",
-    "active_item": "MI-08",
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "MI-09 is verified; MI-08 is the remaining M3 item and requires the eight-cell Windows/Linux Python matrix."
+    "note": "MI-08 has eight verified OS/Python receipts and the M3 aggregate; MI-08 and MI-09 are verified, so the M3 gate is ready."
   }
 }
