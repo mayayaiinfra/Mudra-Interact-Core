@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-05",
+  "active_item": "MI-06",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -475,7 +475,7 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -516,7 +516,7 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -741,8 +741,8 @@
       "M1"
     ],
     "active_gate": "M2",
-    "active_item": "MI-05",
+    "active_item": "MI-06",
     "updated_on": "2026-10-09",
-    "note": "Fresh M0 and M1 are verified; continue M2 in dependency order."
+    "note": "M2 dependency order starts with MI-06; MI-05 depends on both MI-04 and MI-06."
   }
 }
