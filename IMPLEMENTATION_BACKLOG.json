@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -95,7 +95,7 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -104,7 +104,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/M0-v040.json",
+          "sha256": "0d26e743840479533db9608e54835d3c3b77c224bc8d97b1e81a9978ed67be71"
+        }
+      ]
     },
     {
       "id": "M1",
@@ -227,7 +234,7 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -236,7 +243,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/MI-01-v040.json",
+          "sha256": "37a1d960c03f9bf96d7581681f9b16f94d64ee4f025af610ce9dad62222b779b"
+        }
+      ]
     },
     {
       "id": "MI-02",
@@ -266,7 +280,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -620,5 +634,15 @@
       "historical_verification_kind": "luna_self_verified",
       "candidate_version": "0.4.0"
     }
-  ]
+  ],
+  "candidate_progress": {
+    "version": "0.4.0",
+    "state": "IN_PROGRESS",
+    "completed_gates": [
+      "M0"
+    ],
+    "active_gate": "M1",
+    "active_item": "MI-02",
+    "updated_on": "2026-10-09"
+  }
 }
