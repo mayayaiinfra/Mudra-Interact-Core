@@ -8,6 +8,6 @@ collected 28 items
 tests\test_language_contract.py ......                                   [ 21%]
 tests\test_language_verification.py ......................               [100%]
 
-============================= 28 passed in 2.49s ==============================
+============================= 28 passed in 2.13s ==============================
 
 STDERR
