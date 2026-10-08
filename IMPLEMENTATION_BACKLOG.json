@@ -22,7 +22,7 @@
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -73,15 +73,14 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-0.3.0-e905d2d.json",
-          "sha256": "041b58a2a512ce2322d416ba9e067d0a63bd21576da6f7dfa0779b27b30def4d"
+          "path": "evidence/local/M0-0.3.0-901349c.json",
+          "sha256": "23b8a80f3bece5558fb1340a5603a21ccfde5277cf75040eabd193eb24258e06"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M1",
@@ -199,15 +198,14 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-0.3.0-e905d2d.json",
-          "sha256": "041b58a2a512ce2322d416ba9e067d0a63bd21576da6f7dfa0779b27b30def4d"
+          "path": "evidence/local/M0-0.3.0-901349c.json",
+          "sha256": "23b8a80f3bece5558fb1340a5603a21ccfde5277cf75040eabd193eb24258e06"
         }
-      ],
-      "prior_state": "VERIFIED"
+      ]
     },
     {
       "id": "MI-02",
@@ -237,7 +235,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
