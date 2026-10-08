@@ -1,0 +1,116 @@
+{
+  "acceptance_cases": [],
+  "acceptance_sha256": "bafb4ddf837086d1d5f3ccf769c4f78554edb288af50220490a072ef62ecb106",
+  "artifacts": [],
+  "candidate_status": "published_verified",
+  "checks": {
+    "adapter_status": "not_implemented_in_public_core",
+    "artifacts": [
+      {
+        "filename": "mudra_interact-0.4.1-py3-none-any.whl",
+        "sha256": "144ba970f2a02685ef34ce06deaf64ca5d239366717d9c608e41850f0bd156f4",
+        "size_bytes": 58120
+      },
+      {
+        "filename": "mudra_interact-0.4.1.tar.gz",
+        "sha256": "bb3c8d14a7d6b2f428027672ca8c15b9cded07daf1b34f49bff7a4d7a5bc4493",
+        "size_bytes": 95364
+      }
+    ],
+    "authorization": {
+      "administrator_bypass": false,
+      "deployment_branches": [
+        "main"
+      ],
+      "environment": "pypi-production",
+      "independent_review": false,
+      "required_reviewers": 1,
+      "self_approval_allowed": true
+    },
+    "candidate_fingerprint": "2b181b428fa5472dbeec9b694b33a57a850685cf8e842aae78cde6db07cef549",
+    "community_review": "not_established_by_public_core",
+    "errors": [],
+    "github": {
+      "github_release": "VERIFIED",
+      "tag_commit": "3fb1c44ddba02fea5574ca71e90f0a6d5da16273",
+      "workflow_path": ".github/workflows/publish.yml",
+      "workflow_run": "VERIFIED"
+    },
+    "indexes": {
+      "pypi": {
+        "artifact_count": 2,
+        "attestation_source_commit": "3fb1c44ddba02fea5574ca71e90f0a6d5da16273",
+        "attestation_workflow_run_attempt": 1,
+        "attestation_workflow_run_id": 37855845211,
+        "candidate_workflow_environment_binding": true,
+        "downloaded_and_hashed": true,
+        "fresh_installed_wheel_smoke": true,
+        "index": "pypi",
+        "package": "mudra-interact",
+        "publisher_environment_assertion": "pypi-production",
+        "state": "VERIFIED",
+        "trusted_publisher_attestations": 2,
+        "version": "0.4.1"
+      },
+      "testpypi": {
+        "artifact_count": 2,
+        "downloaded_and_hashed": true,
+        "fresh_installed_wheel_smoke": true,
+        "index": "testpypi",
+        "package": "mudra-interact",
+        "state": "VERIFIED",
+        "trusted_publisher_attestations": 0,
+        "version": "0.4.1"
+      }
+    },
+    "package": "mudra-interact",
+    "publication_state": "verified",
+    "recognition_quality": "not_established_by_synthetic_tests",
+    "source_commit": "3fb1c44ddba02fea5574ca71e90f0a6d5da16273",
+    "source_tree_sha256": "146d05aeee0e4efaa7639b33cf3449bc3aed2dc88ae8b4937c432b35816f0779",
+    "state": "VERIFIED",
+    "verification_kind": "luna_self_verified",
+    "version": "0.4.1"
+  },
+  "commands": [],
+  "errors": [],
+  "finished_at": "2026-10-08T23:07:30.284392Z",
+  "items": [
+    "MI-10"
+  ],
+  "limitations": [],
+  "mode": "published",
+  "mutation_results": [],
+  "platform": {
+    "architecture": "x86_64",
+    "implementation": "CPython",
+    "os": "linux",
+    "python": "3.12.3",
+    "release": "6.6.87.2-microsoft-standard-WSL2"
+  },
+  "platform_matrix": [],
+  "prerequisites": [
+    "M0",
+    "M1",
+    "M2",
+    "M3",
+    "protected_release_authorization"
+  ],
+  "report_schema_version": 1,
+  "report_sha256": "c65c074bcddff9deef99bc2ff9cf1d4fb0100c928b4114fed5df34e239da0554",
+  "scope": {
+    "id": "published",
+    "kind": "release"
+  },
+  "source_commit": "3fb1c44ddba02fea5574ca71e90f0a6d5da16273",
+  "source_tree_sha256": "146d05aeee0e4efaa7639b33cf3449bc3aed2dc88ae8b4937c432b35816f0779",
+  "spec_sha256": "569ba8f748224774a4747ef0abcd1774487f98c75c85f7c11137f24fa6935d51",
+  "started_at": "2026-10-08T23:06:54.983840Z",
+  "state": "VERIFIED",
+  "test_counts": {
+    "required_platform_cells": 8,
+    "verified_platform_cells": 8
+  },
+  "tool_lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
+  "verification_kind": "luna_self_verified"
+}

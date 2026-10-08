@@ -1,8 +1,8 @@
 # Distribution and compatibility
 
 Mudra Interact is a standard-library runtime package. The current public
-package candidate is `mudra-interact` version `0.4.1`; the latest published
-version is `0.4.0`. This patch keeps the v2 contract,
+package candidate is `mudra-interact` version `0.4.2`; the latest published
+version is `0.4.1`. This patch keeps the v2 contract,
 catalogue and schema versions set to `2.0.0`.  The wheel carries its schemas,
 neutral catalogue, `py.typed`, `LICENSE`, and `NOTICE`; it has no
 `Requires-Dist` runtime dependencies.
@@ -30,13 +30,13 @@ environment variable.  Each workflow runner emits its sanitized MI-08 receipt
 and the receipt's acceptance artifact in the job log.  Restore those exact files
 under `evidence/local/mi08-platform-receipts/` and their declared artifact paths,
 then run `python tools/aggregate_platform_matrix.py --receipt-dir
-evidence/local/mi08-platform-receipts/v0.4.1 --report
-evidence/local/v0.4.1/M3-platform-matrix.json`. The aggregator checks the receipt
+evidence/local/mi08-platform-receipts/v0.4.2 --report
+evidence/local/v0.4.2/M3-platform-matrix.json`. The aggregator checks the receipt
 hashes, all E73-E84 outcomes, shared source/tool identities (with text
 checkout line endings normalized and binary bytes preserved), exact cell set,
 unique cells and candidate commit ancestry. `python tools/verify_gate.py
---gate M3 --report evidence/local/v0.4.1/M3.json --platform-matrix
-evidence/local/v0.4.1/M3-platform-matrix.json` refuses to verify M3 unless that
+--gate M3 --report evidence/local/v0.4.2/M3.json --platform-matrix
+evidence/local/v0.4.2/M3-platform-matrix.json` refuses to verify M3 unless that
 aggregate is fresh and complete. The explicit path keeps candidate evidence
 separate from the historical default path. M3 cannot close until all eight
 supported cells have fresh receipts.
@@ -83,12 +83,12 @@ upgrade should be accepted only after its compatibility inventory confirms:
 
 | Contract surface | Current public value | Consumer check | Upgrade risk |
 | --- | --- | --- | --- |
-| Package | `mudra-interact==0.4.1` candidate (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
+| Package | `mudra-interact==0.4.2` candidate (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
 | Gesture schemas | v2 / `2.0.0` (unchanged from 0.2.0) | Validate representative synthetic frame, report, batch and event fixtures | A schema change can reject or reinterpret stored work |
 | Communication language | Language v1 / `1.0.0`, creative-plan intent v1 | Validate full synthetic transcripts and review rendered messages; keep authority in the host | Message validity and an `accept` act do not establish identity or authorization |
 | Catalogue | Neutral catalogue `2.0.0` | Check IDs, version and rule mappings before activation | Label packs and community-suitability claims are not supplied by core |
 | CLI | `mudra-interact` with explicit consent/confirmation | Run the host integration smoke against the installed wheel | Flags and error codes are a compatibility surface |
-| Privacy | No telemetry or background network requests; the 0.4.1 candidate sends only through an explicit configured A2A call | Inspect endpoint, authentication, retention and replay policy; run egress-negative checks | A downstream adapter or remote peer can introduce retention or network behaviour |
+| Privacy | No telemetry or background network requests; the 0.4.2 candidate sends only through an explicit configured A2A call | Inspect endpoint, authentication, retention and replay policy; run egress-negative checks | A downstream adapter or remote peer can introduce retention or network behaviour |
 | Licensing | Apache-2.0 core with shipped notices | Re-run the host's asset/licence inventory | Optional camera/model assets need separate review |
 
 The inventory is a handoff contract, not an automatic upgrade or a claim that

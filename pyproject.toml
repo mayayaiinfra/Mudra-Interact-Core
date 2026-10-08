@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mudra-interact"
-version = "0.4.1"
-description = "Vendor-neutral structured communication for people and AI agents, plus offline gesture events"
+version = "0.4.2"
+description = "An open, vendor-neutral protocol for structured human and multi-agent communication"
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
@@ -13,8 +13,8 @@ authors = [{name = "MAYAYAI"}]
 keywords = ["gesture", "landmarks", "communication-protocol", "human-agent", "multi-agent", "transcript-validation"]
 
 [project.urls]
-Documentation = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.4.1/docs/API.md"
-Changelog = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.4.1/CHANGELOG.md"
+Documentation = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.4.2/docs/API.md"
+Changelog = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.4.2/CHANGELOG.md"
 Issues = "https://github.com/mayayaiinfra/Mudra-Interact-Core/issues"
 Repository = "https://github.com/mayayaiinfra/Mudra-Interact-Core"
 

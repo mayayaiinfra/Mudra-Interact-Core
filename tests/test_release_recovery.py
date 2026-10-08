@@ -459,6 +459,10 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "human" in project["description"].lower()
     assert "agent" in project["description"].lower()
     assert "vendor-neutral" in project["description"].lower()
+    assert "future" in readme.lower() and "multi-agent" in readme.lower()
+    assert "across products, models, and providers" in readme.lower()
+    assert "allyk" not in project["description"].lower()
+    assert "allyk" not in readme.lower()
     assert "multi-agent" in readme.lower()
     assert "python -m pip install mudra-interact" in readme
     lock = (ROOT / "requirements-release.lock").read_text(encoding="utf-8")

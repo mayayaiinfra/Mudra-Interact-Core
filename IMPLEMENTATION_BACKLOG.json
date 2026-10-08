@@ -6,7 +6,7 @@
   "implementation_started": true,
   "target": {
     "package": "mudra-interact",
-    "package_version": "0.4.1",
+    "package_version": "0.4.2",
     "schema_version": "2.0.0",
     "catalog_version": "2.0.0"
   },
@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The 0.2.0 and 0.3.0 releases remain historical. Version 0.4.0 adds the experimental communication-language SDK and standard-library A2A JSON-RPC client while preserving the v2 gesture/event contract. M0-M4 and MI-01 through MI-10 are verified for the exact 0.4.0 release candidate. No human, community or accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
+    "scope": "The 0.4.1 package was published to TestPyPI and PyPI and its exact artifacts, attestations, installs and immutable GitHub release were verified. M0-M3 and the eight-cell Linux/Windows CPython 3.11-3.14 matrix passed for its frozen source. MI-10 remains INCOMPLETE: its acceptance suite exposed that the README linked to generic package pages instead of exact-version pages. Candidate 0.4.2 updates the public package value statement and exact links; every gate is being requalified against the new frozen source. No human, community or accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "The exact 0.4.0 PyPI/TestPyPI/GitHub release and M4/MI-10 proof are bound to source 875a611 and its frozen artifact hashes. After correcting published-status docs, M0-M3 were freshly requalified on current source tree 9f3055: M0 24/24, M1 141/141, M2 186/186, M3 217/217, all zero skips. The eight-cell hosted Windows/Linux CPython 3.11-3.14 matrix passed 26/26 per cell in GitHub run 37848916763. ML-01 through ML-04 and ML-06 have current passing receipts. ML-05 human qualification remains externally blocked; no human, community or accessibility, field-accuracy, public-agent or production-host claim is made.",
+    "verification_claim": "0.4.1 publication proof is retained as historical evidence and does not close MI-10 because the independent acceptance suite failed on missing exact-version links. Candidate 0.4.2 is active at MI-01. Its source, schema metadata, package description and exact-version links require fresh M0-M4 evidence; no 0.4.1 receipt is valid as current-candidate verification.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -143,10 +143,50 @@
         "path": "evidence/releases/published-verification.json",
         "sha256": "a2c95a1e6374c82c660d8dc48b5fe962e043cab8821839f55ad42d7ed6365326",
         "description": "Exact published 0.4.0 artifacts, TestPyPI/PyPI downloads and install, PyPI attestations and immutable GitHub release verified for frozen source 875a611."
+      },
+      {
+        "path": "evidence/releases/v0.4.1/published-verification-local.json",
+        "sha256": "3ff71384e72e6c961c988e128d9656bcc395acfdcb1424e95ef2cdd06c2aeaf1",
+        "description": "Published PyPI/TestPyPI files, trusted attestations, downloaded installs, and GitHub release verified for 0.4.1; the separate MI-10 acceptance suite found a release-link defect."
+      },
+      {
+        "path": "evidence/releases/v0.4.1/published.json",
+        "sha256": "8e85c9b931dd6f9846ee8bcec2c59194be9b0fda910cecc2f4c233ca609ed3e2",
+        "description": "Sanitized publication manifest for the immutable 0.4.1 release."
+      },
+      {
+        "path": "evidence/releases/v0.4.1/testpypi-verification.json",
+        "sha256": "75ecad3cfcbef3eceb75ddb1a756a2c26c3dd911458b6162c27ac410cf8920c3",
+        "description": "Exact 0.4.1 TestPyPI artifact download, hash and fresh-install proof."
+      },
+      {
+        "path": "evidence/releases/v0.4.1/pypi-verification.json",
+        "sha256": "768fc009fdd32452c41c1c15aa29a7d808f5b31bbdb8c7ab97b32b6c5030b7e4",
+        "description": "Exact 0.4.1 PyPI artifact, Trusted Publisher attestation and fresh-install proof."
+      },
+      {
+        "path": "evidence/local/v0.4.1/MI-10.json",
+        "sha256": "214735d7a4c55bac955a266749b34aded44d451231dcf778e3bb21d0e73f0d52",
+        "description": "Failed 0.4.1 MI-10 acceptance attempt; first defect was non-versioned PyPI/TestPyPI/GitHub README release links. Not a passing receipt."
+      },
+      {
+        "path": "evidence/local/v0.4.2/M0.json",
+        "sha256": "2a1e6d54072925092542950d9667be14abc0398d8cd8cc15fa3e0392554bc088",
+        "description": "Candidate 0.4.2 M0 report: all 24 E01-E06 cases passed, zero skips, on Windows CPython 3.14; luna_self_verified."
+      },
+      {
+        "path": "evidence/local/v0.4.2/M1.json",
+        "sha256": "fdfdcdc338b4df7f39b3da7ecd6b7519d26884a112b12f946969e2adae2ff685",
+        "description": "Candidate 0.4.2 M1 aggregate: 141 acceptance cases passed, zero skips, on Windows CPython 3.14; luna_self_verified."
+      },
+      {
+        "path": "evidence/local/v0.4.2/M2.json",
+        "sha256": "492d316e6cab266fb77a6e4b492d10fb3ac447f7c09f3c5d5e7b5fd4e9b9cf72",
+        "description": "Candidate 0.4.2 M2 aggregate verification report."
       }
     ]
   },
-  "active_item": "MI-10",
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -206,14 +246,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M0-final2.json",
-          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -250,7 +283,14 @@
           "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M0.json",
+          "sha256": "2a1e6d54072925092542950d9667be14abc0398d8cd8cc15fa3e0392554bc088"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M1",
@@ -271,14 +311,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M1-final2.json",
-          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -315,7 +348,14 @@
           "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M1.json",
+          "sha256": "fdfdcdc338b4df7f39b3da7ecd6b7519d26884a112b12f946969e2adae2ff685"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M2",
@@ -336,14 +376,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M2-final2.json",
-          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -374,9 +407,21 @@
         {
           "path": "evidence/local/v0.4.1/M2-corrected.json",
           "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M2-final2.json"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M2.json",
+          "sha256": "492d316e6cab266fb77a6e4b492d10fb3ac447f7c09f3c5d5e7b5fd4e9b9cf72"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M3",
@@ -387,7 +432,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "VERIFIED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -396,7 +441,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -415,13 +460,13 @@
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
       },
-      "evidence": [
+      "superseded_candidate_evidence": [
         {
           "path": "evidence/local/v0.4.1/M3-ci.json",
-          "sha256": "26c0c42d709a324d1c88f2f0bbaa0289aa7ee5f1e3a236f51af25e6637dedd81"
+          "sha256": "26c0c42d709a324d1c88f2f0bbaa0289aa7ee5f1e3a236f51af25e6637dedd81",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M3-ci.json"
         }
-      ],
-      "verification_kind": "luna_self_verified"
+      ]
     },
     {
       "id": "M4",
@@ -440,7 +485,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -504,14 +549,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M0-final2.json",
-          "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -548,7 +586,14 @@
           "sha256": "e05d031f5007af7497b8f8e3de130687d01e88c1f41c282303a6a56b2248b0ab"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M0.json",
+          "sha256": "2a1e6d54072925092542950d9667be14abc0398d8cd8cc15fa3e0392554bc088"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-02",
@@ -587,14 +632,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M1-final2.json",
-          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -631,7 +669,14 @@
           "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-02.json",
+          "sha256": "02f5bc19b9c9410b0bfe4214c6b23654d3a880fa33550e0544cb1fe73a0592d9"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-03",
@@ -665,14 +710,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M1-final2.json",
-          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -709,7 +747,14 @@
           "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-03.json",
+          "sha256": "73b5a04a21d8a6865cbff33978e707c073ee04f91fcac25b477920e23e4e903e"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-04",
@@ -753,14 +798,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M1-final2.json",
-          "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -797,7 +835,14 @@
           "sha256": "d895e5734dc1e039ce7bbb0b7195ab03b15db2807a5ff546f8083aa5e203b95e"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-04.json",
+          "sha256": "395c0aa54f5bfb85653ca242ccd33f1ff61f7b550da68ed9831873dcab163dae"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-05",
@@ -837,14 +882,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M2-final2.json",
-          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -875,9 +913,21 @@
         {
           "path": "evidence/local/v0.4.1/M2-corrected.json",
           "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M2-final2.json"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-05.json",
+          "sha256": "f969633f73022ecd21b5826a3fc46ae749376bbbf571329cc32791a6da3a9e0f"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-06",
@@ -911,14 +961,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M2-final2.json",
-          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -949,9 +992,21 @@
         {
           "path": "evidence/local/v0.4.1/M2-corrected.json",
           "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M2-final2.json"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-06.json",
+          "sha256": "39bd652424859b14e185662a73629692f8262c7412ef492a01d230493bcadff7"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-07",
@@ -995,14 +1050,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
-      "evidence": [
-        {
-          "path": "evidence/local/v0.4.1/M2-final2.json",
-          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd"
-        }
-      ],
-      "verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -1033,9 +1081,21 @@
         {
           "path": "evidence/local/v0.4.1/M2-corrected.json",
           "sha256": "130252ad170e34bd748a77812c193941104a4868a857920fb5bb58082f37af59"
+        },
+        {
+          "path": "evidence/local/v0.4.1/M2-final2.json",
+          "sha256": "9e24e91e3eaedbae5615ac886450d5686f61a76dca98e921d726aa162a3992dd",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/M2-final2.json"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/MI-07.json",
+          "sha256": "4911a753f8f33604476a49a6835b727978c53e12e797fc7c2ec7180cff8ae2c9"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-08",
@@ -1069,7 +1129,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1106,7 +1166,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -1153,13 +1213,13 @@
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
       },
-      "evidence": [
+      "superseded_candidate_evidence": [
         {
           "path": "evidence/local/mi08-platform-receipts/v0.4.1/linux-py3.14.json",
-          "sha256": "993f4fbfa91871ea6b443b37ee73b89ce12593cc3783e973004ff176ce4f0457"
+          "sha256": "993f4fbfa91871ea6b443b37ee73b89ce12593cc3783e973004ff176ce4f0457",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/mi08-platform-receipts/v0.4.1/linux-py3.14.json"
         }
-      ],
-      "verification_kind": "luna_self_verified"
+      ]
     },
     {
       "id": "MI-09",
@@ -1181,7 +1241,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "VERIFIED",
+      "state": "NOT_STARTED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1190,7 +1250,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -1209,13 +1269,13 @@
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
       },
-      "evidence": [
+      "superseded_candidate_evidence": [
         {
           "path": "evidence/local/v0.4.1/MI-09.json",
-          "sha256": "a6fcf7fc7f89d6cdabcb16541e65745aebfe0208ead9cde11f5c60318d7bb3c1"
+          "sha256": "a6fcf7fc7f89d6cdabcb16541e65745aebfe0208ead9cde11f5c60318d7bb3c1",
+          "description": "0.4.1 candidate receipt superseded for 0.4.2: evidence/local/v0.4.1/MI-09.json"
         }
-      ],
-      "verification_kind": "luna_self_verified"
+      ]
     },
     {
       "id": "MI-10",
@@ -1251,7 +1311,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1260,7 +1320,7 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.1",
+      "candidate_version": "0.4.2",
       "previous_release": {
         "version": "0.4.0",
         "state": "VERIFIED",
@@ -1273,42 +1333,98 @@
         ],
         "superseded_candidate_evidence": [],
         "superseded_candidate_verification_kind": null
-      }
+      },
+      "superseded_candidate_evidence": [
+        {
+          "path": "evidence/local/v0.4.1/MI-10.json",
+          "sha256": "214735d7a4c55bac955a266749b34aded44d451231dcf778e3bb21d0e73f0d52",
+          "description": "Failed 0.4.1 MI-10 acceptance attempt; first defect was non-versioned PyPI/TestPyPI/GitHub README release links. Not a passing receipt."
+        }
+      ]
     }
   ],
   "candidate_progress": {
     "release": null,
-    "version": "0.4.1",
+    "version": "0.4.2",
     "state": "IN_PROGRESS",
     "completed_gates": [
       "M0",
       "M1",
-      "M2",
-      "M3"
+      "M2"
     ],
-    "active_gate": "M4",
-    "active_item": "MI-10",
+    "active_gate": "M3",
+    "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "M0-M3 are verified for candidate 0.4.1. M3 passed 217/217 acceptance cases with zero skips; its current-source eight-cell Linux/Windows CPython 3.11-3.14 matrix passed 26/26 in every cell. MI-08 and MI-09 have scoped receipts. M4 is running the exact-candidate TestPyPI then PyPI publication, downloaded-install, provenance, and immutable release verification.",
+    "note": "M0-M2 are freshly VERIFIED for 0.4.2. M0 passed 24/24, M1 141/141, and M2 186/186 acceptance cases on Windows CPython 3.14, all with zero skips. MI-07 included the independent semantic mutation suite. M3 is active; MI-08 requires fresh eight-cell Linux/Windows CPython 3.11-3.14 evidence.",
     "previous_release": {
-      "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
-      "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
-      "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
-      "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
-      "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
-      "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
+      "version": "0.4.1",
+      "state": "VERIFIED",
+      "m4_acceptance_state": "INCOMPLETE",
+      "pypi_url": "https://pypi.org/project/mudra-interact/0.4.1/",
+      "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.1/",
+      "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.1",
+      "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37855845211",
+      "source_commit": "3fb1c44ddba02fea5574ca71e90f0a6d5da16273",
+      "candidate_fingerprint": "2b181b428fa5472dbeec9b694b33a57a850685cf8e842aae78cde6db07cef549",
       "artifacts": [
         {
-          "filename": "mudra_interact-0.4.0-py3-none-any.whl",
-          "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
-          "size_bytes": 57948
+          "filename": "mudra_interact-0.4.1-py3-none-any.whl",
+          "sha256": "144ba970f2a02685ef34ce06deaf64ca5d239366717d9c608e41850f0bd156f4",
+          "size_bytes": 58120
         },
         {
-          "filename": "mudra_interact-0.4.0.tar.gz",
-          "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
-          "size_bytes": 95094
+          "filename": "mudra_interact-0.4.1.tar.gz",
+          "sha256": "bb3c8d14a7d6b2f428027672ca8c15b9cded07daf1b34f49bff7a4d7a5bc4493",
+          "size_bytes": 95364
         }
-      ]
+      ],
+      "verification_evidence": [
+        {
+          "path": "evidence/releases/v0.4.1/published-verification-local.json",
+          "sha256": "3ff71384e72e6c961c988e128d9656bcc395acfdcb1424e95ef2cdd06c2aeaf1",
+          "description": "Published PyPI/TestPyPI files, trusted attestations, downloaded installs, and GitHub release verified for 0.4.1; the separate MI-10 acceptance suite found a release-link defect."
+        },
+        {
+          "path": "evidence/releases/v0.4.1/published.json",
+          "sha256": "8e85c9b931dd6f9846ee8bcec2c59194be9b0fda910cecc2f4c233ca609ed3e2",
+          "description": "Sanitized publication manifest for the immutable 0.4.1 release."
+        },
+        {
+          "path": "evidence/releases/v0.4.1/testpypi-verification.json",
+          "sha256": "75ecad3cfcbef3eceb75ddb1a756a2c26c3dd911458b6162c27ac410cf8920c3",
+          "description": "Exact 0.4.1 TestPyPI artifact download, hash and fresh-install proof."
+        },
+        {
+          "path": "evidence/releases/v0.4.1/pypi-verification.json",
+          "sha256": "768fc009fdd32452c41c1c15aa29a7d808f5b31bbdb8c7ab97b32b6c5030b7e4",
+          "description": "Exact 0.4.1 PyPI artifact, Trusted Publisher attestation and fresh-install proof."
+        },
+        {
+          "path": "evidence/local/v0.4.1/MI-10.json",
+          "sha256": "214735d7a4c55bac955a266749b34aded44d451231dcf778e3bb21d0e73f0d52",
+          "description": "Failed 0.4.1 MI-10 acceptance attempt; first defect was non-versioned PyPI/TestPyPI/GitHub README release links. Not a passing receipt."
+        }
+      ],
+      "older_release": {
+        "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
+        "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
+        "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
+        "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
+        "source_commit": "875a611da5cc63557563e64644c4a00e03749d23",
+        "candidate_fingerprint": "65aaa772e909eef409209870f9132851037e5a1eadce9f1634def2ccbd8bb6ae",
+        "artifacts": [
+          {
+            "filename": "mudra_interact-0.4.0-py3-none-any.whl",
+            "sha256": "9ec144032355a87ebe9fa824bba626fa6721913e94b4193463ec24e743106e10",
+            "size_bytes": 57948
+          },
+          {
+            "filename": "mudra_interact-0.4.0.tar.gz",
+            "sha256": "80f2345090e41d6c1b81a0549ea8a84ee03b132a852957e1a11538a091be8b86",
+            "size_bytes": 95094
+          }
+        ]
+      }
     }
   }
 }

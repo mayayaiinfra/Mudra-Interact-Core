@@ -1,4 +1,11 @@
-# Migration to Mudra Interact 0.4.1
+# Migration to Mudra Interact 0.4.2
+
+## From package 0.4.1 to 0.4.2
+
+Version 0.4.2 clarifies the public package description and fixes the release
+links to point to the exact package version. It preserves the language v1 and
+gesture/event v2 contracts and the experimental A2A JSON-RPC client. No runtime
+dependency or migration step is introduced.
 
 ## From package 0.4.0 to 0.4.1
 

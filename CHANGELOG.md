@@ -2,7 +2,15 @@
 
 Changes are recorded by release. The links point to immutable tags and exact-version package pages.
 
-## Mudra Interact 0.4.1 — unreleased
+## Mudra Interact 0.4.2 — unreleased
+
+Strengthens the public package description around Mudra's practical value: a
+vendor-neutral, versioned message contract that lets independent applications
+validate and carry structured human/agent communication across models and
+providers. The package page links to the exact release version. No protocol
+behavior, wire format or runtime dependency changes are included.
+
+## Mudra Interact 0.4.1 — 2026-10-09
 
 Clarifies Mudra Interact's vendor-neutral role as a shared, versioned
 communication contract for people and AI agents. The package summary and
@@ -11,6 +19,13 @@ and explicit safety boundaries are useful as workflows become multi-agent.
 Company-specific downstream examples have been replaced with generic consumer
 language, and wording no longer implies unverified community or accessibility
 qualification. No protocol behavior or wire format changes are included.
+The exact wheel and source distribution were published to TestPyPI and PyPI,
+downloaded, hash-checked and freshly installed. PyPI attestations and the
+immutable GitHub release were verified. The release's M4 acceptance remains
+open because its README used non-versioned package links; 0.4.2 corrects them.
+See [PyPI](https://pypi.org/project/mudra-interact/0.4.1/),
+[TestPyPI](https://test.pypi.org/project/mudra-interact/0.4.1/), and the
+[GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.1).
 
 ## Mudra Interact 0.4.0 — 2026-10-08
 

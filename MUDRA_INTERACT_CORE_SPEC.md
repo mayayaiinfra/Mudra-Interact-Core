@@ -6,7 +6,7 @@ Specification **0.3.1**, Astra model review and initial-publication clarificatio
 include human validation, community review or accessibility validation. See
 [review and release handoff](docs/ASTRA_REVIEW_2026-10-08.md).
 Implementation baseline: `eae92b7`, package `0.1.0`.
-Target distribution `mudra-interact` (`Mudra Interact`) version `0.4.1`;
+Target distribution `mudra-interact` (`Mudra Interact`) version `0.4.2`;
 protocol/schema `2.0.0`, catalogue `2.0.0`. The Python import namespace
 remains `mudra_interact_core`; the v2 schema ID remains
 `urn:allyk:mudra-interact-core:contract:2.0.0`.

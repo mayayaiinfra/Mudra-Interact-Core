@@ -7,15 +7,27 @@ provides a shared, versioned JSON contract, deterministic validation, transcript
 and freshness checks, and readable rendering for human-to-human,
 human-to-agent, and agent-to-agent workflows.
 
-As software moves from one assistant toward networks of agents, ad-hoc prompts
-and provider-specific formats make messages difficult to validate, transfer,
-and review consistently. Mudra makes message acts, participants, reply links,
-and freshness explicit in data that each application can validate locally.
-This gives independent tools a common starting point for interoperable
-workflows without requiring them to use the same model or provider. It is a
-protocol library, not a model, hosted service, chat interface, or adopted
-industry standard; useful interoperability still depends on compatible
-applications choosing to implement the contract.
+As software moves from standalone assistants toward teams of agents, messages
+need to travel across products, models, and providers without losing their
+meaning. Prompts and vendor-specific payloads do not give an independent
+receiving application a dependable way to check who sent a message, what kind
+of response it represents, which earlier message it answers, or whether it has
+expired. Mudra makes those details explicit in a bounded, versioned record that
+each application can validate locally. The record names participants; it does
+not authenticate them. That gives people and software a common
+starting point for reviewing, routing, and carrying structured work across
+systems, without requiring a shared model, provider, or hosted service.
+
+The value is the interoperability contract: applications can exchange a
+validated request, proposal, clarification, decision, or result while keeping
+their own models, tools, identity systems, and user experience. The same
+message structure works for person-to-person, person-to-agent, and
+agent-to-agent conversations. This is useful now for experiments and controlled
+integrations, and provides a foundation for future multi-agent workflows as
+more compatible applications adopt it. Mudra is a protocol library, not a
+model, hosted service, chat interface, or adopted industry standard; useful
+interoperability depends on independent applications choosing to implement the
+contract.
 
 Install from PyPI:
 
@@ -90,6 +102,7 @@ See the [gesture API](docs/API.md),
 [communication-language API](docs/COMMUNICATION_LANGUAGE_API.md),
 [compatibility policy](docs/COMPATIBILITY.md), and [changelog](CHANGELOG.md).
 The source and release history are on
-[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core). Find releases on
-[PyPI](https://pypi.org/project/mudra-interact/), [TestPyPI](https://test.pypi.org/project/mudra-interact/),
-and [GitHub releases](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases).
+[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core). Find the current
+release on [PyPI](https://pypi.org/project/mudra-interact/0.4.2/),
+[TestPyPI](https://test.pypi.org/project/mudra-interact/0.4.2/), and
+[GitHub releases](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.2).

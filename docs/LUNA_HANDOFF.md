@@ -13,9 +13,10 @@ The published `0.2.0` remains historical evidence for that bounded foundation.
 Package `0.3.0` added the experimental
 [communication-language SDK](COMMUNICATION_LANGUAGE_CONTRACT.md) without
 changing the v2 gesture/event wire contract. The 0.4.0 candidate adds an
-experimental A2A client. Version 0.4.1 is a documentation and package-metadata
-update that retains the 0.4.0 wire contract. Qualify and publish it with fresh
-M0–M4 evidence; never reuse 0.4.0 receipts for 0.4.1.
+experimental A2A client. Version 0.4.2 clarifies the public value proposition
+and fixes exact-version package links while retaining the 0.4.0 wire contract.
+Qualify and publish it with fresh M0–M4 evidence; never reuse 0.4.1 receipts
+for 0.4.2.
 
 ## 1. Working protocol
 

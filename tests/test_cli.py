@@ -233,7 +233,7 @@ def test_module_entrypoint_shorthand_help_and_version_parity(tmp_path: Path) -> 
     assert module.returncode == script.returncode == 0
     assert json.loads(module.stdout) == json.loads(script.stdout)
     assert subprocess.run([sys.executable, "-m", "mudra_interact_core", "--help"], cwd=ROOT, env=environment, capture_output=True, text=True, check=False).returncode == 0
-    assert subprocess.run([sys.executable, "-m", "mudra_interact_core", "--version"], cwd=ROOT, env=environment, capture_output=True, text=True, check=False).stdout.strip() == "0.4.1"
+    assert subprocess.run([sys.executable, "-m", "mudra_interact_core", "--version"], cwd=ROOT, env=environment, capture_output=True, text=True, check=False).stdout.strip() == "0.4.2"
 
 
 @pytest.mark.acceptance("E53")

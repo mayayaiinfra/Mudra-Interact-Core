@@ -1,7 +1,7 @@
 # Mudra Core v2 wire contract
 
 This document describes the gesture/event wire contract included in the
-0.4.1 candidate (and first released in package 0.2.0). The
+0.4.2 candidate (and first released in package 0.2.0). The
 bundled schema source is
 [`contract.schema.json`](../src/mudra_interact_core/schemas/v2/contract.schema.json);
 it uses Draft 2020-12 and local `#/$defs/...` references. No schema lookup needs
