@@ -132,7 +132,7 @@ def test_fixture_manifest_rejects_missing_tampered_duplicate_and_unknown_records
 def test_v1_is_inspection_only_v2_is_supported_and_unknown_versions_fail() -> None:
     version_map = read_json(CONTRACT_PATH.parent / "version-map.json")
     assert version_map == {
-        "package_version": "0.3.0",
+        "package_version": "0.4.0",
         "protocol_version": "2.0.0",
         "catalog_version": "2.0.0",
         "event_schema_versions": {

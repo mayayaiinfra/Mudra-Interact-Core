@@ -6,7 +6,7 @@
   "implementation_started": true,
   "target": {
     "package": "mudra-interact",
-    "package_version": "0.3.0",
+    "package_version": "0.4.0",
     "schema_version": "2.0.0",
     "catalog_version": "2.0.0"
   },
@@ -18,7 +18,7 @@
   "review": {
     "scope": "The 0.2.0 release remains historical evidence for the bounded gesture/event foundation. The experimental communication-language SDK shipped in 0.3.0 without changing the v2 gesture/event contract. No human/cultural/accessibility validation, field accuracy, camera adapter or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Current source tree 044944e4: M0-M4 are verified. M3 passed 216/216 on Windows 3.14 and Ubuntu 24.04; the current-source Linux/Windows x86_64 Python 3.11-3.14 matrix passed 8/8 cells with 26/26 cases per cell. MI-07 detected 15/15 semantic mutations and MI-09 passed 5/5. M4 passed 231/231 with zero skips, including MI-10 E90-E99 (15/15). Mudra Interact 0.3.0 is published on TestPyPI and PyPI from 1d57c069; the same frozen wheel/sdist passed downloaded-byte, provenance, protected-approval and fresh-install verification and is attached to immutable GitHub release v0.3.0. Human qualification, field accuracy, camera adapter and live host/transport integration are outside this verified core release.",
+    "verification_claim": "Historical source tree 044944e4: M0-M4 were verified for Mudra Interact 0.3.0. M3 passed 216/216 on Windows 3.14 and Ubuntu 24.04; the Linux/Windows x86_64 Python 3.11-3.14 matrix passed 8/8 cells with 26/26 cases per cell. MI-07 detected 15/15 semantic mutations and MI-09 passed 5/5. M4 passed 231/231 with zero skips, including MI-10 E90-E99 (15/15). Mudra Interact 0.3.0 is published on TestPyPI and PyPI from 1d57c069; its frozen wheel/sdist passed downloaded-byte, provenance, protected-approval and fresh-install verification and is attached to immutable GitHub release v0.3.0. These receipts are historical and do not qualify 0.4.0. The 0.4.0 candidate is being requalified from M0; current M0-M4 evidence, matrix, package publication and downloaded-install proof are pending. Human qualification, field accuracy, camera adapter and live host/transport integration remain outside the verified core contract.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "supplemental_evidence": [
@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": null,
+  "active_item": "MI-01",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -95,15 +95,16 @@
       "items": [
         "MI-01"
       ],
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "IN_PROGRESS",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M0-changelog-refresh.json",
           "sha256": "38c77e22a9566fa32b756b2e1f95e08d9c9f7a861671b9289368dbf0a9c95f90"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "M1",
@@ -115,15 +116,16 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M1-changelog-refresh.json",
           "sha256": "db44b0576e52448ff3e953053f7bde31b9ae1c786f611d37879b02d5ae91976a"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "M2",
@@ -135,15 +137,16 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M2-changelog-refresh.json",
           "sha256": "b6752da89318608bd27896e8e1a6da99e63f3dfd24de494f7f7b18c9414c900e"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "IN_PROGRESS"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "M3",
@@ -154,15 +157,16 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M3-ci.json",
           "sha256": "3e7a48b4ddbf1500b54cac8f8e4bd2a3bf0942c6e98cce31bbef6f73ce737c43"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "M4",
@@ -172,15 +176,16 @@
       "items": [
         "MI-10"
       ],
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M4-published.json",
           "sha256": "3ed956e1c0c217060e36ad115d07a0188e9812713be9206259ae14a448b1d883"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "IN_PROGRESS"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     }
   ],
   "recommended_order": [
@@ -222,15 +227,16 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "IN_PROGRESS",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/M0-changelog-refresh.json",
           "sha256": "38c77e22a9566fa32b756b2e1f95e08d9c9f7a861671b9289368dbf0a9c95f90"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-02",
@@ -260,15 +266,16 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-02-changelog-refresh.json",
           "sha256": "b141c4353c9d71c264c4b8376feec357cb95f17689d36378f6ee6900f5da405c"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-03",
@@ -293,15 +300,16 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-03-changelog-refresh.json",
           "sha256": "4016917a4d607ad2eec86f913400aa7b59b035d73e4fabb39aebb74cb54b6d44"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-04",
@@ -336,15 +344,16 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-04-changelog-refresh.json",
           "sha256": "b7492c0e0eeec13abe65e4bcacb8b291c5531d96091bb01dc35ded5dd121a307"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-05",
@@ -375,15 +384,16 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-05-changelog-refresh-venv.json",
           "sha256": "2ff5d23ef734aa5c42e0e0e9686c1aafa0c78df277c0628b19e73451c94149c3"
         }
       ],
-      "prior_state": "IN_PROGRESS"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-06",
@@ -408,15 +418,16 @@
         "E61"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-06-changelog-refresh.json",
           "sha256": "c41eac71d69e5ddeb448fa99da09adb416e4f69567dae62b7da1aeef962f0e20"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-07",
@@ -451,15 +462,16 @@
         "E72"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-07-changelog-refresh.json",
           "sha256": "55884c3d3934d9cb460b460ca7d3c839b44420b8c4116e2910d8e9242a755de0"
         }
       ],
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-08",
@@ -493,8 +505,9 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/mi08-platform-receipts/linux-py3.11.json",
           "sha256": "2bfe23cd9ba119eec1f3bb9ca2e919199d0d18e62a64b223b756775e43a2230c"
@@ -528,8 +541,8 @@
           "sha256": "68c55e624da04cae3143ff1718d403d51868aa85bba58dd2c92c51a954e8342e"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-09",
@@ -551,15 +564,16 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "VERIFIED",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-09-changelog-refresh.json",
           "sha256": "c8343621e3dbf8167a904bfe242d730fe0171be9c8213d3c803072b1137e16ae"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "prior_state": "VERIFIED"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     },
     {
       "id": "MI-10",
@@ -595,15 +609,16 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
+      "state": "NOT_STARTED",
+      "prior_state": "VERIFIED",
+      "historical_evidence": [
         {
           "path": "evidence/local/MI-10-published.json",
           "sha256": "07179ea87959dc0c311bf00bdad33c2edde7b6d72097eb7a33eafd8900eeb567"
         }
       ],
-      "prior_state": "IN_PROGRESS"
+      "historical_verification_kind": "luna_self_verified",
+      "candidate_version": "0.4.0"
     }
   ]
 }

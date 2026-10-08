@@ -3,6 +3,22 @@
 Changes are recorded by release candidate. The links point to immutable tags
 and exact-version package pages after the publication workflow completes.
 
+## Mudra Interact 0.4.0 candidate
+
+Adds an experimental, standard-library A2A JSON-RPC client to the
+communication-language SDK. It maps validated Mudra envelopes to one A2A
+DataPart, validates agent replies, binds server-issued tasks to host and remote
+scope, rejects replayed or stale messages, and requires a separate explicit
+call for task cancellation. The host's authenticated tenant is distinct from
+the optional remote AgentInterface routing tenant.
+
+The independent loopback peer exercises the HTTP mapping and safety boundaries.
+This candidate has no public-agent or production-host qualification. Human-to-
+human remains schema-only, and no model/provider, tool execution, publishing,
+human-comprehension, cultural or accessibility qualification is included.
+Publication is pending the fresh M0–M4 release gates; no 0.4.0 PyPI page or
+GitHub release exists yet.
+
 ## Mudra Interact 0.3.0
 
 Adds an experimental, dependency-free communication-language SDK for bounded

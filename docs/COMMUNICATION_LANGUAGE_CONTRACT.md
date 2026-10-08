@@ -1,9 +1,9 @@
 # Mudra Interact language: reviewed follow-on contract
 
 Design revision 0.1, Astra technical model review, 2026-10-08.
-**Normative contract for the experimental SDK introduced in package 0.3.0.**
-This contract defines a bounded experimental reference SDK in
-`mudra-interact==0.3.0`, after the published foundation release. It does not change
+**Normative contract for the experimental SDK introduced in package 0.3.0 and
+extended by the 0.4.0 candidate.** This contract defines a bounded experimental
+reference SDK in `mudra-interact==0.4.0`, after the published foundation release. It does not change
 the existing event protocol/schema `2.0.0`, four-cue catalogue, consent lifecycle,
 or camera-design boundary. The current release remains governed by the
 [core specification](../MUDRA_INTERACT_CORE_SPEC.md).
@@ -193,14 +193,17 @@ policy must be designed/reviewed before an executing adapter is added.
 ## Interoperability and release boundary
 
 Keep transports separate. A2A has its own messages, tasks, lifecycle and
-authentication; MCP exposes server tools/resources/prompts. Carrying Mudra
-data through them must preserve their authority boundaries. No exact transport
-version mapping or conformance claim is approved here. Each adapter needs a
-fixed upstream version, transport/schema mapping table, unknown-version
-behaviour, identity/scope mapping, cancellation/retry limits and live positive
-and negative interoperability evidence before implementation is called
-conformant. Never map `accept` directly to a tool call. Do not add generic
-plugins, LLM providers or optional dependencies to the offline core.
+authentication; MCP exposes server tools/resources/prompts. The first bounded
+transport is the A2A specification documentation snapshot at `/v1.0.1`, which
+lists protocol release 1.0.0; the wire `A2A-Version` is `1.0`, over JSON-RPC
+HTTP(S). The exact message/identity/task mapping and
+limits are in [the A2A interoperability contract](A2A_INTEROPERABILITY_CONTRACT.md).
+The client is implemented directly against the wire contract with the Python
+standard library; it does not depend on the A2A SDK. The independent live
+loopback peer is engineering evidence, not a public conformance statement or
+third-party host qualification. MCP remains unimplemented. Never map `accept`
+directly to a tool call. Do not add generic plugins, LLM providers or optional
+dependencies to the offline core.
 
 These architectural boundaries are informed by the [A2A specification](https://a2a-protocol.org/latest/specification/),
 [MCP server primitives](https://modelcontextprotocol.io/specification/draft/server/index),
@@ -213,8 +216,9 @@ and external qualification gates. ML-01 freezes the draft-2020-12 JSON Schema,
 version map and independent synthetic vectors. ML-02 implements bounded
 message parsing and freshness. ML-03 implements bounded transcript relationships,
 synthetic exchanges and deterministic plain-text rendering. ML-04 packages and
-qualifies these APIs in the 0.3.0 release while retaining the existing gesture
-matrix. Each engineering gate requires fresh, hash-bound evidence after its
-candidate is committed. ML-05 human qualification and ML-06 live host/transport
-integration remain separate. Broad usability/cultural/accessibility claims
+qualifies the 0.4.0 candidate, including its explicit A2A client, while retaining
+the existing gesture matrix. Each engineering gate requires fresh, hash-bound
+evidence after its candidate is committed. ML-05 human qualification remains
+separate and blocked; ML-06 qualifies only a local A2A peer, not a production
+host or public interoperability. Broad usability/cultural/accessibility claims
 remain blocked without actual representative human evaluation.

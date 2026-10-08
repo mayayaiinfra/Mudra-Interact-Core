@@ -1,4 +1,25 @@
-# Migration to Mudra Interact 0.3.0
+# Migration to Mudra Interact 0.4.0
+
+## From package 0.3.0 to 0.4.0
+
+The 0.4.0 candidate keeps the language v1 and gesture/event v2 contracts
+compatible and adds an experimental A2A JSON-RPC client. No additional runtime
+dependency is introduced. The client performs network I/O only when the host
+explicitly invokes it with a configured endpoint; it does not call a model or
+execute tools.
+
+To opt in, construct `A2AClient` with the configured remote agent, host clock,
+authenticated `AuthenticatedPrincipal`, and an atomic durable `ReplayStore`.
+Set `remote_tenant` only when the selected remote AgentInterface requires its
+own routing tenant. Do not pass the authenticated host tenant as the remote
+tenant. Use `A2ATaskRef` only with the client and authenticated scope that
+created it. `decline` sends a message; explicit `cancel()` is a separate request
+and cannot undo remote side effects. `accept` never authorizes execution.
+
+The included `InMemoryReplayStore` is for tests and single-process examples;
+replace it with a durable, atomic store for multi-worker hosts. Human-to-human
+remains schema-only, and a local peer test does not qualify a public agent or
+production host. See the [A2A interoperability contract](A2A_INTEROPERABILITY_CONTRACT.md).
 
 ## From package 0.2.0 to 0.3.0
 

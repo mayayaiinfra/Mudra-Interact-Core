@@ -58,6 +58,10 @@ PACKAGE_RESOURCE_SOURCES = {
     "mudra_interact_core/examples/language/agent-agent.json": "examples/language/agent-agent.json",
     "mudra_interact_core/py.typed": "src/mudra_interact_core/py.typed",
 }
+PACKAGE_MODULE_SOURCES = {
+    "mudra_interact_core/__init__.py": "src/mudra_interact_core/__init__.py",
+    "mudra_interact_core/a2a.py": "src/mudra_interact_core/a2a.py",
+}
 REQUIRED_PYTHONS = ("3.11", "3.12", "3.13", "3.14")
 REQUIRED_PLATFORMS = (
     ("linux", "x86_64"),
@@ -302,13 +306,23 @@ def inspect_sdist(archive: Path) -> dict[str, str]:
             expected_resources = {
                 f"{expected_root}/{source_path}" for source_path in PACKAGE_RESOURCE_SOURCES.values()
             }
+            expected_modules = {
+                f"{expected_root}/{source_path}" for source_path in PACKAGE_MODULE_SOURCES.values()
+            }
             if not expected_resources.issubset(set(member_names)):
                 raise ReleaseError("sdist_package_data_missing")
+            if not expected_modules.issubset(set(member_names)):
+                raise ReleaseError("sdist_package_module_missing")
             for source_path in PACKAGE_RESOURCE_SOURCES.values():
                 packaged = tar.extractfile(f"{expected_root}/{source_path}")
                 source = ROOT / source_path
                 if packaged is None or packaged.read() != source.read_bytes():
                     raise ReleaseError("sdist_package_data_mismatch")
+            for source_path in PACKAGE_MODULE_SOURCES.values():
+                packaged = tar.extractfile(f"{expected_root}/{source_path}")
+                source = ROOT / source_path
+                if packaged is None or packaged.read() != source.read_bytes():
+                    raise ReleaseError("sdist_package_module_mismatch")
             extracted = tar.extractfile(metadata_members[0])
             if extracted is None:
                 raise ReleaseError("sdist_metadata_invalid")
@@ -346,6 +360,7 @@ def inspect_sdist(archive: Path) -> dict[str, str]:
             canonical_text_bytes(description.encode("utf-8"))
         ).hexdigest(),
         "metadata_version": metadata["Metadata-Version"],
+        "package_modules": sorted(PACKAGE_MODULE_SOURCES),
     }
 
 
@@ -382,6 +397,8 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
     expected_suffixes = set(PACKAGE_RESOURCE_SOURCES)
     if not expected_suffixes.issubset(set(names)):
         raise ReleaseError("wheel_package_data_missing")
+    if not set(PACKAGE_MODULE_SOURCES).issubset(set(names)):
+        raise ReleaseError("wheel_package_module_missing")
     dist_infos = [name for name in names if name.endswith(".dist-info/METADATA")]
     wheel_infos = [name for name in names if name.endswith(".dist-info/WHEEL")]
     records = [name for name in names if name.endswith(".dist-info/RECORD")]
@@ -391,6 +408,9 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
         for packaged_path, source_path in PACKAGE_RESOURCE_SOURCES.items():
             if archive.read(packaged_path) != (ROOT / source_path).read_bytes():
                 raise ReleaseError("wheel_package_data_mismatch")
+        for packaged_path, source_path in PACKAGE_MODULE_SOURCES.items():
+            if archive.read(packaged_path) != (ROOT / source_path).read_bytes():
+                raise ReleaseError("wheel_package_module_mismatch")
         metadata = archive.read(dist_infos[0]).decode("utf-8", errors="strict")
         inventory = [
             {
@@ -434,6 +454,7 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
         ).hexdigest(),
         "requires_dist": fields.get("Requires-Dist"),
         "package_data": sorted(expected_suffixes),
+        "package_modules": sorted(PACKAGE_MODULE_SOURCES),
         "metadata_files": [dist_infos[0], wheel_infos[0], records[0]],
         "legal_payload": sorted(
             name for name in names

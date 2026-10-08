@@ -154,6 +154,14 @@ def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
     assert release_report["checks"]["sdist"]["summary"] == expected_summary
     assert release_report["checks"]["sdist"]["description_sha256"] == expected_description_sha256
     assert release_report["checks"]["wheel"]["requires_dist"] is None
+    assert set(release_report["checks"]["wheel"]["package_modules"]) == {
+        "mudra_interact_core/__init__.py",
+        "mudra_interact_core/a2a.py",
+    }
+    assert set(release_report["checks"]["sdist"]["package_modules"]) == {
+        "mudra_interact_core/__init__.py",
+        "mudra_interact_core/a2a.py",
+    }
     assert release_report["checks"]["wheel"]["metadata_validator"] == "stdlib_pep427_pep566_equivalent"
     assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {f"mudra_interact-{PACKAGE_VERSION}.data/data/LICENSE", f"mudra_interact-{PACKAGE_VERSION}.data/data/NOTICE"}
     assert set(release_report["checks"]["wheel"]["package_data"]) == {
@@ -558,6 +566,10 @@ def test_real_deterministic_sdist_uses_frozen_candidate_filename(tmp_path: Path)
         "summary": release_verifier.PACKAGE_SUMMARY,
         "description_sha256": sha256_text_file(ROOT / "README.md"),
         "metadata_version": "2.4",
+        "package_modules": [
+            "mudra_interact_core/__init__.py",
+            "mudra_interact_core/a2a.py",
+        ],
     }
     extracted = release_verifier.extract_sdist(archive, tmp_path / "extracted")
     assert extracted.name == f"mudra_interact-{PACKAGE_VERSION}"

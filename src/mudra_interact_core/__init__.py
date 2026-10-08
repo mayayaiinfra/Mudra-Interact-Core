@@ -23,6 +23,18 @@ from .language import (
     render_message,
     validate_transcript,
 )
+from .a2a import (
+    A2AClient,
+    A2A_BINDING,
+    A2AInteropError,
+    A2A_PROTOCOL_RELEASE,
+    A2A_PROTOCOL_VERSION,
+    A2A_SPEC_EDITION,
+    A2ASendResult,
+    A2ATaskRef,
+    AuthenticatedPrincipal,
+    InMemoryReplayStore,
+)
 
 __all__ = [
     "InteractionParty",
@@ -52,4 +64,14 @@ __all__ = [
     "check_freshness",
     "validate_transcript",
     "render_message",
+    "A2AClient",
+    "A2A_BINDING",
+    "A2AInteropError",
+    "A2A_PROTOCOL_RELEASE",
+    "A2A_PROTOCOL_VERSION",
+    "A2A_SPEC_EDITION",
+    "A2ASendResult",
+    "A2ATaskRef",
+    "AuthenticatedPrincipal",
+    "InMemoryReplayStore",
 ]

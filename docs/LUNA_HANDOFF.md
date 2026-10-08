@@ -10,10 +10,11 @@ not duplicate volatile status here, where edits would change source identity.
 The [2026-10-08 Astra technical review](ASTRA_REVIEW_2026-10-08.md) supplies
 the original gesture/event foundation and release repair/qualification handoff.
 The published `0.2.0` remains historical evidence for that bounded foundation.
-Package `0.3.0` adds the separately reviewed experimental
+Package `0.3.0` added the experimental
 [communication-language SDK](COMMUNICATION_LANGUAGE_CONTRACT.md) without
-changing the v2 gesture/event wire contract. Qualify and publish that candidate
-with fresh M0–M4 evidence; never reuse the 0.2.0 receipts for 0.3.0.
+changing the v2 gesture/event wire contract. The 0.4.0 candidate adds an
+experimental A2A client. Qualify and publish it with fresh M0–M4 evidence;
+never reuse the 0.3.0 receipts for 0.4.0.
 
 ## 1. Working protocol
 

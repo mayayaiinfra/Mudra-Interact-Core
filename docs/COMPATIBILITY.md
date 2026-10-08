@@ -1,7 +1,8 @@
 # Distribution and compatibility
 
 Mudra Interact is a standard-library runtime package. The current public
-package candidate is `mudra-interact` version `0.3.0`, with the v2 contract,
+package candidate is `mudra-interact` version `0.4.0`; the latest published
+version remains `0.3.0`. The candidate keeps the v2 contract,
 catalogue and schema versions set to `2.0.0`.  The wheel carries its schemas,
 neutral catalogue, `py.typed`, `LICENSE`, and `NOTICE`; it has no
 `Requires-Dist` runtime dependencies.
@@ -80,12 +81,12 @@ only after its private compatibility inventory confirms the following:
 
 | Contract surface | Current public value | Consumer check | Upgrade risk |
 | --- | --- | --- | --- |
-| Package | `mudra-interact==0.3.0` (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
+| Package | `mudra-interact==0.4.0` candidate (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
 | Gesture schemas | v2 / `2.0.0` (unchanged from 0.2.0) | Validate representative synthetic frame, report, batch and event fixtures | A schema change can reject or reinterpret stored work |
 | Communication language | Language v1 / `1.0.0`, creative-plan intent v1 | Validate full synthetic transcripts and review rendered messages; keep authority in the host | Message validity and an `accept` act do not establish identity or authorization |
 | Catalogue | Neutral catalogue `2.0.0` | Check IDs, version and rule mappings before activation | Label packs and cultural claims are not supplied by core |
 | CLI | `mudra-interact` with explicit consent/confirmation | Run the private integration smoke against the installed wheel | Flags and error codes are a compatibility surface |
-| Privacy | Local-only, no telemetry and no implicit BYOK probe | Inspect private deployment policy and run egress-negative checks | A downstream adapter can introduce retention or network behaviour |
+| Privacy | No telemetry or background network requests; the 0.4.0 candidate sends only through an explicit configured A2A call | Inspect endpoint, authentication, retention and replay policy; run egress-negative checks | A downstream adapter or remote peer can introduce retention or network behaviour |
 | Licensing | Apache-2.0 core with shipped notices | Re-run the private asset/licence inventory | Optional camera/model assets need separate review |
 
 The inventory is a handoff contract, not an automatic upgrade or a claim that

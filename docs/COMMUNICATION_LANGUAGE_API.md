@@ -1,7 +1,8 @@
 # Mudra Communication Language API (experimental)
 
-Package `mudra-interact==0.3.0` adds a versioned, modality-independent message
-format beside the existing v2 gesture/event API. It supports bounded creative
+Package `mudra-interact==0.4.0` candidate adds the A2A transport adapter to the
+versioned, modality-independent message format introduced in 0.3.0. It sits
+beside the existing v2 gesture/event API and supports bounded creative
 planning conversations among humans and software agents. The current language
 protocol is `1.0.0`; the only supported intent profile is
 `org.mayayai.creative.plan` version `1.0.0`.
@@ -52,6 +53,46 @@ The same names are exported from `mudra_interact_core`. The exact JSON contract
 and resource limits are defined by
 [`language.schema.json`](../src/mudra_interact_core/schemas/language/v1/language.schema.json)
 and [the language contract](COMMUNICATION_LANGUAGE_CONTRACT.md).
+
+## Experimental A2A client in the unreleased source
+
+The unreleased source includes `A2AClient` for the A2A specification snapshot
+at `/v1.0.1` (released protocol 1.0.0), using wire version 1.0 and JSON-RPC
+over HTTP(S). It sends a
+validated Mudra envelope in one `application/json` DataPart and validates
+returned agent messages. It uses no A2A SDK or runtime dependency. The host
+must supply a configured endpoint, authenticated `AuthenticatedPrincipal`,
+clock callback, `ReplayStore`, optional remote AgentInterface tenant, and
+optional bearer-token provider. The authenticated host tenant is kept local
+and is never sent as the remote A2A routing tenant.
+Production replay storage must be atomic and durable across workers;
+`InMemoryReplayStore` is for tests and single-process demonstrations only.
+
+```python
+from mudra_interact_core import A2AClient, AuthenticatedPrincipal
+
+client = A2AClient(
+    "https://agent.example/rpc",
+    remote_agent_id="44444444-4444-4444-8444-444444444444",
+    replay_store=host_durable_replay_store,
+    clock_utc=host_trusted_clock,
+    token_provider=host_token_provider,
+)
+reply = client.send(message, principal=authenticated_user)
+```
+
+`authenticated_user` must be an `AuthenticatedPrincipal` built from the host's
+verified session. The message's sender and recipient must match that principal
+and the configured remote agent. A returned task handle is scoped to endpoint,
+agent, remote interface tenant, principal, host tenant, and Mudra conversation.
+`decline` sends a message;
+`cancel()` is a separate explicit operation and cannot undo remote side effects.
+Parsing alone does not send anything. `accept` does not authorize execution.
+
+The client implements neither an A2A server nor a human UI. Human-to-human is
+schema-only; human-to-agent, agent-to-human replies, and agent-to-agent sends
+have local loopback peer coverage. No third-party agent or production host has
+been qualified. See the [A2A integration contract](A2A_INTEROPERABILITY_CONTRACT.md).
 
 ## Safety and scope
 
