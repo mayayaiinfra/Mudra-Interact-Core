@@ -234,7 +234,7 @@ def test_testpypi_exact_download_and_fresh_install_smoke_without_fallback() -> N
 
     receipt = release_proof.verify_index(
         "testpypi", artifact_inventory(contents), fetch=record,
-        install=lambda wheel, version: wheel.name == WHEEL_NAME and version == "0.2.0",
+        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == "0.2.0",
     )
     assert receipt["state"] == "VERIFIED"
     assert receipt["downloaded_and_hashed"] is True
@@ -245,7 +245,7 @@ def test_testpypi_exact_download_and_fresh_install_smoke_without_fallback() -> N
     with pytest.raises(release_proof.ReleaseProofError) as error:
         release_proof.verify_index(
             "testpypi", artifact_inventory(contents), fetch=fake_index_fetch("testpypi", contents, bad),
-            install=lambda _wheel, _version: True,
+            install=lambda _wheel, *, package_version: True,
         )
     assert error.value.code == "artifact_hash_mismatch"
 
@@ -258,9 +258,40 @@ def test_testpypi_exact_download_and_fresh_install_smoke_without_fallback() -> N
     with pytest.raises(release_proof.ReleaseProofError) as error:
         release_proof.verify_index(
             "testpypi", artifact_inventory(contents), fetch=redirected_download,
-            install=lambda _wheel, _version: True,
+            install=lambda _wheel, *, package_version: True,
         )
     assert error.value.code == "artifact_download_failed"
+
+
+@pytest.mark.acceptance("E92")
+def test_testpypi_default_install_callback_uses_fresh_venv_and_keyword_version(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    commands: list[list[str]] = []
+
+    class FakeBuilder:
+        def __init__(self, **_kwargs: Any) -> None:
+            pass
+
+        def create(self, path: Path) -> None:
+            path.mkdir(parents=True)
+
+    def fake_run(command: list[str], **_kwargs: Any) -> subprocess.CompletedProcess[str]:
+        commands.append(command)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(release_proof.venv, "EnvBuilder", FakeBuilder)
+    monkeypatch.setattr(release_proof.subprocess, "run", fake_run)
+
+    receipt = release_proof.verify_index(
+        "testpypi", artifact_inventory(), fetch=fake_index_fetch("testpypi", artifact_bytes()),
+    )
+
+    assert receipt["fresh_installed_wheel_smoke"] is True
+    assert len(commands) == 2
+    assert commands[0][-1].endswith(WHEEL_NAME)
+    assert "0.2.0" in commands[1][-1]
+    assert "import importlib.metadata" in commands[1][-1]
 
 
 @pytest.mark.acceptance("E93")
@@ -288,7 +319,7 @@ def test_production_download_verifies_same_hashes_and_attestation(monkeypatch: p
     receipt = release_proof.verify_index(
         "pypi", artifact_inventory(contents), fetch=fake_index_fetch("pypi", contents),
         source_commit="a" * 40, workflow_run_id=12345, workflow_run_attempt=1,
-        install=lambda wheel, version: wheel.name == WHEEL_NAME and version == "0.2.0",
+        install=lambda wheel, *, package_version: wheel.name == WHEEL_NAME and package_version == "0.2.0",
     )
     assert receipt["trusted_publisher_attestations"] == 2
     assert {name for name, _kwargs in attested} == {WHEEL_NAME, SDIST_NAME}
@@ -467,7 +498,6 @@ def test_foreign_publisher_expired_or_secret_bearing_claims_are_rejected(
 
 
 @pytest.mark.acceptance("E93")
-@pytest.mark.acceptance("E98")
 def test_verified_attestation_policy_binds_signed_commit_run_and_attempt(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -627,6 +657,55 @@ def test_verified_attestation_policy_binds_signed_commit_run_and_attempt(
             workflow_run_attempt=True,
         )
     assert error.value.code == "attestation_candidate_invalid"
+
+
+@pytest.mark.acceptance("E98")
+def test_attestation_signature_verifier_errors_fail_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    artifact = tmp_path / WHEEL_NAME
+    artifact.write_bytes(b"synthetic wheel")
+
+    class Distribution:
+        @classmethod
+        def from_file(cls, path: Path):
+            return SimpleNamespace(path=path)
+
+    class Attestation:
+        def verify(self, *, identity: object, dist: object):
+            raise ValueError("synthetic signature verification failure")
+
+    class Provenance:
+        @classmethod
+        def model_validate(cls, _document: dict[str, Any]):
+            return SimpleNamespace(attestation_bundles=[SimpleNamespace(
+                publisher=SimpleNamespace(
+                    kind="GitHub", repository=release_proof.REPOSITORY,
+                    workflow="publish.yml", environment="pypi-production",
+                ),
+                attestations=[Attestation()],
+            )])
+
+    class AttestationType:
+        PYPI_PUBLISH_V1 = SimpleNamespace(value="https://docs.pypi.org/attestations/publish/v1")
+
+    module = ModuleType("pypi_attestations")
+    module.AttestationType = AttestationType
+    module.Distribution = Distribution
+    module.Provenance = Provenance
+    monkeypatch.setitem(sys.modules, "pypi_attestations", module)
+    monkeypatch.setattr(release_proof, "_pypi_attestation_policy", lambda **_kwargs: object())
+
+    def fetch(_url: str, *, max_bytes: int):
+        del max_bytes
+        return 200, "https://pypi.org/integrity/synthetic", b"{}"
+
+    with pytest.raises(release_proof.ReleaseProofError) as error:
+        release_proof._verify_pypi_attestation(
+            WHEEL_NAME, artifact_path=artifact, source_commit="a" * 40,
+            workflow_run_id=12345, workflow_run_attempt=2, fetch=fetch,
+        )
+    assert error.value.code == "publisher_attestation_invalid"
 
 
 @pytest.mark.acceptance("E99")

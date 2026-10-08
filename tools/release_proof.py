@@ -693,7 +693,7 @@ def verify_index(
     workflow_run_attempt: int | None = None,
     workflow_root: Path | None = None,
     fetch: Callable[..., tuple[int, str, bytes]] = http_get,
-    install: Callable[[Path, str], bool] = _fresh_install_smoke,
+    install: Callable[..., bool] = _fresh_install_smoke,
 ) -> dict[str, Any]:
     base, allowed_hosts = _index_hosts(index)
     url = f"{base}/pypi/{PACKAGE}/{VERSION}/json"
@@ -711,7 +711,7 @@ def verify_index(
                 allowed_hosts=allowed_hosts, fetch=fetch, destination=temp,
             )
         wheel_name = next(name for name in downloaded if name.endswith(".whl"))
-        installed = install(downloaded[wheel_name], VERSION)
+        installed = install(downloaded[wheel_name], package_version=VERSION)
         if installed is not True:
             raise ReleaseProofError("fresh_install_failed")
         attestations = 0

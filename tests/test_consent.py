@@ -23,13 +23,7 @@ def test_confirmation_requires_exact_true_booleans(consent, participant, code: s
         session.emit_event(now_ms=100)
 
 
-@pytest.mark.acceptance("E38")
-@pytest.mark.acceptance("E40")
-@pytest.mark.parametrize("bad_time", [True, "100", 100.0, -1, 9_007_199_254_740_992])
-@pytest.mark.parametrize("prior_grant", [False, True])
-def test_invalid_confirmation_time_revokes_stable_result_and_requires_fresh_frames(
-    bad_time, prior_grant: bool,
-) -> None:
+def _assert_invalid_confirmation_time_revokes_stable_result(bad_time, prior_grant: bool) -> None:
     session = stable_session()
     if prior_grant:
         session.confirm(True, True, 100)
@@ -51,6 +45,20 @@ def test_invalid_confirmation_time_revokes_stable_result_and_requires_fresh_fram
     assert recovered.state.value == "stable"
     session.confirm(True, True, 250)
     assert session.emit_event(now_ms=250).direction == "human_to_agent"
+
+
+@pytest.mark.acceptance("E38")
+@pytest.mark.parametrize("bad_time", [True, "100", 100.0, -1, 9_007_199_254_740_992])
+@pytest.mark.parametrize("prior_grant", [False, True])
+def test_invalid_confirmation_time_revokes_stable_result_e38(bad_time, prior_grant: bool) -> None:
+    _assert_invalid_confirmation_time_revokes_stable_result(bad_time, prior_grant)
+
+
+@pytest.mark.acceptance("E40")
+@pytest.mark.parametrize("bad_time", [True, "100", 100.0, -1, 9_007_199_254_740_992])
+@pytest.mark.parametrize("prior_grant", [False, True])
+def test_invalid_confirmation_time_revokes_stable_result_e40(bad_time, prior_grant: bool) -> None:
+    _assert_invalid_confirmation_time_revokes_stable_result(bad_time, prior_grant)
 
 
 @pytest.mark.acceptance("E38")

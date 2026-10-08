@@ -374,7 +374,7 @@
     },
     {
       "path": "tools/release_proof.py",
-      "sha256": "e90b08dae477b124697645027f1604588452bf43d15267a1c5cb2964c96ae4ae",
+      "sha256": "fdc6f4eaa06f43fd654696f61878ce357b2610a4b0418cb7ee5025af92af5a39",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
