@@ -6,7 +6,7 @@
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.4.0",
   "language_protocol_version": "1.0.0",
-  "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. M0-M4 and MI-01 through MI-10 are verified; ML-01 through ML-04 and ML-06 have fresh passing receipts on the released source. Only ML-05 remains blocked on external human qualification. No broad comprehension, cultural, accessibility, public-agent or production-host claims are made.",
+  "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. The exact release source is 875a611. After the documentation status correction, M0-M3 were freshly qualified on current tree 9f3055, including the hosted eight-cell OS/Python matrix; M4/MI-10 prove the exact published 0.4.0 artifacts. ML-01 through ML-04 and ML-06 have fresh passing receipts. ML-05 alone remains externally blocked on real consented participants and independent scoped reviewers.",
   "items": [
     {
       "id": "ML-01",
@@ -110,13 +110,13 @@
       "verification_receipts": [
         {
           "kind": "current-source M3 full gate",
-          "path": "evidence/local/v0.4.0/M3-r4.json",
-          "sha256": "80a3b4704ebc7bf6f93cfeb267c9775de691e8c37372d09162e3848fd2d948f8"
+          "path": "evidence/local/v0.4.0/M3-post-release-r1.json",
+          "sha256": "3e548a9d6a240ec62415dabe25149c9831f941de26f88e1ba1d9fd4dedbf925c"
         },
         {
           "kind": "current-source Linux/Windows CPython 3.11-3.14 matrix",
-          "path": "evidence/local/v0.4.0/M3-platform-matrix.json",
-          "sha256": "11be3062a8700fbcd1386ecfe9f5a130b85fc5f47b3fb63810582a5cfe08b4ae"
+          "path": "evidence/local/v0.4.0/M3-platform-matrix-post-release-r1.json",
+          "sha256": "efa4e2ef246a6bf2ec4453ada164ad4d7416d742146ec8b6e081caf01df7c582"
         },
         {
           "kind": "M4 complete gate E90-E99",
@@ -157,7 +157,7 @@
         ]
       },
       "prior_state": "VERIFIED",
-      "progress": "Current M0-M4 and MI-10 evidence verifies the exact 0.4.0 published wheel/sdist, downloaded installation, attestations and immutable release. Human/provider/host qualification remains explicitly outside this evidence."
+      "progress": "Fresh M0-M3 current-tree gates pass; the hosted eight-cell Linux/Windows CPython 3.11-3.14 matrix passed 26/26 each with zero skips. The published 0.4.0 wheel/sdist and exact M4 authorization/provenance/downloaded-install evidence remain bound to source 875a611."
     },
     {
       "id": "ML-05",
@@ -222,7 +222,7 @@
     "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
     "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0",
     "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
-    "core_gate": "M0-M4 VERIFIED; M4 232 passed, zero skipped",
+    "core_gate": "M0-M3 current tree verified; M4 exact published 0.4.0 release from source 875a611 verified",
     "limitations": [
       "No human-comprehension, cultural or accessibility qualification.",
       "No live public-agent or production-host qualification.",
