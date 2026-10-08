@@ -21,6 +21,7 @@ from tools.aggregate_platform_matrix import (
     write_report as write_matrix_report,
 )
 from tools.release_proof import ReleaseProofError
+from tools.verify_gate import _validate_active_item_selection
 from tools.verify_release import (
     PACKAGE_VERSION,
     REQUIRED_PYTHONS,
@@ -316,6 +317,19 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json" in workflow
     assert "MUDRA_M3_CI_REPORT_JSON" in workflow
     assert "MUDRA_M3_CI_ARTIFACT_BASE64_JSON" in workflow
+
+
+@pytest.mark.acceptance("E79")
+def test_verified_platform_item_can_be_rechecked_after_active_item_advances() -> None:
+    backlog = {"active_item": "MI-10"}
+    _validate_active_item_selection(backlog, "MI-08", {"state": "VERIFIED"})
+
+    with pytest.raises(VerificationError, match="active_item_mismatch"):
+        _validate_active_item_selection(backlog, "MI-09", {"state": "IN_PROGRESS"})
+
+    _validate_active_item_selection(
+        {"active_item": "MI-10"}, "MI-10", {"state": "IN_PROGRESS"}
+    )
 
 
 @pytest.mark.acceptance("E84")

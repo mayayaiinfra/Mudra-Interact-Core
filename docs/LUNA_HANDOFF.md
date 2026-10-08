@@ -123,6 +123,10 @@ identity and M4 receipts; it performs read-only downloads/verification, never
 automatically uploads or modifies the ledger. Publication is a separate explicit
 release workflow under existing or newly recorded authorization.
 
+CI may rerun a `VERIFIED` item for fresh platform evidence after `active_item`
+has advanced. An item that is not yet verified must still match the active item
+selection, and an `IN_PROGRESS` item must remain the active item.
+
 The normal `push`/PR workflow qualifies each MI-08 platform cell. After all
 eight current-source receipts and the aggregate matrix report are committed,
 dispatch `.github/workflows/verify.yml` to execute the complete M3 gate on an

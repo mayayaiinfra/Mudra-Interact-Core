@@ -791,6 +791,18 @@ def _safe_error(error: VerificationError) -> dict[str, str]:
     return {"code": code}
 
 
+def _validate_active_item_selection(
+    backlog: dict[str, Any], item_id: str, item: dict[str, Any]
+) -> None:
+    """Allow fresh checks of verified items after progress advances."""
+    active_item = backlog.get("active_item")
+    state = item.get("state")
+    if state != "VERIFIED" and active_item not in {None, item_id}:
+        raise VerificationError("active_item_mismatch")
+    if state == "IN_PROGRESS" and active_item != item_id:
+        raise VerificationError("active_item_mismatch")
+
+
 def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path: str, *, timeout_seconds: float = 180.0) -> tuple[int, dict[str, Any]]:
     root = root.resolve()
     scope = {"kind": selector_kind, "id": selector_id}
@@ -804,12 +816,9 @@ def execute_scope(root: Path, selector_kind: str, selector_id: str, report_path:
         selected_item_ids, required_case_ids, test_modules, prerequisites = _prepare_scope(
             root, selector_kind, selector_id, items, gates
         )
-        if selector_kind == "item" and backlog.get("active_item") not in {None, selector_id}:
-            raise VerificationError("active_item_mismatch")
         if selector_kind == "item":
             item = items[selector_id]
-            if item.get("state") == "IN_PROGRESS" and backlog.get("active_item") != selector_id:
-                raise VerificationError("active_item_mismatch")
+            _validate_active_item_selection(backlog, selector_id, item)
         current_before = _current_identity(root)
         source_before = current_before["source_tree_sha256"]
         run_id = f"{selector_id.lower()}-{uuid4().hex[:12]}"
