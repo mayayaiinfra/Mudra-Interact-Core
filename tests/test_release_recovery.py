@@ -11,6 +11,7 @@ import json
 import re
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 from types import ModuleType
 from types import SimpleNamespace
@@ -452,6 +453,13 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "may approve their own run" in normalized_runbook
     assert "administrator bypass is disabled" in normalized_runbook
     assert "not an independent review" in normalized_runbook
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    assert "communication" in project["description"].lower()
+    assert "human" in project["description"].lower()
+    assert "agent" in project["description"].lower()
+    assert "allyk" not in project["description"].lower()
+    assert "allyk" not in readme.lower()
+    assert "python -m pip install mudra-interact" in readme
     lock = (ROOT / "requirements-release.lock").read_text(encoding="utf-8")
     requirements = {
         line.split("==", 1)[0].casefold().replace("_", "-")
@@ -557,7 +565,7 @@ def test_public_download_and_release_links_are_exact_version_links() -> None:
     assert f"https://pypi.org/project/mudra-interact/{VERSION}/" in readme
     assert f"https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v{VERSION}" in readme
     assert "index_version_missing" in runbook or "package page" in runbook.lower()
-    assert "--index-url https://test.pypi.org/simple" in readme
+    assert "--index-url https://test.pypi.org/simple" in runbook
 
 
 @pytest.mark.acceptance("E98")

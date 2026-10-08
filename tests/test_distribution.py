@@ -141,6 +141,12 @@ def release_report(tmp_path_factory: pytest.TempPathFactory) -> dict:
 def test_clean_artifacts_metadata_and_payload(release_report: dict) -> None:
     assert release_report["checks"]["wheel"]["metadata_name"] == "mudra-interact"
     assert release_report["checks"]["wheel"]["metadata_version"] == PACKAGE_VERSION
+    expected_summary = release_verifier.PACKAGE_SUMMARY
+    expected_description_sha256 = sha256_text_file(ROOT / "README.md")
+    assert release_report["checks"]["wheel"]["metadata_summary"] == expected_summary
+    assert release_report["checks"]["wheel"]["description_sha256"] == expected_description_sha256
+    assert release_report["checks"]["sdist"]["summary"] == expected_summary
+    assert release_report["checks"]["sdist"]["description_sha256"] == expected_description_sha256
     assert release_report["checks"]["wheel"]["requires_dist"] is None
     assert release_report["checks"]["wheel"]["metadata_validator"] == "stdlib_pep427_pep566_equivalent"
     assert set(release_report["checks"]["wheel"]["legal_payload"]) >= {f"mudra_interact-{PACKAGE_VERSION}.data/data/LICENSE", f"mudra_interact-{PACKAGE_VERSION}.data/data/NOTICE"}
@@ -496,7 +502,11 @@ def test_real_deterministic_sdist_uses_frozen_candidate_filename(tmp_path: Path)
 
     assert archive.name == f"mudra_interact-{PACKAGE_VERSION}.tar.gz"
     assert release_verifier.inspect_sdist(archive) == {
-        "name": "mudra-interact", "version": PACKAGE_VERSION, "metadata_version": "2.4",
+        "name": "mudra-interact",
+        "version": PACKAGE_VERSION,
+        "summary": release_verifier.PACKAGE_SUMMARY,
+        "description_sha256": sha256_text_file(ROOT / "README.md"),
+        "metadata_version": "2.4",
     }
     extracted = release_verifier.extract_sdist(archive, tmp_path / "extracted")
     assert extracted.name == f"mudra_interact-{PACKAGE_VERSION}"

@@ -41,7 +41,10 @@ from tools.verification_report import canonical_text_bytes, safe_subprocess_envi
 
 PACKAGE_NAME = "mudra-interact"
 PACKAGE_NORMALIZED_NAME = "mudra_interact"
-PACKAGE_VERSION = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+PROJECT_METADATA = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+PACKAGE_VERSION = PROJECT_METADATA["version"]
+PACKAGE_SUMMARY = PROJECT_METADATA["description"]
+PACKAGE_README_SHA256 = sha256_text_file(ROOT / "README.md")
 SOURCE_DATE_EPOCH = "1760054400"
 REPORT_VERSION = 1
 PACKAGE_RESOURCE_SOURCES = {
@@ -322,11 +325,28 @@ def inspect_sdist(archive: Path) -> dict[str, str]:
         or metadata_version < (2, 2)
     ):
         raise ReleaseError("sdist_metadata_invalid")
+    if metadata.get("Summary") != PACKAGE_SUMMARY:
+        raise ReleaseError("sdist_metadata_summary_mismatch")
+    description = metadata.get_payload()
+    if (
+        not isinstance(description, str)
+        or hashlib.sha256(canonical_text_bytes(description.encode("utf-8"))).hexdigest()
+        != PACKAGE_README_SHA256
+    ):
+        raise ReleaseError("sdist_description_mismatch")
     license_files = metadata.get_all("License-File", [])
     member_names = {PurePosixPath(member.name).as_posix() for member in members}
     if any(f"{expected_root}/{name}" not in member_names for name in license_files):
         raise ReleaseError("sdist_license_file_missing")
-    return {"name": metadata["Name"], "version": metadata["Version"], "metadata_version": metadata["Metadata-Version"]}
+    return {
+        "name": metadata["Name"],
+        "version": metadata["Version"],
+        "summary": metadata["Summary"],
+        "description_sha256": hashlib.sha256(
+            canonical_text_bytes(description.encode("utf-8"))
+        ).hexdigest(),
+        "metadata_version": metadata["Metadata-Version"],
+    }
 
 
 def extract_sdist(archive: Path, destination: Path) -> Path:
@@ -387,6 +407,16 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
             fields.setdefault(key, value)
     if fields.get("Name") != PACKAGE_NAME or fields.get("Version") != PACKAGE_VERSION:
         raise ReleaseError("wheel_metadata_identity_mismatch")
+    parsed_metadata = Parser().parsestr(metadata)
+    if parsed_metadata.get("Summary") != PACKAGE_SUMMARY:
+        raise ReleaseError("wheel_metadata_summary_mismatch")
+    description = parsed_metadata.get_payload()
+    if (
+        not isinstance(description, str)
+        or hashlib.sha256(canonical_text_bytes(description.encode("utf-8"))).hexdigest()
+        != PACKAGE_README_SHA256
+    ):
+        raise ReleaseError("wheel_description_mismatch")
     if "Requires-Dist" in fields:
         raise ReleaseError("wheel_runtime_dependency_present")
     if "License-File: LICENSE" not in metadata or "License-File: NOTICE" not in metadata:
@@ -398,6 +428,10 @@ def inspect_wheel(wheel: Path) -> dict[str, Any]:
         "file_count": len(names),
         "metadata_name": fields.get("Name"),
         "metadata_version": fields.get("Version"),
+        "metadata_summary": parsed_metadata.get("Summary"),
+        "description_sha256": hashlib.sha256(
+            canonical_text_bytes(description.encode("utf-8"))
+        ).hexdigest(),
         "requires_dist": fields.get("Requires-Dist"),
         "package_data": sorted(expected_suffixes),
         "metadata_files": [dist_infos[0], wheel_infos[0], records[0]],

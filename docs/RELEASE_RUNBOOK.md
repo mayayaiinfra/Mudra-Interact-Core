@@ -91,7 +91,9 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    downloaded wheel. It does not use an extra index or rebuild.
    The smoke installs only the downloaded wheel with `--no-index --no-deps
    --no-cache-dir` in a fresh environment; the package has no runtime
-   dependencies.
+   dependencies. For manual inspection, install the candidate from TestPyPI
+   with that index explicitly and no PyPI fallback:
+   `python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.3.0`.
 2. Only after that check passes does the production job wait at the
    `pypi-production` protected environment. The owner must manually approve
    this run after checking its version, commit and candidate artifact
