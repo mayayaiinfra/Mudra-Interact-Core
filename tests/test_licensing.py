@@ -16,7 +16,10 @@ def _copy_tree(destination: Path) -> Path:
     shutil.copytree(
         ROOT,
         destination,
-        ignore=shutil.ignore_patterns(".git", ".venv", "evidence", "build", "dist", ".pytest_cache", "__pycache__"),
+        ignore=shutil.ignore_patterns(
+            ".git", ".venv", "evidence", "build", "dist", ".pytest_cache",
+            ".pytest-language-tmp", "__pycache__",
+        ),
     )
     return destination
 
