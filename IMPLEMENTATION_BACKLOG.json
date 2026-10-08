@@ -209,8 +209,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0.json",
-          "sha256": "c3ac426ba38967fae24a12eb8b6ffcf0fe2c2d21023e24c19b0d2cc8bc424019"
+          "path": "evidence/local/v0.4.1/M0-final.json",
+          "sha256": "e3980b0038b78e4e4eb9e9e52159c082d8759cf94d6e3747ef7086794e4e9720"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -259,8 +259,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1.json",
-          "sha256": "c8a94985757316fc7e4770ca7557a18b87566f8ad0068a150cbb123dc4d6b4ac"
+          "path": "evidence/local/v0.4.1/M1-final.json",
+          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -309,8 +309,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-r2.json",
-          "sha256": "e789ede114f3a314dc223e6f204ac11b34dde74ada7814ae82e1ef459cc0c164"
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -459,8 +459,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M0.json",
-          "sha256": "c3ac426ba38967fae24a12eb8b6ffcf0fe2c2d21023e24c19b0d2cc8bc424019"
+          "path": "evidence/local/v0.4.1/M0-final.json",
+          "sha256": "e3980b0038b78e4e4eb9e9e52159c082d8759cf94d6e3747ef7086794e4e9720"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -527,8 +527,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1.json",
-          "sha256": "c8a94985757316fc7e4770ca7557a18b87566f8ad0068a150cbb123dc4d6b4ac"
+          "path": "evidence/local/v0.4.1/M1-final.json",
+          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -590,8 +590,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1.json",
-          "sha256": "c8a94985757316fc7e4770ca7557a18b87566f8ad0068a150cbb123dc4d6b4ac"
+          "path": "evidence/local/v0.4.1/M1-final.json",
+          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -663,8 +663,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M1.json",
-          "sha256": "c8a94985757316fc7e4770ca7557a18b87566f8ad0068a150cbb123dc4d6b4ac"
+          "path": "evidence/local/v0.4.1/M1-final.json",
+          "sha256": "dfecfd79b00bcc866ff50049f53c78c3eed549bdc2dbf356e1a8435c4b90ca96"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -732,8 +732,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-r2.json",
-          "sha256": "e789ede114f3a314dc223e6f204ac11b34dde74ada7814ae82e1ef459cc0c164"
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -795,8 +795,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-r2.json",
-          "sha256": "e789ede114f3a314dc223e6f204ac11b34dde74ada7814ae82e1ef459cc0c164"
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -868,8 +868,8 @@
       "candidate_version": "0.4.1",
       "evidence": [
         {
-          "path": "evidence/local/v0.4.1/M2-r2.json",
-          "sha256": "e789ede114f3a314dc223e6f204ac11b34dde74ada7814ae82e1ef459cc0c164"
+          "path": "evidence/local/v0.4.1/M2-final.json",
+          "sha256": "05b6d98ea6a5398d54ad46aa929eeeabf34c0c15e9503e7d68013d51a680a789"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -1133,7 +1133,7 @@
     "active_gate": "M3",
     "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "M0 passed 24/24, M1 passed 141/141, and M2 passed 186/186 acceptance cases on the frozen 0.4.1 candidate with zero skips. M3 requires fresh Linux/Windows Python matrix evidence; M4 requires exact TestPyPI and PyPI publication and downloaded-install proof.",
+    "note": "Exact-commit candidate gates passed: M0 24/24, M1 141/141, M2 186/186; zero skips. The first hosted matrix attempt could not find uncommitted prerequisite receipts. The receipts and their required acceptance artifacts are now committed; rerun CI to qualify the fresh Linux/Windows matrix. M4 remains pending publication and exact downloaded-install proof.",
     "previous_release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
