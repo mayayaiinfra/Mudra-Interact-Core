@@ -18,7 +18,7 @@
   "review": {
     "scope": "Astra technical model review of 7c95adc approved the bounded 0.2.0 foundation direction conditionally; no human/cultural/accessibility validation is claimed. See docs/ASTRA_REVIEW_2026-10-08.md. The future language contract is design-only and does not expand 0.2.0.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "M0–M3 and MI-01..MI-09 are freshly VERIFIED on the frozen 0.2.0 source. The eight-cell Linux/Windows × CPython 3.11–3.14 matrix is 8/8; full hosted M3 passed 207/207 acceptance cases with zero skips. AR-01 and AR-02 were repaired and reviewed. MI-10 remains BLOCKED: current checks pass 14/14 synthetic acceptance cases but no real package has been published or verified. Production PyPI Trusted Publishing is configured; TestPyPI sign-in and pending-publisher setup remain outstanding as of 2026-10-08. No package has been published.",
+    "verification_claim": "M0Ã¢â‚¬â€œM3 and MI-01..MI-09 are freshly VERIFIED on the frozen 0.2.0 source. The eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8; full hosted M3 passed 207/207 acceptance cases with zero skips. AR-01 and AR-02 were repaired and reviewed. MI-10 remains BLOCKED: current checks pass 14/14 synthetic acceptance cases but no real package has been published or verified. Production PyPI Trusted Publishing is configured; TestPyPI sign-in and pending-publisher setup remain outstanding as of 2026-10-08. No package has been published.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
@@ -76,8 +76,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M0-luna-c428a52.json",
-          "sha256": "ada07f52a6e8521fa80174289d760ef5e53aba66093d69160c5eaa5990a557c4"
+          "path": "evidence/local/M0-current-4ed5bef.json",
+          "sha256": "c659864f4cf2f6550889f153b3f803f2e160aada19a23c1bc1fc4b969e871635"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -96,8 +96,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M1-luna-c428a52.json",
-          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
+          "path": "evidence/local/M1-current-4ed5bef.json",
+          "sha256": "1b0c86d6be1dce332022194d7eec8a6bc3d68889f53609a0436ded7c182f4737"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -116,8 +116,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-luna-c428a52.json",
-          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
+          "path": "evidence/local/M2-current-4ed5bef.json",
+          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -158,7 +158,7 @@
         }
       ],
       "verification_kind": "luna_self_verified",
-      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows × CPython 3.11–3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
+      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
     }
   ],
   "recommended_order": [
@@ -204,8 +204,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M0-luna-c428a52.json",
-          "sha256": "ada07f52a6e8521fa80174289d760ef5e53aba66093d69160c5eaa5990a557c4"
+          "path": "evidence/local/M0-current-4ed5bef.json",
+          "sha256": "c659864f4cf2f6550889f153b3f803f2e160aada19a23c1bc1fc4b969e871635"
         }
       ],
       "prior_state": "VERIFIED"
@@ -242,8 +242,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-luna-c428a52.json",
-          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
+          "path": "evidence/local/M1-current-4ed5bef.json",
+          "sha256": "1b0c86d6be1dce332022194d7eec8a6bc3d68889f53609a0436ded7c182f4737"
         }
       ],
       "prior_state": "VERIFIED"
@@ -275,8 +275,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-luna-c428a52.json",
-          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
+          "path": "evidence/local/M1-current-4ed5bef.json",
+          "sha256": "1b0c86d6be1dce332022194d7eec8a6bc3d68889f53609a0436ded7c182f4737"
         }
       ],
       "prior_state": "VERIFIED"
@@ -318,8 +318,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M1-luna-c428a52.json",
-          "sha256": "db32cd0377d03823cf84251cfe4f0d7315b908c7876f0bb67f3e0404e05e187a"
+          "path": "evidence/local/M1-current-4ed5bef.json",
+          "sha256": "1b0c86d6be1dce332022194d7eec8a6bc3d68889f53609a0436ded7c182f4737"
         }
       ],
       "prior_state": "VERIFIED"
@@ -357,8 +357,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-luna-c428a52.json",
-          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
+          "path": "evidence/local/M2-current-4ed5bef.json",
+          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
         }
       ],
       "prior_state": "VERIFIED"
@@ -390,8 +390,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-luna-c428a52.json",
-          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
+          "path": "evidence/local/M2-current-4ed5bef.json",
+          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
         }
       ],
       "prior_state": "VERIFIED"
@@ -433,8 +433,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-luna-c428a52.json",
-          "sha256": "f0eca4610bae6b7fffe74eeb3308d00545106a17475e0a8350b07689278be4c5"
+          "path": "evidence/local/M2-current-4ed5bef.json",
+          "sha256": "022cd04605dcc9e20b479479f424cfe08e5955d9e8e15c7413def2065900f90c"
         }
       ],
       "prior_state": "VERIFIED"
@@ -553,7 +553,7 @@
           "sha256": "94ba49978e9afb6a742f870104f37509f346122545a4a0cc17bb8df1339d832a"
         }
       ],
-      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows × CPython 3.11–3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
+      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
     }
   ]
 }
