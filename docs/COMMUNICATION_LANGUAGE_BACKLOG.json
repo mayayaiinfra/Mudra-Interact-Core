@@ -1,7 +1,7 @@
 {
   "design_revision": "0.1",
   "status": "IMPLEMENTATION_IN_PROGRESS",
-  "active_item": "ML-02",
+  "active_item": "ML-03",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
   "planned_package_version": "0.3.0",
@@ -21,10 +21,14 @@
     },
     {
       "id": "ML-02",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "requires": ["ML-01"],
       "outputs": ["language.py immutable Message and LanguageValidationError", "parse_message", "check_freshness", "bundled schema resources"],
-      "acceptance": ["L10: constructor/parser parity, detached payloads, deterministic bytes", "L11: byte/depth/string/count boundaries, duplicates, booleans, overflow, Unicode and control cases", "L12: each act payload, participant/mode rules and strict version/intent checks", "L13: expiry at boundary, past expiry and 30/31-second future-skew cases; imports cannot execute or authorize"]
+      "acceptance": ["L10: constructor/parser parity, detached payloads, deterministic bytes", "L11: byte/depth/string/count boundaries, duplicates, booleans, overflow, Unicode and control cases", "L12: each act payload, participant/mode rules and strict version/intent checks", "L13: expiry at boundary, past expiry and 30/31-second future-skew cases; imports cannot execute or authorize"],
+      "verification_receipt": {
+        "path": "evidence/language/ML-02.json",
+        "sha256": "b4f83888e64c8f02d1b3dfea18d39117f11242130da68c50a9c6a2529503f867"
+      }
     },
     {
       "id": "ML-03",
