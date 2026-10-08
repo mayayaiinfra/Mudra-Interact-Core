@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-04",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -414,7 +414,7 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -430,7 +430,14 @@
           "sha256": "964552a137fd403089ee0c04e9bcd38c7f2a5ee4aee64f0e6cf299d93fe15f2b"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-04.json",
+          "sha256": "186aa7652029690b2efd793b46e062eff5879d652aec71de458b1105821e5cd7"
+        }
+      ]
     },
     {
       "id": "MI-05",
@@ -726,8 +733,8 @@
       "M0"
     ],
     "active_gate": "M1",
-    "active_item": "MI-04",
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "M0, MI-02 and MI-03 are verified; continue M1 in dependency order."
+    "note": "M0 and all M1 items are verified; validating aggregate M1 gate."
   }
 }
