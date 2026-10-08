@@ -73,8 +73,8 @@ python tools/verify_language_gate.py --item ML-02 --report evidence/language/ML-
 python tools/verify_language_gate.py --check-receipt evidence/language/ML-02.json
 python tools/verify_language_gate.py --item ML-03 --report evidence/language/ML-03.json
 python tools/verify_language_gate.py --check-receipt evidence/language/ML-03.json
-python tools/verify_a2a_gate.py --report evidence/language/ML-06.json
-python tools/verify_a2a_gate.py --check-receipt evidence/language/ML-06.json
+python tools/verify_a2a_gate.py --report evidence/language/ML-06-v0.4.0.json
+python tools/verify_a2a_gate.py --check-receipt evidence/language/ML-06-v0.4.0.json
 ```
 
 ML-06 has a separate verifier because it captures a live loopback HTTP peer in
