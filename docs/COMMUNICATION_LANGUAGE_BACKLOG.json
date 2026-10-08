@@ -25,7 +25,7 @@
       ],
       "verification_receipt": {
         "path": "evidence/language/ML-01.json",
-        "sha256": "851965c8fa3ca8dcc1b917942f3f1865aacc66b854d371fa9facaf4fb7d96577"
+        "sha256": "040830596483e1a3bb194a146ae56f4a336f05fcff972d7796c64f123769e857"
       },
       "prior_state": "VERIFIED"
     },
