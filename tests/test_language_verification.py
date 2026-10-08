@@ -14,6 +14,7 @@ from tools.verification_report import (
 )
 from tools.verify_language_gate import (
     LANGUAGE_IDENTITY_FIELDS,
+    REQUIRED_ML02_CASES,
     compare_identity,
     parse_language_pytest_document,
     validate_language_receipt_files,
@@ -45,7 +46,13 @@ def _pytest_document(case_ids: list[str] | None = None, *, outcome: str = "passe
     }
 
 
-def _receipt(report_artifact: dict | None = None, log_artifact: dict | None = None) -> dict:
+def _receipt(
+    report_artifact: dict | None = None,
+    log_artifact: dict | None = None,
+    *,
+    item: str = "ML-01",
+) -> dict:
+    case_ids = sorted(REQUIRED_ML02_CASES if item == "ML-02" else {"L01", "L02", "L03"})
     if report_artifact is None:
         report_artifact = {
             "kind": "acceptance_report",
@@ -62,7 +69,7 @@ def _receipt(report_artifact: dict | None = None, log_artifact: dict | None = No
         }
     return seal_report({
         "report_schema_version": REPORT_SCHEMA_VERSION,
-        "scope": {"kind": "item", "id": "ML-01"},
+        "scope": {"kind": "item", "id": item},
         "state": "VERIFIED",
         "verification_kind": "luna_self_verified",
         "source_commit": "a" * 40,
@@ -77,7 +84,7 @@ def _receipt(report_artifact: dict | None = None, log_artifact: dict | None = No
         "started_at": "2026-10-08T12:00:00.000000Z",
         "finished_at": "2026-10-08T12:00:01.000000Z",
         "commands": [{
-            "id": "ml01_acceptance",
+            "id": "ml01_acceptance" if item == "ML-01" else "ml02_acceptance",
             "argv": [],
             "exit_code": 0,
             "stdout_sha256": "9" * 64,
@@ -86,17 +93,17 @@ def _receipt(report_artifact: dict | None = None, log_artifact: dict | None = No
             "stderr_bytes": 0,
             "log_path": log_artifact["path"],
         }],
-        "test_counts": {"collected": 3, "passed": 3, "failed": 0, "skipped": 0, "xfailed": 0, "xpassed": 0},
+        "test_counts": {"collected": len(case_ids), "passed": len(case_ids), "failed": 0, "skipped": 0, "xfailed": 0, "xpassed": 0},
         "acceptance_cases": [
             {"acceptance_id": case_id, "outcome": "passed", "node_id": f"tests/test_language_contract.py::case-{index}"}
-            for index, case_id in enumerate(("L01", "L02", "L03"))
+            for index, case_id in enumerate(case_ids)
         ],
         "mutation_results": [],
         "artifacts": [report_artifact, log_artifact],
         "prerequisites": [],
         "limitations": [],
         "errors": [],
-        "items": ["ML-01"],
+        "items": [item],
     })
 
 
@@ -131,6 +138,43 @@ def test_acceptance_report_rejects_duplicate_nodes_and_missing_phases() -> None:
     document["nodes"][0]["phases"] = [{"phase": "call", "outcome": "passed"}]
     with pytest.raises(VerificationError, match="language_pytest_case_not_passed"):
         parse_language_pytest_document(document)
+
+
+@pytest.mark.acceptance("L03")
+def test_ml02_acceptance_report_requires_its_own_complete_id_set() -> None:
+    document = _pytest_document(sorted(REQUIRED_ML02_CASES))
+    counts, cases = parse_language_pytest_document(document, required_case_ids=REQUIRED_ML02_CASES)
+    assert counts["passed"] == 4
+    assert {case["acceptance_id"] for case in cases} == REQUIRED_ML02_CASES
+
+    incomplete = _pytest_document(sorted(REQUIRED_ML02_CASES - {"L13"}))
+    with pytest.raises(VerificationError, match="language_pytest_case_missing"):
+        parse_language_pytest_document(incomplete, required_case_ids=REQUIRED_ML02_CASES)
+
+
+@pytest.mark.acceptance("L03")
+def test_ml02_receipt_validates_and_hash_binds_its_artifacts(tmp_path: Path) -> None:
+    evidence_dir = tmp_path / "evidence" / "language"
+    evidence_dir.mkdir(parents=True)
+    document = _pytest_document(sorted(REQUIRED_ML02_CASES))
+    encoded = canonical_json_bytes(document)
+    pytest_path = evidence_dir / "ML-02-pytest.json"
+    pytest_path.write_bytes(encoded)
+    log_data = b"STDOUT\nML-02 acceptance passed\n\nSTDERR\n"
+    log_path = evidence_dir / "ML-02.log"
+    log_path.write_bytes(log_data)
+    report_artifact = {
+        "kind": "acceptance_report", "path": "evidence/language/ML-02-pytest.json",
+        "sha256": sha256_bytes(encoded), "size_bytes": len(encoded),
+    }
+    log_artifact = {
+        "kind": "command_log", "path": "evidence/language/ML-02.log",
+        "sha256": sha256_bytes(log_data), "size_bytes": len(log_data),
+    }
+    report_path = evidence_dir / "ML-02.json"
+    report_path.write_bytes(canonical_json_bytes(_receipt(report_artifact, log_artifact, item="ML-02")))
+    receipt = validate_language_receipt_files(tmp_path, report_path)
+    assert receipt["scope"]["id"] == "ML-02"
 
 
 @pytest.mark.acceptance("L03")

@@ -1,7 +1,7 @@
 # Mudra Interact language: reviewed follow-on contract
 
 Design revision 0.1, Astra technical model review, 2026-10-08.
-**Design only; not implemented, user-validated, or part of package 0.2.0.**
+**Normative design contract; implementation is in progress and is not part of package 0.2.0.**
 This contract defines a bounded experimental reference SDK for a later
 `mudra-interact==0.3.0`, after the current foundation release. It does not change
 the existing event protocol/schema `2.0.0`, four-cue catalogue, consent lifecycle,
@@ -207,10 +207,9 @@ and [W3C multimodal framework](https://www.w3.org/TR/mmi-framework/), reviewed
 conformance evidence for Mudra.
 
 The [follow-on backlog](COMMUNICATION_LANGUAGE_BACKLOG.json) defines engineering
-and external qualification gates. Before any `0.3.0` implementation, freeze
-draft-2020-12 JSON Schema and independent vectors from this contract, including
-all listed limits and relationships. Schema handles structural cases; explicit
-runtime checks handle cross-message/time invariants. Reuse the fail-closed
-reporting pattern with distinct `Lxx` IDs; never reuse M4 or E90-E99 evidence as
-proof of a language implementation. Broad usability/cultural/accessibility
+and external qualification gates. ML-01 freezes the draft-2020-12 JSON Schema,
+version map and independent synthetic vectors. ML-02 implements bounded
+message parsing and freshness; later runtime checks handle transcript
+relationships and rendering. These gates are separate from the gesture/event
+release and its M4/E90-E99 evidence. Broad usability/cultural/accessibility
 claims remain blocked without actual representative human evaluation.

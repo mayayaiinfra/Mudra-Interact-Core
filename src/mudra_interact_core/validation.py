@@ -95,21 +95,42 @@ def require_canonical_uuid(value: Any, *, nullable: bool = False) -> str | None:
     return value
 
 
-def _reject_surrogates_and_bound_strings(value: Any, *, depth: int = 0) -> None:
-    if depth > MAX_JSON_DEPTH:
+def _reject_surrogates_and_bound_strings(
+    value: Any,
+    *,
+    depth: int = 0,
+    maximum_depth: int = MAX_JSON_DEPTH,
+    maximum_string_scalars: int = MAX_STRING_SCALARS,
+) -> None:
+    if depth > maximum_depth:
         fail("invalid_json")
     if isinstance(value, str):
-        if len(value) > MAX_STRING_SCALARS or any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+        if len(value) > maximum_string_scalars or any(0xD800 <= ord(char) <= 0xDFFF for char in value):
             fail("invalid_json")
         return
     if isinstance(value, list):
         for item in value:
-            _reject_surrogates_and_bound_strings(item, depth=depth + 1)
+            _reject_surrogates_and_bound_strings(
+                item,
+                depth=depth + 1,
+                maximum_depth=maximum_depth,
+                maximum_string_scalars=maximum_string_scalars,
+            )
         return
     if isinstance(value, dict):
         for key, item in value.items():
-            _reject_surrogates_and_bound_strings(key, depth=depth + 1)
-            _reject_surrogates_and_bound_strings(item, depth=depth + 1)
+            _reject_surrogates_and_bound_strings(
+                key,
+                depth=depth + 1,
+                maximum_depth=maximum_depth,
+                maximum_string_scalars=maximum_string_scalars,
+            )
+            _reject_surrogates_and_bound_strings(
+                item,
+                depth=depth + 1,
+                maximum_depth=maximum_depth,
+                maximum_string_scalars=maximum_string_scalars,
+            )
 
 
 def _scan_depth(data: bytes, *, maximum: int = MAX_JSON_DEPTH) -> None:
@@ -161,7 +182,13 @@ def _invalid_constant(_value: str) -> Any:
     fail("invalid_json")
 
 
-def parse_json_bytes(data: bytes, *, limit: int) -> Any:
+def parse_json_bytes(
+    data: bytes,
+    *,
+    limit: int,
+    max_depth: int = MAX_JSON_DEPTH,
+    max_string_scalars: int = MAX_STRING_SCALARS,
+) -> Any:
     """Decode one bounded JSON document with no coercion or remote behavior."""
 
     if type(data) is not bytes:
@@ -170,7 +197,7 @@ def parse_json_bytes(data: bytes, *, limit: int) -> Any:
         fail("input_too_large")
     if data.startswith(b"\xef\xbb\xbf"):
         fail("invalid_json")
-    _scan_depth(data)
+    _scan_depth(data, maximum=max_depth)
     try:
         text = data.decode("utf-8", errors="strict")
         value = json.loads(
@@ -183,18 +210,33 @@ def parse_json_bytes(data: bytes, *, limit: int) -> Any:
         raise
     except (UnicodeError, json.JSONDecodeError, RecursionError, ValueError, OverflowError):
         fail("invalid_json")
-    _reject_surrogates_and_bound_strings(value)
+    _reject_surrogates_and_bound_strings(
+        value,
+        maximum_depth=max_depth,
+        maximum_string_scalars=max_string_scalars,
+    )
     return value
 
 
-def parse_json_text(text: str, *, limit: int) -> Any:
+def parse_json_text(
+    text: str,
+    *,
+    limit: int,
+    max_depth: int = MAX_JSON_DEPTH,
+    max_string_scalars: int = MAX_STRING_SCALARS,
+) -> Any:
     if type(text) is not str:
         fail("invalid_json")
     try:
         data = text.encode("utf-8", errors="strict")
     except UnicodeError:
         fail("invalid_json")
-    return parse_json_bytes(data, limit=limit)
+    return parse_json_bytes(
+        data,
+        limit=limit,
+        max_depth=max_depth,
+        max_string_scalars=max_string_scalars,
+    )
 
 
 def require_exact_fields(value: Any, fields: set[str]) -> dict[str, Any]:

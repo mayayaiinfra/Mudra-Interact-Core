@@ -43,6 +43,8 @@ VERSION_MAP_PATH = "src/mudra_interact_core/schemas/language/v1/version-map.json
 FIXTURE_MANIFEST_PATH = "tests/fixtures/language/v1/manifest.json"
 CASE_PATTERN = re.compile(r"^\|\s*(L\d{2})\s*\|")
 REQUIRED_ML01_CASES = {"L01", "L02", "L03"}
+REQUIRED_ML02_CASES = {"L10", "L11", "L12", "L13"}
+REQUIRED_CASES_BY_ITEM = {"ML-01": REQUIRED_ML01_CASES, "ML-02": REQUIRED_ML02_CASES}
 KNOWN_DIRECTIONS = {
     "human_to_human",
     "human_to_agent",
@@ -306,14 +308,23 @@ def _validate_report_shape(report: Any) -> dict[str, Any]:
     if not isinstance(report, dict) or not isinstance(report.get("state"), str):
         raise VerificationError("language_receipt_shape_invalid")
     report = validate_report_integrity(report)
-    if report.get("scope") != {"kind": "item", "id": "ML-01"}:
+    scope = report.get("scope")
+    if (
+        not isinstance(scope, dict)
+        or set(scope) != {"kind", "id"}
+        or scope.get("kind") != "item"
+        or type(scope.get("id")) is not str
+        or scope["id"] not in REQUIRED_CASES_BY_ITEM
+    ):
         raise VerificationError("language_receipt_scope_invalid")
+    item_id = scope["id"]
+    required_case_ids = REQUIRED_CASES_BY_ITEM[item_id]
     if report.get("state") != "VERIFIED":
         raise VerificationError("language_receipt_not_verified")
     for key in ("schema_sha256", "version_map_sha256", "fixture_manifest_sha256"):
         if not isinstance(report.get(key), str) or not re.fullmatch(r"[0-9a-f]{64}", report[key]):
             raise VerificationError("language_receipt_identity_invalid")
-    if report.get("items") != ["ML-01"]:
+    if report.get("items") != [item_id]:
         raise VerificationError("language_receipt_item_invalid")
     counts = report.get("test_counts")
     if not isinstance(counts, dict) or set(counts) != {"collected", "passed", "failed", "skipped", "xfailed", "xpassed"}:
@@ -335,13 +346,13 @@ def _validate_report_shape(report: Any) -> dict[str, Any]:
             not isinstance(case, dict)
             or set(case) != {"acceptance_id", "outcome", "node_id"}
             or not isinstance(case.get("acceptance_id"), str)
-            or case.get("acceptance_id") not in REQUIRED_ML01_CASES
+            or case.get("acceptance_id") not in required_case_ids
             or case.get("outcome") != "passed"
             or not isinstance(case.get("node_id"), str)
         ):
             raise VerificationError("language_receipt_case_invalid")
         found.add(case["acceptance_id"])
-    if found != REQUIRED_ML01_CASES:
+    if found != required_case_ids:
         raise VerificationError("language_receipt_cases_missing")
     artifacts = report.get("artifacts")
     if not isinstance(artifacts, list) or not artifacts:
@@ -351,11 +362,14 @@ def _validate_report_shape(report: Any) -> dict[str, Any]:
     if len(acceptance_artifacts) != 1 or len(log_artifacts) != 1 or len(artifacts) != 2:
         raise VerificationError("language_receipt_evidence_missing")
     commands = report.get("commands")
+    expected_command_id = "ml01_acceptance" if item_id == "ML-01" else "ml02_acceptance"
     if (
         not isinstance(commands, list)
         or len(commands) != 1
         or not isinstance(commands[0], dict)
-        or commands[0].get("id") != "ml01_acceptance"
+        or commands[0].get("id") != expected_command_id
+        or not isinstance(commands[0].get("argv"), list)
+        or any(not isinstance(argument, str) for argument in commands[0]["argv"])
         or commands[0].get("log_path") != log_artifacts[0].get("path")
         or type(commands[0].get("exit_code")) is not int
         or commands[0]["exit_code"] != 0
@@ -400,11 +414,22 @@ def validate_language_receipt_files(
     for artifact in artifacts:
         if not isinstance(artifact, dict) or set(artifact) != {"kind", "path", "sha256", "size_bytes"}:
             raise VerificationError("language_receipt_artifact_invalid")
+        if (
+            type(artifact.get("size_bytes")) is not int
+            or artifact["size_bytes"] < 0
+            or not isinstance(artifact.get("sha256"), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", artifact["sha256"])
+        ):
+            raise VerificationError("language_receipt_artifact_invalid")
         path = _safe_repo_file(root, artifact["path"])
         if sha256_file(path) != artifact["sha256"] or path.stat().st_size != artifact["size_bytes"]:
             raise VerificationError("language_receipt_artifact_hash_mismatch")
     pytest_path = _safe_repo_file(root, pytest_artifact["path"])
-    actual_counts, actual_cases = parse_language_pytest_document(read_json(pytest_path, max_bytes=MAX_TEST_REPORT_BYTES))
+    item_id = report["scope"]["id"]
+    actual_counts, actual_cases = parse_language_pytest_document(
+        read_json(pytest_path, max_bytes=MAX_TEST_REPORT_BYTES),
+        required_case_ids=REQUIRED_CASES_BY_ITEM[item_id],
+    )
     if actual_counts != report["test_counts"] or actual_cases != report["acceptance_cases"]:
         raise VerificationError("language_receipt_evidence_mismatch")
     return report
@@ -631,6 +656,125 @@ def run_ml01(root: Path, report_path: Path) -> dict[str, Any]:
     return report
 
 
+def run_ml02(root: Path, report_path: Path) -> dict[str, Any]:
+    root = root.resolve()
+    if not _git_working_tree_clean(root):
+        raise VerificationError("language_candidate_not_committed_clean")
+    prerequisite_path = _report_path(root, "evidence/language/ML-01.json")
+    prerequisite = check_receipt(root, prerequisite_path)
+    if prerequisite["state"] != "VERIFIED":
+        raise VerificationError("language_prerequisite_unverified")
+    validate_local_schema_references(read_json(root / SCHEMA_PATH))
+    validate_language_fixture_manifest(root)
+    identity_before = current_language_identity(root)
+    started = utc_now()
+    acceptance_path = report_path.with_name(report_path.stem + "-pytest.json")
+    log_path = report_path.with_suffix(".log")
+    for output_path in (acceptance_path, log_path):
+        try:
+            relative_output = output_path.relative_to(root).as_posix()
+        except ValueError:
+            raise VerificationError("language_report_path_invalid") from None
+        if _report_path(root, relative_output) != output_path:
+            raise VerificationError("language_report_path_invalid")
+    acceptance_path.parent.mkdir(parents=True, exist_ok=True)
+    fd, temp_report_name = tempfile.mkstemp(prefix=".pytest-language-", suffix=".json", dir=acceptance_path.parent)
+    os.close(fd)
+    temp_report = Path(temp_report_name)
+    pytest_temp = tempfile.TemporaryDirectory(prefix="mudra-language-acceptance-")
+    try:
+        argv = [
+            sys.executable, "-m", "pytest", "-p", "tools.pytest_acceptance",
+            "--basetemp", pytest_temp.name,
+            "tests/test_language_runtime.py",
+            "--acceptance-report", str(temp_report),
+        ]
+        try:
+            proc = subprocess.run(
+                argv,
+                cwd=root,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=300,
+                check=False,
+            )
+        except subprocess.TimeoutExpired:
+            raise VerificationError("language_pytest_timeout") from None
+        except OSError:
+            raise VerificationError("language_pytest_launch_failed") from None
+        log = b"STDOUT\n" + proc.stdout + b"\nSTDERR\n" + proc.stderr
+        if len(log) > MAX_LOG_BYTES:
+            _atomic_bytes(log_path, log[:MAX_LOG_BYTES])
+            raise VerificationError("language_pytest_log_truncated")
+        _atomic_bytes(log_path, log)
+        if not temp_report.is_file():
+            raise VerificationError("language_pytest_report_missing")
+        pytest_document = read_json(temp_report, max_bytes=MAX_TEST_REPORT_BYTES)
+        counts, cases = parse_language_pytest_document(pytest_document, required_case_ids=REQUIRED_ML02_CASES)
+        if proc.returncode != 0:
+            raise VerificationError("language_pytest_nonzero_exit")
+        os.replace(temp_report, acceptance_path)
+        identity_after = current_language_identity(root)
+        if identity_after != identity_before:
+            raise VerificationError("language_source_changed_during_run")
+        artifacts = [{
+            "kind": "acceptance_report",
+            "path": acceptance_path.relative_to(root).as_posix(),
+            "sha256": sha256_file(acceptance_path),
+            "size_bytes": acceptance_path.stat().st_size,
+        }, {
+            "kind": "command_log",
+            "path": log_path.relative_to(root).as_posix(),
+            "sha256": sha256_file(log_path),
+            "size_bytes": log_path.stat().st_size,
+        }]
+        return {
+            "report_schema_version": REPORT_SCHEMA_VERSION,
+            "scope": {"kind": "item", "id": "ML-02"},
+            "state": "VERIFIED",
+            "verification_kind": "luna_self_verified",
+            **identity_after,
+            "platform": {
+                "os": platform.system().lower(),
+                "architecture": platform.machine().lower(),
+                "python": platform.python_version(),
+            },
+            "started_at": started,
+            "finished_at": utc_now(),
+            "commands": [{
+                "id": "ml02_acceptance",
+                "argv": [sys.executable, "-m", "pytest", "-p", "tools.pytest_acceptance", "--basetemp", "<isolated-temporary-directory>", "tests/test_language_runtime.py", "--acceptance-report", acceptance_path.relative_to(root).as_posix()],
+                "exit_code": proc.returncode,
+                "stdout_sha256": sha256_bytes(proc.stdout),
+                "stderr_sha256": sha256_bytes(proc.stderr),
+                "stdout_bytes": len(proc.stdout),
+                "stderr_bytes": len(proc.stderr),
+                "log_path": log_path.relative_to(root).as_posix(),
+            }],
+            "test_counts": counts,
+            "acceptance_cases": cases,
+            "mutation_results": [],
+            "artifacts": artifacts,
+            "prerequisites": [{
+                "id": "ML-01",
+                "state": "VERIFIED",
+                "receipt_path": prerequisite_path.relative_to(root).as_posix(),
+                "receipt_sha256": sha256_file(prerequisite_path),
+            }],
+            "limitations": ["Structural message parsing and freshness only; transcript validation, rendering, human qualification, transport adapters and authorization are not claimed."],
+            "errors": [],
+            "items": ["ML-02"],
+        }
+    except VerificationError as exc:
+        raise exc
+    finally:
+        try:
+            temp_report.unlink(missing_ok=True)
+        except OSError:
+            pass
+        pytest_temp.cleanup()
+
+
 def check_receipt(root: Path, path: Path) -> dict[str, Any]:
     current = current_language_identity(root)
     receipt = validate_language_receipt_files(root, path, current_identity=current)
@@ -643,22 +787,23 @@ def check_receipt(root: Path, path: Path) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--item", choices=["ML-01"])
+    group.add_argument("--item", choices=["ML-01", "ML-02"])
     group.add_argument("--check-receipt")
     parser.add_argument("--report", help="Repository-relative receipt path under evidence/language")
     args = parser.parse_args(argv)
     try:
         if args.check_receipt:
             path = _report_path(_ROOT, args.check_receipt)
-            check_receipt(_ROOT, path)
-            print("VERIFIED ML-01 receipt")
+            receipt = check_receipt(_ROOT, path)
+            print(f"VERIFIED {receipt['scope']['id']} receipt")
             return 0
         if not args.report:
             parser.error("--report is required with --item")
         path = _report_path(_ROOT, args.report)
-        report = run_ml01(_ROOT, path)
+        runner = {"ML-01": run_ml01, "ML-02": run_ml02}[args.item]
+        report = runner(_ROOT, path)
         _atomic_json(path, seal_report(report))
-        print(f"VERIFIED ML-01: {report['test_counts']['passed']} acceptance tests; 0 skips")
+        print(f"VERIFIED {args.item}: {report['test_counts']['passed']} acceptance tests; 0 skips")
         return 0
     except VerificationError as exc:
         print(f"BLOCKED: {exc.code}", file=sys.stderr)
