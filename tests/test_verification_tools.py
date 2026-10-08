@@ -31,6 +31,7 @@ from tools.verification_report import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.mark.acceptance("E04")
 def test_platform_matrix_report_supports_versioned_evidence_and_rejects_unsafe_paths() -> None:
     assert _platform_matrix_report_path(None).as_posix() == DEFAULT_PLATFORM_MATRIX_REPORT
     assert _platform_matrix_report_path(
