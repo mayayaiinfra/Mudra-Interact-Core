@@ -49,7 +49,7 @@
       }
     ]
   },
-  "active_item": "MI-09",
+  "active_item": "MI-08",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -650,7 +650,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -709,7 +709,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -718,7 +718,14 @@
         }
       ],
       "historical_verification_kind": "luna_self_verified",
-      "candidate_version": "0.4.0"
+      "candidate_version": "0.4.0",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-09.json",
+          "sha256": "3f40f0632a000f0cfe5f524af13d9e9c9ee5c3409ad6b34d27c19cabe4091c35"
+        }
+      ]
     },
     {
       "id": "MI-10",
@@ -775,8 +782,8 @@
       "M2"
     ],
     "active_gate": "M3",
-    "active_item": "MI-09",
+    "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "M2 is verified. MI-09 is eligible alongside MI-08 and is being completed before the eight-cell platform qualification."
+    "note": "MI-09 is verified; MI-08 is the remaining M3 item and requires the eight-cell Windows/Linux Python matrix."
   }
 }
