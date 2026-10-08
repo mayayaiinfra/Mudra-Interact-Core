@@ -18,11 +18,11 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "The PyPI/TestPyPI package summary and README now describe Mudra Interact as a Python communication library with an offline gesture-event protocol; the README contains no unrelated product branding. Wheel and sdist verification checks the published summary and rendered description against project metadata and README. These source changes reset implementation verification to M0. Version 0.3.0 has not been published; fresh gates and release proofs are required.",
+    "verification_claim": "M0 is VERIFIED on source commit 642eea2: 23 passed, zero skipped, E01-E06. The PyPI README and package summary now describe the communication library and gesture-event protocol without unrelated product branding; release tests confirm wheel and sdist metadata carry the exact intended summary and README. M1 requalification starts at MI-02. Version 0.3.0 is not yet published to TestPyPI or PyPI.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-01",
+  "active_item": "MI-02",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -73,9 +73,14 @@
       "items": [
         "MI-01"
       ],
-      "state": "IN_PROGRESS",
-      "evidence": [],
-      "verification_kind": null,
+      "state": "VERIFIED",
+      "evidence": [
+        {
+          "path": "evidence/local/M0-index-copy.json",
+          "sha256": "6e48e0b67602cb2ff83740b4410aebe3e7ebd854ceb422a662ebd1c678b44a8c"
+        }
+      ],
+      "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
     {
@@ -88,7 +93,7 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "evidence": [],
       "verification_kind": null,
       "prior_state": "VERIFIED"
@@ -183,9 +188,14 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
-      "verification_kind": null,
-      "evidence": [],
+      "state": "VERIFIED",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/M0-index-copy.json",
+          "sha256": "6e48e0b67602cb2ff83740b4410aebe3e7ebd854ceb422a662ebd1c678b44a8c"
+        }
+      ],
       "prior_state": "VERIFIED"
     },
     {
@@ -216,7 +226,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "verification_kind": null,
       "evidence": [],
       "prior_state": "VERIFIED"
