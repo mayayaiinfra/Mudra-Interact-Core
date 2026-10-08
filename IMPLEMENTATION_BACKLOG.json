@@ -1267,7 +1267,7 @@
     "active_gate": "M3",
     "active_item": "MI-08",
     "updated_on": "2026-10-09",
-    "note": "On final source commit 91bb6ec, M0 passed 24/24, M1 passed 141/141, and M2 passed 186/186 acceptance cases with zero skips. The final platform matrix must run on this source tree; M4 remains pending exact TestPyPI/PyPI publication and downloaded-install proof.",
+    "note": "M0-M2 passed on the final 0.4.1 source. The fresh hosted Linux/Windows CPython 3.11-3.14 matrix now has eight verified cells (26/26 per cell, zero skips), and the aggregate is verified. The full M3 gate still must pass in the Linux isolated CI gate; M4 remains pending exact publication and download verification.",
     "previous_release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
