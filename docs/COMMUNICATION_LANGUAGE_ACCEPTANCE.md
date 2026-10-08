@@ -13,6 +13,10 @@ counted as M0–M4 or E90–E99 evidence.
 | L11 | ML-02 / `tests/test_language_runtime.py` | Exact byte/depth/string/step-count boundaries, duplicate keys, BOM/UTF-8/trailing documents, bool/overflow numbers, Unicode scalars, controls and LF allowlist follow the contract. |
 | L12 | ML-02 / `tests/test_language_runtime.py` | All positive and negative static fixtures use the runtime parser; payload, intent/version, participant identity, provenance mode and adapter-version constraints fail closed. |
 | L13 | ML-02 / `tests/test_language_runtime.py` | Expiry equality, past expiry, 30/31-second future skew and import purity pass; core import has no network, process or authorization surface. |
+| L20 | ML-03 / `tests/test_language_transcript.py` | The three checked-in creative-planning examples validate; complete transcript scope, unique IDs, reply graph, role consistency, reverse participants, intent, ordering, expiry, and whole-transcript failure are enforced. |
+| L21 | ML-03 / `tests/test_language_transcript.py` | Each proposal accepts at most one accept-or-decline; revised proposals have independent IDs/dispositions; acknowledgements cannot loop, repeat, or extend expiry; status/result/error terminal relationships follow the contract. |
+| L22 | ML-03 / `tests/test_language_transcript.py` | All acts render deterministically as literal plain text with explicit IDs, roles, provenance assertions, non-authorization language, visible bidi controls, and strict locale rejection. |
+| L23 | ML-03 / `tests/test_language_transcript.py` | Malicious prose and spoofed claims remain data; validation/rendering trigger no network, subprocess or action; an invalid late item returns no partial transcript. |
 
 ## Independent-fixture rules
 
@@ -57,4 +61,6 @@ python tools/verify_language_gate.py --item ML-01 --report evidence/language/ML-
 python tools/verify_language_gate.py --check-receipt evidence/language/ML-01.json
 python tools/verify_language_gate.py --item ML-02 --report evidence/language/ML-02.json
 python tools/verify_language_gate.py --check-receipt evidence/language/ML-02.json
+python tools/verify_language_gate.py --item ML-03 --report evidence/language/ML-03.json
+python tools/verify_language_gate.py --check-receipt evidence/language/ML-03.json
 ```

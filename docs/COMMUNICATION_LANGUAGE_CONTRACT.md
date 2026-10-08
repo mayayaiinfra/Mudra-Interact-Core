@@ -1,7 +1,7 @@
 # Mudra Interact language: reviewed follow-on contract
 
 Design revision 0.1, Astra technical model review, 2026-10-08.
-**Normative design contract; implementation is in progress and is not part of package 0.2.0.**
+**Normative design contract; implementation and qualification remain in progress and are not part of package 0.2.0.**
 This contract defines a bounded experimental reference SDK for a later
 `mudra-interact==0.3.0`, after the current foundation release. It does not change
 the existing event protocol/schema `2.0.0`, four-cue catalogue, consent lifecycle,
@@ -169,9 +169,11 @@ English is the only reference locale. Any other locale fails
 using deterministic neutral labels, explicit participant kind/ID, the exact
 referenced ID, payload and provenance assertions. Begin with an explicit
 experimental message label. Include the fixed sentence: "This message does
-not authorize execution." This is a literal plain-text representation, not
-an accessibility qualification. Test control/bidirectional text presentation
-and escape dangerous formatting at each future HTML/UI boundary.
+not authorize execution." State that participant identities and kinds are
+message claims and are not authenticated. This is a literal plain-text
+representation, not an accessibility qualification. Render bidirectional
+controls visibly and test control/bidirectional text presentation; escape
+dangerous formatting at each future HTML/UI boundary.
 
 Humans must be able to inspect the whole interpretation, clarify or decline
 it, and use an alternative input path. An adapter may suggest a selected act
@@ -209,7 +211,9 @@ conformance evidence for Mudra.
 The [follow-on backlog](COMMUNICATION_LANGUAGE_BACKLOG.json) defines engineering
 and external qualification gates. ML-01 freezes the draft-2020-12 JSON Schema,
 version map and independent synthetic vectors. ML-02 implements bounded
-message parsing and freshness; later runtime checks handle transcript
-relationships and rendering. These gates are separate from the gesture/event
-release and its M4/E90-E99 evidence. Broad usability/cultural/accessibility
-claims remain blocked without actual representative human evaluation.
+message parsing and freshness. ML-03 implements bounded transcript relationships,
+synthetic exchanges and deterministic plain-text rendering. Each gate requires
+fresh, hash-bound evidence after the candidate is committed. These gates are
+separate from the gesture/event release and its M4/E90-E99 evidence. Broad
+usability/cultural/accessibility claims remain blocked without actual
+representative human evaluation.

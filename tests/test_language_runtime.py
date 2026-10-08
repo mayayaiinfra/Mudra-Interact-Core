@@ -358,7 +358,7 @@ subprocess.run = forbidden
 os.system = forbidden
 urllib.request.urlopen = forbidden
 import mudra_interact_core.language as language
-assert set(language.__all__) == {"LanguageValidationError", "Message", "check_freshness", "parse_message"}
+assert set(language.__all__) == {"LanguageValidationError", "Message", "check_freshness", "parse_message", "validate_transcript", "render_message"}
 assert not any(hasattr(language, name) for name in ("authorize", "execute", "publish", "generate"))
 '''
     completed = subprocess.run(

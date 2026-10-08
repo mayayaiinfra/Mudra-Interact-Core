@@ -23,6 +23,8 @@ PROTOCOL_VERSION = "1.0.0"
 INTENT_NAME = "org.mayayai.creative.plan"
 INTENT_VERSION = "1.0.0"
 MAX_MESSAGE_BYTES = 65_536
+MAX_TRANSCRIPT_BYTES = 1_048_576
+MAX_TRANSCRIPT_MESSAGES = 128
 MAX_JSON_DEPTH = 16
 MAX_STRING_SCALARS = 4_096
 
@@ -82,10 +84,10 @@ def _fail(code: str) -> None:
     raise LanguageValidationError(code)
 
 
-def _json_string_size(value: str) -> int:
+def _json_string_size(value: str, *, limit: int = MAX_MESSAGE_BYTES) -> int:
     if type(value) is not str:
         _fail("invalid_shape")
-    if len(value) > MAX_MESSAGE_BYTES:
+    if len(value) > limit:
         _fail("input_too_large")
     try:
         return len(json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode("utf-8", errors="strict"))
@@ -93,12 +95,18 @@ def _json_string_size(value: str) -> int:
         _fail("invalid_json")
 
 
-def _bounded_json_size(value: Any, *, depth: int = 0, active: set[int] | None = None) -> int:
+def _bounded_json_size(
+    value: Any,
+    *,
+    limit: int = MAX_MESSAGE_BYTES,
+    depth: int = 0,
+    active: set[int] | None = None,
+) -> int:
     """Measure JSON size without invoking non-builtin conversion hooks."""
     if active is None:
         active = set()
     if type(value) is str:
-        size = _json_string_size(value)
+        size = _json_string_size(value, limit=limit)
     elif value is None:
         size = 4
     elif type(value) is bool:
@@ -131,8 +139,8 @@ def _bounded_json_size(value: Any, *, depth: int = 0, active: set[int] | None = 
                 for index, item in enumerate(value):
                     if index:
                         size += 1
-                    size += _bounded_json_size(item, depth=next_depth, active=active)
-                    if size > MAX_MESSAGE_BYTES:
+                    size += _bounded_json_size(item, limit=limit, depth=next_depth, active=active)
+                    if size > limit:
                         _fail("input_too_large")
             else:
                 size = 2
@@ -141,15 +149,15 @@ def _bounded_json_size(value: Any, *, depth: int = 0, active: set[int] | None = 
                         _fail("invalid_shape")
                     if index:
                         size += 1
-                    size += _json_string_size(key) + 1
-                    size += _bounded_json_size(item, depth=next_depth, active=active)
-                    if size > MAX_MESSAGE_BYTES:
+                    size += _json_string_size(key, limit=limit) + 1
+                    size += _bounded_json_size(item, limit=limit, depth=next_depth, active=active)
+                    if size > limit:
                         _fail("input_too_large")
         finally:
             active.remove(identity)
     else:
         _fail("invalid_shape")
-    if size > MAX_MESSAGE_BYTES:
+    if size > limit:
         _fail("input_too_large")
     return size
 
@@ -575,9 +583,214 @@ def check_freshness(message: Message, now_utc: str) -> bool:
     return True
 
 
+def validate_transcript(data: bytes | dict[str, Any]) -> tuple[Message, ...]:
+    """Validate a complete bounded conversation or return no messages at all."""
+    if type(data) is bytes:
+        try:
+            value = parse_json_bytes(
+                data,
+                limit=MAX_TRANSCRIPT_BYTES,
+                max_depth=MAX_JSON_DEPTH,
+                max_string_scalars=MAX_MESSAGE_BYTES,
+            )
+        except MudraValidationError as exc:
+            if exc.code == "input_too_large":
+                _fail("input_too_large")
+            _fail("invalid_json")
+    elif type(data) is dict:
+        _bounded_json_size(data, limit=MAX_TRANSCRIPT_BYTES)
+        _validate_json_tree(data)
+        value = data
+    else:
+        _fail("invalid_shape")
+
+    envelope = _exact_object(value, frozenset({"protocol_version", "messages"}))
+    if type(envelope["protocol_version"]) is not str:
+        _fail("invalid_shape")
+    if envelope["protocol_version"] != PROTOCOL_VERSION:
+        _fail("unsupported_version")
+    raw_messages = envelope["messages"]
+    if type(raw_messages) is not list or not (1 <= len(raw_messages) <= MAX_TRANSCRIPT_MESSAGES):
+        _fail("invalid_shape")
+
+    messages = tuple(parse_message(raw) for raw in raw_messages)
+    if messages[0].act != "request" or messages[0].reply_to is not None:
+        _fail("invalid_sequence")
+
+    first_conversation = messages[0].conversation_id
+    participant_kinds: dict[str, str] = {}
+    prior_by_id: dict[str, Message] = {}
+    dispositions: set[str] = set()
+    acknowledgements: set[str] = set()
+    terminal_references: set[str] = set()
+    terminal_accepts: set[str] = set()
+    previous_created: datetime | None = None
+
+    for index, message in enumerate(messages):
+        if message.conversation_id != first_conversation:
+            _fail("scope_mismatch")
+        if message.message_id in prior_by_id:
+            _fail("invalid_sequence")
+        created = _parse_utc(message.created_at)
+        if previous_created is not None and created < previous_created:
+            _fail("invalid_sequence")
+        previous_created = created
+
+        for participant in (message.sender, message.recipient):
+            known_kind = participant_kinds.setdefault(participant.participant_id, participant.kind)
+            if known_kind != participant.kind:
+                _fail("scope_mismatch")
+
+        if index == 0:
+            prior_by_id[message.message_id] = message
+            continue
+
+        if message.reply_to is None or message.reply_to not in prior_by_id:
+            _fail("invalid_sequence")
+        parent = prior_by_id[message.reply_to]
+        if (
+            message.sender.participant_id != parent.recipient.participant_id
+            or message.recipient.participant_id != parent.sender.participant_id
+        ):
+            _fail("scope_mismatch")
+        if message.intent.name != parent.intent.name or message.intent.version != parent.intent.version:
+            _fail("unsupported_intent")
+        if created > _parse_utc(parent.expires_at):
+            _fail("expired_message")
+        if message.act == "acknowledge" and _parse_utc(message.expires_at) > _parse_utc(parent.expires_at):
+            _fail("invalid_sequence")
+
+        if message.act == "proposal":
+            if parent.act not in {"request", "clarification"}:
+                _fail("invalid_sequence")
+        elif message.act == "clarification":
+            if parent.act not in {"request", "proposal"}:
+                _fail("invalid_sequence")
+            expected_about = "brief" if parent.act == "request" else "proposal"
+            if message.intent.payload["about"] != expected_about:
+                _fail("invalid_sequence")
+        elif message.act in {"accept", "decline"}:
+            if parent.act != "proposal":
+                _fail("invalid_sequence")
+            if parent.message_id in dispositions:
+                _fail("invalid_sequence")
+            dispositions.add(parent.message_id)
+        elif message.act == "acknowledge":
+            if parent.act == "acknowledge" or parent.message_id in acknowledgements:
+                _fail("invalid_sequence")
+            acknowledgements.add(parent.message_id)
+        elif message.act in {"status", "result"}:
+            if parent.act != "accept" or parent.message_id in terminal_accepts:
+                _fail("invalid_sequence")
+        elif message.act == "error":
+            if parent.act not in {"request", "accept"} or parent.message_id in terminal_references:
+                _fail("invalid_sequence")
+        else:  # A request can only be the first transcript entry.
+            _fail("invalid_sequence")
+
+        if message.act in {"error", "result"}:
+            if parent.message_id in terminal_references:
+                _fail("invalid_sequence")
+            terminal_references.add(parent.message_id)
+            if parent.act == "accept":
+                terminal_accepts.add(parent.message_id)
+        prior_by_id[message.message_id] = message
+
+    return messages
+
+
+_BIDI_DISPLAY_CONTROLS = frozenset({
+    0x061C, 0x200E, 0x200F, 0x2028, 0x2029,
+    *range(0x202A, 0x202F), *range(0x2066, 0x206A),
+})
+
+
+def _quoted_untrusted_text(value: str) -> str:
+    safe_chars = []
+    for char in value:
+        codepoint = ord(char)
+        if codepoint in _BIDI_DISPLAY_CONTROLS:
+            safe_chars.append(f"⟪U+{codepoint:04X}⟫")
+        else:
+            safe_chars.append(char)
+    return json.dumps("".join(safe_chars), ensure_ascii=False, separators=(",", ":"))
+
+
+def _render_scalar(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def render_message(message: Message, locale: str = "en") -> str:
+    """Render one message as deterministic plain text without interpreting it."""
+    if type(locale) is not str or locale != "en":
+        _fail("unsupported_locale")
+    if type(message) is not Message:
+        _fail("invalid_shape")
+
+    payload = message.intent.payload
+    lines = [
+        "EXPERIMENTAL MUDRA MESSAGE (language 1.0.0)",
+        f"Act: {message.act}",
+        f"Message ID: {message.message_id}",
+        f"Conversation ID: {message.conversation_id}",
+        "Participant identities and kinds are message claims; they are not authenticated.",
+        f"Sender: {message.sender.kind} ({message.sender.participant_id})",
+        f"Recipient: {message.recipient.kind} ({message.recipient.participant_id})",
+        f"Reply to: {message.reply_to if message.reply_to is not None else 'none'}",
+        f"Created at: {message.created_at}",
+        f"Expires at: {message.expires_at}",
+        f"Intent: {message.intent.name} version {message.intent.version}",
+        "Payload:",
+    ]
+    if message.act == "request":
+        lines.extend((
+            f"  brief: {_quoted_untrusted_text(payload['brief'])}",
+            f"  medium: {payload['medium']}",
+        ))
+    elif message.act == "proposal":
+        lines.append(f"  summary: {_quoted_untrusted_text(payload['summary'])}")
+        lines.append("  steps:")
+        for step in payload["steps"]:
+            lines.append(
+                f"    - step_id {step['step_id']}: {_quoted_untrusted_text(step['description'])}"
+            )
+    elif message.act == "clarification":
+        lines.extend((
+            f"  text: {_quoted_untrusted_text(payload['text'])}",
+            f"  about: {payload['about']}",
+        ))
+    elif message.act in {"accept", "acknowledge"}:
+        lines.append("  (empty payload)")
+    elif message.act == "decline":
+        lines.append(f"  reason: {payload['reason']}")
+    elif message.act == "status":
+        lines.extend((
+            f"  state: {payload['state']}",
+            f"  text: {_quoted_untrusted_text(payload['text'])}",
+        ))
+    elif message.act == "result":
+        lines.append(f"  summary: {_quoted_untrusted_text(payload['summary'])}")
+    else:
+        lines.append(f"  code: {payload['code']}")
+
+    score = _render_scalar(message.provenance.interpretation_score)
+    reviewed = "true" if message.provenance.human_reviewed else "false"
+    lines.extend((
+        "Provenance assertions:",
+        f"  mode: {message.provenance.mode}",
+        f"  adapter: {message.provenance.adapter_id} version {message.provenance.adapter_version}",
+        f"  interpretation score (adapter assertion): {score}",
+        f"  human reviewed (assertion, not independently verified): {reviewed}",
+        "This message does not authorize execution.",
+    ))
+    return "\n".join(lines)
+
+
 __all__ = [
     "LanguageValidationError",
     "Message",
     "check_freshness",
     "parse_message",
+    "render_message",
+    "validate_transcript",
 ]

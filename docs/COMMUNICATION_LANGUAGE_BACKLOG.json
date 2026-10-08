@@ -10,7 +10,7 @@
   "items": [
     {
       "id": "ML-01",
-      "state": "VERIFIED",
+      "state": "REVERIFY_REQUIRED",
       "requires": [],
       "outputs": ["schemas/language/v1 closed JSON Schema", "independent synthetic fixture manifest", "language version mapping", "distinct Lxx acceptance reporter and gate configuration"],
       "acceptance": ["L01: all acts and all four role directions have independent valid/invalid fixtures", "L02: unknown versions/namespaces/fields/remote refs and stale or tampered fixtures reject", "L03: reporter rejects missing IDs, skip/xfail/empty suites, stale source, forged and missing evidence"],
@@ -21,7 +21,7 @@
     },
     {
       "id": "ML-02",
-      "state": "VERIFIED",
+      "state": "REVERIFY_REQUIRED",
       "requires": ["ML-01"],
       "outputs": ["language.py immutable Message and LanguageValidationError", "parse_message", "check_freshness", "bundled schema resources"],
       "acceptance": ["L10: constructor/parser parity, detached payloads, deterministic bytes", "L11: byte/depth/string/count boundaries, duplicates, booleans, overflow, Unicode and control cases", "L12: each act payload, participant/mode rules and strict version/intent checks", "L13: expiry at boundary, past expiry and 30/31-second future-skew cases; imports cannot execute or authorize"],
@@ -32,7 +32,7 @@
     },
     {
       "id": "ML-03",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "requires": ["ML-02"],
       "outputs": ["validate_transcript", "render_message", "synthetic human-human/human-agent/agent-agent creative planning examples"],
       "acceptance": ["L20: reply graph, scope, unique IDs, reversed participants, role consistency and chronological invariants", "L21: per-proposal single disposition, revisions do not inherit accept, terminal status rules and acknowledgement loop prevention", "L22: deterministic literal rendering, no supported-locale fallback, visible non-authorization and provenance assertions", "L23: malicious prose and spoofed accept/review/role/confidence never cause network, subprocess or action; incomplete histories and invalid late messages reject wholly"]

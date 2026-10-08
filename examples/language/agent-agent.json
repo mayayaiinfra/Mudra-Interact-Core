@@ -1,0 +1,138 @@
+{
+  "messages": [
+    {
+      "act": "request",
+      "conversation_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "created_at": "2026-10-08T14:00:00.000000Z",
+      "expires_at": "2026-10-08T14:10:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "brief": "Prepare a neutral plan for a public library reading event.",
+          "medium": "text"
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "30000000-0000-4000-8000-000000000001",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.agent_alpha",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "66666666-6666-4666-8666-666666666666"
+      },
+      "reply_to": null,
+      "sender": {
+        "kind": "agent",
+        "participant_id": "55555555-5555-4555-8555-555555555555"
+      }
+    },
+    {
+      "act": "proposal",
+      "conversation_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "created_at": "2026-10-08T14:00:30.000000Z",
+      "expires_at": "2026-10-08T14:10:30.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "steps": [
+            {
+              "description": "Set the event theme and audience.",
+              "step_id": 1
+            },
+            {
+              "description": "Draft an accessible discussion outline.",
+              "step_id": 2
+            }
+          ],
+          "summary": "An event plan with an introduction and reader discussion."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "30000000-0000-4000-8000-000000000002",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.agent_beta",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.92,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "55555555-5555-4555-8555-555555555555"
+      },
+      "reply_to": "30000000-0000-4000-8000-000000000001",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "66666666-6666-4666-8666-666666666666"
+      }
+    },
+    {
+      "act": "accept",
+      "conversation_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "created_at": "2026-10-08T14:01:00.000000Z",
+      "expires_at": "2026-10-08T14:11:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {},
+        "version": "1.0.0"
+      },
+      "message_id": "30000000-0000-4000-8000-000000000003",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.agent_alpha",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": null,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "66666666-6666-4666-8666-666666666666"
+      },
+      "reply_to": "30000000-0000-4000-8000-000000000002",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "55555555-5555-4555-8555-555555555555"
+      }
+    },
+    {
+      "act": "result",
+      "conversation_id": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      "created_at": "2026-10-08T14:02:00.000000Z",
+      "expires_at": "2026-10-08T14:08:00.000000Z",
+      "intent": {
+        "name": "org.mayayai.creative.plan",
+        "payload": {
+          "summary": "The planning outline is ready for external review."
+        },
+        "version": "1.0.0"
+      },
+      "message_id": "30000000-0000-4000-8000-000000000004",
+      "protocol_version": "1.0.0",
+      "provenance": {
+        "adapter_id": "org.mayayai.agent_beta",
+        "adapter_version": "1.0.0",
+        "human_reviewed": false,
+        "interpretation_score": 0.92,
+        "mode": "agent"
+      },
+      "recipient": {
+        "kind": "agent",
+        "participant_id": "55555555-5555-4555-8555-555555555555"
+      },
+      "reply_to": "30000000-0000-4000-8000-000000000003",
+      "sender": {
+        "kind": "agent",
+        "participant_id": "66666666-6666-4666-8666-666666666666"
+      }
+    }
+  ],
+  "protocol_version": "1.0.0"
+}

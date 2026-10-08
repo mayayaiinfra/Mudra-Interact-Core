@@ -15,7 +15,14 @@ from .protocol import (
 from .validation import InteractionConfig
 from .session import RecognitionSession
 from .recognition import LandmarkRuleRecognizer, RecognitionStabilizer, extract_contact_features
-from .language import LanguageValidationError, Message, check_freshness, parse_message
+from .language import (
+    LanguageValidationError,
+    Message,
+    check_freshness,
+    parse_message,
+    render_message,
+    validate_transcript,
+)
 
 __all__ = [
     "InteractionParty",
@@ -43,4 +50,6 @@ __all__ = [
     "Message",
     "parse_message",
     "check_freshness",
+    "validate_transcript",
+    "render_message",
 ]
