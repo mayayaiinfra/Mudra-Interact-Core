@@ -512,15 +512,16 @@ def _windows_process_image_path() -> Path | None:
     return image
 
 
-def _windows_firewall_rule_matches() -> bool:
+def _windows_firewall_rule_status() -> tuple[bool, str]:
+    """Return a safe reason when the process-scoped Windows rule is unavailable."""
     rule_name = os.environ.get("MUDRA_FIREWALL_RULE_NAME", "").strip()
     configured_image = os.environ.get("MUDRA_PYTHON_EXE", "").strip()
     powershell = shutil.which("powershell.exe") or shutil.which("powershell")
     image = _windows_process_image_path()
     if not rule_name or not configured_image or not powershell or image is None:
-        return False
+        return False, "firewall_probe_configuration_unavailable"
     if os.path.normcase(os.path.abspath(configured_image)) != os.path.normcase(os.path.abspath(image)):
-        return False
+        return False, "process_image_mismatch"
     script = r"""
 $ErrorActionPreference = 'Stop'
 $rule = Get-NetFirewallRule -PolicyStore ActiveStore -Name $env:MUDRA_FIREWALL_RULE_NAME -ErrorAction SilentlyContinue
@@ -550,8 +551,19 @@ exit 3
             timeout=30,
         )
     except (OSError, subprocess.TimeoutExpired):
-        return False
-    return completed.returncode == 0
+        return False, "firewall_rule_inspection_failed"
+    if completed.returncode == 0:
+        return True, "firewall_rule_matches"
+    if completed.returncode == 2:
+        return False, "firewall_rule_not_found"
+    if completed.returncode == 3:
+        return False, "firewall_rule_mismatch"
+    return False, "firewall_rule_inspection_failed"
+
+
+def _windows_firewall_rule_matches() -> bool:
+    """Return whether an active canonical process-image block rule matches."""
+    return _windows_firewall_rule_status()[0]
 
 
 def _windows_network_isolation_result(
@@ -593,9 +605,14 @@ def runner_network_isolation_probe() -> tuple[str, str, str]:
 
     if os.name == "nt":
         control_verified = os.environ.get("MUDRA_WINDOWS_EGRESS_CONTROL") == "VERIFIED"
+        if not control_verified:
+            return "UNAVAILABLE", "windows_firewall_program_rule", "control_connection_unavailable"
+        rule_matches, rule_result = _windows_firewall_rule_status()
+        if not rule_matches:
+            return "UNAVAILABLE", "windows_firewall_program_rule", rule_result
         return _windows_network_isolation_result(
-            control_connection_verified=control_verified,
-            rule_matches=_windows_firewall_rule_matches(),
+            control_connection_verified=True,
+            rule_matches=True,
             connect_code=_egress_connect_code(),
         )
 

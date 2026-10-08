@@ -303,6 +303,25 @@ def test_windows_firewall_rule_rejects_a_different_process_image(
     assert _windows_firewall_rule_matches() is False
 
 
+@pytest.mark.acceptance("E84")
+def test_windows_firewall_rule_reports_safe_lookup_reason(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    image = tmp_path / "base-python.exe"
+    image.write_bytes(b"synthetic executable marker")
+    monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "synthetic-rule")
+    monkeypatch.setenv("MUDRA_PYTHON_EXE", str(image))
+    monkeypatch.setattr("tools.verify_release.shutil.which", lambda _name: "powershell.exe")
+    monkeypatch.setattr("tools.verify_release._windows_process_image_path", lambda: image)
+    monkeypatch.setattr(
+        "tools.verify_release.subprocess.run",
+        lambda *_args, **_kwargs: subprocess.CompletedProcess([], 2),
+    )
+
+    assert release_verifier._windows_firewall_rule_status() == (False, "firewall_rule_not_found")
+
+
 @pytest.mark.acceptance("E77")
 def test_repeat_build_hashes_are_identical(release_report: dict) -> None:
     repeat = release_report["checks"]["repeat_build"]
