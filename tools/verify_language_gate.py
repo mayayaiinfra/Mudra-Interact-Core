@@ -347,8 +347,29 @@ def _validate_report_shape(report: Any) -> dict[str, Any]:
     if not isinstance(artifacts, list) or not artifacts:
         raise VerificationError("language_receipt_evidence_missing")
     acceptance_artifacts = [artifact for artifact in artifacts if isinstance(artifact, dict) and artifact.get("kind") == "acceptance_report"]
-    if len(acceptance_artifacts) != 1:
+    log_artifacts = [artifact for artifact in artifacts if isinstance(artifact, dict) and artifact.get("kind") == "command_log"]
+    if len(acceptance_artifacts) != 1 or len(log_artifacts) != 1 or len(artifacts) != 2:
         raise VerificationError("language_receipt_evidence_missing")
+    commands = report.get("commands")
+    if (
+        not isinstance(commands, list)
+        or len(commands) != 1
+        or not isinstance(commands[0], dict)
+        or commands[0].get("id") != "ml01_acceptance"
+        or commands[0].get("log_path") != log_artifacts[0].get("path")
+        or type(commands[0].get("exit_code")) is not int
+        or commands[0]["exit_code"] != 0
+        or any(
+            type(commands[0].get(key)) is not int or commands[0][key] < 0
+            for key in ("stdout_bytes", "stderr_bytes")
+        )
+        or any(
+            not isinstance(commands[0].get(key), str)
+            or not re.fullmatch(r"[0-9a-f]{64}", commands[0][key])
+            for key in ("stdout_sha256", "stderr_sha256")
+        )
+    ):
+        raise VerificationError("language_receipt_command_invalid")
     return report
 
 
@@ -561,6 +582,11 @@ def run_ml01(root: Path, report_path: Path) -> dict[str, Any]:
             "path": acceptance_path.relative_to(root).as_posix(),
             "sha256": sha256_file(acceptance_path),
             "size_bytes": acceptance_path.stat().st_size,
+        }, {
+            "kind": "command_log",
+            "path": log_path.relative_to(root).as_posix(),
+            "sha256": sha256_file(log_path),
+            "size_bytes": log_path.stat().st_size,
         }]
         report: dict[str, Any] = {
             "report_schema_version": REPORT_SCHEMA_VERSION,

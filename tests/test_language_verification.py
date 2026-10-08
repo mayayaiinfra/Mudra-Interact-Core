@@ -45,12 +45,19 @@ def _pytest_document(case_ids: list[str] | None = None, *, outcome: str = "passe
     }
 
 
-def _receipt(report_artifact: dict | None = None) -> dict:
+def _receipt(report_artifact: dict | None = None, log_artifact: dict | None = None) -> dict:
     if report_artifact is None:
         report_artifact = {
             "kind": "acceptance_report",
             "path": "evidence/language/ML-01-pytest.json",
             "sha256": "5" * 64,
+            "size_bytes": 1,
+        }
+    if log_artifact is None:
+        log_artifact = {
+            "kind": "command_log",
+            "path": "evidence/language/ML-01.log",
+            "sha256": "8" * 64,
             "size_bytes": 1,
         }
     return seal_report({
@@ -69,14 +76,23 @@ def _receipt(report_artifact: dict | None = None) -> dict:
         "platform": {"os": "windows", "architecture": "x86_64", "python": "3.14.2"},
         "started_at": "2026-10-08T12:00:00.000000Z",
         "finished_at": "2026-10-08T12:00:01.000000Z",
-        "commands": [],
+        "commands": [{
+            "id": "ml01_acceptance",
+            "argv": [],
+            "exit_code": 0,
+            "stdout_sha256": "9" * 64,
+            "stderr_sha256": "a" * 64,
+            "stdout_bytes": 1,
+            "stderr_bytes": 0,
+            "log_path": log_artifact["path"],
+        }],
         "test_counts": {"collected": 3, "passed": 3, "failed": 0, "skipped": 0, "xfailed": 0, "xpassed": 0},
         "acceptance_cases": [
             {"acceptance_id": case_id, "outcome": "passed", "node_id": f"tests/test_language_contract.py::case-{index}"}
             for index, case_id in enumerate(("L01", "L02", "L03"))
         ],
         "mutation_results": [],
-        "artifacts": [report_artifact],
+        "artifacts": [report_artifact, log_artifact],
         "prerequisites": [],
         "limitations": [],
         "errors": [],
@@ -134,14 +150,23 @@ def test_receipt_requires_hash_bound_evidence_and_rejects_forged_verified_result
     pytest_path = evidence_dir / "ML-01-pytest.json"
     encoded = canonical_json_bytes(_pytest_document())
     pytest_path.write_bytes(encoded)
+    log_path = evidence_dir / "ML-01.log"
+    log_data = b"STDOUT\npytest passed\n\nSTDERR\n"
+    log_path.write_bytes(log_data)
     artifact = {
         "kind": "acceptance_report",
         "path": "evidence/language/ML-01-pytest.json",
         "sha256": sha256_bytes(encoded),
         "size_bytes": len(encoded),
     }
+    log_artifact = {
+        "kind": "command_log",
+        "path": "evidence/language/ML-01.log",
+        "sha256": sha256_bytes(log_data),
+        "size_bytes": len(log_data),
+    }
     report_path = evidence_dir / "ML-01.json"
-    report_path.write_bytes(canonical_json_bytes(_receipt(artifact)))
+    report_path.write_bytes(canonical_json_bytes(_receipt(artifact, log_artifact)))
     receipt = validate_language_receipt_files(tmp_path, report_path)
     assert receipt["state"] == "VERIFIED"
 
@@ -165,19 +190,38 @@ def test_receipt_rejects_tampered_or_missing_pytest_artifact(tmp_path: Path) -> 
     pytest_path = evidence_dir / "ML-01-pytest.json"
     encoded = canonical_json_bytes(_pytest_document())
     pytest_path.write_bytes(encoded)
+    log_path = evidence_dir / "ML-01.log"
+    log_data = b"STDOUT\npytest passed\n\nSTDERR\n"
+    log_path.write_bytes(log_data)
     artifact = {
         "kind": "acceptance_report",
         "path": "evidence/language/ML-01-pytest.json",
         "sha256": sha256_bytes(encoded),
         "size_bytes": len(encoded),
     }
+    log_artifact = {
+        "kind": "command_log",
+        "path": "evidence/language/ML-01.log",
+        "sha256": sha256_bytes(log_data),
+        "size_bytes": len(log_data),
+    }
     report_path = evidence_dir / "ML-01.json"
-    report_path.write_bytes(canonical_json_bytes(_receipt(artifact)))
+    report_path.write_bytes(canonical_json_bytes(_receipt(artifact, log_artifact)))
 
     pytest_path.write_bytes(encoded + b" ")
     with pytest.raises(VerificationError, match="language_receipt_artifact_hash_mismatch"):
         validate_language_receipt_files(tmp_path, report_path)
 
+    pytest_path.write_bytes(encoded)
+    log_path.write_bytes(log_data + b"tampered")
+    with pytest.raises(VerificationError, match="language_receipt_artifact_hash_mismatch"):
+        validate_language_receipt_files(tmp_path, report_path)
+
+    log_path.unlink()
+    with pytest.raises(VerificationError, match="language_file_missing_or_outside_root"):
+        validate_language_receipt_files(tmp_path, report_path)
+
+    log_path.write_bytes(log_data)
     pytest_path.unlink()
     with pytest.raises(VerificationError, match="language_file_missing_or_outside_root"):
         validate_language_receipt_files(tmp_path, report_path)

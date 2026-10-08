@@ -11,6 +11,7 @@ from jsonschema import Draft202012Validator
 from tools.verification_report import VerificationError, read_json
 from tools.verify_language_gate import (
     SCHEMA_PATH,
+    VERSION_MAP_PATH,
     validate_language_fixture_manifest,
     validate_local_schema_references,
 )
@@ -73,6 +74,23 @@ def test_unsupported_versions_namespace_and_act_reject() -> None:
         "unknown_message_field",
     }
     assert all(not validator.is_valid(fixture["value"]) for fixture in negative)
+
+
+@pytest.mark.acceptance("L02")
+def test_language_version_map_is_closed_and_matches_the_schema() -> None:
+    schema = _schema()
+    version_map = read_json(ROOT / VERSION_MAP_PATH)
+    assert version_map == {
+        "language_protocol_version": "1.0.0",
+        "schema_id": schema["$id"],
+        "target_package_version": "0.3.0",
+        "intent_profiles": {
+            "org.mayayai.creative.plan": {"version": "1.0.0", "status": "supported"},
+        },
+        "gesture_event_protocol_version": "2.0.0",
+        "gesture_event_language_interchange": False,
+        "unsupported_version_policy": "reject_without_coercion_or_authority_migration",
+    }
 
 
 @pytest.mark.acceptance("L02")
