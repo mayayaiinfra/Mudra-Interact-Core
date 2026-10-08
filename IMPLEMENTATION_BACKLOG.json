@@ -146,7 +146,7 @@
       }
     ]
   },
-  "active_item": "MI-08",
+  "active_item": "MI-10",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -387,7 +387,7 @@
         "MI-08",
         "MI-09"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -414,7 +414,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.1/M3-ci.json",
+          "sha256": "26c0c42d709a324d1c88f2f0bbaa0289aa7ee5f1e3a236f51af25e6637dedd81"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "M4",
@@ -1062,7 +1069,7 @@
         "E84"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1145,7 +1152,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "evidence": [
+        {
+          "path": "evidence/local/mi08-platform-receipts/v0.4.1/linux-py3.14.json",
+          "sha256": "993f4fbfa91871ea6b443b37ee73b89ce12593cc3783e973004ff176ce4f0457"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-09",
@@ -1167,7 +1181,7 @@
         "E89"
       ],
       "completion_kind": "design_only",
-      "state": "NOT_STARTED",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1194,7 +1208,14 @@
           }
         ],
         "superseded_candidate_verification_kind": "luna_self_verified"
-      }
+      },
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.1/MI-09.json",
+          "sha256": "a6fcf7fc7f89d6cdabcb16541e65745aebfe0208ead9cde11f5c60318d7bb3c1"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     },
     {
       "id": "MI-10",
@@ -1230,7 +1251,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1262,12 +1283,13 @@
     "completed_gates": [
       "M0",
       "M1",
-      "M2"
+      "M2",
+      "M3"
     ],
-    "active_gate": "M3",
-    "active_item": "MI-08",
+    "active_gate": "M4",
+    "active_item": "MI-10",
     "updated_on": "2026-10-09",
-    "note": "M0-M2 passed on the final 0.4.1 source. The fresh hosted Linux/Windows CPython 3.11-3.14 matrix now has eight verified cells (26/26 per cell, zero skips), and the aggregate is verified. The full M3 gate still must pass in the Linux isolated CI gate; M4 remains pending exact publication and download verification.",
+    "note": "M0-M3 are verified for candidate 0.4.1. M3 passed 217/217 acceptance cases with zero skips; its current-source eight-cell Linux/Windows CPython 3.11-3.14 matrix passed 26/26 in every cell. MI-08 and MI-09 have scoped receipts. M4 is running the exact-candidate TestPyPI then PyPI publication, downloaded-install, provenance, and immutable release verification.",
     "previous_release": {
       "pypi_url": "https://pypi.org/project/mudra-interact/0.4.0/",
       "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.0/",
