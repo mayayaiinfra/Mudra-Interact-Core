@@ -7,7 +7,7 @@
       "contact_pattern": "I",
       "confidence": 0.72,
       "limitations": [
-        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "A geometric contact cue does not establish full finger posture, handedness or tradition-specific meaning.",
         "Palm orientation and participant context are outside the core rule."
       ],
       "provenance": {
@@ -22,7 +22,7 @@
       "contact_pattern": "M",
       "confidence": 0.70,
       "limitations": [
-        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "A geometric contact cue does not establish full finger posture, handedness or tradition-specific meaning.",
         "Participant confirmation is required before any sharing or action."
       ],
       "provenance": {
@@ -37,7 +37,7 @@
       "contact_pattern": "R",
       "confidence": 0.70,
       "limitations": [
-        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "A geometric contact cue does not establish full finger posture, handedness or tradition-specific meaning.",
         "Participant confirmation is required before any sharing or action."
       ],
       "provenance": {
@@ -52,7 +52,7 @@
       "contact_pattern": "M+R",
       "confidence": 0.78,
       "limitations": [
-        "A geometric contact cue does not establish full finger posture, handedness or cultural meaning.",
+        "A geometric contact cue does not establish full finger posture, handedness or tradition-specific meaning.",
         "The rule is neutral and does not infer a named tradition or efficacy claim."
       ],
       "provenance": {

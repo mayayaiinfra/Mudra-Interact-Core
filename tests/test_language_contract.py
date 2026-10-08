@@ -83,7 +83,7 @@ def test_language_version_map_is_closed_and_matches_the_schema() -> None:
     assert version_map == {
         "language_protocol_version": "1.0.0",
         "schema_id": schema["$id"],
-        "target_package_version": "0.4.0",
+        "target_package_version": "0.4.1",
         "intent_profiles": {
             "org.mayayai.creative.plan": {"version": "1.0.0", "status": "supported"},
         },

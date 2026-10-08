@@ -42,7 +42,7 @@ MAX_REPORT_BYTES = 2 * 1024 * 1024
 MAX_LOG_BYTES = 512 * 1024
 _EXPECTED_LIMITATIONS = [
     "Independent loopback peer only; no public third-party agent or production host qualification.",
-    "Human-to-human is schema-only; no human study, user interface, or accessibility/cultural review is claimed.",
+    "Human-to-human is schema-only; no human study, user interface, or accessibility/community review is claimed.",
     "The deterministic provider-unavailable result is injected; no model/provider or paid operation is called.",
 ]
 _REPORT_FIELDS = {

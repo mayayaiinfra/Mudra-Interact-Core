@@ -14,7 +14,7 @@ Please use [GitHub's private vulnerability reporting form](https://github.com/ma
 when it is enabled for this repository. If that form is unavailable, contact
 the maintainers through the repository owner profile and ask for a private
 reporting channel. Do not include credentials, personal data, real camera
-frames or private ALLYK source in a public issue.
+frames or private consumer source in a public issue.
 
 Include the affected release, Python/platform details, a minimal synthetic
 reproducer and the expected versus observed behavior. Avoid posting a working
@@ -29,4 +29,4 @@ index, tag and downloaded-install identities. A passing local test run or
 source push alone is not a publication or security certification.
 
 The package makes no claim of independent penetration testing, complete
-absence of vulnerabilities, recognition accuracy or cultural review.
+absence of vulnerabilities, recognition accuracy or community review.

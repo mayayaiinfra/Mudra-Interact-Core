@@ -1,10 +1,21 @@
 # Mudra Interact
 
-Mudra Interact is an Apache-2.0 Python library for structured communication
-between people and AI agents, with an offline gesture-event protocol in the
-same package. Its communication-language SDK is experimental. It gives
-applications a versioned JSON envelope for human-to-human, human-to-agent and
-agent-to-agent workflows, plus tools to validate messages and transcripts.
+Mudra Interact is an open, vendor-neutral Apache-2.0 Python SDK for structured
+communication between people and AI agents, with an offline gesture-event
+protocol in the same package. Its experimental communication-language SDK
+provides a shared, versioned JSON contract, deterministic validation, transcript
+and freshness checks, and readable rendering for human-to-human,
+human-to-agent, and agent-to-agent workflows.
+
+As software moves from one assistant toward networks of agents, ad-hoc prompts
+and provider-specific formats make messages difficult to validate, transfer,
+and review consistently. Mudra makes message acts, participants, reply links,
+and freshness explicit in data that each application can validate locally.
+This gives independent tools a common starting point for interoperable
+workflows without requiring them to use the same model or provider. It is a
+protocol library, not a model, hosted service, chat interface, or adopted
+industry standard; useful interoperability still depends on compatible
+applications choosing to implement the contract.
 
 Install from PyPI:
 
@@ -71,15 +82,14 @@ replay controls, consequential-action confirmation, retention and provider
 policy. The package includes no model integration, social publishing, camera
 adapter, host UI, hosted service or telemetry.
 
-No human-comprehension study, cultural review, accessibility qualification,
+No human-comprehension study, community review, accessibility qualification,
 recognition-accuracy study or independent security assessment is claimed.
-Gesture labels do not assert universal, religious or cultural meanings.
+Gesture labels do not assert universal, religious or tradition-specific meanings.
 
 See the [gesture API](docs/API.md),
 [communication-language API](docs/COMMUNICATION_LANGUAGE_API.md),
 [compatibility policy](docs/COMPATIBILITY.md), and [changelog](CHANGELOG.md).
 The source and release history are on
-[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core). Version 0.4.0
-is the latest published release: [PyPI](https://pypi.org/project/mudra-interact/0.4.0/),
-[TestPyPI](https://test.pypi.org/project/mudra-interact/0.4.0/), and
-[GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0).
+[GitHub](https://github.com/mayayaiinfra/Mudra-Interact-Core). Find releases on
+[PyPI](https://pypi.org/project/mudra-interact/), [TestPyPI](https://test.pypi.org/project/mudra-interact/),
+and [GitHub releases](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases).

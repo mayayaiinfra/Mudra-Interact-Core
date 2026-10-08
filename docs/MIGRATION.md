@@ -1,15 +1,16 @@
-# Migration to Mudra Interact 0.4.0
+# Migration to Mudra Interact 0.4.1
 
-## From package 0.3.0 to 0.4.0
+## From package 0.4.0 to 0.4.1
 
-The 0.4.0 candidate keeps the language v1 and gesture/event v2 contracts
-compatible and adds an experimental A2A JSON-RPC client. No additional runtime
-dependency is introduced. The client performs network I/O only when the host
-explicitly invokes it with a configured endpoint; it does not call a model or
-execute tools.
+Version 0.4.1 updates the public description and documentation to explain the
+vendor-neutral communication contract and its role in future multi-agent
+workflows. It keeps the language v1 and gesture/event v2 contracts and the
+experimental A2A JSON-RPC client unchanged. No runtime dependency or migration
+step is introduced.
 
-To opt in, construct `A2AClient` with the configured remote agent, host clock,
-authenticated `AuthenticatedPrincipal`, and an atomic durable `ReplayStore`.
+To use the A2A client added in 0.4.0, construct `A2AClient` with the configured
+remote agent, host clock, authenticated `AuthenticatedPrincipal`, and an atomic
+durable `ReplayStore`.
 Set `remote_tenant` only when the selected remote AgentInterface requires its
 own routing tenant. Do not pass the authenticated host tenant as the remote
 tenant. Use `A2ATaskRef` only with the client and authenticated scope that
@@ -66,7 +67,7 @@ scope and result revision.
 
 ## Field changes
 
-- Rename cultural classifier labels to the four neutral contact IDs in the v2
+- Rename tradition-specific classifier labels to the four neutral contact IDs in the v2
   specification. Historical names are unverified migration aliases and are not
   enabled or inferred by the core.
 - Supply explicit `schema_version`, stream/frame IDs, monotonic time and a

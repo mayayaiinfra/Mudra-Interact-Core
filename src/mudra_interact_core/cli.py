@@ -39,7 +39,7 @@ EXIT_DENIED = 3
 EXIT_IO = 4
 EXIT_INTERRUPTED = 130
 _OUTPUT_LIMIT = 512
-_VERSION_FALLBACK = "0.4.0"
+_VERSION_FALLBACK = "0.4.1"
 _REASON_PRECEDENCE = (
     "unsupported_pattern",
     "ambiguous_contacts",

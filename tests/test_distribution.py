@@ -579,11 +579,11 @@ def test_real_deterministic_sdist_uses_frozen_candidate_filename(tmp_path: Path)
 
 
 @pytest.mark.acceptance("E83")
-def test_allyk_compatibility_inventory_keeps_private_boundary() -> None:
+def test_downstream_compatibility_inventory_is_vendor_neutral() -> None:
     document = (ROOT / "docs" / "COMPATIBILITY.md").read_text(encoding="utf-8")
-    assert "ALLYK" in document
-    assert "private downstream consumer" in document
-    assert "no ALLYK source" in document
+    assert "Downstream consumer boundary" in document
+    assert "independent applications" in document
+    assert "host-specific adapters" in document
     assert "automatic upgrade" in document
     assert "schema" in document.lower() and "licensing" in document.lower()
 

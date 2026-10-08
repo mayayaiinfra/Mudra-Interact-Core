@@ -2,10 +2,11 @@
 
 Specification **0.3.1**, Astra model review and initial-publication clarification
 **2026-10-08**; owner-approved platform scope and public distribution-name update
-**2026-10-07**. Owner: MAYAYAI. This is technical model review, not human,
-cultural or accessibility validation. See [review and release handoff](docs/ASTRA_REVIEW_2026-10-08.md).
+**2026-10-07**. Owner: MAYAYAI. This is technical model review; it does not
+include human validation, community review or accessibility validation. See
+[review and release handoff](docs/ASTRA_REVIEW_2026-10-08.md).
 Implementation baseline: `eae92b7`, package `0.1.0`.
-Target distribution `mudra-interact` (`Mudra Interact`) version `0.4.0`;
+Target distribution `mudra-interact` (`Mudra Interact`) version `0.4.1`;
 protocol/schema `2.0.0`, catalogue `2.0.0`. The Python import namespace
 remains `mudra_interact_core`; the v2 schema ID remains
 `urn:allyk:mudra-interact-core:contract:2.0.0`.
@@ -27,12 +28,12 @@ to obtain a passing gate.
 
 This is a reference implementation, with no evidence of SOTA performance,
 calibrated probabilities, research novelty or adoption as a standard. Synthetic
-tests cannot establish recognition accuracy, cultural meaning, accessibility,
+tests cannot establish recognition accuracy, tradition-specific meaning, accessibility,
 clinical efficacy or host privacy. Five legacy tests prove only their cases.
 
-ALLYK camera UI, authentication, storage, billing, model assets and action
-execution remain private downstream concerns. A public release must not silently
-upgrade a private ALLYK copy or consumer. Record compatibility before upgrades.
+Camera UI, authentication, storage, billing, model assets and action execution
+remain downstream application concerns. A public release must not silently
+upgrade an installed consumer. Record compatibility before upgrades.
 The core has no camera, network, telemetry, persistence, model or shell runtime.
 
 Luna implements and self-verifies engineering gates through executable evidence.
@@ -158,7 +159,7 @@ Test nextafter-below/equal/above on the predicate independently of geometry.
 | 1 1 1 | unknown | uncertain | 0.0 |
 
 These preserve the four geometric rules under neutral IDs. Historical Mudra
-names remain migration aliases, not inferred cultural truth; contact alone
+names remain migration aliases, not verified tradition-specific meaning; contact alone
 never distinguishes Gyan/Chin. Fixed scores are rule strengths, not measured
 probabilities. Score/calibration changes require a versioned method and evidence.
 
@@ -172,7 +173,7 @@ Constructors and import use the same checks and rule/state/score consistency.
 No arbitrary method/catalogue/score can enter the trusted recognition path.
 
 Order observation codes I, M, R. Every supported pose includes posture_unverified
-even when stable; temporal stability never proves full posture/cultural meaning.
+even when stable; temporal stability never proves full posture or tradition-specific meaning.
 Unknown/no-contact uses unsupported_pattern; conflicting contacts use
 ambiguous_contacts. Session state may add exactly one temporal uncertainty from
 the transition rules. Candidate rule scores match the table exactly; for stable
@@ -349,11 +350,11 @@ definition, limitations, provenance reference and content licence. Reject duplic
 IDs, wrong versions, missing rule mappings/fields and unknown fields; never
 silently drop/overwrite entries. Return immutable or detached lookup values.
 
-Historical cultural labels are unverified until real evidence exists. An optional
+Historical tradition labels are unverified until human evidence exists. An optional
 label pack requires reviewer/evidence references, rights, language/tradition
 scope, prohibited claims and withdrawal/version records. Luna cannot fabricate
-cultural review. Geometric core acceptance remains separate from label-pack
-acceptance; missing review cannot be disguised as an approved cultural release.
+community review. Geometric core acceptance remains separate from label-pack
+acceptance; missing review cannot be disguised as approval for any tradition.
 
 MI-09 produces ADAPTER_SPEC.md: pinned/licensed/hashed assets; explicit start
 and visible capture; one selected hand; aspect conversion; monotonic identity;
@@ -363,8 +364,8 @@ neutral rearm; mirroring; model-loading failure; permission denial; cold-cache/
 offline behaviour; non-camera accessibility alternative; editable confirmation.
 No images in telemetry or implicit BYOK capability probes.
 
-Model/camera implementation, OS/browser quality, licensing and human cultural/
-accessibility review are separate release gates. Fake frames and a design doc
+Model/camera implementation, OS/browser quality, licensing and human review of
+tradition-specific meanings/accessibility are separate release gates. Fake frames and a design doc
 cannot verify a real adapter. Do not add model downloads/private UI/native
 frameworks to satisfy the public core. Runtime remains standard-library only.
 
@@ -472,8 +473,8 @@ CLI may use a preliminary wheel in M2; only M3 proves full packaging/matrix.
 
 Use one existing development checkout per repository with one writing task at a
 time; do not create linked Git worktrees or additional development clones. Keep
-the public core and private ALLYK repositories separate. Coordinate checkout
-ownership before editing, preserve unrelated changes and freeze source edits
+the public core separate from private consumer implementations. Coordinate
+checkout ownership before editing, preserve unrelated changes and freeze source edits
 during verification. Disposable owned test copies/virtual environments and CI
 verification checkouts remain required where applicable; they are not alternate
 development locations. Follow the single-worktree protocol in LUNA_HANDOFF.md.

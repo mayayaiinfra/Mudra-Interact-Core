@@ -100,7 +100,7 @@ targets; files not present at baseline must be implemented before verification.
 | E56 | MI-06 / test_catalog.py | Exactly four neutral base IDs map to all rules; each has provenance/licence/limits/version; no unsubstantiated reviewed status. |
 | E57 | MI-06 / test_catalog.py | Malformed catalogue/duplicates/missing records/unknown version/unknown field fail, not empty/drop/overwrite. |
 | E58 | MI-06 / test_catalog.py | Lookup returns detached/immutable data; modifying prior result cannot poison future sessions. |
-| E59 | MI-06 / test_catalog.py | Named historical aliases documented, not enabled by default; evidence-free cultural-label activation rejected. |
+| E59 | MI-06 / test_catalog.py | Named historical aliases documented, not enabled by default; evidence-free tradition-specific-label activation rejected. |
 | E60 | MI-06 / test_catalog.py | Label-pack review format includes reviewer/right/source/version/withdrawal; missing evidence remains blocked, not mock-approved. |
 | E61 | MI-06 / test_catalog.py | English neutral copy has no medical/religious efficacy claim; actual human content review remains distinct from word filters. |
 | E62 | MI-07 / test_privacy.py | Reject metadata/landmarks/raw image/path/URL/prose fields at every event nesting point; malicious extras not silently stripped as safe success. |
@@ -124,13 +124,13 @@ targets; files not present at baseline must be implemented before verification.
 | E80 | MI-08 / test_distribution.py | Stale source/tag/version/hash/evidence mismatch rejects release packet. |
 | E81 | MI-08 / test_distribution.py | Windows path/encoding and POSIX regular-file checks tested on actual respective OS; simulated platform strings don't qualify. |
 | E82 | MI-08 / test_distribution.py | Uninstall/reinstall exact wheel; version/schema/catalogue/language resources and module ownership stay consistent. |
-| E83 | MI-08 / test_distribution.py | Dependent ALLYK consumer compatibility inventory records upgrade risk without exporting private sources or assuming automatic upgrade. |
+| E83 | MI-08 / test_distribution.py | Downstream consumer compatibility inventory records upgrade risk without exposing private source or assuming automatic upgrade. |
 | E84 | MI-08 / test_distribution.py | Gate report can be reproduced from frozen source/tool lock; the isolated verifier has a complete dependency closure; text identity is stable across LF/CRLF checkouts while binary identity remains byte-exact; mutable implementation and communication-language status ledgers do not stale product evidence; every release, acceptance and mutation subprocess receives only an allowlisted environment; absent required artifact/tool/platform blocks aggregation. |
 | E85 | MI-09 / test_adapter_contract.py | DESIGN specifies asset pin/hash/licence and absence of core camera dependency; no implementation status fabricated. |
 | E86 | MI-09 / test_adapter_contract.py | DESIGN state table covers start/deny/stop/revoke/late callback/device switch/hand loss/tab hide; queued result never silently accepted. |
 | E87 | MI-09 / test_adapter_contract.py | DESIGN defines track identity/aspect/mirror/clock and no duplicate-frame hold bypass. |
 | E88 | MI-09 / test_adapter_contract.py | DESIGN defines bounded latest-frame queue, model failure/offline/cold-cache handling, local-only telemetry and no BYOK probe. |
-| E89 | MI-09 / test_adapter_contract.py | DESIGN lists real browser/quality/accessibility/cultural/asset proof still needed and alternative input path; never claims live evaluation. |
+| E89 | MI-09 / test_adapter_contract.py | DESIGN lists real browser/quality/accessibility/community/asset proof still needed and alternative input path; never claims live evaluation. |
 | E90 | MI-10 / test_release_recovery.py | Actual repository/publishing authority and protected, version-specific manual release authorization are required. Existing project: verify owner control and exact publisher. First publication: an authenticated owner-authorized pending Trusted Publisher must match project/repository/workflow/environment; 404 alone is insufficient, no name reservation is claimed, collision blocks, and successful creation/publisher identity must be checked after upload. The approved single-owner policy may use owner self-approval but is not independent review; missing/ambiguous authority blocks and no secret is stored in evidence. |
 | E91 | MI-10 / test_release_recovery.py | Exact frozen candidate matches current source/spec/acceptance/tool-lock identity, all verified gates, offline qualification and exact artifact hashes before upload. |
 | E92 | MI-10 / test_release_recovery.py | TestPyPI exact-version metadata and downloaded bytes match the frozen candidate; a fresh isolated install smoke passes; TestPyPI cannot stand in for production. |
@@ -140,7 +140,7 @@ targets; files not present at baseline must be implemented before verification.
 | E96 | MI-10 / test_release_recovery.py | Synthetic rollback/yank plan preserves published history and requires applicable authorization; never deletes user data. |
 | E97 | MI-10 / test_release_recovery.py | Public quickstart/download links resolve to exact-version sources; observed live release/package state is recorded, no mock release acceptance. |
 | E98 | MI-10 / test_release_recovery.py | Wrong publisher/repo/artifact/expired authorization or missing signing identity blocks; absent/malformed/wrong signed source-commit, workflow configuration/trigger or run/attempt claims block even when artifact digest and publisher assertion match. Wrong/missing publisher environment or candidate-workflow upload binding also blocks. A separate successful GitHub run is insufficient linkage. No long-lived secret fallback. |
-| E99 | MI-10 / test_release_recovery.py | Gate aggregator rejects missing or stale external proof; final report separates published core, unimplemented adapter, and unverified accuracy/cultural claims. |
+| E99 | MI-10 / test_release_recovery.py | Gate aggregator rejects missing or stale external proof; final report separates published core, unimplemented adapter, and unverified accuracy or community claims. |
 
 ## 3. Required semantic mutations
 

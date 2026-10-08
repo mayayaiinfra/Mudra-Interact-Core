@@ -128,5 +128,5 @@ The human-to-human comprehension study remains separate and open in ML-05.
 The study protocol has placeholders for the controller/contact, storage,
 retention, withdrawal and age fields that require owner-specific facts and
 approval. No participants may be contacted or enrolled from the draft, and no
-human usability, legal-compliance, accessibility or cultural-suitability claim
+human usability, legal-compliance, accessibility or community suitability claim
 is made from these engineering tests.

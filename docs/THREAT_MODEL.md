@@ -16,8 +16,8 @@ review aid, not a security certification or a promise about an embedding host.
 
 The model excludes a malicious Python process with arbitrary memory access,
 compromised operating systems, host data retention, camera model accuracy,
-cultural interpretation, accessibility quality, publisher account control and
-ALLYK private integration. Those require their own design and release gates.
+tradition-specific interpretation, accessibility quality, publisher account control and
+host-specific integration. Those require their own design and release gates.
 
 It does not assert universal privacy for every host embedding.
 

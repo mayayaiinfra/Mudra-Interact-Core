@@ -1,7 +1,7 @@
 {
   "language_protocol_version": "1.0.0",
   "schema_id": "urn:allyk:mudra-interact:language:1.0.0",
-  "target_package_version": "0.4.0",
+  "target_package_version": "0.4.1",
   "intent_profiles": {
     "org.mayayai.creative.plan": {
       "version": "1.0.0",

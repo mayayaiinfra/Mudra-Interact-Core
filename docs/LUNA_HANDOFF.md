@@ -13,15 +13,17 @@ The published `0.2.0` remains historical evidence for that bounded foundation.
 Package `0.3.0` added the experimental
 [communication-language SDK](COMMUNICATION_LANGUAGE_CONTRACT.md) without
 changing the v2 gesture/event wire contract. The 0.4.0 candidate adds an
-experimental A2A client. Qualify and publish it with fresh M0–M4 evidence;
-never reuse the 0.3.0 receipts for 0.4.0.
+experimental A2A client. Version 0.4.1 is a documentation and package-metadata
+update that retains the 0.4.0 wire contract. Qualify and publish it with fresh
+M0–M4 evidence; never reuse 0.4.0 receipts for 0.4.1.
 
 ## 1. Working protocol
 
 Use the existing primary checkout as the single development worktree for this
 repository. Do not create linked Git worktrees or additional development clones.
-Public Mudra Core and private ALLYK remain separate repositories, each with its
-own existing checkout; this rule does not authorize merging their contents.
+Public Mudra Core and private consumer implementations remain separate
+repositories, each with its own existing checkout; this rule does not authorize
+merging their contents.
 
 Only one task may edit a given checkout at a time. Before editing, establish
 which task owns the active item; a clean Git status alone does not prove another
@@ -40,7 +42,7 @@ files into the development checkout. The single-worktree rule does not waive
 independent installed-package checks or the required OS/Python matrix.
 
 1. Inspect repository status, instructions and current ledger. Preserve unrelated
-   edits. Do not copy private ALLYK code into this public repository.
+   edits. Do not copy private consumer code into this public repository.
 2. Select the first NOT_STARTED item whose dependencies are VERIFIED; mark it
    IN_PROGRESS. One active item; no bypass based on apparent implementation.
 3. Read its outputs and ALL owned acceptance cases. Write concrete expected
@@ -61,7 +63,7 @@ independent installed-package checks or the required OS/Python matrix.
 
 Do not ask after routine components. Do not fabricate authorizations or account
 access. Credential/account setup, unavailable runner infrastructure, new spending
-or real cultural/accessibility review may need the owner; ask with the precise
+or real community/accessibility review may need the owner; ask with the precise
 missing fact after preparing everything independently possible. Reuse approvals
 that already cover the action. Changing the agreed privacy/consent/schema/release
 contract requires Astra review; ordinary fixes within it do not.
@@ -212,6 +214,6 @@ Every gate update to the user states: gate/item IDs, source/artifact identity,
 actual check results and skips, discovered/fixed defects, commit/push status,
 remaining limits and next dependency. State explicitly if no package was
 published. Final completion requires VERIFIED M0-M4, exact release URLs/hashes
-and fresh installed download proof. Adapter implementation/accuracy/cultural
+and fresh installed download proof. Adapter implementation/accuracy/community review
 approval stay separately unclaimed. Missing external proof keeps M4 BLOCKED
 while all achievable local engineering work is preserved.

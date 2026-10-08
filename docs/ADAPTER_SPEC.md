@@ -3,8 +3,8 @@
 **Status: DESIGN ONLY.** This document specifies a future local browser or
 native adapter around Mudra Interact Core. It does not implement camera
 capture, ship a model, grant device permission, or claim browser, quality,
-accessibility, cultural, or licensing proof. No camera dependency is added to
-the public core package. A real adapter remains a separate ALLYK or consumer
+accessibility, community review, or licensing proof. No camera dependency is added to
+the public core package. A real adapter remains a separate host or consumer
 integration and must pass the proof listed at the end of this document.
 
 ## Boundary and responsibilities
@@ -139,11 +139,11 @@ design document:
 4. Keyboard/pointer alternative flow, screen-reader labels, focus order,
    reduced-motion behaviour and an accessibility review with representative
    users.
-5. Cultural and language review for any optional label pack, including rights,
+5. Community and language review for any optional label pack, including rights,
    tradition scope, prohibited claims and withdrawal records.
 6. Independent asset and model/data licence review, security/privacy review,
    and a real integration smoke against the installed public core wheel.
 
 Until those artifacts exist, the adapter remains DESIGN, the camera
 runtime remains unimplemented in this public repository, and no recognition
-accuracy or cultural approval is claimed.
+accuracy or community approval is claimed.

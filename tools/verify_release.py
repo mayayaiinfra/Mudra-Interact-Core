@@ -1087,7 +1087,7 @@ def main(argv: list[str] | None = None) -> int:
                     **published,
                     "adapter_status": "not_implemented_in_public_core",
                     "recognition_quality": "not_established_by_synthetic_tests",
-                    "cultural_review": "not_established_by_public_core",
+                    "community_review": "not_established_by_public_core",
                     "publication_state": "verified" if state == "VERIFIED" else "blocked",
                 },
                 "platform_matrix": [], "report_sha256": "",

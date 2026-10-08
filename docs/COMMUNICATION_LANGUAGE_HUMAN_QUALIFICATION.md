@@ -8,7 +8,7 @@ SDK or authorize recruitment.
 1.0.0 profile in the 0.4.0 candidate.
 
 **Owner:** MAYAYAI, with an independent moderator and scoped accessibility and
-cultural reviewers assigned before a study begins.
+community reviewers assigned before a study begins.
 
 ## Purpose and claim boundary
 
@@ -23,7 +23,7 @@ model quality, production use, a transport adapter, or universal comprehension.
 The current SDK is English-only and has no user interface. Results apply only
 to the exact package, renderer, locale, and synthetic scenarios tested. A
 small formative sample can find issues; it cannot establish statistical
-representativeness or broad cultural suitability.
+representativeness or broad suitability across communities.
 
 No study may start until the owner has populated and approved the participant
 notice and data-handling details below, confirmed whether local ethics or
@@ -42,7 +42,7 @@ purposive recruitment to include a mix of people who do and do not regularly
 use AI/creative tools, plus people who use relevant accessibility features.
 Ask only which access supports are useful; do not request diagnoses. Separately
 assign at least two reviewers with relevant lived or professional experience
-for each cultural or accessibility claim the project proposes to make. Record
+for each community or accessibility claim the project proposes to make. Record
 the population, language, modality, and context each reviewer can speak to.
 These target counts are planning thresholds, not evidence of statistical
 power. If the required access or reviewer coverage is unavailable, document
@@ -169,5 +169,5 @@ The study operator signs the evidence as `human_study`, not
 `luna_self_verified`. Preserve a source-free summary of results and a restricted
 consent/deletion receipt under the approved schedule. A completed questionnaire
 or synthetic test is not a participant study. ML-05 remains open until actual
-consented sessions, scoped cultural/accessibility reviews, remediation, and
+consented sessions, scoped community/accessibility reviews, remediation, and
 the final limitations report are present.

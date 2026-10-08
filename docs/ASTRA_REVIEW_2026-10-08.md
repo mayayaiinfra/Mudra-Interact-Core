@@ -2,7 +2,7 @@
 
 Reviewed 2026-10-08 against `7c95adc` in the existing primary checkout.
 Review kind: **Astra model technical review**, not independent human review,
-cultural validation, accessibility qualification or an exhaustive security audit.
+community review, accessibility qualification or an exhaustive security audit.
 The review inspected the core specification, acceptance matrix, ledger,
 proposal, runtime session boundary, licence inventory, release tooling and
 workflows. The owner requested Astra review followed by Luna publication.
@@ -121,7 +121,7 @@ independent backlog. Every future item starts NOT_STARTED. It deliberately
 keeps network/host/model integrations separate and does not choose a host by
 assumption. Broader language work can proceed after the `0.2.0` release under
 the user's direction, but must receive its own implementation/conformance and
-release evidence. Representative human comprehension, cultural and
+release evidence. Representative human comprehension, community and
 accessibility validation must come from real people and cannot be marked passed
 by Astra or Luna.
 

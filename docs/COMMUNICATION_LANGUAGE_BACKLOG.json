@@ -4,7 +4,7 @@
   "active_item": "ML-05",
   "review_kind": "astra_technical_model_review",
   "contract": "docs/COMMUNICATION_LANGUAGE_CONTRACT.md",
-  "planned_package_version": "0.4.0",
+  "planned_package_version": "0.4.1",
   "language_protocol_version": "1.0.0",
   "current_release_dependency": "Mudra Interact 0.4.0 is published on TestPyPI and PyPI with immutable GitHub release v0.4.0. The exact release source is 875a611. After the documentation status correction, M0-M3 were freshly qualified on current tree 9f3055, including the hosted eight-cell OS/Python matrix; M4/MI-10 prove the exact published 0.4.0 artifacts. ML-01 through ML-04 and ML-06 have fresh passing receipts. ML-05 alone remains externally blocked on real consented participants and independent scoped reviewers.",
   "items": [
@@ -169,15 +169,15 @@
       "outputs": [
         "docs/COMMUNICATION_LANGUAGE_HUMAN_QUALIFICATION.md (draft protocol; no participant evidence)",
         "consented representative-user study plan and actual results",
-        "cultural and accessibility review with reviewer scope and limitations"
+        "community and accessibility review with reviewer scope and limitations"
       ],
       "acceptance": [
         "L40: actual participants evaluate comprehension, interpretation correction, refusal and alternatives across intended communication paths",
         "L41: document languages, access needs, study limits, disagreement and remediation; do not substitute model review or synthetic tests for humans",
-        "L42: broad usability/accessibility/cultural claims remain blocked until scoped evidence supports them; experimental SDK may release with explicit limits"
+        "L42: broad usability, community-suitability, and accessibility claims remain blocked until scoped evidence supports them; experimental SDK may release with explicit limits"
       ],
-      "progress": "Drafted the study protocol, participant notice, scoped tasks, critical-failure rules and evidence format. No participants have been contacted, consented or studied; recruitment, approved notice/data handling and independent cultural/accessibility reviewers remain required.",
-      "blocked_reason": "External human qualification cannot be completed without actual eligible volunteers, an owner-approved populated participant notice/data flow, and scoped independent cultural/accessibility reviewers. Synthetic tests do not substitute for these inputs.",
+      "progress": "Drafted the study protocol, participant notice, scoped tasks, critical-failure rules and evidence format. No participants have been contacted, consented or studied; recruitment, approved notice/data handling and independent community/accessibility reviewers remain required.",
+      "blocked_reason": "External human qualification cannot be completed without actual eligible volunteers, an owner-approved populated participant notice/data flow, and scoped independent community/accessibility reviewers. Synthetic tests do not substitute for these inputs.",
       "prior_state": "NOT_STARTED"
     },
     {
@@ -212,7 +212,7 @@
     }
   ],
   "reverification_required": [],
-  "next_scope": "Software implementation and release gates are complete. Resume ML-05 only when actual eligible participants can be recruited and consented under the approved notice/data flow and independent scoped cultural/accessibility reviewers are available. Synthetic tests and model review cannot replace these inputs.",
+  "next_scope": "Software implementation and release gates are complete. Resume ML-05 only when actual eligible participants can be recruited and consented under the approved notice/data flow and independent scoped community/accessibility reviewers are available. Synthetic tests and model review cannot replace these inputs.",
   "current_release": {
     "package": "mudra-interact",
     "version": "0.4.0",
@@ -224,7 +224,7 @@
     "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37842184366",
     "core_gate": "M0-M3 current tree verified; M4 exact published 0.4.0 release from source 875a611 verified",
     "limitations": [
-      "No human-comprehension, cultural or accessibility qualification.",
+      "No human-comprehension, community or accessibility qualification.",
       "No live public-agent or production-host qualification.",
       "ML-05 remains blocked pending real consented participants and independent reviewers."
     ]
@@ -260,10 +260,10 @@
       "ML-06"
     ],
     "externally_blocked_item": "ML-05",
-    "blocker": "Actual consented participants, owner-approved populated participant notice/data flow, and independent scoped cultural/accessibility reviewers are required.",
+    "blocker": "Actual consented participants, owner-approved populated participant notice/data flow, and independent scoped community/accessibility reviewers are required.",
     "claims_not_established": [
       "Human comprehension or usability",
-      "Cultural suitability",
+      "Suitability across communities",
       "Accessibility qualification",
       "Gesture recognition accuracy in the field",
       "Public third-party A2A interoperability",

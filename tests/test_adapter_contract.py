@@ -63,7 +63,7 @@ def test_real_proof_and_accessible_alternative_are_not_fabricated() -> None:
     text = _spec().lower()
     for term in (
         "required proof before implementation status changes", "browser/device permission",
-        "real model inference", "accessibility review", "cultural and language review",
+        "real model inference", "accessibility review", "community and language review",
         "asset and model/data licence review", "keyboard/pointer alternative",
         "remains design", "no recognition", "accuracy",
     ):

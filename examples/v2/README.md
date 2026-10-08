@@ -1,7 +1,7 @@
 # v2 CLI examples
 
 These files contain synthetic 21-point landmarks only. They do not contain
-camera images, identifiers or cultural labels.
+camera images, identifiers or tradition-specific labels.
 
 ```powershell
 .venv\Scripts\mudra-interact.exe recognize --input examples/v2/frame.json

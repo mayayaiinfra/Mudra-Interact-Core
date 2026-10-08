@@ -71,7 +71,7 @@
     {
       "fixture_id": "v2-neutral-catalogue-four-rules",
       "path": "catalogue-v2.json",
-      "sha256": "b67113d7c4ade5f6060e34313c1b61d178a0bc03423631963baa011dfe17da36",
+      "sha256": "682b576f13d81ba2a07434ee5819d4e2d417d3767880acb89d040482b87f2899",
       "case_id": "E01",
       "expected": {
         "outcome": "valid",

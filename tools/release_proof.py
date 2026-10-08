@@ -913,7 +913,7 @@ def verify_published(
         "artifacts": validated["artifacts"],
         "adapter_status": "not_implemented_in_public_core",
         "recognition_quality": "not_established_by_synthetic_tests",
-        "cultural_review": "not_established_by_public_core",
+        "community_review": "not_established_by_public_core",
         "errors": [],
     }
 

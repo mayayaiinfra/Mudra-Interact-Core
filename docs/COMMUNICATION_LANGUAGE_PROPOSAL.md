@@ -78,7 +78,7 @@ separate, visible policy permits that specific transfer.
 Keep the existing four geometric contact cues as one experimental input
 adapter. They may signal simple controls such as select, request clarification
 or confirm only after a user-configured mapping and visible review. The cues do
-not encode rich prose, intent, emotion, identity, cultural meaning or a complete
+not encode rich prose, intent, emotion, identity, tradition-specific meaning or a complete
 message. The current stabilizer, consent checks and image-free event remain a
 useful safe input substrate, not evidence that the full communication language
 exists.
@@ -110,7 +110,7 @@ Before revising the normative contract, Astra should settle:
 4. Sender identity, provenance, authentication, replay protection, consent,
    confirmation and host action authority; identify what remains outside the
    public core.
-5. Human-human validation, including language, cultural, accessibility and
+5. Human-human validation, including language, community, accessibility and
    representative-user review. Synthetic tests alone cannot pass this gate.
 6. Package/repository boundaries: core SDK versus MCP/A2A/creative adapters,
    optional dependencies, distribution names and release versions.

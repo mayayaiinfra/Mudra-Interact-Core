@@ -1,10 +1,10 @@
 # Release runbook
 
-This runbook publishes only the declared package `mudra-interact==0.4.0`
+This runbook publishes only the declared package `mudra-interact==0.4.1`
 from one frozen commit. The public core is a Python library, so its production
 release is a package distribution, not a server deployment. The workflow never
 stores a PyPI API token and does not rebuild after candidate qualification.
-The currently published release is 0.3.0; this runbook qualifies its successor.
+The currently published release is 0.4.0; this runbook qualifies its successor.
 
 ## Owner setup required once
 
@@ -67,7 +67,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    frozen through publication. The version, commit, source-tree hash, spec,
    acceptance table, tool lock and all M0–M3 receipts must match the ledger.
 2. Run the full M3 gate and require the eight-cell Linux/Windows × CPython
-   3.11–3.14 aggregate at `evidence/local/v0.4.0/M3-platform-matrix.json`.
+   3.11–3.14 aggregate at `evidence/local/v0.4.1/M3-platform-matrix.json`.
    Both verification and publication workflows must pass this versioned path
    explicitly; the verifier's default matrix path is reserved for historical
    evidence. Do not substitute a local-only report.
@@ -76,7 +76,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    installing only `requirements-release.lock` with hashes. This exercises the
    locked Sigstore policy against synthetic X.509 claim extensions; it is a
    deterministic verifier regression, not live publisher proof.
-3. Dispatch **Publish Mudra Interact** with version `0.4.0` and the exact candidate
+3. Dispatch **Publish Mudra Interact** with version `0.4.1` and the exact candidate
    commit. The workflow builds twice, compares wheel and sdist bytes, validates
    the source-built wheel, installs it in a clean isolated environment, and
    freezes one wheel plus one source distribution. The output is kept as a
@@ -97,7 +97,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    --no-cache-dir` in a fresh environment; the package has no runtime
    dependencies. For manual inspection, install the candidate from TestPyPI
    with that index explicitly and no PyPI fallback:
-   `python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.4.0`.
+   `python -m pip install --no-deps --index-url https://test.pypi.org/simple mudra-interact==0.4.1`.
 2. Only after that check passes does the production job wait at the
    `pypi-production` protected environment. The owner must manually approve
    this run after checking its version, commit and candidate artifact
@@ -120,7 +120,7 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    the frozen candidate files. Protected-environment configuration and run
    evidence are checked independently. Unsigned publisher metadata plus an
    unrelated successful GitHub run does not meet this requirement.
-4. After production verification, create the immutable `v0.4.0` tag/release
+4. After production verification, create the immutable `v0.4.1` tag/release
    against the candidate commit and attach the same wheel and sdist. Existing
    tags/releases are never overwritten. The workflow exports a sanitized
    publication manifest as an Actions artifact.
@@ -168,14 +168,14 @@ is tested but cannot perform a yank or publish a patch.
 
 ## Post-release and limits
 
-Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact/0.4.0/)
-and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.0)
+Confirm the public [PyPI version page](https://pypi.org/project/mudra-interact/0.4.1/)
+and [GitHub release](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.1)
 open, and that both expose the exact version and artifact hashes. Run the
 documented consumer smoke from the downloaded wheel. Report the source commit,
 candidate fingerprint, artifact digests, workflow run, protected environment,
 index verification and tested platforms.
 
 The public core does not implement a camera adapter and synthetic acceptance
-tests do not establish field accuracy, cultural review, accessibility or
+tests do not establish field accuracy, community review, accessibility or
 independent security assessment. Keep each claim separate in release notes and
 the final report.

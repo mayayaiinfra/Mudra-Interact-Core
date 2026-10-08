@@ -2,6 +2,16 @@
 
 Changes are recorded by release. The links point to immutable tags and exact-version package pages.
 
+## Mudra Interact 0.4.1 — unreleased
+
+Clarifies Mudra Interact's vendor-neutral role as a shared, versioned
+communication contract for people and AI agents. The package summary and
+project description explain why locally validated messages, transcript checks,
+and explicit safety boundaries are useful as workflows become multi-agent.
+Company-specific downstream examples have been replaced with generic consumer
+language, and wording no longer implies unverified community or accessibility
+qualification. No protocol behavior or wire format changes are included.
+
 ## Mudra Interact 0.4.0 — 2026-10-08
 
 Adds an experimental, standard-library A2A JSON-RPC client to the
@@ -21,7 +31,7 @@ immutable GitHub release were verified. See [PyPI](https://pypi.org/project/mudr
 The client is experimental and has only independent loopback-peer qualification;
 no public-agent or production-host qualification is claimed. Human-to-human
 remains schema-only. The release includes no model/provider, tool execution,
-publishing, human-comprehension, cultural or accessibility qualification.
+publishing, human-comprehension, community or accessibility qualification.
 
 ## Mudra Interact 0.3.0
 
@@ -34,8 +44,8 @@ schema and three packaged synthetic planning examples.
 The v2 gesture/event protocol and CLI remain compatible with 0.2.0. Language
 messages do not authenticate participants or authorize execution. This release
 does not include a model/provider call, content generation, camera adapter,
-MCP/A2A transport, host UI, publishing integration, or human cultural,
-accessibility or usability qualification. The release workflow attaches the
+MCP/A2A transport, host UI, publishing integration, or human, accessibility
+or usability qualification. The release workflow attaches the
 exact wheel and source distribution to
 [GitHub release v0.3.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.3.0)
 after publication verification.

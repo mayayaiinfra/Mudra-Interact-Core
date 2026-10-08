@@ -974,12 +974,12 @@ def execute_scope(
         if matrix_report is not None:
             report["limitations"] = [
                 "This gate receipt includes the verified eight-cell OS/Python matrix.",
-                "It does not establish package publication, camera-adapter runtime, cultural-review or private production-integration readiness.",
+                "It does not establish package publication, camera-adapter runtime, community review or private production-integration readiness.",
             ]
         else:
             report["limitations"] = [
                 "This receipt covers only the declared local acceptance scope and actual current platform.",
-                "It does not establish cross-platform, release, camera-adapter, cultural-review or production-integration readiness.",
+                "It does not establish cross-platform, release, camera-adapter, community review or production-integration readiness.",
             ]
         if "MI-10" in selected_item_ids:
             report["limitations"] = [] if published_result and published_result.get("state") == "VERIFIED" else [

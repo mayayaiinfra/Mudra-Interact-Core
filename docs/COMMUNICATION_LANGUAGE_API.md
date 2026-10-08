@@ -111,6 +111,6 @@ own visible data and permission policy. This release demonstrates structured
 planning and review; it does not claim a complete creative-production plugin.
 
 The contract does not claim universal natural-language or sign-language
-coverage, comprehension, cultural suitability, accessibility or user-tested
+coverage, comprehension, suitability across communities, accessibility or user-tested
 clarity. Those require the separate human qualification in ML-05. The live
 interoperability contract in ML-06 is also separate.

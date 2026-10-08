@@ -220,5 +220,5 @@ qualifies the 0.4.0 candidate, including its explicit A2A client, while retainin
 the existing gesture matrix. Each engineering gate requires fresh, hash-bound
 evidence after its candidate is committed. ML-05 human qualification remains
 separate and blocked; ML-06 qualifies only a local A2A peer, not a production
-host or public interoperability. Broad usability/cultural/accessibility claims
+host or public interoperability. Broad usability/community/accessibility claims
 remain blocked without actual representative human evaluation.

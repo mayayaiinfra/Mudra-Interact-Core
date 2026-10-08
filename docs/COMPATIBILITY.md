@@ -1,8 +1,8 @@
 # Distribution and compatibility
 
 Mudra Interact is a standard-library runtime package. The current public
-package candidate is `mudra-interact` version `0.4.0`; the latest published
-version remains `0.3.0`. The candidate keeps the v2 contract,
+package candidate is `mudra-interact` version `0.4.1`; the latest published
+version is `0.4.0`. This patch keeps the v2 contract,
 catalogue and schema versions set to `2.0.0`.  The wheel carries its schemas,
 neutral catalogue, `py.typed`, `LICENSE`, and `NOTICE`; it has no
 `Requires-Dist` runtime dependencies.
@@ -74,32 +74,32 @@ inventory and all eight supported cell states. Reports contain synthetic-safe la
 and never contain host paths, credentials, customer data or raw command
 diagnostics.
 
-## ALLYK consumer boundary
+## Downstream consumer boundary
 
-ALLYK is a private downstream consumer of the public interoperability contract.
-This repository contains no ALLYK source, credentials, private catalogue,
-adapter implementation or private policy.  A consumer upgrade is accepted
-only after its private compatibility inventory confirms the following:
+Mudra Interact defines a public interoperability contract for independent
+applications. This repository does not contain application credentials,
+private catalogues, host-specific adapters, or deployment policy. A consumer
+upgrade should be accepted only after its compatibility inventory confirms:
 
 | Contract surface | Current public value | Consumer check | Upgrade risk |
 | --- | --- | --- | --- |
-| Package | `mudra-interact==0.4.0` candidate (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
+| Package | `mudra-interact==0.4.1` candidate (import `mudra_interact_core`) | Install exact wheel with `--no-deps`; verify module ownership | A rebuilt or transitive dependency can change the artifact |
 | Gesture schemas | v2 / `2.0.0` (unchanged from 0.2.0) | Validate representative synthetic frame, report, batch and event fixtures | A schema change can reject or reinterpret stored work |
 | Communication language | Language v1 / `1.0.0`, creative-plan intent v1 | Validate full synthetic transcripts and review rendered messages; keep authority in the host | Message validity and an `accept` act do not establish identity or authorization |
-| Catalogue | Neutral catalogue `2.0.0` | Check IDs, version and rule mappings before activation | Label packs and cultural claims are not supplied by core |
-| CLI | `mudra-interact` with explicit consent/confirmation | Run the private integration smoke against the installed wheel | Flags and error codes are a compatibility surface |
-| Privacy | No telemetry or background network requests; the 0.4.0 candidate sends only through an explicit configured A2A call | Inspect endpoint, authentication, retention and replay policy; run egress-negative checks | A downstream adapter or remote peer can introduce retention or network behaviour |
-| Licensing | Apache-2.0 core with shipped notices | Re-run the private asset/licence inventory | Optional camera/model assets need separate review |
+| Catalogue | Neutral catalogue `2.0.0` | Check IDs, version and rule mappings before activation | Label packs and community-suitability claims are not supplied by core |
+| CLI | `mudra-interact` with explicit consent/confirmation | Run the host integration smoke against the installed wheel | Flags and error codes are a compatibility surface |
+| Privacy | No telemetry or background network requests; the 0.4.1 candidate sends only through an explicit configured A2A call | Inspect endpoint, authentication, retention and replay policy; run egress-negative checks | A downstream adapter or remote peer can introduce retention or network behaviour |
+| Licensing | Apache-2.0 core with shipped notices | Re-run the host's asset/licence inventory | Optional camera/model assets need separate review |
 
 The inventory is a handoff contract, not an automatic upgrade or a claim that
-the private ALLYK integration is implemented here. A missing private check
-blocks the downstream release without changing this public package.
+any particular host integration is implemented here. A missing consumer check
+blocks that application's release without changing this public package.
 
 ## Known limits
 
 The public core does not include camera capture, model downloads, browser UI,
-remote inference, cultural review, or a hosted service.  Recognition quality,
-accessibility and any private ALLYK adapter remain separate release evidence.
+remote inference, community review, or a hosted service. Recognition quality,
+accessibility and any host adapter remain separate release evidence.
 The release command can therefore prove local packaging and correctly report a
 blocked candidate while required external platform or publication evidence is
 still unavailable.

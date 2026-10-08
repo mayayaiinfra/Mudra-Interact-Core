@@ -13,6 +13,6 @@ reviewer identity, evidence reference, rights, language/tradition scope,
 prohibited-claims record, version and withdrawal record. The loader validates
 that record shape; it never turns an evidence-free record into approval.
 
-Human cultural and accessibility review remains an external release decision.
+Human community and accessibility review remains an external release decision.
 No word filter, synthetic fixture or agent status flag can substitute for that
 review. The public core stays useful offline while leaving that decision visible.

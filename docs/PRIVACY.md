@@ -24,7 +24,7 @@ The boundary is structural and finite:
 These guarantees concern the object shape and core process. They do not promise
 Python memory zeroization, crash-dump erasure, host retention behaviour,
 absence of personal information in a caller-chosen UUID, or privacy of a
-redirected output file. A camera adapter, UI, storage layer and ALLYK host must
+redirected output file. A camera adapter, UI, storage layer and embedding host must
 perform their own consent, retention, access-control and telemetry review.
 
 The privacy tests cover direct constructors, JSON import, event serialization,

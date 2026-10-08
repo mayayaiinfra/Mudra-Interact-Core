@@ -458,8 +458,8 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert "communication" in project["description"].lower()
     assert "human" in project["description"].lower()
     assert "agent" in project["description"].lower()
-    assert "allyk" not in project["description"].lower()
-    assert "allyk" not in readme.lower()
+    assert "vendor-neutral" in project["description"].lower()
+    assert "multi-agent" in readme.lower()
     assert "python -m pip install mudra-interact" in readme
     lock = (ROOT / "requirements-release.lock").read_text(encoding="utf-8")
     requirements = {
@@ -826,7 +826,7 @@ def test_published_aggregator_blocks_absent_live_proof_and_separates_unverified_
     implementation = (ROOT / "tools/release_proof.py").read_text(encoding="utf-8")
     assert '"adapter_status": "not_implemented_in_public_core"' in implementation
     assert '"recognition_quality": "not_established_by_synthetic_tests"' in implementation
-    assert '"cultural_review": "not_established_by_public_core"' in implementation
+    assert '"community_review": "not_established_by_public_core"' in implementation
     report = ROOT / "build" / "test-m10-published-blocked.json"
     report.parent.mkdir(parents=True, exist_ok=True)
     result = subprocess.run(
@@ -843,4 +843,4 @@ def test_published_aggregator_blocks_absent_live_proof_and_separates_unverified_
     assert "publication proof" in " ".join(document["limitations"]).lower()
     assert document["checks"]["adapter_status"] == "not_implemented_in_public_core"
     assert document["checks"]["recognition_quality"] == "not_established_by_synthetic_tests"
-    assert document["checks"]["cultural_review"] == "not_established_by_public_core"
+    assert document["checks"]["community_review"] == "not_established_by_public_core"
