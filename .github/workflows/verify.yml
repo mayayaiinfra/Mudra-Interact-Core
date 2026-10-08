@@ -209,7 +209,9 @@ jobs:
           runner_user="$USER"
           python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
           runuser_path="$(command -v runuser)"
-          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json
+          candidate_version="$("$python_path" -c 'import tomllib; from pathlib import Path; print(tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"])')"
+          platform_matrix="evidence/local/v${candidate_version}/M3-platform-matrix.json"
+          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json --platform-matrix "$platform_matrix"
       - name: Record sanitized M3 gate report and acceptance artifacts
         if: always()
         shell: bash

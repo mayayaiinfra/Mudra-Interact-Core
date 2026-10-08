@@ -92,7 +92,7 @@ jobs:
           runner_user="$USER"
           python_path="$RUNNER_TEMP/mudra-verifier/bin/python"
           runuser_path="$(command -v runuser)"
-          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-publish.json
+          sudo unshare --net -- "$runuser_path" -u "$runner_user" -- env PIP_NO_INDEX=1 PYTHONNOUSERSITE=1 "$python_path" tools/verify_gate.py --gate M3 --report evidence/local/M3-publish.json --platform-matrix "evidence/local/v${{ inputs.version }}/M3-platform-matrix.json"
       - name: Rebuild twice and freeze one qualified artifact pair
         shell: bash
         env:

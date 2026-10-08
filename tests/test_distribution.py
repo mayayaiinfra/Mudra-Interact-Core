@@ -423,7 +423,9 @@ def test_ci_is_pinned_read_only_and_bounded() -> None:
     assert "MUDRA_CI_RECEIPT_JSON" in workflow
     assert "MUDRA_CI_ARTIFACT_BASE64_JSON" in workflow
     assert "--acceptance-report=" in workflow
-    assert "tools/verify_gate.py --gate M3 --report evidence/local/M3-ci.json" in workflow
+    assert 'candidate_version="$("$python_path" -c' in workflow
+    assert 'platform_matrix="evidence/local/v${candidate_version}/M3-platform-matrix.json"' in workflow
+    assert '--platform-matrix "$platform_matrix"' in workflow
     assert "MUDRA_M3_CI_REPORT_JSON" in workflow
     assert "MUDRA_M3_CI_ARTIFACT_BASE64_JSON" in workflow
 

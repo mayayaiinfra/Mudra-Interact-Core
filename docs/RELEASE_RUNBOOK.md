@@ -67,7 +67,10 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    frozen through publication. The version, commit, source-tree hash, spec,
    acceptance table, tool lock and all M0–M3 receipts must match the ledger.
 2. Run the full M3 gate and require the eight-cell Linux/Windows × CPython
-   3.11–3.14 aggregate. Do not substitute a local-only report.
+   3.11–3.14 aggregate at `evidence/local/v0.4.0/M3-platform-matrix.json`.
+   Both verification and publication workflows must pass this versioned path
+   explicitly; the verifier's default matrix path is reserved for historical
+   evidence. Do not substitute a local-only report.
    Before either index upload, the protected workflow also runs
    `tools/check_attestation_policy.py` under Ubuntu 24.04 / CPython 3.12 after
    installing only `requirements-release.lock` with hashes. This exercises the

@@ -445,6 +445,7 @@ def test_release_workflow_is_pinned_separated_and_documents_exact_downloads() ->
     assert all(re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-f]{40}", ref) for ref in action_refs)
     assert "path: evidence/releases/testpypi-verification.json" in workflow
     assert "path: evidence/releases/pypi-verification.json" in workflow
+    assert '--platform-matrix "evidence/local/v${{ inputs.version }}/M3-platform-matrix.json"' in workflow
     assert "python-version: '3.12'" in workflow
     normalized_runbook = " ".join(runbook.lower().split())
     assert "same frozen files" in normalized_runbook and "no rebuild" in normalized_runbook
