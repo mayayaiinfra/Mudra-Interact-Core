@@ -116,8 +116,8 @@
       "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/M2-index-copy.json",
-          "sha256": "3ce8f592ec345405669e525a40bec94f8985e55a827d6229de8da56a129e75d0"
+          "path": "evidence/local/M2-refresh-efbefb6.json",
+          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
         }
       ],
       "verification_kind": "luna_self_verified",
@@ -355,8 +355,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-index-copy.json",
-          "sha256": "3ce8f592ec345405669e525a40bec94f8985e55a827d6229de8da56a129e75d0"
+          "path": "evidence/local/M2-refresh-efbefb6.json",
+          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
         }
       ],
       "prior_state": "IN_PROGRESS"
@@ -388,8 +388,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-index-copy.json",
-          "sha256": "3ce8f592ec345405669e525a40bec94f8985e55a827d6229de8da56a129e75d0"
+          "path": "evidence/local/M2-refresh-efbefb6.json",
+          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
         }
       ],
       "prior_state": "VERIFIED"
@@ -431,8 +431,8 @@
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/M2-index-copy.json",
-          "sha256": "3ce8f592ec345405669e525a40bec94f8985e55a827d6229de8da56a129e75d0"
+          "path": "evidence/local/M2-refresh-efbefb6.json",
+          "sha256": "e747395504b0411ab28a7b3417d4368142b17be5eccc97089ebd336aff4927ae"
         }
       ],
       "prior_state": "VERIFIED"
