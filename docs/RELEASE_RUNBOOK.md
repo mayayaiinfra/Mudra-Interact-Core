@@ -67,6 +67,11 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    acceptance table, tool lock and all M0–M3 receipts must match the ledger.
 2. Run the full M3 gate and require the eight-cell Linux/Windows × CPython
    3.11–3.14 aggregate. Do not substitute a local-only report.
+   Before either index upload, the protected workflow also runs
+   `tools/check_attestation_policy.py` under Ubuntu 24.04 / CPython 3.12 after
+   installing only `requirements-release.lock` with hashes. This exercises the
+   locked Sigstore policy against synthetic X.509 claim extensions; it is a
+   deterministic verifier regression, not live publisher proof.
 3. Dispatch **Publish Mudra Interact** with version `0.2.0` and the exact candidate
    commit. The workflow builds twice, compares wheel and sdist bytes, validates
    the source-built wheel, installs it in a clean isolated environment, and
@@ -99,9 +104,16 @@ This setup follows [PyPI's first-project Trusted Publishing documentation](https
    production file, verifies the PyPI Trusted Publisher attestations and runs a
    second fresh isolated install smoke. TestPyPI evidence cannot stand in for
    this production proof. Each cryptographically verified attestation must
-   bind the artifact digest, repository, workflow, environment, full candidate
-   source commit and workflow run. Matching unsigned publisher metadata plus
-   an unrelated successful GitHub run does not meet this requirement.
+   bind the downloaded artifact name and digest, OIDC issuer, repository, full
+   candidate source commit, workflow configuration, trigger, and exact workflow
+   run and attempt. Separately, the PyPI Integrity API's publisher assertion
+   must name the exact repository, workflow and `pypi-production` environment.
+   The environment value is a PyPI assertion, not a signed Fulcio certificate
+   claim. The verifier also checks the `publish-pypi` job in the candidate
+   commit's signed workflow source: it declares `pypi-production` and uploads
+   the frozen candidate files. Protected-environment configuration and run
+   evidence are checked independently. Unsigned publisher metadata plus an
+   unrelated successful GitHub run does not meet this requirement.
 4. After production verification, create the immutable `v0.2.0` tag/release
    against the candidate commit and attach the same wheel and sdist. Existing
    tags/releases are never overwritten. The workflow exports a sanitized

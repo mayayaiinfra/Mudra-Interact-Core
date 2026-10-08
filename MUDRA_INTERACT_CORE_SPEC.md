@@ -433,9 +433,14 @@ publisher does not reserve a name or establish project ownership; a missing
 project page is not enough. Confirm successful project creation and publisher
 identity after upload. Name collision or ambiguous authority blocks promotion.
 Bind each cryptographically verified production artifact attestation to the
-full candidate source commit and workflow run, as well as artifact digest,
-repository, workflow and environment. A separate matching GitHub run record
-does not establish that the artifact's attestation came from that run.
+downloaded artifact name and digest, OIDC issuer, repository, full candidate
+source commit, workflow configuration, trigger and exact workflow run and
+attempt. The PyPI Integrity API publisher assertion separately identifies the
+repository, workflow and production environment; the environment is not a
+signed Fulcio certificate claim. Bind that assertion to the signed workflow
+source in the candidate commit and verify that its production job declares the
+environment and uploads the frozen files. A separate matching GitHub run
+record does not establish that the artifact's attestation came from that run.
 Separate indexes and
 accounts; single-index downloads with --no-deps, no extra-index fallback.
 No rebuild after acceptance, overwritten tag or reused published version.

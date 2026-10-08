@@ -859,6 +859,9 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--offline", action="store_true")
     mode.add_argument("--published", action="store_true")
     mode.add_argument("--verify-index", choices=("testpypi", "pypi"))
+    parser.add_argument("--source-commit", help="Exact source commit bound to PyPI attestations")
+    parser.add_argument("--workflow-run-id", type=int, help="Exact GitHub Actions workflow run ID")
+    parser.add_argument("--workflow-run-attempt", type=int, help="Exact GitHub Actions run attempt")
     parser.add_argument("--artifact-dir", help="Repository-relative destination for the frozen wheel and sdist (offline mode only).")
     parser.add_argument("--candidate-report", default="evidence/releases/offline-qualification.json")
     parser.add_argument("--published-manifest", default="evidence/releases/published.json")
@@ -926,7 +929,22 @@ def main(argv: list[str] | None = None) -> int:
                 if args.artifact_dir is None:
                     raise ReleaseProofError("artifact_path_invalid")
                 inventory = frozen_candidate_inventory(args.artifact_dir, args.candidate_report)
-                check = verify_index(args.verify_index, inventory)
+                if args.verify_index == "pypi":
+                    if args.source_commit != git_value("rev-parse", "HEAD"):
+                        raise ReleaseProofError("attestation_candidate_invalid")
+                    check = verify_index(
+                        args.verify_index,
+                        inventory,
+                        source_commit=args.source_commit,
+                        workflow_run_id=args.workflow_run_id,
+                        workflow_run_attempt=args.workflow_run_attempt,
+                    )
+                else:
+                    if any(value is not None for value in (
+                        args.source_commit, args.workflow_run_id, args.workflow_run_attempt,
+                    )):
+                        raise ReleaseProofError("attestation_candidate_invalid")
+                    check = verify_index(args.verify_index, inventory)
                 state = "VERIFIED"
                 errors = []
             except ReleaseProofError as exc:

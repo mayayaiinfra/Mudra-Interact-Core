@@ -12,6 +12,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from types import ModuleType
 from types import SimpleNamespace
 from typing import Any
 
@@ -58,6 +59,7 @@ def valid_manifest_parts(tmp_path: Path) -> tuple[dict[str, Any], dict[str, str]
         **hashes,
         "tag": "v0.2.0",
         "workflow_run_id": 12345,
+        "workflow_run_attempt": 1,
         "artifacts": artifact_inventory(),
     }
     candidate["candidate_fingerprint"] = release_proof.fingerprint(candidate)
@@ -85,10 +87,24 @@ def valid_manifest_parts(tmp_path: Path) -> tuple[dict[str, Any], dict[str, str]
     index_refs = {}
     for index in ("testpypi", "pypi"):
         index_path = tmp_path / f"{index}.json"
+        index_checks = {
+            "index": index,
+            "downloaded_and_hashed": True,
+            "fresh_installed_wheel_smoke": True,
+        }
+        if index == "pypi":
+            index_checks.update({
+                "trusted_publisher_attestations": 2,
+                "attestation_source_commit": candidate["source_commit"],
+                "attestation_workflow_run_id": candidate["workflow_run_id"],
+                "attestation_workflow_run_attempt": candidate["workflow_run_attempt"],
+                "publisher_environment_assertion": "pypi-production",
+                "candidate_workflow_environment_binding": True,
+            })
         index_document = seal_report({
             "state": "VERIFIED", "mode": f"verify_{index}",
             "source_commit": candidate["source_commit"], "source_tree_sha256": tree,
-            "checks": {"index": index, "downloaded_and_hashed": True, "fresh_installed_wheel_smoke": True},
+            "checks": index_checks,
             "artifacts": artifact_inventory(),
         })
         index_path.write_text(json.dumps(index_document), encoding="utf-8")
@@ -102,6 +118,7 @@ def valid_manifest_parts(tmp_path: Path) -> tuple[dict[str, Any], dict[str, str]
             "kind": "github_protected_environment",
             "environment": "pypi-production",
             "workflow_run_id": 12345,
+            "workflow_run_attempt": 1,
             "candidate_fingerprint": candidate["candidate_fingerprint"],
         },
         "gate_evidence": [{"gate": gate, "path": f"evidence/local/{gate}.json", "sha256": "0" * 64}
@@ -249,14 +266,37 @@ def test_testpypi_exact_download_and_fresh_install_smoke_without_fallback() -> N
 @pytest.mark.acceptance("E93")
 def test_production_download_verifies_same_hashes_and_attestation(monkeypatch: pytest.MonkeyPatch) -> None:
     contents = artifact_bytes()
-    attested: list[str] = []
-    monkeypatch.setattr(release_proof, "_verify_pypi_attestation", lambda name, **_kwargs: attested.append(name) or True)
+    attested: list[tuple[str, dict[str, Any]]] = []
+
+    monkeypatch.setattr(
+        release_proof, "_verify_candidate_publish_workflow",
+        lambda _root, source_commit: {"candidate_commit": source_commit},
+    )
+
+    def verify_attestation(name: str, **kwargs: Any) -> bool:
+        path = kwargs["artifact_path"]
+        assert path.is_file()
+        assert path.read_bytes() == contents[name]
+        attested.append((name, kwargs))
+        return True
+
+    monkeypatch.setattr(
+        release_proof,
+        "_verify_pypi_attestation",
+        verify_attestation,
+    )
     receipt = release_proof.verify_index(
         "pypi", artifact_inventory(contents), fetch=fake_index_fetch("pypi", contents),
+        source_commit="a" * 40, workflow_run_id=12345, workflow_run_attempt=1,
         install=lambda wheel, version: wheel.name == WHEEL_NAME and version == "0.2.0",
     )
     assert receipt["trusted_publisher_attestations"] == 2
-    assert set(attested) == {WHEEL_NAME, SDIST_NAME}
+    assert {name for name, _kwargs in attested} == {WHEEL_NAME, SDIST_NAME}
+    assert all(kwargs["source_commit"] == "a" * 40 for _, kwargs in attested)
+    assert all(kwargs["workflow_run_id"] == 12345 for _, kwargs in attested)
+    assert all(kwargs["workflow_run_attempt"] == 1 for _, kwargs in attested)
+    assert all(not kwargs["artifact_path"].exists() for _, kwargs in attested)
+    assert receipt["attestation_source_commit"] == "a" * 40
     assert receipt["downloaded_and_hashed"] and receipt["fresh_installed_wheel_smoke"]
 
 
@@ -418,33 +458,175 @@ def test_foreign_publisher_expired_or_secret_bearing_claims_are_rejected(
     with pytest.raises(release_proof.ReleaseProofError) as error:
         release_proof._index_hosts("untrusted-index")
     assert error.value.code == "index_invalid"
-    publisher = {
-        "kind": "GitHub", "repository": release_proof.REPOSITORY,
-        "workflow": "publish.yml", "environment": "pypi-production",
-    }
-
-    def provenance_fetch(_url: str, *, max_bytes: int):
-        return 200, "https://pypi.org/integrity/synthetic", json.dumps({
-            "attestation_bundles": [{"publisher": publisher, "attestations": []}],
-        }).encode()
-
-    monkeypatch.setattr(release_proof.subprocess, "run", lambda *_args, **_kwargs: SimpleNamespace(returncode=0))
-    assert release_proof._verify_pypi_attestation(WHEEL_NAME, fetch=provenance_fetch) is True
-    publisher["environment"] = "other-environment"
-    with pytest.raises(release_proof.ReleaseProofError) as error:
-        release_proof._verify_pypi_attestation(WHEEL_NAME, fetch=provenance_fetch)
-    assert error.value.code == "publisher_identity_mismatch"
-    publisher["environment"] = "pypi-production"
-    monkeypatch.setattr(release_proof.subprocess, "run", lambda *_args, **_kwargs: (_ for _ in ()).throw(FileNotFoundError()))
-    with pytest.raises(release_proof.ReleaseProofError) as error:
-        release_proof._verify_pypi_attestation(WHEEL_NAME, fetch=provenance_fetch)
-    assert error.value.code == "attestation_verifier_unavailable"
     with pytest.raises(release_proof.ReleaseProofError) as error:
         release_proof._json_get(
             "https://pypi.org/integrity/synthetic",
             lambda *_args, **_kwargs: (200, "https://test.pypi.org/integrity/synthetic", b"{}"),
         )
     assert error.value.code == "remote_redirect_host_invalid"
+
+
+@pytest.mark.acceptance("E93")
+@pytest.mark.acceptance("E98")
+def test_verified_attestation_policy_binds_signed_commit_run_and_attempt(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Synthetic policy tests reject claim drift; they are not PyPI proof."""
+    source_commit = "a" * 40
+    workflow_run_id = 12345
+    workflow_run_attempt = 2
+    expected_claims = {
+        "issuer": "https://token.actions.githubusercontent.com",
+        "repository_uri": f"https://github.com/{release_proof.REPOSITORY}",
+        "source_repository_digest": source_commit,
+        "build_config_uri": (
+            f"https://github.com/{release_proof.REPOSITORY}/"
+            f"{release_proof.WORKFLOW}@refs/heads/main"
+        ),
+        "build_trigger": "workflow_dispatch",
+        "run_invocation_uri": (
+            f"https://github.com/{release_proof.REPOSITORY}/actions/runs/"
+            f"{workflow_run_id}/attempts/{workflow_run_attempt}"
+        ),
+    }
+    claim_for_policy = {
+        "OIDCIssuerV2": "issuer",
+        "OIDCSourceRepositoryURI": "repository_uri",
+        "OIDCSourceRepositoryDigest": "source_repository_digest",
+        "OIDCBuildConfigURI": "build_config_uri",
+        "OIDCBuildTrigger": "build_trigger",
+        "OIDCRunInvocationURI": "run_invocation_uri",
+    }
+
+    class ClaimPolicy:
+        def __init__(self, name: str, value: str) -> None:
+            self.name = name
+            self.value = value
+
+        def verify(self, claims: dict[str, str]) -> None:
+            key = claim_for_policy[self.name]
+            if claims.get(key) != self.value:
+                raise ValueError("signed claim mismatch")
+
+    class AllOf:
+        def __init__(self, children: list[ClaimPolicy]) -> None:
+            if not children:
+                raise ValueError("empty policy")
+            self.children = children
+
+        def verify(self, claims: dict[str, str]) -> None:
+            for child in self.children:
+                child.verify(claims)
+
+    def synthetic_policy(*, source_commit: str, workflow_run_id: int, workflow_run_attempt: int) -> AllOf:
+        if (
+            not release_proof.COMMIT_RE.fullmatch(source_commit)
+            or type(workflow_run_id) is not int or workflow_run_id < 1
+            or type(workflow_run_attempt) is not int or workflow_run_attempt < 1
+        ):
+            raise release_proof.ReleaseProofError("attestation_candidate_invalid")
+        values = dict(expected_claims)
+        values["source_repository_digest"] = source_commit
+        values["run_invocation_uri"] = (
+            f"https://github.com/{release_proof.REPOSITORY}/actions/runs/"
+            f"{workflow_run_id}/attempts/{workflow_run_attempt}"
+        )
+        return AllOf([
+            ClaimPolicy(name, values[key]) for name, key in claim_for_policy.items()
+        ])
+
+    monkeypatch.setattr(release_proof, "_pypi_attestation_policy", synthetic_policy)
+
+    artifact_path = tmp_path / WHEEL_NAME
+    artifact_path.write_bytes(b"synthetic-wheel-MUDRA")
+    expected_digest = hashlib.sha256(artifact_path.read_bytes()).hexdigest()
+
+    class SyntheticDistribution:
+        @classmethod
+        def from_file(cls, path: Path):
+            return SimpleNamespace(path=path, name=path.name)
+
+    class SyntheticAttestationType:
+        PYPI_PUBLISH_V1 = SimpleNamespace(value="https://docs.pypi.org/attestations/publish/v1")
+
+    class SyntheticAttestation:
+        def __init__(self, claims: dict[str, str], digest: str) -> None:
+            self.claims = claims
+            self.digest = digest
+
+        def verify(self, *, identity: AllOf, dist: SimpleNamespace):
+            identity.verify(self.claims)
+            if hashlib.sha256(dist.path.read_bytes()).hexdigest() != self.digest:
+                raise ValueError("distribution digest mismatch")
+            return SyntheticAttestationType.PYPI_PUBLISH_V1.value, {}
+
+    class SyntheticProvenance:
+        document: dict[str, Any]
+
+        @classmethod
+        def model_validate(cls, document: dict[str, Any]):
+            return cls.document
+
+    pypi_module = ModuleType("pypi_attestations")
+    pypi_module.AttestationType = SyntheticAttestationType
+    pypi_module.Distribution = SyntheticDistribution
+    pypi_module.Provenance = SyntheticProvenance
+    monkeypatch.setitem(sys.modules, "pypi_attestations", pypi_module)
+
+    def verify_claims(
+        claims: dict[str, str], *, digest: str = expected_digest,
+        publisher_environment: str = "pypi-production",
+    ) -> bool:
+        attestation = SyntheticAttestation(claims, digest)
+        SyntheticProvenance.document = SimpleNamespace(attestation_bundles=[SimpleNamespace(
+            publisher=SimpleNamespace(
+                kind="GitHub", repository=release_proof.REPOSITORY,
+                workflow="publish.yml", environment=publisher_environment,
+            ),
+            attestations=[attestation],
+        )])
+
+        def provenance_fetch(_url: str, *, max_bytes: int):
+            del max_bytes
+            return 200, "https://pypi.org/integrity/synthetic", b"{}"
+
+        return release_proof._verify_pypi_attestation(
+            WHEEL_NAME,
+            artifact_path=artifact_path,
+            source_commit=source_commit,
+            workflow_run_id=workflow_run_id,
+            workflow_run_attempt=workflow_run_attempt,
+            fetch=provenance_fetch,
+        )
+
+    assert verify_claims(expected_claims) is True
+    with pytest.raises(release_proof.ReleaseProofError) as error:
+        verify_claims(expected_claims, publisher_environment="other-environment")
+    assert error.value.code == "publisher_identity_mismatch"
+    for key in expected_claims:
+        wrong = dict(expected_claims)
+        wrong[key] = "wrong-signed-claim"
+        with pytest.raises(release_proof.ReleaseProofError) as error:
+            verify_claims(wrong)
+        assert error.value.code == "publisher_attestation_invalid"
+
+        missing = dict(expected_claims)
+        missing.pop(key)
+        with pytest.raises(release_proof.ReleaseProofError) as error:
+            verify_claims(missing)
+        assert error.value.code == "publisher_attestation_invalid"
+
+    with pytest.raises(release_proof.ReleaseProofError) as error:
+        verify_claims(expected_claims, digest="0" * 64)
+    assert error.value.code == "publisher_attestation_invalid"
+
+    with pytest.raises(release_proof.ReleaseProofError) as error:
+        release_proof._pypi_attestation_policy(
+            source_commit=source_commit,
+            workflow_run_id=workflow_run_id,
+            workflow_run_attempt=True,
+        )
+    assert error.value.code == "attestation_candidate_invalid"
 
 
 @pytest.mark.acceptance("E99")

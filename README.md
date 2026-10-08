@@ -6,13 +6,14 @@ conservative, image-free gesture interaction protocol. It accepts normalized
 `MudraEvent` only after distinct-frame stability plus explicit consent and
 confirmation.
 
-The target package version is `mudra-interact==0.2.0`. It has **not yet
-been published**: publishing-authority verification, Trusted Publisher setup and
-candidate-specific release approval are still required. A missing package or
-release page does not prove the name is available or authorize claiming it.
-First publication may use an owner-authorized pending Trusted Publisher as
-described in the [release runbook](docs/RELEASE_RUNBOOK.md).
-Once published, these exact-version pages are the distribution sources:
+This release is `mudra-interact==0.2.0`. The [release runbook](docs/RELEASE_RUNBOOK.md)
+defines the evidence required before treating a published artifact as verified.
+Check the exact-version pages and artifact digests before installing; a missing
+package page alone does not prove that its name is available or authorize
+claiming it. First publication may use an owner-authorized pending Trusted
+Publisher as described in the runbook.
+
+These exact-version pages are the distribution sources:
 
 - [PyPI project, version 0.2.0](https://pypi.org/project/mudra-interact/0.2.0/)
 - [GitHub release, tag v0.2.0](https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.2.0)

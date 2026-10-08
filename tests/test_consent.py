@@ -24,6 +24,36 @@ def test_confirmation_requires_exact_true_booleans(consent, participant, code: s
 
 
 @pytest.mark.acceptance("E38")
+@pytest.mark.acceptance("E40")
+@pytest.mark.parametrize("bad_time", [True, "100", 100.0, -1, 9_007_199_254_740_992])
+@pytest.mark.parametrize("prior_grant", [False, True])
+def test_invalid_confirmation_time_revokes_stable_result_and_requires_fresh_frames(
+    bad_time, prior_grant: bool,
+) -> None:
+    session = stable_session()
+    if prior_grant:
+        session.confirm(True, True, 100)
+    with pytest.raises(MudraValidationError, match="invalid_sequence"):
+        session.confirm(True, True, bad_time)
+
+    assert session.current.state.value == "uncertain"
+    assert session.last_frame_id == 3
+    assert session.last_frame_time == 100
+    assert session.streak_count == 0
+    with pytest.raises(MudraValidationError, match="confirmation_required"):
+        session.emit_event(now_ms=100)
+    with pytest.raises(MudraValidationError, match="confirmation_required"):
+        session.confirm(True, True, 100)
+
+    session.observe(frame(4, 150))
+    session.observe(frame(5, 200))
+    recovered = session.observe(frame(6, 250))
+    assert recovered.state.value == "stable"
+    session.confirm(True, True, 250)
+    assert session.emit_event(now_ms=250).direction == "human_to_agent"
+
+
+@pytest.mark.acceptance("E38")
 def test_both_true_and_current_stable_are_required_for_every_sender() -> None:
     session = stable_session()
     session.confirm(True, True, 100)
@@ -93,4 +123,3 @@ def test_invalid_emit_arguments_consume_grant_and_require_fresh_observation() ->
     session.observe(frame(6, 250))
     session.confirm(True, True, 250)
     assert session.emit_event(now_ms=250).direction == "human_to_agent"
-

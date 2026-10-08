@@ -32,6 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--candidate", action="store_true")
     mode.add_argument("--published", action="store_true")
     parser.add_argument("--workflow-run-id", type=int, required=True)
+    parser.add_argument("--workflow-run-attempt", type=int, required=True)
     parser.add_argument("--offline-report", default="evidence/releases/offline-qualification.json")
     parser.add_argument("--artifact-dir", default="release-artifacts/0.2.0")
     parser.add_argument("--candidate-path", default="evidence/releases/candidate.json")
@@ -46,6 +47,7 @@ def main(argv: list[str] | None = None) -> int:
                 ROOT, offline_report_path=args.offline_report,
                 artifact_dir=args.artifact_dir,
                 workflow_run_id=args.workflow_run_id,
+                workflow_run_attempt=args.workflow_run_attempt,
                 current_commit=head,
             )
             _write_local_json(ROOT, args.candidate_path, document)
@@ -58,6 +60,7 @@ def main(argv: list[str] | None = None) -> int:
                 output_path=args.output,
                 current_commit=head,
                 workflow_run_id=args.workflow_run_id,
+                workflow_run_attempt=args.workflow_run_attempt,
             )
             print(document["candidate"]["candidate_fingerprint"])
         return 0

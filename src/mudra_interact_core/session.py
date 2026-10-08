@@ -298,10 +298,13 @@ class RecognitionSession:
 
         self._ensure_running()
         self._clear_confirmation()
-        self._last_denial = None
+        self._last_denial = "confirmation"
+        if type(now_ms) is not int or now_ms < 0 or now_ms > MAX_SAFE_INTEGER:
+            self._clear_streak()
+            fail("invalid_sequence")
         now = self._operation_time(now_ms, allow_equal=True)
         if self._consumed_revision == self._revision:
-            self._last_denial = "confirmation"
+            self._clear_streak()
             fail("stale_confirmation")
         if type(consent_confirmed) is not bool or consent_confirmed is not True:
             self._last_denial = "consent"
@@ -312,10 +315,9 @@ class RecognitionSession:
             self._clear_streak("confirmation_required")
             fail("confirmation_required")
         if self._current.state is not RecognitionState.STABLE or self._last_frame_time is None:
-            self._last_denial = "confirmation"
+            self._clear_streak()
             fail("confirmation_required")
         if now < self._last_frame_time or now > self._last_frame_time + 5_000:
-            self._last_denial = "confirmation"
             self._clear_streak("stale_confirmation")
             fail("stale_confirmation")
         self._confirmation = _Confirmation(
@@ -407,4 +409,3 @@ class RecognitionSession:
 
 
 __all__ = ["RecognitionSession"]
-

@@ -51,6 +51,117 @@ class ReleaseProofError(Exception):
         super().__init__(code)
 
 
+def _pypi_attestation_policy(
+    *, source_commit: str, workflow_run_id: int, workflow_run_attempt: int,
+) -> Any:
+    """Build the required Sigstore identity policy for one frozen release run."""
+    if (
+        not isinstance(source_commit, str) or not COMMIT_RE.fullmatch(source_commit)
+        or type(workflow_run_id) is not int or workflow_run_id < 1
+        or type(workflow_run_attempt) is not int or workflow_run_attempt < 1
+    ):
+        raise ReleaseProofError("attestation_candidate_invalid")
+    try:
+        from sigstore.verify import policy
+    except ImportError:
+        raise ReleaseProofError("attestation_verifier_unavailable") from None
+    run_uri = (
+        f"https://github.com/{REPOSITORY}/actions/runs/"
+        f"{workflow_run_id}/attempts/{workflow_run_attempt}"
+    )
+    try:
+        return policy.AllOf([
+            policy.OIDCIssuerV2("https://token.actions.githubusercontent.com"),
+            policy.OIDCSourceRepositoryURI(f"https://github.com/{REPOSITORY}"),
+            policy.OIDCSourceRepositoryDigest(source_commit),
+            policy.OIDCBuildConfigURI(
+                f"https://github.com/{REPOSITORY}/{WORKFLOW}@refs/heads/main"
+            ),
+            policy.OIDCBuildTrigger("workflow_dispatch"),
+            policy.OIDCRunInvocationURI(run_uri),
+        ])
+    except (AttributeError, TypeError):
+        raise ReleaseProofError("attestation_verifier_unavailable") from None
+
+
+def _verify_candidate_publish_workflow(root: Path, source_commit: str) -> dict[str, str]:
+    """Bind the PyPI upload assertion to the immutable candidate workflow.
+
+    PyPI's publisher environment is an index assertion, not a Fulcio OIDC
+    extension.  The signed source digest and workflow identity are joined to
+    the workflow file in that exact checked-out candidate commit here.
+    """
+    if not isinstance(source_commit, str) or not COMMIT_RE.fullmatch(source_commit):
+        raise ReleaseProofError("publisher_workflow_mismatch")
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "show", f"{source_commit}:{WORKFLOW}"],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
+            check=False,
+            timeout=20,
+        )
+    except (OSError, subprocess.SubprocessError):
+        raise ReleaseProofError("publisher_workflow_unavailable") from None
+    if result.returncode != 0:
+        raise ReleaseProofError("publisher_workflow_unavailable")
+    try:
+        import yaml
+
+        class UniqueLoader(yaml.SafeLoader):
+            pass
+
+        def construct_mapping(loader: Any, node: Any, deep: bool = False) -> dict[Any, Any]:
+            loader.flatten_mapping(node)
+            mapping: dict[Any, Any] = {}
+            for key_node, value_node in node.value:
+                key = loader.construct_object(key_node, deep=deep)
+                if key in mapping:
+                    raise ValueError("duplicate YAML key")
+                mapping[key] = loader.construct_object(value_node, deep=deep)
+            return mapping
+
+        UniqueLoader.add_constructor(
+            yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, construct_mapping,
+        )
+        workflow = yaml.load(result.stdout, Loader=UniqueLoader)
+    except Exception:
+        raise ReleaseProofError("publisher_workflow_mismatch") from None
+    try:
+        job = workflow["jobs"]["publish-pypi"]
+        environment = job["environment"]
+        steps = job["steps"]
+        download, publish = steps
+        download_use = download["uses"]
+        publish_use = publish["uses"]
+        correct = (
+            job["needs"] == ["verify-testpypi", "qualify-candidate"]
+            and isinstance(environment, dict)
+            and environment.get("name") == PRODUCTION_ENVIRONMENT
+            and job["permissions"] == {"contents": "read", "id-token": "write"}
+            and download["name"] == "Download the same frozen candidate"
+            and isinstance(download_use, str)
+            and re.fullmatch(r"actions/download-artifact@[0-9a-f]{40}", download_use)
+            and download["with"] == {
+                "name": "mudra-candidate-${{ inputs.version }}",
+                "path": "candidate",
+            }
+            and publish["name"] == "Publish the same files to PyPI"
+            and isinstance(publish_use, str)
+            and re.fullmatch(r"pypa/gh-action-pypi-publish@[0-9a-f]{40}", publish_use)
+            and publish["with"] == {"packages-dir": "candidate/release-artifacts/0.2.0/"}
+        )
+    except (KeyError, TypeError, ValueError):
+        correct = False
+    if not correct:
+        raise ReleaseProofError("publisher_workflow_mismatch")
+    return {
+        "environment": PRODUCTION_ENVIRONMENT,
+        "workflow_path": WORKFLOW,
+        "candidate_commit": source_commit,
+        "proof_kind": "signed_candidate_source_workflow",
+    }
 def _pairs_no_duplicates(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     result: dict[str, Any] = {}
     for key, value in pairs:
@@ -222,7 +333,7 @@ def validate_manifest(
         "package", "version", "repository", "workflow_path", "source_commit",
         "source_tree_sha256", "spec_sha256", "acceptance_sha256",
         "tool_lock_sha256", "tag", "workflow_run_id", "candidate_fingerprint",
-        "artifacts",
+        "workflow_run_attempt", "artifacts",
     }
     if not isinstance(candidate, dict) or set(candidate) != candidate_fields:
         raise ReleaseProofError("candidate_shape_invalid")
@@ -249,16 +360,20 @@ def validate_manifest(
         or candidate["acceptance_sha256"] != acceptance_sha256
         or candidate["tool_lock_sha256"] != tool_lock_sha256
         or type(candidate["workflow_run_id"]) is not int or candidate["workflow_run_id"] < 1
+        or type(candidate["workflow_run_attempt"]) is not int or candidate["workflow_run_attempt"] < 1
         or candidate["candidate_fingerprint"] != fingerprint(candidate_unsigned)
     ):
         raise ReleaseProofError("candidate_identity_mismatch")
     authorization = manifest["authorization"]
     if (
         not isinstance(authorization, dict)
-        or set(authorization) != {"kind", "environment", "workflow_run_id", "candidate_fingerprint"}
+        or set(authorization) != {
+            "kind", "environment", "workflow_run_id", "workflow_run_attempt", "candidate_fingerprint",
+        }
         or authorization.get("kind") != "github_protected_environment"
         or authorization.get("environment") != PRODUCTION_ENVIRONMENT
         or authorization.get("workflow_run_id") != candidate["workflow_run_id"]
+        or authorization.get("workflow_run_attempt") != candidate["workflow_run_attempt"]
         or authorization.get("candidate_fingerprint") != candidate["candidate_fingerprint"]
     ):
         raise ReleaseProofError("release_authorization_missing")
@@ -299,6 +414,15 @@ def validate_manifest(
             or index_report.get("checks", {}).get("downloaded_and_hashed") is not True
             or index_report.get("checks", {}).get("fresh_installed_wheel_smoke") is not True
             or _validate_artifact_inventory(index_report.get("artifacts")) != artifacts
+        ):
+            raise ReleaseProofError("index_evidence_invalid")
+        if index == "pypi" and (
+            index_report.get("checks", {}).get("trusted_publisher_attestations") != len(artifacts)
+            or index_report.get("checks", {}).get("attestation_source_commit") != candidate["source_commit"]
+            or index_report.get("checks", {}).get("attestation_workflow_run_id") != candidate["workflow_run_id"]
+            or index_report.get("checks", {}).get("attestation_workflow_run_attempt") != candidate["workflow_run_attempt"]
+            or index_report.get("checks", {}).get("publisher_environment_assertion") != PRODUCTION_ENVIRONMENT
+            or index_report.get("checks", {}).get("candidate_workflow_environment_binding") is not True
         ):
             raise ReleaseProofError("index_evidence_invalid")
     offline_body = dict(offline_report)
@@ -504,37 +628,59 @@ def _fresh_install_smoke(wheel: Path, *, package_version: str) -> bool:
 def _verify_pypi_attestation(
     filename: str,
     *,
+    artifact_path: Path,
+    source_commit: str,
+    workflow_run_id: int,
+    workflow_run_attempt: int,
     fetch: Callable[..., tuple[int, str, bytes]] = http_get,
-    repository_url: str = f"https://github.com/{REPOSITORY}",
 ) -> bool:
+    if (
+        not COMMIT_RE.fullmatch(source_commit)
+        or type(workflow_run_id) is not int or workflow_run_id < 1
+        or type(workflow_run_attempt) is not int or workflow_run_attempt < 1
+        or artifact_path.name != filename or not artifact_path.is_file()
+    ):
+        raise ReleaseProofError("attestation_candidate_invalid")
     provenance_url = f"https://pypi.org/integrity/{PACKAGE}/{VERSION}/{filename}/provenance"
     status, _final_url, provenance = _json_get(provenance_url, fetch)
     if status != 200 or not isinstance(provenance, dict):
         raise ReleaseProofError("publisher_attestation_missing")
-    bundles = provenance.get("attestation_bundles")
-    if not isinstance(bundles, list) or len(bundles) != 1 or not isinstance(bundles[0], dict):
-        raise ReleaseProofError("publisher_attestation_invalid")
-    publisher = bundles[0].get("publisher")
-    if (
-        not isinstance(publisher, dict)
-        or not isinstance(publisher.get("repository"), str)
-        or publisher.get("kind") != "GitHub"
-        or publisher.get("repository").casefold() != REPOSITORY.casefold()
-        or publisher.get("workflow") != Path(WORKFLOW).name
-        or publisher.get("environment") != PRODUCTION_ENVIRONMENT
-    ):
-        raise ReleaseProofError("publisher_identity_mismatch")
-    executable = "pypi-attestations"
-    command = [executable, "verify", "pypi", "--repository", repository_url, f"pypi:{filename}"]
     try:
-        result = subprocess.run(
-            command, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL, check=False, timeout=120,
+        from pypi_attestations import AttestationType, Distribution, Provenance
+
+        parsed = Provenance.model_validate(provenance)
+        if len(parsed.attestation_bundles) != 1:
+            raise ReleaseProofError("publisher_attestation_invalid")
+        bundle = parsed.attestation_bundles[0]
+        publisher = bundle.publisher
+        if (
+            getattr(publisher, "kind", None) != "GitHub"
+            or getattr(publisher, "repository", "").casefold() != REPOSITORY.casefold()
+            or getattr(publisher, "workflow", None) != Path(WORKFLOW).name
+            or getattr(publisher, "environment", None) != PRODUCTION_ENVIRONMENT
+        ):
+            raise ReleaseProofError("publisher_identity_mismatch")
+        if len(bundle.attestations) != 1:
+            raise ReleaseProofError("publisher_attestation_invalid")
+        expected_identity = _pypi_attestation_policy(
+            source_commit=source_commit,
+            workflow_run_id=workflow_run_id,
+            workflow_run_attempt=workflow_run_attempt,
         )
-    except (OSError, subprocess.SubprocessError):
-        raise ReleaseProofError("attestation_verifier_unavailable") from None
-    if result.returncode != 0:
-        raise ReleaseProofError("publisher_attestation_invalid")
+        distribution = Distribution.from_file(artifact_path)
+        attestation = bundle.attestations[0]
+        predicate_type, _predicate = attestation.verify(
+            identity=expected_identity,
+            dist=distribution,
+        )
+        if predicate_type != AttestationType.PYPI_PUBLISH_V1.value:
+            raise ReleaseProofError("publisher_attestation_invalid")
+    except ReleaseProofError:
+        raise
+    except Exception:
+        # Parsing, missing claims, signature failures and verifier/API failures
+        # all fail closed without copying remote values into public reports.
+        raise ReleaseProofError("publisher_attestation_invalid") from None
     return True
 
 
@@ -542,6 +688,10 @@ def verify_index(
     index: str,
     artifacts: list[dict[str, Any]],
     *,
+    source_commit: str | None = None,
+    workflow_run_id: int | None = None,
+    workflow_run_attempt: int | None = None,
+    workflow_root: Path | None = None,
     fetch: Callable[..., tuple[int, str, bytes]] = http_get,
     install: Callable[[Path, str], bool] = _fresh_install_smoke,
 ) -> dict[str, Any]:
@@ -562,13 +712,32 @@ def verify_index(
             )
         wheel_name = next(name for name in downloaded if name.endswith(".whl"))
         installed = install(downloaded[wheel_name], VERSION)
+        if installed is not True:
+            raise ReleaseProofError("fresh_install_failed")
+        attestations = 0
+        if index == "pypi":
+            if (
+                not isinstance(source_commit, str)
+                or type(workflow_run_id) is not int or workflow_run_id < 1
+                or type(workflow_run_attempt) is not int or workflow_run_attempt < 1
+            ):
+                raise ReleaseProofError("attestation_candidate_invalid")
+            _verify_candidate_publish_workflow(
+                workflow_root if workflow_root is not None else Path(__file__).resolve().parents[1],
+                source_commit,
+            )
+            for artifact in artifacts:
+                _verify_pypi_attestation(
+                    artifact["filename"],
+                    artifact_path=downloaded[artifact["filename"]],
+                    source_commit=source_commit,
+                    workflow_run_id=workflow_run_id,
+                    workflow_run_attempt=workflow_run_attempt,
+                    fetch=fetch,
+                )
+                attestations += 1
     if installed is not True:
         raise ReleaseProofError("fresh_install_failed")
-    attestations = 0
-    if index == "pypi":
-        for artifact in artifacts:
-            _verify_pypi_attestation(artifact["filename"], fetch=fetch)
-            attestations += 1
     return {
         "state": "VERIFIED",
         "index": index,
@@ -578,6 +747,13 @@ def verify_index(
         "downloaded_and_hashed": True,
         "fresh_installed_wheel_smoke": True,
         "trusted_publisher_attestations": attestations,
+        **({
+            "attestation_source_commit": source_commit,
+            "attestation_workflow_run_id": workflow_run_id,
+            "attestation_workflow_run_attempt": workflow_run_attempt,
+            "publisher_environment_assertion": PRODUCTION_ENVIRONMENT,
+            "candidate_workflow_environment_binding": True,
+        } if index == "pypi" else {}),
     }
 
 
@@ -589,6 +765,7 @@ def _verify_github_publication(candidate: dict[str, Any], fetch: Callable[..., t
         raise ReleaseProofError("workflow_run_unavailable")
     if (
         run.get("head_sha") != candidate["source_commit"]
+        or run.get("run_attempt") != candidate["workflow_run_attempt"]
         or run.get("status") != "completed" or run.get("conclusion") != "success"
         or not isinstance(run.get("path"), str) or WORKFLOW not in run["path"]
         or run.get("event") != "workflow_dispatch"
@@ -712,7 +889,14 @@ def verify_published(
     environment = environment_verifier(candidate["repository"], fetch)
     github = github_verifier(candidate, fetch)
     testpypi = index_verifier("testpypi", validated["artifacts"], fetch=fetch)
-    pypi = index_verifier("pypi", validated["artifacts"], fetch=fetch)
+    pypi = index_verifier(
+        "pypi", validated["artifacts"],
+        source_commit=candidate["source_commit"],
+        workflow_run_id=candidate["workflow_run_id"],
+        workflow_run_attempt=candidate["workflow_run_attempt"],
+        workflow_root=root,
+        fetch=fetch,
+    )
     return {
         "state": "VERIFIED",
         "verification_kind": "luna_self_verified",
@@ -797,11 +981,16 @@ def create_candidate_document(
     offline_report_path: str,
     artifact_dir: str,
     workflow_run_id: int,
+    workflow_run_attempt: int,
     current_commit: str,
 ) -> dict[str, Any]:
     from tools.verify_release import frozen_candidate_inventory, git_value
 
-    if current_commit != git_value("rev-parse", "HEAD") or type(workflow_run_id) is not int or workflow_run_id < 1:
+    if (
+        current_commit != git_value("rev-parse", "HEAD")
+        or type(workflow_run_id) is not int or workflow_run_id < 1
+        or type(workflow_run_attempt) is not int or workflow_run_attempt < 1
+    ):
         raise ReleaseProofError("candidate_identity_mismatch")
     tree = source_tree_sha256(root)
     offline_path = _safe_repo_file(root, offline_report_path, prefix="evidence/releases")
@@ -846,6 +1035,7 @@ def create_candidate_document(
         "tool_lock_sha256": sha256_text_file(root / "requirements-dev.lock"),
         "tag": f"v{VERSION}",
         "workflow_run_id": workflow_run_id,
+        "workflow_run_attempt": workflow_run_attempt,
         "artifacts": artifact_rows,
     }
     candidate["candidate_fingerprint"] = fingerprint(candidate)
@@ -866,6 +1056,7 @@ def create_published_document(
     output_path: str,
     current_commit: str,
     workflow_run_id: int,
+    workflow_run_attempt: int,
 ) -> dict[str, Any]:
     candidate_file = _safe_repo_file(root, candidate_path, prefix="evidence/releases")
     try:
@@ -879,6 +1070,7 @@ def create_published_document(
         candidate_doc["schema_version"] != 1 or not isinstance(candidate, dict)
         or candidate.get("source_commit") != current_commit
         or candidate.get("workflow_run_id") != workflow_run_id
+        or candidate.get("workflow_run_attempt") != workflow_run_attempt
         or candidate.get("candidate_fingerprint") != fingerprint({k: v for k, v in candidate.items() if k != "candidate_fingerprint"})
     ):
         raise ReleaseProofError("candidate_identity_mismatch")
@@ -899,6 +1091,15 @@ def create_published_document(
             or _validate_artifact_inventory(report.get("artifacts")) != artifacts
         ):
             raise ReleaseProofError("index_evidence_invalid")
+        if index == "pypi" and (
+            report.get("checks", {}).get("trusted_publisher_attestations") != len(artifacts)
+            or report.get("checks", {}).get("attestation_source_commit") != candidate["source_commit"]
+            or report.get("checks", {}).get("attestation_workflow_run_id") != candidate["workflow_run_id"]
+            or report.get("checks", {}).get("attestation_workflow_run_attempt") != candidate["workflow_run_attempt"]
+            or report.get("checks", {}).get("publisher_environment_assertion") != PRODUCTION_ENVIRONMENT
+            or report.get("checks", {}).get("candidate_workflow_environment_binding") is not True
+        ):
+            raise ReleaseProofError("index_evidence_invalid")
         refs[index] = _report_reference(root, path)
     published = {
         "schema_version": 1,
@@ -909,6 +1110,7 @@ def create_published_document(
             "kind": "github_protected_environment",
             "environment": PRODUCTION_ENVIRONMENT,
             "workflow_run_id": workflow_run_id,
+            "workflow_run_attempt": workflow_run_attempt,
             "candidate_fingerprint": candidate["candidate_fingerprint"],
         },
         "gate_evidence": candidate_doc["gate_evidence"],

@@ -67,8 +67,8 @@ MUTATIONS = (
     Mutation(
         "consumed_confirmation_reused",
         "src/mudra_interact_core/session.py",
-        "if self._consumed_revision == self._revision:\n            self._last_denial = \"confirmation\"\n            fail(\"stale_confirmation\")",
-        "if False:\n            self._last_denial = \"confirmation\"\n            fail(\"stale_confirmation\")",
+        "if self._consumed_revision == self._revision:\n            self._clear_streak()\n            fail(\"stale_confirmation\")",
+        "if False:\n            self._clear_streak()\n            fail(\"stale_confirmation\")",
         ("E39", "E40", "E41"),
         ("tests/test_consent.py::test_one_emission_per_confirmed_revision", "tests/test_consent.py::test_confirmation_age_and_monotonic_clock_boundaries"),
     ),

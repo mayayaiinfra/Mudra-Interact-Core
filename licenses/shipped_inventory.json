@@ -3,7 +3,7 @@
   "files": [
     {
       "path": ".github/workflows/publish.yml",
-      "sha256": "ee254c77ef5caa3ef7f529e2874c69471387da10621e5e5f0ad5e80bf185f8aa",
+      "sha256": "07ebe5b486007f8aed7b591e538457653cba43dcb3e1e87d74bf78822bb03f9f",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -38,7 +38,7 @@
     },
     {
       "path": "MUDRA_INTERACT_CORE_SPEC.md",
-      "sha256": "25a6aa74a146f33b7cd5f820d77a2f0b096c451e4aa4979509f2310b5111d831",
+      "sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -52,7 +52,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "8d03a84a824ed8fce341d9e6bb9b4c5ac2a3cf65e2d8d69c3fcd00641b84fc54",
+      "sha256": "1d35a2028a543b41b1eb306542ab93a4a59e5e49efbd6df37d7e75bfabcfdd84",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -66,7 +66,7 @@
     },
     {
       "path": "docs/ACCEPTANCE.md",
-      "sha256": "79f1252f5ffdb050d67a96f4fccdbe292512ca1b381f17e4076ca2cfcc9b9626",
+      "sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -150,7 +150,7 @@
     },
     {
       "path": "docs/RELEASE_RUNBOOK.md",
-      "sha256": "d4c0a597c4f0125ea8df19161d579cb47ca2ebaf100112f01a8835f59c6e1c44",
+      "sha256": "4abdd4b0600683f8dd036aa49da12d9729a1b0b6d17fab203bb18926a00d1c27",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -192,7 +192,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "33ce96a810788701278c1a2082972615efc6d2b57806f0bd23fc0fd2189cb955",
+      "sha256": "d35b27f56f954a4f12ba7ccd3ed6fc89bc1cb0550cdbf9fc5706e6dc02b40640",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -206,14 +206,14 @@
     },
     {
       "path": "requirements-release.in",
-      "sha256": "7e1da3b25bf98b08fec0acef5f08940a5f49c6f0375f22122719142c4a693063",
+      "sha256": "93a72b26679b2a052b9de245040404305e4f903cf50f1d8118d9b0f9b4786746",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
     },
     {
       "path": "requirements-release.lock",
-      "sha256": "68058cc31bceae265071ec13756adb93aa701f7b779c43f9c07a5c3505c7af1e",
+      "sha256": "5fdd857252472d4b3d91684a512b2271bafb71dddc297c4b28208eed34e54e1e",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -325,7 +325,7 @@
     },
     {
       "path": "src/mudra_interact_core/session.py",
-      "sha256": "9a1d2f52ba3bd608df67dfab5271aed4c297f092f9a4055d539d1a0431a58fa1",
+      "sha256": "463dae82479dcf5068e4c786fa2bc1b3852ecaf21c87d7ef719e3ca717538b9a",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -352,8 +352,15 @@
       "status": "included"
     },
     {
+      "path": "tools/check_attestation_policy.py",
+      "sha256": "7f90d91d02ab09eadaa4a0a4e4d08db4af852cfdf512c72463199ac9c327090d",
+      "component": "Mudra Interact",
+      "license": "Apache-2.0",
+      "status": "included"
+    },
+    {
       "path": "tools/create_release_manifest.py",
-      "sha256": "c5f04d3a854fd93aa681b96968880a3d3d7edc3c1249400dc82785065004d91d",
+      "sha256": "f50ad1ea1641177858db1a3ce74a5aca948994155a87b525e6f76c0681c176dd",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -367,14 +374,14 @@
     },
     {
       "path": "tools/release_proof.py",
-      "sha256": "4bcf795050e568ab50af36afd730c1e8954df5be629eee4ee668f7cd096145be",
+      "sha256": "e90b08dae477b124697645027f1604588452bf43d15267a1c5cb2964c96ae4ae",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
     },
     {
       "path": "tools/run_mutations.py",
-      "sha256": "d0a141654b91f8dbbcbe9449948a9231b6c2a6e0134a71a9266143cec05768d7",
+      "sha256": "e8a8ed230903de3f9d3025d5aa06410bf7397225be27d7d1dfacb0d864200a91",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"
@@ -395,7 +402,7 @@
     },
     {
       "path": "tools/verify_release.py",
-      "sha256": "74a5bc07f7126534001e39abb60e6bc59e8dffba358f24e59461f2dd089ea819",
+      "sha256": "b8755a497879dbb35a52c0c115af24eab30c6d93f9bfc0d8423798ce179aec59",
       "component": "Mudra Interact",
       "license": "Apache-2.0",
       "status": "included"

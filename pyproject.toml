@@ -6,10 +6,17 @@ build-backend = "setuptools.build_meta"
 name = "mudra-interact"
 version = "0.2.0"
 description = "Apache-2.0 landmark protocol and conservative Mudra interaction recognizer"
+readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "Apache-2.0"}
 authors = [{name = "MAYAYAI"}]
 keywords = ["gesture", "mudra", "landmarks", "human-agent-interaction", "privacy"]
+
+[project.urls]
+Documentation = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.2.0/docs/API.md"
+Changelog = "https://github.com/mayayaiinfra/Mudra-Interact-Core/blob/v0.2.0/CHANGELOG.md"
+Issues = "https://github.com/mayayaiinfra/Mudra-Interact-Core/issues"
+Repository = "https://github.com/mayayaiinfra/Mudra-Interact-Core"
 
 [project.scripts]
 mudra-interact = "mudra_interact_core.cli:main"

@@ -128,8 +128,9 @@ jobs:
         shell: bash
         env:
           WORKFLOW_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_RUN_ATTEMPT: ${{ github.run_attempt }}
         run: |
-          fingerprint="$(python tools/create_release_manifest.py --candidate --workflow-run-id "$WORKFLOW_RUN_ID")"
+          fingerprint="$(python tools/create_release_manifest.py --candidate --workflow-run-id "$WORKFLOW_RUN_ID" --workflow-run-attempt "$WORKFLOW_RUN_ATTEMPT")"
           echo "fingerprint=$fingerprint" >> "$GITHUB_OUTPUT"
       - name: Save the frozen candidate and qualification report
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -143,9 +144,33 @@ jobs:
           retention-days: 30
           compression-level: 0
 
+  verify-attestation-policy:
+    name: Verify locked Sigstore policy behavior
+    needs: validate-inputs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out candidate source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ inputs.candidate_commit }}
+      - name: Set up Python 3.12
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.12'
+      - name: Install the hash-locked attestation verifier
+        shell: bash
+        run: |
+          python -m venv "$RUNNER_TEMP/mudra-attestation-verifier"
+          "$RUNNER_TEMP/mudra-attestation-verifier/bin/python" -m pip install --require-hashes -r requirements-release.lock
+      - name: Run signed-claim policy regressions against synthetic X.509 certificates
+        shell: bash
+        run: |
+          "$RUNNER_TEMP/mudra-attestation-verifier/bin/python" tools/check_attestation_policy.py
+
   publish-testpypi:
     name: TestPyPI publish ${{ needs.qualify-candidate.outputs.candidate_fingerprint }}
-    needs: qualify-candidate
+    needs: [qualify-candidate, verify-attestation-policy]
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment:
@@ -243,7 +268,11 @@ jobs:
           path: .
       - name: Verify PyPI metadata, bytes, attestations and fresh installation
         shell: bash
-        run: python tools/verify_release.py --verify-index pypi --artifact-dir release-artifacts/0.2.0 --candidate-report evidence/releases/offline-qualification.json --report evidence/releases/pypi-verification.json
+        env:
+          CANDIDATE_COMMIT: ${{ inputs.candidate_commit }}
+          WORKFLOW_RUN_ID: ${{ github.run_id }}
+          WORKFLOW_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: python tools/verify_release.py --verify-index pypi --source-commit "$CANDIDATE_COMMIT" --workflow-run-id "$WORKFLOW_RUN_ID" --workflow-run-attempt "$WORKFLOW_RUN_ATTEMPT" --artifact-dir release-artifacts/0.2.0 --candidate-report evidence/releases/offline-qualification.json --report evidence/releases/pypi-verification.json
       - name: Save production verification receipt
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -295,7 +324,8 @@ jobs:
       - name: Create the sanitized publication manifest
         env:
           WORKFLOW_RUN_ID: ${{ github.run_id }}
-        run: python tools/create_release_manifest.py --published --workflow-run-id "$WORKFLOW_RUN_ID"
+          WORKFLOW_RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: python tools/create_release_manifest.py --published --workflow-run-id "$WORKFLOW_RUN_ID" --workflow-run-attempt "$WORKFLOW_RUN_ATTEMPT"
       - name: Save release receipts and manifest for final verification
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
