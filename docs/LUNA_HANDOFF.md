@@ -157,10 +157,12 @@ safe synthetic summaries/fixtures. Reject receipts whose files no longer hash.
 The source-tree digest includes tracked product code, tests, fixtures, schemas,
 build configuration and normative docs; exclude the mutable implementation and
 communication-language status ledgers, evidence output and ignored build/cache
-directories. Status-only commits refer to the qualified candidate commit.
-Changing code, tests, contract or tool locks invalidates affected receipts;
-dependency impact must be recomputed and needed gates rerun. Editing acceptance
-to ease a failure is a contract change, not a fix.
+directories. Verification subprocesses receive an allowlisted environment;
+ambient credentials must not pass to tests, mutations or package builds.
+Status-only commits refer to the qualified candidate commit. Changing code,
+tests, contract or tool locks invalidates affected receipts; dependency impact
+must be recomputed and needed gates rerun. Editing acceptance to ease a failure
+is a contract change, not a fix.
 
 A fixture/header checker does not prove behaviour. Run assertion tests, enumerate
 parametrizations and retain results. The verifier itself has failure-injection

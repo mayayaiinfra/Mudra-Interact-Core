@@ -10,6 +10,7 @@ import sys
 import pytest
 
 from mudra_interact_core.language import LanguageValidationError, Message, check_freshness, parse_message
+from tools.verification_report import safe_subprocess_environment
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,15 +19,7 @@ DIRECTIONS = ("human_to_human", "human_to_agent", "agent_to_human", "agent_to_ag
 
 
 def _isolated_child_environment() -> dict[str, str]:
-    allowed = {
-        "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
-        "userprofile", "systemdrive", "comspec", "psmodulepath",
-        "mudra_firewall_rule_name", "mudra_python_exe",
-        "mudra_windows_egress_control",
-    }
-    env = {key: value for key, value in os.environ.items() if key.casefold() in allowed}
-    env.update({"PYTHONPATH": "", "PYTHONNOUSERSITE": "1"})
-    return env
+    return safe_subprocess_environment()
 
 
 def _valid_messages() -> list[tuple[str, str, dict]]:

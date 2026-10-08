@@ -36,7 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.verification_report import canonical_text_bytes, sha256_text_file  # noqa: E402
+from tools.verification_report import canonical_text_bytes, safe_subprocess_environment, sha256_text_file  # noqa: E402
 
 
 PACKAGE_NAME = "mudra-interact"
@@ -205,18 +205,7 @@ def run(argv: list[str], *, cwd: Path, env: dict[str, str], timeout: int = 180) 
 
 
 def reproducible_env() -> dict[str, str]:
-    allowed_environment = {
-        "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
-        "userprofile", "systemdrive", "comspec", "programfiles",
-        "programfiles(x86)", "programw6432", "psmodulepath",
-        "mudra_firewall_rule_name", "mudra_python_exe",
-        "mudra_windows_egress_control",
-    }
-    env = {
-        key: value
-        for key, value in os.environ.items()
-        if key.casefold() in allowed_environment
-    }
+    env = safe_subprocess_environment()
     env.update({
         "SOURCE_DATE_EPOCH": SOURCE_DATE_EPOCH,
         "TZ": "UTC",

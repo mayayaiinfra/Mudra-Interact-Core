@@ -88,6 +88,28 @@ def sha256_text_file(path: Path) -> str:
     return sha256_bytes(canonical_text_bytes(path.read_bytes()))
 
 
+def safe_subprocess_environment() -> dict[str, str]:
+    """Return the small, non-secret environment needed by local verifiers."""
+    allowed = {
+        "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
+        "userprofile", "systemdrive", "comspec", "programfiles",
+        "programfiles(x86)", "programw6432", "psmodulepath", "lc_all", "lang", "tz",
+        "mudra_firewall_rule_name", "mudra_python_exe", "mudra_windows_egress_control",
+    }
+    environment = {
+        key: value
+        for key, value in os.environ.items()
+        if key.casefold() in allowed
+    }
+    environment.update({
+        "PYTHONPATH": "",
+        "PYTHONNOUSERSITE": "1",
+        "PIP_NO_INDEX": "1",
+        "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    })
+    return environment
+
+
 def strict_json_bytes(data: bytes) -> Any:
     if data.startswith(b"\xef\xbb\xbf"):
         raise VerificationError("invalid_json")

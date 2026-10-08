@@ -38,6 +38,7 @@ from tools.verification_report import (
     canonical_text_bytes,
     canonical_json_bytes,
     seal_report,
+    safe_subprocess_environment,
     sha256_bytes,
     sha256_text_file,
     source_tree_sha256 as independent_source_tree_sha256,
@@ -97,8 +98,10 @@ def test_reproducible_build_environment_excludes_unrelated_secrets(monkeypatch: 
     monkeypatch.setenv("MUDRA_WINDOWS_EGRESS_CONTROL", "VERIFIED")
     monkeypatch.setenv("MUDRA_FIREWALL_RULE_NAME", "mudra-test-firewall")
     env = release_verifier.reproducible_env()
+    verifier_env = safe_subprocess_environment()
 
     assert "MUDRA_TEST_SECRET" not in env
+    assert "MUDRA_TEST_SECRET" not in verifier_env
     assert env["MUDRA_WINDOWS_EGRESS_CONTROL"] == "VERIFIED"
     assert env["MUDRA_FIREWALL_RULE_NAME"] == "mudra-test-firewall"
     assert env["PIP_NO_INDEX"] == "1"

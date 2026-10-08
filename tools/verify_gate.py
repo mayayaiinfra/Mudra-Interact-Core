@@ -31,6 +31,7 @@ from tools.verification_report import (
     canonical_json_bytes,
     read_json,
     seal_report,
+    safe_subprocess_environment,
     sha256_bytes,
     sha256_file,
     sha256_text_file,
@@ -365,6 +366,7 @@ def run_command(
         process = subprocess.Popen(
             argv,
             cwd=cwd,
+            env=safe_subprocess_environment(),
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

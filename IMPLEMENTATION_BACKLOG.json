@@ -18,11 +18,11 @@
   "review": {
     "scope": "The Astra review approved the bounded 0.2.0 gesture/event foundation; that exact release remains historical and published. The active 0.3.0 candidate adds the separately reviewed experimental communication-language SDK without changing the v2 gesture/event contract. No human/cultural/accessibility validation or live host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Corrected-source M0 passed 23/23 and M1 passed 140/140 on Windows Python 3.14, with all required cases and no skips. The status-ledger fingerprint regression and secret-free build environment are covered. M2-M3 and ML-01-ML-03 need fresh receipts; 0.3.0 TestPyPI/PyPI publication and downloaded-install proof remain.",
+    "verification_claim": "The source identity now excludes both mutable status ledgers. Verification, release and mutation subprocesses receive a safe allowlisted environment; E84 regression coverage passes, and the full Windows distribution/verification suite passed 45/45 under a process-scoped outbound block. Earlier M0-M3 and ML-01-ML-03 receipts used the previous fingerprint and are being requalified, beginning at MI-01. The 0.3.0 TestPyPI/PyPI release has not been published.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
-  "active_item": "MI-05",
+  "active_item": "MI-01",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -73,13 +73,8 @@
       "items": [
         "MI-01"
       ],
-      "state": "VERIFIED",
-      "evidence": [
-        {
-          "path": "evidence/local/M0-gate-status-ledger-fix.json",
-          "sha256": "53b9a01cf03aa1b6cc6935f98134cb9218b087ad59d187483a74b9f669eb8b00"
-        }
-      ],
+      "state": "IN_PROGRESS",
+      "evidence": [],
       "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
@@ -93,13 +88,8 @@
         "MI-03",
         "MI-04"
       ],
-      "state": "VERIFIED",
-      "evidence": [
-        {
-          "path": "evidence/local/M1-status-ledger-fix.json",
-          "sha256": "b3e5f00f8dda067f95dd2d092d79de4868147b9c7cef0fc3a50fd3b52e058515"
-        }
-      ],
+      "state": "NOT_STARTED",
+      "evidence": [],
       "verification_kind": "luna_self_verified",
       "prior_state": "VERIFIED"
     },
@@ -113,7 +103,7 @@
         "MI-06",
         "MI-07"
       ],
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "evidence": [],
       "verification_kind": "luna_self_verified",
       "supplemental_evidence": [
@@ -124,7 +114,7 @@
           "mutations_detected": 15
         }
       ],
-      "prior_state": "VERIFIED"
+      "prior_state": "IN_PROGRESS"
     },
     {
       "id": "M3",
@@ -193,14 +183,9 @@
         "E06"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M0-status-ledger-fix.json",
-          "sha256": "6d8c7111445d9bb922126eeb6b581d50c27947856534f52d21ce629bf6305fb6"
-        }
-      ],
+      "state": "IN_PROGRESS",
+      "verification_kind": null,
+      "evidence": [],
       "prior_state": "VERIFIED"
     },
     {
@@ -231,14 +216,9 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M1-status-ledger-fix.json",
-          "sha256": "b3e5f00f8dda067f95dd2d092d79de4868147b9c7cef0fc3a50fd3b52e058515"
-        }
-      ],
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
       "prior_state": "VERIFIED"
     },
     {
@@ -264,14 +244,9 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M1-status-ledger-fix.json",
-          "sha256": "b3e5f00f8dda067f95dd2d092d79de4868147b9c7cef0fc3a50fd3b52e058515"
-        }
-      ],
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
       "prior_state": "VERIFIED"
     },
     {
@@ -307,14 +282,9 @@
         "E44"
       ],
       "completion_kind": "engineering",
-      "state": "VERIFIED",
-      "verification_kind": "luna_self_verified",
-      "evidence": [
-        {
-          "path": "evidence/local/M1-status-ledger-fix.json",
-          "sha256": "b3e5f00f8dda067f95dd2d092d79de4868147b9c7cef0fc3a50fd3b52e058515"
-        }
-      ],
+      "state": "NOT_STARTED",
+      "verification_kind": null,
+      "evidence": [],
       "prior_state": "VERIFIED"
     },
     {
@@ -346,10 +316,10 @@
         "E55"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "NOT_STARTED",
       "verification_kind": null,
       "evidence": [],
-      "prior_state": "VERIFIED"
+      "prior_state": "IN_PROGRESS"
     },
     {
       "id": "MI-06",

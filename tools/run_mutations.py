@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.verification_report import source_tree_sha256
+from tools.verification_report import safe_subprocess_environment, source_tree_sha256
 
 
 @dataclass(frozen=True)
@@ -173,7 +173,7 @@ def _copy_root(destination: Path) -> None:
 
 
 def _run(nodes: tuple[str, ...], cwd: Path, *, timeout: float) -> tuple[int, str]:
-    environment = {key: value for key, value in os.environ.items() if key != "PYTHONPATH"}
+    environment = safe_subprocess_environment()
     environment["PYTHONPATH"] = os.pathsep.join((str(cwd / "src"), str(cwd)))
     try:
         result = subprocess.run(
@@ -213,7 +213,16 @@ def _custom_assertion(root: Path, name: str) -> tuple[int, str]:
         encoding="utf-8",
     )
     try:
-        result = subprocess.run([sys.executable, script.name], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=20, check=False)
+        result = subprocess.run(
+            [sys.executable, script.name],
+            cwd=root,
+            env=safe_subprocess_environment(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=20,
+            check=False,
+        )
     except subprocess.TimeoutExpired:
         return 124, "custom_assertion_timeout"
     return result.returncode, (result.stdout or "")[-4096:]
