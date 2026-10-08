@@ -44,7 +44,7 @@
       }
     ]
   },
-  "active_item": "MI-02",
+  "active_item": "MI-03",
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -308,7 +308,7 @@
         "E19"
       ],
       "completion_kind": "engineering",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -324,7 +324,14 @@
           "sha256": "5d6b65a1e0dcce07f95b4e93d693b15062a3d6438903b50fdc405084137e96c6"
         }
       ],
-      "superseded_candidate_verification_kind": "luna_self_verified"
+      "superseded_candidate_verification_kind": "luna_self_verified",
+      "verification_kind": "luna_self_verified",
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.0/MI-02.json",
+          "sha256": "067304b5ac91ed9f1bf982d8b5647b3e7c4d7afbe4fd62453915a5864bbb67cc"
+        }
+      ]
     },
     {
       "id": "MI-03",
@@ -349,7 +356,7 @@
         "E26"
       ],
       "completion_kind": "engineering",
-      "state": "NOT_STARTED",
+      "state": "IN_PROGRESS",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -712,8 +719,8 @@
       "M0"
     ],
     "active_gate": "M1",
-    "active_item": "MI-02",
+    "active_item": "MI-03",
     "updated_on": "2026-10-09",
-    "note": "Fresh M0/MI-01 candidate evidence is verified at source commit 7da1893845227c7fd1b7db7d8d0f0d27a297d33e; continue with MI-02."
+    "note": "M0 and MI-02 are verified; continue M1 in dependency order."
   }
 }
