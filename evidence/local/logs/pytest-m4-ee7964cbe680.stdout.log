@@ -1,0 +1,11 @@
+........................................................................ [ 31%]
+........................................................................ [ 63%]
+........................................................................ [ 95%]
+..........                                                               [100%]
+=============================== warnings summary ===============================
+tests/test_distribution.py::test_real_deterministic_sdist_uses_frozen_candidate_filename
+  /usr/lib/python3.12/tarfile.py:2301: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+226 passed, 1 warning in 67.80s (0:01:07)

@@ -18,7 +18,7 @@
   "review": {
     "scope": "Astra technical model review of 7c95adc approved the bounded 0.2.0 foundation direction conditionally; no human/cultural/accessibility validation is claimed. See docs/ASTRA_REVIEW_2026-10-08.md. The future language contract is design-only and does not expand 0.2.0.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "M0Ã¢â‚¬â€œM3 and MI-01..MI-09 are freshly VERIFIED on the frozen 0.2.0 source. The eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8; full hosted M3 passed 207/207 acceptance cases with zero skips. AR-01 and AR-02 were repaired and reviewed. MI-10 remains BLOCKED: current checks pass 14/14 synthetic acceptance cases but no real package has been published or verified. Production PyPI Trusted Publishing is configured; TestPyPI sign-in and pending-publisher setup remain outstanding as of 2026-10-08. No package has been published.",
+    "verification_claim": "The 0.2.0 gesture/event foundation is published and verified. M0 passed 23/23, M1 140/140, M2 185/185, and the full hosted M3 gate passed 211/211 with zero skips; the Linux/Windows × CPython 3.11–3.14 matrix is 8/8. The full M4 gate passed 226/226 acceptance cases with zero skips, including MI-10 E90–E99 (15/15), and its live published proof verified TestPyPI and PyPI downloads, fresh wheel installations, two PyPI Trusted Publisher attestations, the protected pypi-production approval, and the v0.2.0 tag and GitHub release. The M4 evidence includes the restricted proxy route and direct-egress denial proof. The broader human-human, human-agent and agent-agent communication language and creative-plugin work remains a follow-on; 0.2.0 does not implement that vision.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md"
   },
@@ -150,15 +150,14 @@
       "items": [
         "MI-10"
       ],
-      "state": "BLOCKED",
+      "state": "VERIFIED",
       "evidence": [
         {
-          "path": "evidence/local/MI-10-blocker-10b7ae7.json",
-          "sha256": "94ba49978e9afb6a742f870104f37509f346122545a4a0cc17bb8df1339d832a"
+          "path": "evidence/local/M4-published.json",
+          "sha256": "4eaee0684abd194c10c71c6f04abedd8e1f68f32227611e8ff542a93e55d9792"
         }
       ],
-      "verification_kind": "luna_self_verified",
-      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
+      "verification_kind": "luna_self_verified"
     }
   ],
   "recommended_order": [
@@ -545,15 +544,18 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "BLOCKED",
+      "state": "VERIFIED",
       "verification_kind": "luna_self_verified",
       "evidence": [
         {
-          "path": "evidence/local/MI-10-blocker-10b7ae7.json",
-          "sha256": "94ba49978e9afb6a742f870104f37509f346122545a4a0cc17bb8df1339d832a"
+          "path": "evidence/local/M4-published.json",
+          "sha256": "4eaee0684abd194c10c71c6f04abedd8e1f68f32227611e8ff542a93e55d9792"
+        },
+        {
+          "path": "evidence/local/MI-10-published.json",
+          "sha256": "a68fd1111d7f8688ab5022974be260e4fe6e6c20aa35e712e0ef1695b4ec7379"
         }
-      ],
-      "blocker": "Fresh current-source MI-01..MI-09 and M0..M3 evidence is VERIFIED; the eight-cell Linux/Windows Ãƒâ€” CPython 3.11Ã¢â‚¬â€œ3.14 matrix is 8/8 and the hosted M3 gate passed 207/207 acceptance cases with zero skips. The current MI-10 check passed its 14 synthetic acceptance tests but is BLOCKED with published_artifact_unavailable. The authorized PyPI pending publisher for mudra-interact / mayayaiinfra/Mudra-Interact-Core / publish.yml / pypi-production is configured. As of 2026-10-08, the TestPyPI account session remains signed out and the corresponding mudra-interact pending publisher is not configured. Sign in and configure/verify TestPyPI Trusted Publishing, then publish only the frozen candidate through the protected workflow, manually approve the exact production candidate, and verify the same downloaded artifacts, attestations, and fresh installs. No package has been published."
+      ]
     }
   ]
 }

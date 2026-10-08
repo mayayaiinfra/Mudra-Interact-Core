@@ -1,0 +1,515 @@
+{
+  "acceptance_cases": [],
+  "acceptance_sha256": "f1aaa08dfa68b51a7acb94226750793dbfc2a1874b9a82d56cd9dc266fcb50e3",
+  "artifacts": [
+    {
+      "kind": "wheel",
+      "path": "<temporary>/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
+    },
+    {
+      "kind": "sdist",
+      "path": "<temporary>/mudra_interact-0.2.0.tar.gz",
+      "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "size_bytes": 59393
+    },
+    {
+      "kind": "wheel_from_sdist",
+      "path": "<temporary>/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
+    }
+  ],
+  "candidate_status": "blocked",
+  "checks": {
+    "fresh_install": {
+      "install_exit": 0,
+      "module_owned_by_venv": true,
+      "outside_checkout": true,
+      "reinstall_exit": 0,
+      "runtime_dependencies": "none",
+      "smoke_exit": 0,
+      "uninstall_exit": 0
+    },
+    "inventory": {
+      "legal_files": [
+        "LICENSE",
+        "NOTICE"
+      ],
+      "lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
+      "no_credentials_or_model_payload": true,
+      "source_files": 88
+    },
+    "offline": {
+      "cold_dependency": {
+        "explicit_setup_failure": "VERIFIED",
+        "missing_build_dependency_exit": "1"
+      },
+      "negative_egress": {
+        "attempted_egress": "VERIFIED",
+        "control_connection_before_block": "NOT_REQUIRED",
+        "isolation_result": "egress_denied",
+        "method": "linux_network_namespace",
+        "runner_network_isolation": "VERIFIED",
+        "synthetic_probe": "VERIFIED"
+      },
+      "pip_no_index": true
+    },
+    "repeat_build": {
+      "sdist_a_sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "sdist_b_sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "sdist_identical": true,
+      "wheel_a_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "wheel_b_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "wheel_identical": true
+    },
+    "sdist": {
+      "metadata_version": "2.4",
+      "name": "mudra-interact",
+      "version": "0.2.0"
+    },
+    "sdist_rebuild": {
+      "metadata": {
+        "file_count": 26,
+        "inventory": [
+          {
+            "path": "mudra_interact-0.2.0.data/data/LICENSE",
+            "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
+            "size_bytes": 11337
+          },
+          {
+            "path": "mudra_interact-0.2.0.data/data/NOTICE",
+            "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
+            "size_bytes": 419
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/METADATA",
+            "sha256": "07321456e2a267a434ed5dc454174708366a79b25652eecb343f0ecfdc71d057",
+            "size_bytes": 5569
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/RECORD",
+            "sha256": "72d0418d15c04e69fa4c41c8e7cc11e1d40122f0ceadfef6b9296dd8a9ee95e2",
+            "size_bytes": 2376
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/WHEEL",
+            "sha256": "c14c80f0e6ae95195b7f032d990b2f367806af140702f90a72f466762ce5262d",
+            "size_bytes": 92
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/entry_points.txt",
+            "sha256": "b5b20aefa104ed1721ab950aa0d02744c21978dec7988dbb6e9ad09ddde7a0ff",
+            "size_bytes": 64
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+            "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
+            "size_bytes": 11337
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/licenses/NOTICE",
+            "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
+            "size_bytes": 419
+          },
+          {
+            "path": "mudra_interact-0.2.0.dist-info/top_level.txt",
+            "sha256": "05f66cefd5318312d7de405e300de0f14c98caa663f804eab5be84a1a202a5f8",
+            "size_bytes": 20
+          },
+          {
+            "path": "mudra_interact_core/__init__.py",
+            "sha256": "c73bf87e9621fb8e1f015dd57ca0a34b156af77420940816c2f2370c79e68c9b",
+            "size_bytes": 1040
+          },
+          {
+            "path": "mudra_interact_core/__main__.py",
+            "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
+            "size_bytes": 49
+          },
+          {
+            "path": "mudra_interact_core/catalog.py",
+            "sha256": "267e80e45934c7613f0d41a9ada5f4fdf3518c403eca15995f9bb9988bbe682b",
+            "size_bytes": 5090
+          },
+          {
+            "path": "mudra_interact_core/catalog/mudra_catalog.json",
+            "sha256": "73ca76189109fa913ad8c2b9baeb84f6f55e4c37fa13b8672afa69b520acf662",
+            "size_bytes": 2340
+          },
+          {
+            "path": "mudra_interact_core/cli.py",
+            "sha256": "9a4771f48ce310872fc64e157518624d74b4ba912b194fcbbf044fb98ca521d9",
+            "size_bytes": 13219
+          },
+          {
+            "path": "mudra_interact_core/coordinates.py",
+            "sha256": "11047b9b85957fe5e05ab64d6f18f357eb992487e208c3ebfac8bac070862a77",
+            "size_bytes": 1630
+          },
+          {
+            "path": "mudra_interact_core/errors.py",
+            "sha256": "d0570c2fa76190bf1d76c236a0d8e934707fadeb898480662c975633b159bbb5",
+            "size_bytes": 1182
+          },
+          {
+            "path": "mudra_interact_core/frame.py",
+            "sha256": "a6cf444f4284ee0c684a7ecf79af7fcdbb0ac5b6e810de4a619dbfbab941d39e",
+            "size_bytes": 8605
+          },
+          {
+            "path": "mudra_interact_core/protocol.py",
+            "sha256": "7732e2f0ef6e411670df9d35eeb9ddbeaade9445a42cde5cced2a5d0057ede11",
+            "size_bytes": 13635
+          },
+          {
+            "path": "mudra_interact_core/py.typed",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size_bytes": 0
+          },
+          {
+            "path": "mudra_interact_core/recognition.py",
+            "sha256": "80008b65e399ea7a749c258523ec3adc64e9b65baf2a0f11fe3e618a3ec971d8",
+            "size_bytes": 6684
+          },
+          {
+            "path": "mudra_interact_core/schemas/__init__.py",
+            "sha256": "5fd6b803b835bde1df86e0a0a43cafdd5fe8b22e83401c6c34a2d77a5dcbd09d",
+            "size_bytes": 80
+          },
+          {
+            "path": "mudra_interact_core/schemas/v2/__init__.py",
+            "sha256": "39803deaeca327f61f22495c6372c42d23847fc0a19b9d8509ef6629ae2ad976",
+            "size_bytes": 76
+          },
+          {
+            "path": "mudra_interact_core/schemas/v2/contract.schema.json",
+            "sha256": "3818ac12c3000e79bd09f2aa49d58c19ab2e2446acce96a67b87491a44c9d361",
+            "size_bytes": 6963
+          },
+          {
+            "path": "mudra_interact_core/schemas/v2/version-map.json",
+            "sha256": "47f359e773c5c0a500f7d2401df3806debedf78b83ac29c8d0eb2289b31fe9e4",
+            "size_bytes": 353
+          },
+          {
+            "path": "mudra_interact_core/session.py",
+            "sha256": "463dae82479dcf5068e4c786fa2bc1b3852ecaf21c87d7ef719e3ca717538b9a",
+            "size_bytes": 16354
+          },
+          {
+            "path": "mudra_interact_core/validation.py",
+            "sha256": "fa74a8e1db07e9304673f57626bf3f17fe13871b55a03a6c502aad4c03da0d96",
+            "size_bytes": 7326
+          }
+        ],
+        "legal_payload": [
+          "mudra_interact-0.2.0.data/data/LICENSE",
+          "mudra_interact-0.2.0.data/data/NOTICE",
+          "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+          "mudra_interact-0.2.0.dist-info/licenses/NOTICE"
+        ],
+        "metadata_files": [
+          "mudra_interact-0.2.0.dist-info/METADATA",
+          "mudra_interact-0.2.0.dist-info/WHEEL",
+          "mudra_interact-0.2.0.dist-info/RECORD"
+        ],
+        "metadata_name": "mudra-interact",
+        "metadata_validator": "stdlib_pep427_pep566_equivalent",
+        "metadata_version": "0.2.0",
+        "package_data": [
+          "mudra_interact_core/catalog/mudra_catalog.json",
+          "mudra_interact_core/py.typed",
+          "mudra_interact_core/schemas/v2/contract.schema.json",
+          "mudra_interact_core/schemas/v2/version-map.json"
+        ],
+        "requires_dist": null
+      },
+      "offline": true,
+      "wheel_sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf"
+    },
+    "wheel": {
+      "file_count": 26,
+      "inventory": [
+        {
+          "path": "mudra_interact-0.2.0.data/data/LICENSE",
+          "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
+          "size_bytes": 11337
+        },
+        {
+          "path": "mudra_interact-0.2.0.data/data/NOTICE",
+          "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
+          "size_bytes": 419
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/METADATA",
+          "sha256": "07321456e2a267a434ed5dc454174708366a79b25652eecb343f0ecfdc71d057",
+          "size_bytes": 5569
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/RECORD",
+          "sha256": "72d0418d15c04e69fa4c41c8e7cc11e1d40122f0ceadfef6b9296dd8a9ee95e2",
+          "size_bytes": 2376
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/WHEEL",
+          "sha256": "c14c80f0e6ae95195b7f032d990b2f367806af140702f90a72f466762ce5262d",
+          "size_bytes": 92
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/entry_points.txt",
+          "sha256": "b5b20aefa104ed1721ab950aa0d02744c21978dec7988dbb6e9ad09ddde7a0ff",
+          "size_bytes": 64
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+          "sha256": "d9e69a413321767a52afb19e44d386c8f0e0c55f1dd3ce83c78e734cbf7e8018",
+          "size_bytes": 11337
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/licenses/NOTICE",
+          "sha256": "4276337fa3e15342fbbcd77212eb6e0e98a4fb12d8854835088b6f126bcceab3",
+          "size_bytes": 419
+        },
+        {
+          "path": "mudra_interact-0.2.0.dist-info/top_level.txt",
+          "sha256": "05f66cefd5318312d7de405e300de0f14c98caa663f804eab5be84a1a202a5f8",
+          "size_bytes": 20
+        },
+        {
+          "path": "mudra_interact_core/__init__.py",
+          "sha256": "c73bf87e9621fb8e1f015dd57ca0a34b156af77420940816c2f2370c79e68c9b",
+          "size_bytes": 1040
+        },
+        {
+          "path": "mudra_interact_core/__main__.py",
+          "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
+          "size_bytes": 49
+        },
+        {
+          "path": "mudra_interact_core/catalog.py",
+          "sha256": "267e80e45934c7613f0d41a9ada5f4fdf3518c403eca15995f9bb9988bbe682b",
+          "size_bytes": 5090
+        },
+        {
+          "path": "mudra_interact_core/catalog/mudra_catalog.json",
+          "sha256": "73ca76189109fa913ad8c2b9baeb84f6f55e4c37fa13b8672afa69b520acf662",
+          "size_bytes": 2340
+        },
+        {
+          "path": "mudra_interact_core/cli.py",
+          "sha256": "9a4771f48ce310872fc64e157518624d74b4ba912b194fcbbf044fb98ca521d9",
+          "size_bytes": 13219
+        },
+        {
+          "path": "mudra_interact_core/coordinates.py",
+          "sha256": "11047b9b85957fe5e05ab64d6f18f357eb992487e208c3ebfac8bac070862a77",
+          "size_bytes": 1630
+        },
+        {
+          "path": "mudra_interact_core/errors.py",
+          "sha256": "d0570c2fa76190bf1d76c236a0d8e934707fadeb898480662c975633b159bbb5",
+          "size_bytes": 1182
+        },
+        {
+          "path": "mudra_interact_core/frame.py",
+          "sha256": "a6cf444f4284ee0c684a7ecf79af7fcdbb0ac5b6e810de4a619dbfbab941d39e",
+          "size_bytes": 8605
+        },
+        {
+          "path": "mudra_interact_core/protocol.py",
+          "sha256": "7732e2f0ef6e411670df9d35eeb9ddbeaade9445a42cde5cced2a5d0057ede11",
+          "size_bytes": 13635
+        },
+        {
+          "path": "mudra_interact_core/py.typed",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        {
+          "path": "mudra_interact_core/recognition.py",
+          "sha256": "80008b65e399ea7a749c258523ec3adc64e9b65baf2a0f11fe3e618a3ec971d8",
+          "size_bytes": 6684
+        },
+        {
+          "path": "mudra_interact_core/schemas/__init__.py",
+          "sha256": "5fd6b803b835bde1df86e0a0a43cafdd5fe8b22e83401c6c34a2d77a5dcbd09d",
+          "size_bytes": 80
+        },
+        {
+          "path": "mudra_interact_core/schemas/v2/__init__.py",
+          "sha256": "39803deaeca327f61f22495c6372c42d23847fc0a19b9d8509ef6629ae2ad976",
+          "size_bytes": 76
+        },
+        {
+          "path": "mudra_interact_core/schemas/v2/contract.schema.json",
+          "sha256": "3818ac12c3000e79bd09f2aa49d58c19ab2e2446acce96a67b87491a44c9d361",
+          "size_bytes": 6963
+        },
+        {
+          "path": "mudra_interact_core/schemas/v2/version-map.json",
+          "sha256": "47f359e773c5c0a500f7d2401df3806debedf78b83ac29c8d0eb2289b31fe9e4",
+          "size_bytes": 353
+        },
+        {
+          "path": "mudra_interact_core/session.py",
+          "sha256": "463dae82479dcf5068e4c786fa2bc1b3852ecaf21c87d7ef719e3ca717538b9a",
+          "size_bytes": 16354
+        },
+        {
+          "path": "mudra_interact_core/validation.py",
+          "sha256": "fa74a8e1db07e9304673f57626bf3f17fe13871b55a03a6c502aad4c03da0d96",
+          "size_bytes": 7326
+        }
+      ],
+      "legal_payload": [
+        "mudra_interact-0.2.0.data/data/LICENSE",
+        "mudra_interact-0.2.0.data/data/NOTICE",
+        "mudra_interact-0.2.0.dist-info/licenses/LICENSE",
+        "mudra_interact-0.2.0.dist-info/licenses/NOTICE"
+      ],
+      "metadata_files": [
+        "mudra_interact-0.2.0.dist-info/METADATA",
+        "mudra_interact-0.2.0.dist-info/WHEEL",
+        "mudra_interact-0.2.0.dist-info/RECORD"
+      ],
+      "metadata_name": "mudra-interact",
+      "metadata_validator": "stdlib_pep427_pep566_equivalent",
+      "metadata_version": "0.2.0",
+      "package_data": [
+        "mudra_interact_core/catalog/mudra_catalog.json",
+        "mudra_interact_core/py.typed",
+        "mudra_interact_core/schemas/v2/contract.schema.json",
+        "mudra_interact_core/schemas/v2/version-map.json"
+      ],
+      "requires_dist": null
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "python",
+        "-m",
+        "pip",
+        "wheel",
+        "--no-deps",
+        "--no-build-isolation",
+        "--no-index"
+      ],
+      "exit": 0
+    }
+  ],
+  "errors": [],
+  "finished_at": "2026-10-08T04:41:31.151286Z",
+  "frozen_candidate_artifacts": [
+    {
+      "filename": "mudra_interact-0.2.0-py3-none-any.whl",
+      "kind": "wheel",
+      "path": "release-artifacts/0.2.0/mudra_interact-0.2.0-py3-none-any.whl",
+      "sha256": "1b566e6dee848778758585faff6530505f71fc063d14cd8f459670c9b51839bf",
+      "size_bytes": 38903
+    },
+    {
+      "filename": "mudra_interact-0.2.0.tar.gz",
+      "kind": "sdist",
+      "path": "release-artifacts/0.2.0/mudra_interact-0.2.0.tar.gz",
+      "sha256": "67155c90d2eee3e73162e18eb137b32915695f4cc8b2c2c6f48828fe8b9ce4d9",
+      "size_bytes": 59393
+    }
+  ],
+  "items": [
+    "MI-08"
+  ],
+  "limitations": [
+    "7 required OS/Python cells are unavailable on this runner"
+  ],
+  "mode": "offline",
+  "mutation_results": [],
+  "platform": {
+    "architecture": "x86_64",
+    "implementation": "CPython",
+    "os": "linux",
+    "python": "3.14.7",
+    "release": "6.17.0-1022-azure"
+  },
+  "platform_matrix": [
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "linux",
+      "python": "3.11",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "linux",
+      "python": "3.12",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "linux",
+      "python": "3.13",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "actual_local_run",
+      "os": "linux",
+      "python": "3.14",
+      "state": "VERIFIED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "windows",
+      "python": "3.11",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "windows",
+      "python": "3.12",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "windows",
+      "python": "3.13",
+      "state": "BLOCKED"
+    },
+    {
+      "architecture": "x86_64",
+      "evidence": "missing_platform_cell",
+      "os": "windows",
+      "python": "3.14",
+      "state": "BLOCKED"
+    }
+  ],
+  "prerequisites": [
+    "MI-07",
+    "hash_locked_build_tools"
+  ],
+  "report_schema_version": 1,
+  "report_sha256": "88efba1e765fb09f5c8f50d722fa69dac603b9442b2db85a094bb419efe75aa1",
+  "scope": {
+    "id": "offline",
+    "kind": "release"
+  },
+  "source_commit": "7cf9b00036959b1dd51041b8af3f002712cd6813",
+  "source_tree_sha256": "797fd44b096001788c6ce3a3bddee35cb798f5c304a5f5054d172c5f5302efad",
+  "spec_sha256": "fb9a459be96f5d05859e0d14be537cc889e61607d82c5f063ff79c7ed147091f",
+  "started_at": "2026-10-08T04:41:25.306918Z",
+  "state": "BLOCKED",
+  "test_counts": {
+    "required_platform_cells": 8,
+    "verified_platform_cells": 1
+  },
+  "tool_lock_sha256": "e8cdeff44e0fafa1973d1fbede57dfe2ad60caa034a475c1b58c0eaf4b354084",
+  "verification_kind": "luna_self_verified"
+}
