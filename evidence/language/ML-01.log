@@ -3,11 +3,11 @@ STDOUT
 platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
 rootdir: C:\Users\MAYAYAI\MAPROJECTS\Mudra-Interact-Core
 configfile: pyproject.toml
-collected 24 items
+collected 26 items
 
-tests\test_language_contract.py ......                                   [ 25%]
-tests\test_language_verification.py ..................                   [100%]
+tests\test_language_contract.py ......                                   [ 23%]
+tests\test_language_verification.py ....................                 [100%]
 
-============================= 24 passed in 2.14s ==============================
+============================= 26 passed in 2.04s ==============================
 
 STDERR
