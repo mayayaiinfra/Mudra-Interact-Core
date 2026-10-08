@@ -92,7 +92,7 @@ def safe_subprocess_environment() -> dict[str, str]:
     """Return the small, non-secret environment needed by local verifiers."""
     allowed = {
         "path", "systemroot", "windir", "temp", "tmp", "tmpdir", "home",
-        "userprofile", "systemdrive", "comspec", "programfiles",
+        "userprofile", "username", "user", "logname", "systemdrive", "comspec", "programfiles",
         "programfiles(x86)", "programw6432", "psmodulepath", "lc_all", "lang", "tz",
         "mudra_firewall_rule_name", "mudra_python_exe", "mudra_windows_egress_control",
     }
