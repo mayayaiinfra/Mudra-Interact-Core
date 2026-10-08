@@ -17,7 +17,10 @@ from typing import Callable
 
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED = {".git", ".venv", "__pycache__", ".pytest_cache", ".pytest-language-tmp", "build", "dist", "evidence"}
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from tools.verification_report import source_tree_sha256
 
 
 @dataclass(frozen=True)
@@ -156,25 +159,9 @@ MUTATIONS = (
 
 
 def _tree_digest(root: Path) -> str:
-    digest = hashlib.sha256()
-    paths: list[Path] = []
-    for path in root.rglob("*"):
-        if not path.is_file():
-            continue
-        relative = path.relative_to(root)
-        if any(part in EXCLUDED for part in relative.parts) or relative.name.endswith(".pyc"):
-            continue
-        if relative.as_posix() == "IMPLEMENTATION_BACKLOG.json":
-            continue
-        paths.append(path)
-    for path in sorted(paths, key=lambda item: item.relative_to(root).as_posix()):
-        relative = path.relative_to(root).as_posix().encode("utf-8")
-        contents = path.read_bytes()
-        digest.update(len(relative).to_bytes(4, "big"))
-        digest.update(relative)
-        digest.update(len(contents).to_bytes(8, "big"))
-        digest.update(contents)
-    return digest.hexdigest()
+    # Share the verifier's git-aware inventory so ignored pytest scratch output
+    # cannot dominate the proof or be mistaken for source identity.
+    return source_tree_sha256(root)
 
 
 def _copy_root(destination: Path) -> None:
