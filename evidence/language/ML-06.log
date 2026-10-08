@@ -1,0 +1,13 @@
+STDOUT
+============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\MAYAYAI\MAPROJECTS\Mudra-Interact-Core
+configfile: pyproject.toml
+collected 15 items
+
+tests\test_a2a_interop.py ...........                                    [ 73%]
+tests\test_a2a_verification.py ....                                      [100%]
+
+============================= 15 passed in 9.56s ==============================
+
+STDERR

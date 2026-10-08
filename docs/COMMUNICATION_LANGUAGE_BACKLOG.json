@@ -182,8 +182,12 @@
         "L52: no side effects from parse or accept; explicit cancellation only; fixed remote errors",
         "L53: packaged dependency-free adapter and accurate qualification limits"
       ],
-      "progress": "Astra selected A2A as the first transport. Implemented a strict standard-library client, a pinned mapping contract, and an independent loopback JSON-RPC peer with synthetic scenarios. Host tenant and optional remote AgentInterface tenant are kept separate. Current-source acceptance, packaging, and release qualification remain pending; no external provider or production host was called.",
-      "prior_state": "NOT_STARTED"
+      "progress": "The independent loopback A2A peer and fail-closed receipt verifier passed 15/15 checks; the current-source ML-06 receipt is recorded. The candidate distribution gate must still prove the wheel and sdist contain the adapter, and M4 publication remains pending. No public third-party agent, production host, model provider, or paid operation was called.",
+      "prior_state": "NOT_STARTED",
+      "verification_receipt": {
+        "path": "evidence/language/ML-06.json",
+        "sha256": "bbaa2af5f2977789d9c390ac1c73c8e6b29acddf1b1ff5584860128bf057c4e2"
+      }
     }
   ],
   "reverification_required": [
@@ -192,5 +196,5 @@
       "reason": "The acceptance contract and source changed after the historical v0.3.0 receipts. Those receipts remain valid only for their recorded v0.3.0 source; the new candidate needs fresh language and core release evidence."
     }
   ],
-  "next_scope": "Complete current-source ML-06 tests, tool-backed receipt and distribution checks, then run the required new-candidate core gates. ML-05 remains blocked pending owner-specific consent/data-flow inputs, real volunteers, and independent scoped reviewers."
+  "next_scope": "Continue the fresh 0.4.0 core gates from M2, beginning with MI-06, then complete M2 semantic mutations, M3 cross-platform/package qualification, and M4 exact-artifact publication. ML-05 remains externally blocked pending owner-approved consent/data handling, real volunteers, and independent scoped reviewers."
 }
