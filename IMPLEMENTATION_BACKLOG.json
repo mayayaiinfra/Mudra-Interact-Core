@@ -16,9 +16,9 @@
     "execution": "docs/LUNA_HANDOFF.md"
   },
   "review": {
-    "scope": "The 0.4.1 package was published to TestPyPI and PyPI and its exact artifacts, attestations, installs and immutable GitHub release were verified. Its separate MI-10 acceptance remained incomplete because the README used generic, non-versioned package links. Candidate 0.4.2 strengthens the vendor-neutral future-value description and fixes those links. M0-M3 are freshly verified for 0.4.2; M4/MI-10 remains open until its published artifacts pass exact download, provenance, install and immutable-release checks. No human, community or accessibility validation, field accuracy, camera adapter or live production-host integration is claimed.",
+    "scope": "Mudra Interact 0.4.2 is published to PyPI and TestPyPI. Its public package page explains the value of a versioned, vendor-neutral communication contract for carrying validated human/agent messages across independently built systems and future multi-agent workflows. M0-M4 and MI-01 through MI-10 are verified for the released source. No human, community, accessibility or independent-security assessment, field accuracy, camera adapter or live production-host integration is claimed.",
     "baseline_tests": "Historical source tree 981aec9c had M0 23/23, M1 120/120, M2 165/165 with 15 mutations, MI-01 through MI-09, 8/8 MI-08 platform cells (run 37716341667), and M3 187/187 with 83/83 IDs (run 37717500467). These receipts are retained as historical evidence, not current-source verification. The tracked proposal, review contract and required repairs change source identity.",
-    "verification_claim": "Candidate 0.4.2 has fresh M0-M3 evidence, including 217/217 hosted M3 acceptance cases with zero skips and the complete eight-cell Linux/Windows CPython 3.11-3.14 matrix. M4/MI-10 is active; package publication and exact downloaded-install/provenance verification remain required.",
+    "verification_claim": "Release 0.4.2: M0-M4 VERIFIED. The full Linux M4 gate passed 232/232 acceptance cases with zero skips. The exact frozen wheel and sdist were uploaded to TestPyPI and PyPI, downloaded, hash-checked and freshly installed; PyPI attestations, protected-environment binding and immutable GitHub release were verified.",
     "review_kind": "astra_technical_model_review",
     "review_document": "docs/ASTRA_REVIEW_2026-10-08.md",
     "superseded_candidate_supplemental_evidence": [
@@ -191,7 +191,7 @@
       }
     ]
   },
-  "active_item": "MI-10",
+  "active_item": null,
   "states": [
     "NOT_STARTED",
     "IN_PROGRESS",
@@ -488,7 +488,7 @@
       "items": [
         "MI-10"
       ],
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -510,7 +510,14 @@
         ],
         "superseded_candidate_evidence": [],
         "superseded_candidate_verification_kind": null
-      }
+      },
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M4.json",
+          "sha256": "4f1e5c68af0950bf201949c9fd49ac7ecc0bc5fafa527ca7a760ace10115ca91"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     }
   ],
   "recommended_order": [
@@ -1337,7 +1344,7 @@
         "Live upload/download/cryptographically bound provenance/fresh installed verification"
       ],
       "completion_kind": "published_artifact",
-      "state": "IN_PROGRESS",
+      "state": "VERIFIED",
       "prior_state": "VERIFIED",
       "historical_evidence": [
         {
@@ -1366,23 +1373,126 @@
           "sha256": "214735d7a4c55bac955a266749b34aded44d451231dcf778e3bb21d0e73f0d52",
           "description": "Failed 0.4.1 MI-10 acceptance attempt; first defect was non-versioned PyPI/TestPyPI/GitHub README release links. Not a passing receipt."
         }
-      ]
+      ],
+      "evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M4.json",
+          "sha256": "4f1e5c68af0950bf201949c9fd49ac7ecc0bc5fafa527ca7a760ace10115ca91"
+        }
+      ],
+      "verification_kind": "luna_self_verified"
     }
   ],
   "candidate_progress": {
-    "release": null,
+    "release": {
+      "version": "0.4.2",
+      "state": "VERIFIED",
+      "pypi_url": "https://pypi.org/project/mudra-interact/0.4.2/",
+      "testpypi_url": "https://test.pypi.org/project/mudra-interact/0.4.2/",
+      "github_release_url": "https://github.com/mayayaiinfra/Mudra-Interact-Core/releases/tag/v0.4.2",
+      "workflow_run": "https://github.com/mayayaiinfra/Mudra-Interact-Core/actions/runs/37860173131",
+      "workflow_run_attempt": 1,
+      "production_environment": "pypi-production",
+      "source_commit": "991bf89ca44e49804639bdd4054704be660e05e5",
+      "source_tree_sha256": "6ddb0722591de0fedd687475a3005582f9769006ef41d6798c288705ee8c3d5f",
+      "candidate_fingerprint": "5f59f34a3bfa1fd1a87dcdba3beaa10ff4db00aac6b2f063441de6738ebe0a30",
+      "artifacts": [
+        {
+          "filename": "mudra_interact-0.4.2-py3-none-any.whl",
+          "sha256": "acc167a039ebf4bf785372a0d512f092aad1ec276dafa3661095c3bc455ca36d",
+          "size_bytes": 58415
+        },
+        {
+          "filename": "mudra_interact-0.4.2.tar.gz",
+          "sha256": "3db15f10f390e8cbe0266251cf529d6fe298210a45b1cc804fbfa72a3b47c597",
+          "size_bytes": 97779
+        }
+      ],
+      "acceptance": {
+        "gate": "M4",
+        "state": "VERIFIED",
+        "cases_collected": 232,
+        "passed": 232,
+        "failed": 0,
+        "skipped": 0,
+        "platform": {
+          "architecture": "x86_64",
+          "os": "linux",
+          "os_release": "6.6.87.2-microsoft-standard-WSL2",
+          "python": "3.12.3",
+          "python_build": [
+            "main",
+            "Aug 31 2026 10:18:26"
+          ],
+          "python_implementation": "CPython"
+        }
+      },
+      "verification_evidence": [
+        {
+          "path": "evidence/local/v0.4.2/M4.json",
+          "sha256": "4f1e5c68af0950bf201949c9fd49ac7ecc0bc5fafa527ca7a760ace10115ca91",
+          "description": "M4 gate report: 232/232 acceptance cases passed, zero skipped; exact published-release proof verified."
+        },
+        {
+          "path": "evidence/local/pytest-m4-fdf5a27073f2.json",
+          "sha256": "5d20bc46a75e59c42379ffa08c12d0f3244436e571920ec5587b0b9ab3129f89",
+          "description": "Hash-bound raw acceptance receipt for the M4 gate."
+        },
+        {
+          "path": "evidence/local/logs/pytest-m4-fdf5a27073f2.stdout.log",
+          "sha256": "b2263848c39dc2582118520b81438eb11203f3621bffa856226632697dc584ef",
+          "description": "M4 acceptance runner stdout."
+        },
+        {
+          "path": "evidence/local/logs/pytest-m4-fdf5a27073f2.stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "description": "M4 acceptance runner stderr (empty, hash recorded)."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/published-verification.json",
+          "sha256": "b85ea44c648b57e9de9823a15b9570f4cff374e2491ebc506c379d3ba7488094",
+          "description": "Live TestPyPI/PyPI download, hash, fresh-install, provenance and immutable-release verification."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/published.json",
+          "sha256": "86a0afd6010cdbe060488cbf5185b30be6debe257d1e64b838b1b998fdc0f965",
+          "description": "Sanitized manifest binding the release to the frozen source and artifacts."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/candidate.json",
+          "sha256": "593bb07a2e176b161db2cb539f734a9957a24f0dc043d269a62389c78994386d",
+          "description": "Frozen candidate fingerprint and offline qualification receipt."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/offline-qualification.json",
+          "sha256": "cf6ab4b29e7fe6380d095a0e9f83370ed548091e29bceaf89cc090ba717f0f6a",
+          "description": "Offline reproducibility and package qualification report."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/testpypi-verification.json",
+          "sha256": "b0b2324f83457eb0ff64d8dc45971e5ab3377816767dde17346d953746557203",
+          "description": "Exact TestPyPI artifact download and fresh-install receipt."
+        },
+        {
+          "path": "evidence/releases/v0.4.2/pypi-verification.json",
+          "sha256": "a1bdc25a4fc5798ee089059163acca1cb9ec6a93de885afcb0feecfd5ab5557a",
+          "description": "Exact PyPI artifact download, attestations and fresh-install receipt."
+        }
+      ]
+    },
     "version": "0.4.2",
-    "state": "IN_PROGRESS",
+    "state": "VERIFIED",
     "completed_gates": [
       "M0",
       "M1",
       "M2",
-      "M3"
+      "M3",
+      "M4"
     ],
-    "active_gate": "M4",
-    "active_item": "MI-10",
+    "active_gate": null,
+    "active_item": null,
     "updated_on": "2026-10-09",
-    "note": "M0-M3 are freshly VERIFIED for 0.4.2. The hosted M3 full gate passed 217/217 cases with zero skips, and the exact eight-cell Linux/Windows CPython 3.11-3.14 matrix passed. M4/MI-10 is active for release-acceptance preflight, TestPyPI/PyPI publication, exact artifact downloads, attestations, fresh installs and immutable release verification.",
+    "note": "M0-M4 and MI-01 through MI-10 are VERIFIED for published release 0.4.2. The public package description now explains the interoperable, versioned human/agent message contract and its use in future multi-agent workflows, without downstream-company examples. All 232 M4 acceptance cases passed with zero skips; exact TestPyPI and PyPI files, attestations, fresh installs and immutable release were verified.",
     "previous_release": {
       "version": "0.4.1",
       "state": "VERIFIED",
